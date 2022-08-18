@@ -1,8 +1,15 @@
 ### 第01章 Linux下MySQL的安装与使用
 
-#### **1.** **安装前说明**
+#### **1.安装前说明**
+- 安装有 Xshell 和 Xftp 等访问CentOS系统的工具
+- CentOS6和CentOS7在MySQL的使用中的区别
 
-##### **1.1** **查看是否安装过MySQL**
+```shell
+1. 防火墙：6是iptables，7是firewalld 
+2. 启动服务的命令：6是service，7是systemctl
+```
+
+##### **1.1查看是否安装过MySQL**
 
 - 如果你是用rpm安装, 检查一下RPM PACKAGE：
 
@@ -18,13 +25,13 @@ systemctl status mysqld.service
 
 ##### **1.2 MySQL的卸载**
 
-**1.** **关闭** **mysql** **服务**
+**1.关闭mysql服务**
 
 ```shell
 systemctl stop mysqld.service
 ```
 
-**2.** **查看当前** **mysql** **安装状况**
+**2.查看当前mysql安装状况**
 
 ```shell
 rpm -qa | grep -i mysql
@@ -32,7 +39,7 @@ rpm -qa | grep -i mysql
 yum list installed | grep mysql
 ```
 
-**3.** **卸载上述命令查询出的已安装程序**
+**3.卸载上述命令查询出的已安装程序**
 
 ```shell
 yum remove mysql-xxx mysql-xxx mysql-xxx mysqk-xxxx
@@ -40,7 +47,7 @@ yum remove mysql-xxx mysql-xxx mysql-xxx mysqk-xxxx
 
 务必卸载干净，反复执行`rpm -qa | grep -i mysql`确认是否有卸载残留
 
-**4.** **删除** **mysql** **相关文件**
+**4.删除mysql相关文件**
 
 - 查找相关文件
 
@@ -93,7 +100,7 @@ rm -rf /etc/my.cnf
 chmod -R 777 /tmp
 ```
 
-**2.** **安装前，检查依赖**
+**2.安装前，检查依赖**
 
 ```shell
 rpm -qa|grep libaio
@@ -102,7 +109,7 @@ rpm -qa|grep net-tools
 
 ##### **2.2 CentOS7下MySQL安装过程** 
 
-**1.** **将安装程序拷贝到/opt目录下**
+**1.将安装程序拷贝到/opt目录下**
 
 在mysql的安装文件目录下执行：（必须按照顺序执行）
 
@@ -121,7 +128,7 @@ rpm -ivh mysql-community-server-8.0.25-1.el7.x86_64.rpm
 
 > 若存在mariadb-libs问题，则执行**yum remove mysql-libs**即可
 
-##### **2.3** **查看MySQL版本**
+##### **2.3查看MySQL版本**
 
 ```shell
 mysql --version 
@@ -129,7 +136,7 @@ mysql --version
 mysqladmin --version
 ```
 
-##### **2.4** **服务的初始化**
+##### **2.4服务的初始化**
 
 为了保证数据库目录与文件的所有者为 mysql 登录用户，如果你是以 root 身份运行 mysql 服务，需要执行下面的命令初始化：
 
@@ -147,7 +154,7 @@ cat /var/log/mysqld.log
 
 root@localhost: 后面就是初始化的密码
 
-##### **2.5** **启动MySQL，查看状态** 
+##### **2.5启动MySQL，查看状态** 
 
 ```shell
 #加不加.service后缀都可以 
@@ -157,7 +164,7 @@ root@localhost: 后面就是初始化的密码
 查看状态：systemctl status mysqld.service
 ```
 
-##### **2.6** **查看MySQL服务是否自启动**
+##### **2.6查看MySQL服务是否自启动**
 
 ```shell
 systemctl list-unit-files|grep mysqld.service
@@ -177,25 +184,25 @@ systemctl disable mysqld.service
 
 #### **3. MySQL登录**
 
-##### **3.1** **首次登录**
+##### **3.1首次登录**
 
 通过`mysql -hlocalhost -P3306 -uroot -p`进行登录，在Enter password：录入初始化密码
 
-##### **3.2** **修改密码**
+##### **3.2修改密码**
 
 ```mysql
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';
 ```
 
-##### **3.3** **设置远程登录**
+##### **3.3设置远程登录**
 
-**1.** **确认网络** 
+**1.确认网络** 
 
 1.在远程机器上使用ping ip地址`保证网络畅通`
 
 2.在远程机器上使用telnet命令`保证端口号开放`访问
 
-**2.** **关闭防火墙或开放端口**
+**2.关闭防火墙或开放端口**
 
 **方式一：关闭防火墙**
 
@@ -266,9 +273,9 @@ flush privileges;
 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'abc123';
 ```
 
-#### **5.** **字符集的相关操作**
+#### **5.字符集的相关操作**
 
-##### **5.1** **各级别的字符集**
+##### **5.1各级别的字符集**
 
 ```mysql
 show variables like 'character%';
@@ -303,7 +310,7 @@ systemctl restart mysqld
 - 如果`创建表时`没有显式的指定字符集和比较规则，则该表`默认用数据库的`字符集和比较规则
 - 如果`创建数据库时`没有显式的指定字符集和比较规则，则该数据库`默认用服务器的`字符集和比较规则
 
-##### **5.2** **请求到响应过程中字符集的变化**
+##### **5.2请求到响应过程中字符集的变化**
 
 ```mermaid
 graph TB

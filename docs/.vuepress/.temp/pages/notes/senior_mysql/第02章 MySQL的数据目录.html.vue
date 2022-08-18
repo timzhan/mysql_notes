@@ -2,12 +2,12 @@
  * @Author: tuWei
  * @Date: 2022-08-17 00:53:59
  * @LastEditors: tuWei
- * @LastEditTime: 2022-08-18 14:17:29
+ * @LastEditTime: 2022-08-18 15:18:08
 -->
 <h3 id="第02章-mysql的数据目录" tabindex="-1"><a class="header-anchor" href="#第02章-mysql的数据目录" aria-hidden="true">#</a> 第02章 MySQL的数据目录</h3>
 <h4 id="_1-mysql8的主要目录结构" tabindex="-1"><a class="header-anchor" href="#_1-mysql8的主要目录结构" aria-hidden="true">#</a> <strong>1. MySQL8的主要目录结构</strong></h4>
 <div class="language-bash ext-sh line-numbers-mode"><pre v-pre class="language-bash"><code><span class="token function">find</span> / -name mysql
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h5 id="_1-1-数据库文件的存放路径" tabindex="-1"><a class="header-anchor" href="#_1-1-数据库文件的存放路径" aria-hidden="true">#</a> <strong>1.1</strong> <strong>数据库文件的存放路径</strong></h5>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h5 id="_1-1数据库文件的存放路径" tabindex="-1"><a class="header-anchor" href="#_1-1数据库文件的存放路径" aria-hidden="true">#</a> <strong>1.1数据库文件的存放路径</strong></h5>
 <p>MySQL数据库文件的存放路径:/var/lib/mysql/</p>
 <div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show variables like 'datadir';
 +---------------+-----------------+
@@ -16,12 +16,12 @@
 | datadir       | /var/lib/mysql/ |
 +---------------+-----------------+
 1 row in set (0.04 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h5 id="_1-2-相关命令目录" tabindex="-1"><a class="header-anchor" href="#_1-2-相关命令目录" aria-hidden="true">#</a> <strong>1.2</strong> <strong>相关命令目录</strong></h5>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h5 id="_1-2相关命令目录" tabindex="-1"><a class="header-anchor" href="#_1-2相关命令目录" aria-hidden="true">#</a> <strong>1.2相关命令目录</strong></h5>
 <p><strong>相关命令目录：/usr/bin 和/usr/sbin。</strong></p>
-<h5 id="_1-3-配置文件目录" tabindex="-1"><a class="header-anchor" href="#_1-3-配置文件目录" aria-hidden="true">#</a> <strong>1.3</strong> <strong>配置文件目录</strong></h5>
+<h5 id="_1-3配置文件目录" tabindex="-1"><a class="header-anchor" href="#_1-3配置文件目录" aria-hidden="true">#</a> <strong>1.3配置文件目录</strong></h5>
 <p><strong>配置文件目录：/usr/share/mysql-8.0（命令及配置文件），/etc/mysql（如my.cnf）</strong></p>
-<h4 id="_2-数据库和文件系统的关系" tabindex="-1"><a class="header-anchor" href="#_2-数据库和文件系统的关系" aria-hidden="true">#</a> <strong>2.</strong> <strong>数据库和文件系统的关系</strong></h4>
-<h5 id="_2-1-表在文件系统中的表示" tabindex="-1"><a class="header-anchor" href="#_2-1-表在文件系统中的表示" aria-hidden="true">#</a> <strong>2.1</strong> <strong>表在文件系统中的表示</strong></h5>
+<h4 id="_2-数据库和文件系统的关系" tabindex="-1"><a class="header-anchor" href="#_2-数据库和文件系统的关系" aria-hidden="true">#</a> <strong>2.数据库和文件系统的关系</strong></h4>
+<h5 id="_2-1表在文件系统中的表示" tabindex="-1"><a class="header-anchor" href="#_2-1表在文件系统中的表示" aria-hidden="true">#</a> <strong>2.1表在文件系统中的表示</strong></h5>
 <p>2.1 查看默认数据库
 查看一下在我的计算机上当前有哪些数据库:</p>
 <div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SHOW DATABASES;
@@ -63,14 +63,14 @@ mysql&gt; SHOW TABLES LIKE 'innodb_sys%';
 | INNODB_SYS_TABLESTATS                      |
 +--------------------------------------------+
 10 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h5 id="_2-2-表在文件系统中的表示" tabindex="-1"><a class="header-anchor" href="#_2-2-表在文件系统中的表示" aria-hidden="true">#</a> <strong>2.2</strong> <strong>表在文件系统中的表示</strong></h5>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h5 id="_2-2表在文件系统中的表示" tabindex="-1"><a class="header-anchor" href="#_2-2表在文件系统中的表示" aria-hidden="true">#</a> <strong>2.2表在文件系统中的表示</strong></h5>
 <p>看一下我的计算机上的数据目录下的内容:</p>
 <div class="language-bash ext-sh line-numbers-mode"><pre v-pre class="language-bash"><code><span class="token builtin class-name">cd</span> /var/lib/mysql
 ll
 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h5 id="_2-3-表在文件系统中的表示" tabindex="-1"><a class="header-anchor" href="#_2-3-表在文件系统中的表示" aria-hidden="true">#</a> 2.3 表在文件系统中的表示</h5>
 <h6 id="_2-3-1-innodb存储引擎模式" tabindex="-1"><a class="header-anchor" href="#_2-3-1-innodb存储引擎模式" aria-hidden="true">#</a> <strong>2.3.1 InnoDB存储引擎模式</strong></h6>
-<p><strong>1.</strong> <strong>表结构</strong></p>
+<p><strong>1.表结构</strong></p>
 <p>为了保存表结构，<code v-pre>InnoDB</code>在<code v-pre>数据目录</code>下对应的数据库子目录下创建了一个专门用于<code v-pre>描述表结构的文件</code></p>
 <div class="language-text ext-text line-numbers-mode"><pre v-pre class="language-text"><code>表名.frm
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>在dbs数据库下创建一个名为 test 的表:</p>
@@ -81,7 +81,7 @@ mysql&gt; CREATE TABLE test (
     -&gt; );
 Query OK, 0 rows affected (0.03 sec)
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>那在数据库dbs对应的子目录下会创建一个test.frm的用于描述表结构的文件，这个文件在各平台是相同的， .frm是以二进制存储的</p>
-<p><strong>2.</strong> <strong>表中数据和索引</strong></p>
+<p><strong>2.表中数据和索引</strong></p>
 <p><strong>① 系统表空间（system tablespace）</strong></p>
 <p>默认情况下，InnoDB会在数据目录下创建一个名为<code v-pre>ibdata1</code>、大小为<code v-pre>12M</code>的<code v-pre>自拓展</code>文件，这个文件就是对应的<code v-pre>系统表空间</code>在文件系统上的表示。</p>
 <p><strong>② 独立表空间(file-per-table tablespace)</strong></p>
@@ -97,10 +97,10 @@ Query OK, 0 rows affected (0.03 sec)
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>④ 其他类型的表空间</strong></p>
 <p>随着MySQL的发展，除了上述两种老牌表空间之外，现在还新提出了一些不同类型的表空间，比如通用表空间（general tablespace）、临时表空间（temporary tablespace）等。</p>
 <h6 id="_2-3-2-myisam存储引擎模式" tabindex="-1"><a class="header-anchor" href="#_2-3-2-myisam存储引擎模式" aria-hidden="true">#</a> <strong>2.3.2 MyISAM存储引擎模式</strong></h6>
-<p><strong>1.</strong> <strong>表结构</strong></p>
+<p><strong>1.表结构</strong></p>
 <p>在存储表结构方面， MyISAM 和 InnoDB 一样，也是在<code v-pre>数据目录</code>下对应的数据库子目录下创建了一个专门用于描述表结构的文件</p>
 <div class="language-text ext-text line-numbers-mode"><pre v-pre class="language-text"><code>表名.frm
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><strong>2.</strong> <strong>表中数据和索引</strong></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><strong>2.表中数据和索引</strong></p>
 <p>在MyISAM中的索引全部都是<code v-pre>二级索引</code>，该存储引擎的<code v-pre>数据和索引是分开存放</code>的。所以在文件系统中也是使用不同的文件来存储数据文件和索引文件，同时表数据都存放在对应的数据库子目录下。</p>
 <div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>test.frm 存储表结构 #MySQL8.0 改为了 b.xxx.sdi
 test.MYD 存储数据 (MYData) 

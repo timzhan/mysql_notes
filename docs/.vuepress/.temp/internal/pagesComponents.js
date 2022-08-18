@@ -3,6 +3,12 @@ import { defineAsyncComponent } from 'vue'
 export const pagesComponents = {
   // path: /
   "v-8daa1a0e": defineAsyncComponent(() => import(/* webpackChunkName: "v-8daa1a0e" */"/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/pages/index.html.vue")),
+  // path: /demo/
+  "v-1473bf53": defineAsyncComponent(() => import(/* webpackChunkName: "v-1473bf53" */"/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/pages/demo/index.html.vue")),
+  // path: /demo/demo1.html
+  "v-961d1b04": defineAsyncComponent(() => import(/* webpackChunkName: "v-961d1b04" */"/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/pages/demo/demo1.html.vue")),
+  // path: /demo/demo2.html
+  "v-92b369c6": defineAsyncComponent(() => import(/* webpackChunkName: "v-92b369c6" */"/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/pages/demo/demo2.html.vue")),
   // path: /notes/base_mysql/%E7%AC%AC00%E7%AB%A0_%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2.html
   "v-d8e0b1dc": defineAsyncComponent(() => import(/* webpackChunkName: "v-d8e0b1dc" */"/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/pages/notes/base_mysql/第00章_写在前面.html.vue")),
   // path: /notes/base_mysql/%E7%AC%AC00%E7%AB%A0_%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E.html

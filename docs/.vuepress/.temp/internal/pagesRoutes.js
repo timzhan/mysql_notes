@@ -1,5 +1,8 @@
 export const pagesRoutes = [
   ["v-8daa1a0e","/",{"title":"Hello VuePress"},["/index.html","/README.md"]],
+  ["v-1473bf53","/demo/",{"title":"Hello demo"},["/demo/index.html","/demo/README.md"]],
+  ["v-961d1b04","/demo/demo1.html",{"title":""},["/demo/demo1","/demo/demo1.md"]],
+  ["v-92b369c6","/demo/demo2.html",{"title":""},["/demo/demo2","/demo/demo2.md"]],
   ["v-d8e0b1dc","/notes/base_mysql/%E7%AC%AC00%E7%AB%A0_%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2.html",{"title":"第00章_写在前面"},["/notes/base_mysql/第00章_写在前面.html","/notes/base_mysql/%E7%AC%AC00%E7%AB%A0_%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2","/notes/base_mysql/第00章_写在前面.md","/notes/base_mysql/%E7%AC%AC00%E7%AB%A0_%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2.md"]],
   ["v-b2d3792c","/notes/base_mysql/%E7%AC%AC00%E7%AB%A0_%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E.html",{"title":"第19章_写在最后"},["/notes/base_mysql/第00章_写在最后.html","/notes/base_mysql/%E7%AC%AC00%E7%AB%A0_%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E","/notes/base_mysql/第00章_写在最后.md","/notes/base_mysql/%E7%AC%AC00%E7%AB%A0_%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E.md"]],
   ["v-4c653686","/notes/base_mysql/%E7%AC%AC01%E7%AB%A0_%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0.html",{"title":"第01章_数据库概述"},["/notes/base_mysql/第01章_数据库概述.html","/notes/base_mysql/%E7%AC%AC01%E7%AB%A0_%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0","/notes/base_mysql/第01章_数据库概述.md","/notes/base_mysql/%E7%AC%AC01%E7%AB%A0_%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E8%BF%B0.md"]],
