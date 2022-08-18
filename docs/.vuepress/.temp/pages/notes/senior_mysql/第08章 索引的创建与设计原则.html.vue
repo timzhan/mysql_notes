@@ -30,21 +30,21 @@
 <h4 id="_1-创建表的时候创建索引" tabindex="-1"><a class="header-anchor" href="#_1-创建表的时候创建索引" aria-hidden="true">#</a> 1. 创建表的时候创建索引</h4>
 <p>使用CREATE TABLE创建表时，除了可以定义列的数据类型外，还可以定义主键约束、外键约束或者唯一性约束，而不论创建哪种约束，在定义约束的同时相当于在指定列上创建了一个索引。</p>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE dept(
-dept_id INT PRIMARY KEY AUTO_INCREMENT,
-dept_name VARCHAR(20)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> dept<span class="token punctuation">(</span>
+dept_id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+dept_name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-CREATE TABLE emp(
-emp_id INT PRIMARY KEY AUTO_INCREMENT,
-emp_name VARCHAR(20) UNIQUE,
-dept_id INT,
-CONSTRAINT emp_dept_id_fk FOREIGN KEY(dept_id) REFERENCES dept(dept_id)
-)
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> emp<span class="token punctuation">(</span>
+emp_id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+emp_name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">UNIQUE</span><span class="token punctuation">,</span>
+dept_id <span class="token keyword">INT</span><span class="token punctuation">,</span>
+<span class="token keyword">CONSTRAINT</span> emp_dept_id_fk <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span>dept_id<span class="token punctuation">)</span> <span class="token keyword">REFERENCES</span> dept<span class="token punctuation">(</span>dept_id<span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>但是，如果显式创建表时创建索引的话，基本语法格式如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE table_name [col_name data_type]
-[UNIQUE | FULLTEXT | SPATIAL] [INDEX | KEY] [index_name] (col_name [length]) [ASC |
-DESC]
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> table_name <span class="token punctuation">[</span>col_name data_type<span class="token punctuation">]</span>
+<span class="token punctuation">[</span><span class="token keyword">UNIQUE</span> <span class="token operator">|</span> FULLTEXT <span class="token operator">|</span> SPATIAL<span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">INDEX</span> <span class="token operator">|</span> <span class="token keyword">KEY</span><span class="token punctuation">]</span> <span class="token punctuation">[</span>index_name<span class="token punctuation">]</span> <span class="token punctuation">(</span>col_name <span class="token punctuation">[</span>length<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token keyword">ASC</span> <span class="token operator">|</span>
+<span class="token keyword">DESC</span><span class="token punctuation">]</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>UNIQUE 、 FULLTEXT 和 SPATIAL 为可选参数，分别表示唯一索引、全文索引和空间索引；</li>
 <li>INDEX 与 KEY 为同义词，两者的作用相同，用来指定创建索引；</li>
@@ -55,101 +55,101 @@ DESC]
 </ul>
 <p><strong>1. 创建普通索引</strong></p>
 <p>在book表中的year_publication字段上建立普通索引，SQL语句如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE book(
-book_id INT ,
-book_name VARCHAR(100),
-authors VARCHAR(100),
-info VARCHAR(100) ,
-comment VARCHAR(100),
-year_publication YEAR,
-INDEX(year_publication)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> book<span class="token punctuation">(</span>
+book_id <span class="token keyword">INT</span> <span class="token punctuation">,</span>
+book_name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+authors <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+info <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token punctuation">,</span>
+<span class="token keyword">comment</span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+year_publication <span class="token keyword">YEAR</span><span class="token punctuation">,</span>
+<span class="token keyword">INDEX</span><span class="token punctuation">(</span>year_publication<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>2. 创建唯一索引</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test1(
-id INT NOT NULL,
-name varchar(30) NOT NULL,
-UNIQUE INDEX uk_idx_id(id)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test1<span class="token punctuation">(</span>
+id <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token keyword">UNIQUE</span> <span class="token keyword">INDEX</span> uk_idx_id<span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>该语句执行完毕之后，使用SHOW CREATE TABLE查看表结构：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW INDEX FROM test1 \G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">INDEX</span> <span class="token keyword">FROM</span> test1 \G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><strong>3. 主键索引</strong></p>
 <p>设定为主键后数据库会自动建立索引，innodb为聚簇索引，语法：</p>
 <ul>
 <li>随表一起建索引：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE student (
-id INT(10) UNSIGNED AUTO_INCREMENT ,
-student_no VARCHAR(200),
-student_name VARCHAR(200),
-PRIMARY KEY(id)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> student <span class="token punctuation">(</span>
+id <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token keyword">UNSIGNED</span> <span class="token keyword">AUTO_INCREMENT</span> <span class="token punctuation">,</span>
+student_no <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+student_name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>删除主键索引：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE student
-drop PRIMARY KEY;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> student
+<span class="token keyword">drop</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>修改主键索引：必须先删除掉(drop)原索引，再新建(add)索引</li>
 </ul>
 <p><strong>4. 创建单列索引</strong></p>
 <p>引举:</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test2(
-id INT NOT NULL,
-name CHAR(50) NULL,
-INDEX single_idx_name(name(20))
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test2<span class="token punctuation">(</span>
+id <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+name <span class="token keyword">CHAR</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token keyword">INDEX</span> single_idx_name<span class="token punctuation">(</span>name<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>该语句执行完毕之后，使用SHOW CREATE TABLE查看表结构：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW INDEX FROM test2 \G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">INDEX</span> <span class="token keyword">FROM</span> test2 \G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><strong>5. 创建组合索引</strong></p>
 <p>举例：创建表test3，在表中的id、name和age字段上建立组合索引，SQL语句如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test3(
-id INT(11) NOT NULL,
-name CHAR(30) NOT NULL,
-age INT(11) NOT NULL,
-info VARCHAR(255),
-INDEX multi_idx(id,name,age)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test3<span class="token punctuation">(</span>
+id <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+name <span class="token keyword">CHAR</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+age <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+info <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token keyword">INDEX</span> multi_idx<span class="token punctuation">(</span>id<span class="token punctuation">,</span>name<span class="token punctuation">,</span>age<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>该语句执行完毕之后，使用SHOW INDEX 查看：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW INDEX FROM test3 \G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">INDEX</span> <span class="token keyword">FROM</span> test3 \G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>在test3表中，查询id和name字段，使用EXPLAIN语句查看索引的使用情况：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>EXPLAIN SELECT * FROM test3 WHERE id=1 AND name='songhongkang' \G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">EXPLAIN</span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test3 <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span> <span class="token operator">AND</span> name<span class="token operator">=</span><span class="token string">'songhongkang'</span> \G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>可以看到，查询id和name字段时，使用了名称为MultiIdx的索引，如果查询 (name, age) 组合或者单独查询name和age字段，会发现结果中possible_keys和key值为NULL, 并没有使用在t3表中创建的索引进行查询。</p>
 <p><strong>6. 创建全文索引</strong></p>
 <p>FULLTEXT全文索引可以用于全文检索，并且只为 <code v-pre>CHAR</code> 、<code v-pre>VARCHAR</code> 和 <code v-pre>TEXT</code> 列创建索引。索引总是对整个列进行，不支持局部 (前缀) 索引。</p>
 <p>举例1：创建表test4，在表中的info字段上建立全文索引，SQL语句如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test4(
-id INT NOT NULL,
-name CHAR(30) NOT NULL,
-age INT NOT NULL,
-info VARCHAR(255),
-FULLTEXT INDEX futxt_idx_info(info)
-) ENGINE=MyISAM;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test4<span class="token punctuation">(</span>
+id <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+name <span class="token keyword">CHAR</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+age <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+info <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+FULLTEXT <span class="token keyword">INDEX</span> futxt_idx_info<span class="token punctuation">(</span>info<span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span>MyISAM<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><blockquote>
 <p>在MySQL5.7及之后版本中可以不指定最后的ENGINE了，因为在此版本中InnoDB支持全文索引。</p>
 </blockquote>
 <p>语句执行完毕之后，使用SHOW CREATE TABLE查看表结构：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW INDEX FROM test4 \G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">INDEX</span> <span class="token keyword">FROM</span> test4 \G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>由结果可以看到，info字段上已经成功建立了一个名为futxt_idx_info的FULLTEXT索引。</p>
 <p>举例2：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE articles (
-id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-title VARCHAR (200),
-body TEXT,
-FULLTEXT index (title, body)
-) ENGINE = INNODB;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> articles <span class="token punctuation">(</span>
+id <span class="token keyword">INT</span> <span class="token keyword">UNSIGNED</span> <span class="token keyword">AUTO_INCREMENT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span>
+title <span class="token keyword">VARCHAR</span> <span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+body <span class="token keyword">TEXT</span><span class="token punctuation">,</span>
+FULLTEXT <span class="token keyword">index</span> <span class="token punctuation">(</span>title<span class="token punctuation">,</span> body<span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span> <span class="token operator">=</span> <span class="token keyword">INNODB</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>创建了一个给title和body字段添加全文索引的表。</p>
 <p>举例3：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE `papers` (
-`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-`title` varchar(200) DEFAULT NULL,
-`content` text,
-PRIMARY KEY (`id`),
-FULLTEXT KEY `title` (`title`,`content`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>papers<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+<span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token keyword">unsigned</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>title<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>content<span class="token punctuation">`</span></span> <span class="token keyword">text</span><span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+FULLTEXT <span class="token keyword">KEY</span> <span class="token identifier"><span class="token punctuation">`</span>title<span class="token punctuation">`</span></span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>title<span class="token punctuation">`</span></span><span class="token punctuation">,</span><span class="token identifier"><span class="token punctuation">`</span>content<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span>MyISAM <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>不同于like方式的的查询：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM papers WHERE content LIKE ‘%查询字符串%’;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> papers <span class="token keyword">WHERE</span> content <span class="token operator">LIKE</span> ‘<span class="token operator">%</span>查询字符串<span class="token operator">%</span>’<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>全文索引用match+against方式查询：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM papers WHERE MATCH(title,content) AGAINST (‘查询字符串’);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> papers <span class="token keyword">WHERE</span> <span class="token keyword">MATCH</span><span class="token punctuation">(</span>title<span class="token punctuation">,</span>content<span class="token punctuation">)</span> AGAINST <span class="token punctuation">(</span>‘查询字符串’<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>明显的提高查询效率。</p>
 <blockquote>
 <p>注意点</p>
@@ -162,26 +162,26 @@ FULLTEXT KEY `title` (`title`,`content`)
 <p><strong>7. 创建空间索引</strong></p>
 <p>空间索引创建中，要求空间类型的字段必须为 非空 。</p>
 <p>举例：创建表test5，在空间类型为GEOMETRY的字段上创建空间索引，SQL语句如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test5(
-geo GEOMETRY NOT NULL,
-SPATIAL INDEX spa_idx_geo(geo)
-) ENGINE=MyISAM;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test5<span class="token punctuation">(</span>
+geo <span class="token keyword">GEOMETRY</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+SPATIAL <span class="token keyword">INDEX</span> spa_idx_geo<span class="token punctuation">(</span>geo<span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span>MyISAM<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>该语句执行完毕之后，使用SHOW CREATE TABLE查看表结构：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW INDEX FROM test5 \G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">INDEX</span> <span class="token keyword">FROM</span> test5 \G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>可以看到，test5表的geo字段上创建了名称为spa_idx_geo的空间索引。注意创建时指定空间类型字段值的非空约束，并且表的存储引擎为MyISAM。</p>
 <h4 id="_2-在已经存在的表上创建索引" tabindex="-1"><a class="header-anchor" href="#_2-在已经存在的表上创建索引" aria-hidden="true">#</a> 2. 在已经存在的表上创建索引</h4>
 <p>在已经存在的表中创建索引可以使用ALTER TABLE语句或者CREATE INDEX语句。</p>
 <p><strong>1. 使用ALTER TABLE语句创建索引</strong> ALTER TABLE语句创建索引的基本语法如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE table_name ADD [UNIQUE | FULLTEXT | SPATIAL] [INDEX | KEY]
-[index_name] (col_name[length],...) [ASC | DESC]
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> table_name <span class="token keyword">ADD</span> <span class="token punctuation">[</span><span class="token keyword">UNIQUE</span> <span class="token operator">|</span> FULLTEXT <span class="token operator">|</span> SPATIAL<span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">INDEX</span> <span class="token operator">|</span> <span class="token keyword">KEY</span><span class="token punctuation">]</span>
+<span class="token punctuation">[</span>index_name<span class="token punctuation">]</span> <span class="token punctuation">(</span>col_name<span class="token punctuation">[</span>length<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token keyword">ASC</span> <span class="token operator">|</span> <span class="token keyword">DESC</span><span class="token punctuation">]</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>2. 使用CREATE INDEX创建索引</strong> CREATE INDEX语句可以在已经存在的表上添加索引，在MySQL中， CREATE INDEX被映射到一个ALTER TABLE语句上，基本语法结构为：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE [UNIQUE | FULLTEXT | SPATIAL] INDEX index_name
-ON table_name (col_name[length],...) [ASC | DESC]
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token punctuation">[</span><span class="token keyword">UNIQUE</span> <span class="token operator">|</span> FULLTEXT <span class="token operator">|</span> SPATIAL<span class="token punctuation">]</span> <span class="token keyword">INDEX</span> index_name
+<span class="token keyword">ON</span> table_name <span class="token punctuation">(</span>col_name<span class="token punctuation">[</span>length<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token keyword">ASC</span> <span class="token operator">|</span> <span class="token keyword">DESC</span><span class="token punctuation">]</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_1-3-删除索引" tabindex="-1"><a class="header-anchor" href="#_1-3-删除索引" aria-hidden="true">#</a> 1.3 删除索引</h3>
 <p><strong>1. 使用ALTER TABLE删除索引</strong>  ALTER TABLE删除索引的基本语法格式如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE table_name DROP INDEX index_name;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> table_name <span class="token keyword">DROP</span> <span class="token keyword">INDEX</span> index_name<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><strong>2. 使用DROP INDEX语句删除索引</strong> DROP INDEX删除索引的基本语法格式如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP INDEX index_name ON table_name;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> <span class="token keyword">INDEX</span> index_name <span class="token keyword">ON</span> table_name<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><blockquote>
 <p>提示: 删除表中的列时，如果要删除的列为索引的组成部分，则该列也会从索引中删除。如果组成索引的所有列都被删除，则整个索引将被删除。</p>
 </blockquote>
@@ -190,31 +190,31 @@ ON table_name (col_name[length],...) [ASC | DESC]
 <p>降序索引以降序存储键值。虽然在语法上，从MySQL 4版本开始就已经支持降序索引的语法了，但实际上DESC定义是被忽略的，直到MySQL 8.x版本才开始真正支持降序索引 (仅限于InnoDBc存储引擎)。</p>
 <p>MySQL在8.0版本之前创建的仍然是升序索引，使用时进行反向扫描，这大大降低了数据库的效率。在某些场景下，降序索引意义重大。例如，如果一个查询，需要对多个列进行排序，且顺序要求不一致，那么使用降序索引将会避免数据库使用额外的文件排序操作，从而提高性能。</p>
 <p>举例：分别在MySQL 5.7版本和MySQL 8.0版本中创建数据表ts1，结果如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE ts1(a int,b int,index idx_a_b(a,b desc));
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> ts1<span class="token punctuation">(</span>a <span class="token keyword">int</span><span class="token punctuation">,</span>b <span class="token keyword">int</span><span class="token punctuation">,</span><span class="token keyword">index</span> idx_a_b<span class="token punctuation">(</span>a<span class="token punctuation">,</span>b <span class="token keyword">desc</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>在MySQL 5.7版本中查看数据表ts1的结构，结果如下:</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220622224124267.png" alt="image-20220622224124267"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220622224124267.png" alt="image-20220622224124267" loading="lazy"></p>
 <p>从结果可以看出，索引仍然是默认的升序</p>
 <p>在MySQL 8.0版本中查看数据表ts1的结构，结果如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220622224205048.png" alt="image-20220622224205048"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220622224205048.png" alt="image-20220622224205048" loading="lazy"></p>
 <p>从结果可以看出，索引已经是降序了。下面继续测试降序索引在执行计划中的表现。</p>
 <p>分别在MySQL 5.7版本和MySQL 8.0版本的数据表ts1中插入800条随机数据，执行语句如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER //
-CREATE PROCEDURE ts_insert()
-BEGIN
-	DECLARE i INT DEFAULT 1;
-	WHILE i &lt; 800
-	DO
-		insert into ts1 select rand()*80000, rand()*80000;
-		SET i = i+1;
-	END WHILE;
-	commit;
-END //
-DELIMITER;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> ts_insert<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">BEGIN</span>
+	<span class="token keyword">DECLARE</span> i <span class="token keyword">INT</span> <span class="token keyword">DEFAULT</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">WHILE</span> i <span class="token operator">&lt;</span> <span class="token number">800</span>
+	<span class="token keyword">DO</span>
+		<span class="token keyword">insert</span> <span class="token keyword">into</span> ts1 <span class="token keyword">select</span> rand<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">80000</span><span class="token punctuation">,</span> rand<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">80000</span><span class="token punctuation">;</span>
+		<span class="token keyword">SET</span> i <span class="token operator">=</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">END</span> <span class="token keyword">WHILE</span><span class="token punctuation">;</span>
+	<span class="token keyword">commit</span><span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
+<span class="token keyword">DELIMITER</span><span class="token punctuation">;</span>
 
-# 调用
-CALL ts_insert();
+<span class="token comment"># 调用</span>
+<span class="token keyword">CALL</span> ts_insert<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>在MySQL 5.7版本中查看数据表ts1的执行计划，结果如下:</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>EXPLAIN SELECT * FROM ts1 ORDER BY a, b DESC LIMIT 5;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">EXPLAIN</span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> ts1 <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> a<span class="token punctuation">,</span> b <span class="token keyword">DESC</span> <span class="token keyword">LIMIT</span> <span class="token number">5</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>在MySQL 8.0版本中查看数据表 ts1 的执行计划。</p>
 <p>从结果可以看出，修改后MySQL 5.7 的执行计划要明显好于MySQL 8.0。</p>
 <h3 id="_2-2-隐藏索引" tabindex="-1"><a class="header-anchor" href="#_2-2-隐藏索引" aria-hidden="true">#</a> 2.2 隐藏索引</h3>
@@ -228,26 +228,26 @@ CALL ts_insert();
 <p>索引默认是可见的，在使用CREATE TABLE, CREATE INDEX 或者 ALTER TABLE 等语句时可以通过 <code v-pre>VISIBLE</code> 或者 <code v-pre>INVISIBLE</code> 关键词设置索引的可见性。</p>
 <p><strong>1. 创建表时直接创建</strong></p>
 <p>在MySQL中创建隐藏索引通过SQL语句INVISIBLE来实现，其语法形式如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE tablename(
-propname1 type1[CONSTRAINT1],
-propname2 type2[CONSTRAINT2],
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> tablename<span class="token punctuation">(</span>
+propname1 type1<span class="token punctuation">[</span>CONSTRAINT1<span class="token punctuation">]</span><span class="token punctuation">,</span>
+propname2 type2<span class="token punctuation">[</span>CONSTRAINT2<span class="token punctuation">]</span><span class="token punctuation">,</span>
 ……
-propnamen typen,
-INDEX [indexname](propname1 [(length)]) INVISIBLE
-);
+propnamen typen<span class="token punctuation">,</span>
+<span class="token keyword">INDEX</span> <span class="token punctuation">[</span>indexname<span class="token punctuation">]</span><span class="token punctuation">(</span>propname1 <span class="token punctuation">[</span><span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span> INVISIBLE
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>上述语句比普通索引多了一个关键字INVISIBLE，用来标记索引为不可见索引。</p>
 <p><strong>2. 在已经存在的表上创建</strong></p>
 <p>可以为已经存在的表设置隐藏索引，其语法形式如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE INDEX indexname
-ON tablename(propname[(length)]) INVISIBLE;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">INDEX</span> indexname
+<span class="token keyword">ON</span> tablename<span class="token punctuation">(</span>propname<span class="token punctuation">[</span><span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span> INVISIBLE<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>3. 通过ALTER TABLE语句创建</strong></p>
 <p>语法形式如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE tablename
-ADD INDEX indexname (propname [(length)]) INVISIBLE;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> tablename
+<span class="token keyword">ADD</span> <span class="token keyword">INDEX</span> indexname <span class="token punctuation">(</span>propname <span class="token punctuation">[</span><span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span> INVISIBLE<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>4. 切换索引可见状态</strong></p>
 <p>已存在的索引可通过如下语句切换可见状态：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE tablename ALTER INDEX index_name INVISIBLE; #切换成隐藏索引
-ALTER TABLE tablename ALTER INDEX index_name VISIBLE; #切换成非隐藏索引
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> tablename <span class="token keyword">ALTER</span> <span class="token keyword">INDEX</span> index_name INVISIBLE<span class="token punctuation">;</span> <span class="token comment">#切换成隐藏索引</span>
+<span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> tablename <span class="token keyword">ALTER</span> <span class="token keyword">INDEX</span> index_name VISIBLE<span class="token punctuation">;</span> <span class="token comment">#切换成非隐藏索引</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>如果将index_cname索引切换成可见状态，通过explain查看执行计划，发现优化器选择了index_cname索引。</p>
 <blockquote>
 <p>注意 当索引被隐藏时，它的内容仍然是和正常索引一样实时更新的。如果一个索引需要长期被隐藏，那么可以将其删除，因为索引的存在会影响插入、更新和删除的性能。</p>
@@ -256,146 +256,146 @@ ALTER TABLE tablename ALTER INDEX index_name VISIBLE; #切换成非隐藏索引
 <p><strong>5. 使隐藏索引对查询优化器可见</strong></p>
 <p>在MySQL 8.x版本中，为索引提供了一种新的测试方式，可以通过查询优化器的一个开关 (use_invisible_indexes) 来打开某个设置，使隐藏索引对查询优化器可见。如果use_invisible_indexes 设置为off (默认)，优化器会忽略隐藏索引。如果设置为on，即使隐藏索引不可见，优化器在生成执行计 划时仍会考虑使用隐藏索引。</p>
 <p>（1）在MySQL命令行执行如下命令查看查询优化器的开关设置。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select @@optimizer_switch \G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> @<span class="token variable">@optimizer_switch</span> \G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>在输出的结果信息中找到如下属性配置。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>use_invisible_indexes=off
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>use_invisible_indexes<span class="token operator">=</span><span class="token keyword">off</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>此属性配置值为off，说明隐藏索引默认对查询优化器不可见。</p>
 <p>（2）使隐藏索引对查询优化器可见，需要在MySQL命令行执行如下命令：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; set session optimizer_switch=&quot;use_invisible_indexes=on&quot;;
-Query OK, 0 rows affected (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">set</span> <span class="token keyword">session</span> optimizer_switch<span class="token operator">=</span><span class="token string">"use_invisible_indexes=on"</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>SQL语句执行成功，再次查看查询优化器的开关设置。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select @@optimizer_switch \G
-*************************** 1. row ***************************
-@@optimizer_switch:
-index_merge=on,index_merge_union=on,index_merge_sort_union=on,index_merge_
-intersection=on,engine_condition_pushdown=on,index_condition_pushdown=on,mrr=on,mrr_co
-st_based=on,block_nested_loop=on,batched_key_access=off,materialization=on,semijoin=on
-,loosescan=on,firstmatch=on,duplicateweedout=on,subquery_materialization_cost_based=on
-,use_index_extensions=on,condition_fanout_filter=on,derived_merge=on,use_invisible_ind
-exes=on,skip_scan=on,hash_join=on
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> @<span class="token variable">@optimizer_switch</span> \G
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">1.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+@<span class="token variable">@optimizer_switch</span>:
+index_merge<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>index_merge_union<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>index_merge_sort_union<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>index_merge_
+intersection<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>engine_condition_pushdown<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>index_condition_pushdown<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>mrr<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>mrr_co
+st_based<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>block_nested_loop<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>batched_key_access<span class="token operator">=</span><span class="token keyword">off</span><span class="token punctuation">,</span>materialization<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>semijoin<span class="token operator">=</span><span class="token keyword">on</span>
+<span class="token punctuation">,</span>loosescan<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>firstmatch<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>duplicateweedout<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>subquery_materialization_cost_based<span class="token operator">=</span><span class="token keyword">on</span>
+<span class="token punctuation">,</span>use_index_extensions<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>condition_fanout_filter<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>derived_merge<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>use_invisible_ind
+exes<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>skip_scan<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">,</span>hash_join<span class="token operator">=</span><span class="token keyword">on</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>此时，在输出结果中可以看到如下属性配置。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>use_invisible_indexes=on
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>use_invisible_indexes<span class="token operator">=</span><span class="token keyword">on</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>use_invisible_indexes属性的值为on，说明此时隐藏索引对查询优化器可见。</p>
 <p>（3）使用EXPLAIN查看以字段invisible_column作为查询条件时的索引使用情况。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>explain select * from classes where cname = '高一2班';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">explain</span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> classes <span class="token keyword">where</span> cname <span class="token operator">=</span> <span class="token string">'高一2班'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>查询优化器会使用隐藏索引来查询数据。</p>
 <p>（4）如果需要使隐藏索引对查询优化器不可见，则只需要执行如下命令即可。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; set session optimizer_switch=&quot;use_invisible_indexes=off&quot;;
-Query OK, 0 rows affected (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">set</span> <span class="token keyword">session</span> optimizer_switch<span class="token operator">=</span><span class="token string">"use_invisible_indexes=off"</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>再次查看查询优化器的开关设置。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select @@optimizer_switch \G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> @<span class="token variable">@optimizer_switch</span> \G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>此时，use_invisible_indexes属性的值已经被设置为“off”。</p>
 <h2 id="_3-索引的设计原则" tabindex="-1"><a class="header-anchor" href="#_3-索引的设计原则" aria-hidden="true">#</a> 3. 索引的设计原则</h2>
 <p>为了使索引的使用效率更高，在创建索引时，必须考虑在哪些字段上创建索引和创建什么类型的索引。**索引设计不合理或者缺少索引都会对数据库和应用程序的性能造成障碍。**高效的索引对于获得良好的性能非常重要。设计索引时，应该考虑相应准则。</p>
 <h3 id="_3-1-数据准备" tabindex="-1"><a class="header-anchor" href="#_3-1-数据准备" aria-hidden="true">#</a> 3.1 数据准备</h3>
 <p><strong>第1步：创建数据库、创建表</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE DATABASE atguigudb1;
-USE atguigudb1;
-#1.创建学生表和课程表
-CREATE TABLE `student_info` (
-`id` INT(11) NOT NULL AUTO_INCREMENT,
-`student_id` INT NOT NULL ,
-`name` VARCHAR(20) DEFAULT NULL,
-`course_id` INT NOT NULL ,
-`class_id` INT(11) DEFAULT NULL,
-`create_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-PRIMARY KEY (`id`)
-) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> atguigudb1<span class="token punctuation">;</span>
+<span class="token keyword">USE</span> atguigudb1<span class="token punctuation">;</span>
+<span class="token comment">#1.创建学生表和课程表</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>student_info<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+<span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>student_id<span class="token punctuation">`</span></span> <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>course_id<span class="token punctuation">`</span></span> <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>class_id<span class="token punctuation">`</span></span> <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>create_time<span class="token punctuation">`</span></span> <span class="token keyword">DATETIME</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CURRENT_TIMESTAMP</span> <span class="token keyword">ON</span> <span class="token keyword">UPDATE</span> <span class="token keyword">CURRENT_TIMESTAMP</span><span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">INNODB</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token operator">=</span><span class="token number">1</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8<span class="token punctuation">;</span>
 
-CREATE TABLE `course` (
-`id` INT(11) NOT NULL AUTO_INCREMENT,
-`course_id` INT NOT NULL ,
-`course_name` VARCHAR(40) DEFAULT NULL,
-PRIMARY KEY (`id`)
-) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>course<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+<span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>course_id<span class="token punctuation">`</span></span> <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>course_name<span class="token punctuation">`</span></span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">40</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">INNODB</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token operator">=</span><span class="token number">1</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>第2步：创建模拟数据必需的存储函数</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#函数1：创建随机产生字符串函数
-DELIMITER //
-CREATE FUNCTION rand_string(n INT)
-	RETURNS VARCHAR(255) #该函数会返回一个字符串
-BEGIN
-	DECLARE chars_str VARCHAR(100) DEFAULT
-'abcdefghijklmnopqrstuvwxyzABCDEFJHIJKLMNOPQRSTUVWXYZ';
-	DECLARE return_str VARCHAR(255) DEFAULT '';
-    DECLARE i INT DEFAULT 0;
-    WHILE i &lt; n DO
-    	SET return_str =CONCAT(return_str,SUBSTRING(chars_str,FLOOR(1+RAND()*52),1));
-    	SET i = i + 1;
-    END WHILE;
-    RETURN return_str;
-END //
-DELIMITER ;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#函数2：创建随机数函数
-DELIMITER //
-CREATE FUNCTION rand_num (from_num INT ,to_num INT) RETURNS INT(11)
-BEGIN
-DECLARE i INT DEFAULT 0;
-SET i = FLOOR(from_num +RAND()*(to_num - from_num+1)) ;
-RETURN i;
-END //
-DELIMITER ;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#函数1：创建随机产生字符串函数</span>
+<span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">FUNCTION</span> rand_string<span class="token punctuation">(</span>n <span class="token keyword">INT</span><span class="token punctuation">)</span>
+	<span class="token keyword">RETURNS</span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token comment">#该函数会返回一个字符串</span>
+<span class="token keyword">BEGIN</span>
+	<span class="token keyword">DECLARE</span> chars_str <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span>
+<span class="token string">'abcdefghijklmnopqrstuvwxyzABCDEFJHIJKLMNOPQRSTUVWXYZ'</span><span class="token punctuation">;</span>
+	<span class="token keyword">DECLARE</span> return_str <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">''</span><span class="token punctuation">;</span>
+    <span class="token keyword">DECLARE</span> i <span class="token keyword">INT</span> <span class="token keyword">DEFAULT</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">WHILE</span> i <span class="token operator">&lt;</span> n <span class="token keyword">DO</span>
+    	<span class="token keyword">SET</span> return_str <span class="token operator">=</span>CONCAT<span class="token punctuation">(</span>return_str<span class="token punctuation">,</span>SUBSTRING<span class="token punctuation">(</span>chars_str<span class="token punctuation">,</span>FLOOR<span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">+</span>RAND<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">52</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    	<span class="token keyword">SET</span> i <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">END</span> <span class="token keyword">WHILE</span><span class="token punctuation">;</span>
+    <span class="token keyword">RETURN</span> return_str<span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#函数2：创建随机数函数</span>
+<span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">FUNCTION</span> rand_num <span class="token punctuation">(</span>from_num <span class="token keyword">INT</span> <span class="token punctuation">,</span>to_num <span class="token keyword">INT</span><span class="token punctuation">)</span> <span class="token keyword">RETURNS</span> <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>
+<span class="token keyword">BEGIN</span>
+<span class="token keyword">DECLARE</span> i <span class="token keyword">INT</span> <span class="token keyword">DEFAULT</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> i <span class="token operator">=</span> FLOOR<span class="token punctuation">(</span>from_num <span class="token operator">+</span>RAND<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>to_num <span class="token operator">-</span> from_num<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+<span class="token keyword">RETURN</span> i<span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>创建函数，假如报错：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>This function has none of DETERMINISTIC......
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>This <span class="token keyword">function</span> has none <span class="token keyword">of</span> <span class="token keyword">DETERMINISTIC</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>由于开启过慢查询日志bin-log, 我们就必须为我们的function指定一个参数。</p>
 <p>主从复制，主机会将写操作记录在bin-log日志中。从机读取bin-log日志，执行语句来同步数据。如果使 用函数来操作数据，会导致从机和主键操作时间不一致。所以，默认情况下，mysql不开启创建函数设置。</p>
 <ul>
 <li>查看mysql是否允许创建函数：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show variables like 'log_bin_trust_function_creators';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'log_bin_trust_function_creators'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>命令开启：允许创建函数设置：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>set global log_bin_trust_function_creators=1; # 不加global只是当前窗口有效。
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">set</span> <span class="token keyword">global</span> log_bin_trust_function_creators<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment"># 不加global只是当前窗口有效。</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>
 <p>mysqld重启，上述参数又会消失。永久方法：</p>
 <ul>
 <li>
 <p>windows下：my.ini[mysqld]加上：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>log_bin_trust_function_creators=1
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>log_bin_trust_function_creators<span class="token operator">=</span><span class="token number">1</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></li>
 <li>
 <p>linux下：/etc/my.cnf下my.cnf[mysqld]加上：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>log_bin_trust_function_creators=1
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>log_bin_trust_function_creators<span class="token operator">=</span><span class="token number">1</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></li>
 </ul>
 </li>
 </ul>
 <p><strong>第3步：创建插入模拟数据的存储过程</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># 存储过程1：创建插入课程表存储过程
-DELIMITER //
-CREATE PROCEDURE insert_course( max_num INT )
-BEGIN
-DECLARE i INT DEFAULT 0;
-SET autocommit = 0; #设置手动提交事务
-REPEAT #循环
-SET i = i + 1; #赋值
-INSERT INTO course (course_id, course_name ) VALUES
-(rand_num(10000,10100),rand_string(6));
-UNTIL i = max_num
-END REPEAT;
-COMMIT; #提交事务
-END //
-DELIMITER ;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># 存储过程2：创建插入学生信息表存储过程
-DELIMITER //
-CREATE PROCEDURE insert_stu( max_num INT )
-BEGIN
-DECLARE i INT DEFAULT 0;
-SET autocommit = 0; #设置手动提交事务
-REPEAT #循环
-SET i = i + 1; #赋值
-INSERT INTO student_info (course_id, class_id ,student_id ,NAME ) VALUES
-(rand_num(10000,10100),rand_num(10000,10200),rand_num(1,200000),rand_string(6));
-UNTIL i = max_num
-END REPEAT;
-COMMIT; #提交事务
-END //
-DELIMITER ;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># 存储过程1：创建插入课程表存储过程</span>
+<span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> insert_course<span class="token punctuation">(</span> max_num <span class="token keyword">INT</span> <span class="token punctuation">)</span>
+<span class="token keyword">BEGIN</span>
+<span class="token keyword">DECLARE</span> i <span class="token keyword">INT</span> <span class="token keyword">DEFAULT</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> autocommit <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">#设置手动提交事务</span>
+<span class="token keyword">REPEAT</span> <span class="token comment">#循环</span>
+<span class="token keyword">SET</span> i <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">#赋值</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> course <span class="token punctuation">(</span>course_id<span class="token punctuation">,</span> course_name <span class="token punctuation">)</span> <span class="token keyword">VALUES</span>
+<span class="token punctuation">(</span>rand_num<span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">,</span><span class="token number">10100</span><span class="token punctuation">)</span><span class="token punctuation">,</span>rand_string<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+UNTIL i <span class="token operator">=</span> max_num
+<span class="token keyword">END</span> <span class="token keyword">REPEAT</span><span class="token punctuation">;</span>
+<span class="token keyword">COMMIT</span><span class="token punctuation">;</span> <span class="token comment">#提交事务</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># 存储过程2：创建插入学生信息表存储过程</span>
+<span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> insert_stu<span class="token punctuation">(</span> max_num <span class="token keyword">INT</span> <span class="token punctuation">)</span>
+<span class="token keyword">BEGIN</span>
+<span class="token keyword">DECLARE</span> i <span class="token keyword">INT</span> <span class="token keyword">DEFAULT</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> autocommit <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">#设置手动提交事务</span>
+<span class="token keyword">REPEAT</span> <span class="token comment">#循环</span>
+<span class="token keyword">SET</span> i <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">#赋值</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> student_info <span class="token punctuation">(</span>course_id<span class="token punctuation">,</span> class_id <span class="token punctuation">,</span>student_id <span class="token punctuation">,</span>NAME <span class="token punctuation">)</span> <span class="token keyword">VALUES</span>
+<span class="token punctuation">(</span>rand_num<span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">,</span><span class="token number">10100</span><span class="token punctuation">)</span><span class="token punctuation">,</span>rand_num<span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">,</span><span class="token number">10200</span><span class="token punctuation">)</span><span class="token punctuation">,</span>rand_num<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">200000</span><span class="token punctuation">)</span><span class="token punctuation">,</span>rand_string<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+UNTIL i <span class="token operator">=</span> max_num
+<span class="token keyword">END</span> <span class="token keyword">REPEAT</span><span class="token punctuation">;</span>
+<span class="token keyword">COMMIT</span><span class="token punctuation">;</span> <span class="token comment">#提交事务</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>第4步：调用存储过程</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CALL insert_course(100);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CALL insert_stu(1000000);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CALL</span> insert_course<span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CALL</span> insert_stu<span class="token punctuation">(</span><span class="token number">1000000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_3-2-哪些情况适合创建索引" tabindex="-1"><a class="header-anchor" href="#_3-2-哪些情况适合创建索引" aria-hidden="true">#</a> 3.2 哪些情况适合创建索引</h3>
 <h4 id="_1-字段的数值有唯一性的限制" tabindex="-1"><a class="header-anchor" href="#_1-字段的数值有唯一性的限制" aria-hidden="true">#</a> 1. 字段的数值有唯一性的限制</h4>
 <img src="@source/notes/senior_mysql/images/image-20220623154615702.png" alt="image-20220623154615702" style="float:left;" />
@@ -412,10 +412,10 @@ DELIMITER ;
 <h4 id="_5-distinct-字段需要创建索引" tabindex="-1"><a class="header-anchor" href="#_5-distinct-字段需要创建索引" aria-hidden="true">#</a> 5.DISTINCT 字段需要创建索引</h4>
 <p>有时候我们需要对某个字段进行去重，使用 DISTINCT，那么对这个字段创建索引，也会提升查询效率。</p>
 <p>比如，我们想要查询课程表中不同的 student_id 都有哪些，如果我们没有对 student_id 创建索引，执行 SQL 语句：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT DISTINCT(student_id) FROM `student_info`;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span><span class="token punctuation">(</span>student_id<span class="token punctuation">)</span> <span class="token keyword">FROM</span> <span class="token identifier"><span class="token punctuation">`</span>student_info<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>运行结果（600637 条记录，运行时间 0.683s ）</p>
 <p>如果我们对 student_id 创建索引，再执行 SQL 语句：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT DISTINCT(student_id) FROM `student_info`;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span><span class="token punctuation">(</span>student_id<span class="token punctuation">)</span> <span class="token keyword">FROM</span> <span class="token identifier"><span class="token punctuation">`</span>student_info<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>运行结果（600637 条记录，运行时间 0.010s ）</p>
 <p>你能看到 SQL 查询效率有了提升，同时显示出来的 student_id 还是按照递增的顺序 进行展示的。这是因为索引会对数据按照某种顺序进行排序，所以在去重的时候也会快很多。</p>
 <h4 id="_6-多表-join-连接操作时-创建索引注意事项" tabindex="-1"><a class="header-anchor" href="#_6-多表-join-连接操作时-创建索引注意事项" aria-hidden="true">#</a> 6. 多表 JOIN 连接操作时，创建索引注意事项</h4>
@@ -423,10 +423,10 @@ DELIMITER ;
 <p>其次， <code v-pre>对 WHERE 条件创建索引</code> ，因为 WHERE 才是对数据条件的过滤。如果在数据量非常大的情况下， 没有 WHERE 条件过滤是非常可怕的。</p>
 <p>最后， <code v-pre>对用于连接的字段创建索引</code> ，并且该字段在多张表中的 类型必须一致 。比如 course_id 在 student_info 表和 course 表中都为 int(11) 类型，而不能一个为 int 另一个为 varchar 类型。</p>
 <p>举个例子，如果我们只对 student_id 创建索引，执行 SQL 语句：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT s.course_id, name, s.student_id, c.course_name
-FROM student_info s JOIN course c
-ON s.course_id = c.course_id
-WHERE name = '462eed7ac6e791292a79';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> s<span class="token punctuation">.</span>course_id<span class="token punctuation">,</span> name<span class="token punctuation">,</span> s<span class="token punctuation">.</span>student_id<span class="token punctuation">,</span> c<span class="token punctuation">.</span>course_name
+<span class="token keyword">FROM</span> student_info s <span class="token keyword">JOIN</span> course c
+<span class="token keyword">ON</span> s<span class="token punctuation">.</span>course_id <span class="token operator">=</span> c<span class="token punctuation">.</span>course_id
+<span class="token keyword">WHERE</span> name <span class="token operator">=</span> <span class="token string">'462eed7ac6e791292a79'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>运行结果（1 条数据，运行时间 0.189s ）</p>
 <p>这里我们对 name 创建索引，再执行上面的 SQL 语句，运行时间为 0.002s 。</p>
 <h4 id="_7-使用列的类型小的创建索引" tabindex="-1"><a class="header-anchor" href="#_7-使用列的类型小的创建索引" aria-hidden="true">#</a> 7. 使用列的类型小的创建索引</h4>
@@ -434,28 +434,28 @@ WHERE name = '462eed7ac6e791292a79';
 <h4 id="_8-使用字符串前缀创建索引" tabindex="-1"><a class="header-anchor" href="#_8-使用字符串前缀创建索引" aria-hidden="true">#</a> 8. 使用字符串前缀创建索引</h4>
 <img src="@source/notes/senior_mysql/images/image-20220623175513439.png" alt="image-20220623175513439" style="float:left;" />
 <p>创建一张商户表，因为地址字段比较长，在地址字段上建立前缀索引</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table shop(address varchar(120) not null);
-alter table shop add index(address(12));
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> shop<span class="token punctuation">(</span>address <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">120</span><span class="token punctuation">)</span> <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> shop <span class="token keyword">add</span> <span class="token keyword">index</span><span class="token punctuation">(</span>address<span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>问题是，截取多少呢？截取得多了，达不到节省索引存储空间的目的；截取得少了，重复内容太多，字 段的散列度(选择性)会降低。怎么计算不同的长度的选择性呢？</p>
 <p>先看一下字段在全部数据中的选择度：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>select count(distinct address) / count(*) from shop
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token keyword">distinct</span> address<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">from</span> shop
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>通过不同长度去计算，与全表的选择性对比：</p>
 <p>公式：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>count(distinct left(列名, 索引长度))/count(*)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token function">count</span><span class="token punctuation">(</span><span class="token keyword">distinct</span> <span class="token keyword">left</span><span class="token punctuation">(</span>列名<span class="token punctuation">,</span> 索引长度<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>例如：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>select count(distinct left(address,10)) / count(*) as sub10, -- 截取前10个字符的选择度
-count(distinct left(address,15)) / count(*) as sub11, -- 截取前15个字符的选择度
-count(distinct left(address,20)) / count(*) as sub12, -- 截取前20个字符的选择度
-count(distinct left(address,25)) / count(*) as sub13 -- 截取前25个字符的选择度
-from shop;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token keyword">distinct</span> <span class="token keyword">left</span><span class="token punctuation">(</span>address<span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">as</span> sub10<span class="token punctuation">,</span> <span class="token comment">-- 截取前10个字符的选择度</span>
+<span class="token function">count</span><span class="token punctuation">(</span><span class="token keyword">distinct</span> <span class="token keyword">left</span><span class="token punctuation">(</span>address<span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">as</span> sub11<span class="token punctuation">,</span> <span class="token comment">-- 截取前15个字符的选择度</span>
+<span class="token function">count</span><span class="token punctuation">(</span><span class="token keyword">distinct</span> <span class="token keyword">left</span><span class="token punctuation">(</span>address<span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">as</span> sub12<span class="token punctuation">,</span> <span class="token comment">-- 截取前20个字符的选择度</span>
+<span class="token function">count</span><span class="token punctuation">(</span><span class="token keyword">distinct</span> <span class="token keyword">left</span><span class="token punctuation">(</span>address<span class="token punctuation">,</span><span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">as</span> sub13 <span class="token comment">-- 截取前25个字符的选择度</span>
+<span class="token keyword">from</span> shop<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><blockquote>
 <p>越接近于1越好，说明越有区分度</p>
 </blockquote>
 <p><strong>引申另一个问题：索引列前缀对排序的影响</strong></p>
 <p>如果使用了索引列前缀，比方说前边只把address列的 <code v-pre>前12个字符</code> 放到了二级索引中，下边这个查询可能就有点尴尬了：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM shop
-ORDER BY address
-LIMIT 12;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> shop
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> address
+<span class="token keyword">LIMIT</span> <span class="token number">12</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>因为二级索引中不包含完整的address列信息，所以无法对前12个字符相同，后边的字符不同的记录进行排序，也就是使用索引列前缀的方式 <code v-pre>无法支持使用索引排序</code> ，只能使用文件排序。</p>
 <p><strong>拓展：Alibaba《Java开发手册》</strong></p>
 <p>【 强制 】在 varchar 字段上建立索引时，必须指定索引长度，没必要对全字段建立索引，根据实际文本 区分度决定索引长度。</p>
@@ -472,73 +472,73 @@ LIMIT 12;
 <h3 id="_3-4-哪些情况不适合创建索引" tabindex="-1"><a class="header-anchor" href="#_3-4-哪些情况不适合创建索引" aria-hidden="true">#</a> 3.4 哪些情况不适合创建索引</h3>
 <h4 id="_1-在where中使用不到的字段-不要设置索引" tabindex="-1"><a class="header-anchor" href="#_1-在where中使用不到的字段-不要设置索引" aria-hidden="true">#</a> 1. 在where中使用不到的字段，不要设置索引</h4>
 <p>WHERE条件 (包括 GROUP BY、ORDER BY) 里用不到的字段不需要创建索引，索引的价值是快速定位，如果起不到定位的字段通常是不需要创建索引的。举个例子：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT course_id, student_id, create_time
-FROM student_info
-WHERE student_id = 41251;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> course_id<span class="token punctuation">,</span> student_id<span class="token punctuation">,</span> create_time
+<span class="token keyword">FROM</span> student_info
+<span class="token keyword">WHERE</span> student_id <span class="token operator">=</span> <span class="token number">41251</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>因为我们是按照 student_id 来进行检索的，所以不需要对其他字段创建索引，即使这些字段出现在SELECT字段中。</p>
 <h4 id="_2-数据量小的表最好不要使用索引" tabindex="-1"><a class="header-anchor" href="#_2-数据量小的表最好不要使用索引" aria-hidden="true">#</a> 2. 数据量小的表最好不要使用索引</h4>
 <p>如果表记录太少，比如少于1000个，那么是不需要创建索引的。表记录太少，是否创建索引 <code v-pre>对查询效率的影响并不大</code>。甚至说，查询花费的时间可能比遍历索引的时间还要短，索引可能不会产生优化效果。</p>
 <p>举例：创建表1：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE t_without_index(
-a INT PRIMARY KEY AUTO_INCREMENT,
-b INT
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> t_without_index<span class="token punctuation">(</span>
+a <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+b <span class="token keyword">INT</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>提供存储过程1：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#创建存储过程
-DELIMITER //
-CREATE PROCEDURE t_wout_insert()
-BEGIN
-    DECLARE i INT DEFAULT 1;
-    WHILE i &lt;= 900
-    DO
-        INSERT INTO t_without_index(b) SELECT RAND()*10000;
-        SET i = i + 1;
-    END WHILE;
-    COMMIT;
-END //
-DELIMITER ;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#创建存储过程</span>
+<span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> t_wout_insert<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">BEGIN</span>
+    <span class="token keyword">DECLARE</span> i <span class="token keyword">INT</span> <span class="token keyword">DEFAULT</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">WHILE</span> i <span class="token operator">&lt;=</span> <span class="token number">900</span>
+    <span class="token keyword">DO</span>
+        <span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> t_without_index<span class="token punctuation">(</span>b<span class="token punctuation">)</span> <span class="token keyword">SELECT</span> RAND<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">10000</span><span class="token punctuation">;</span>
+        <span class="token keyword">SET</span> i <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">END</span> <span class="token keyword">WHILE</span><span class="token punctuation">;</span>
+    <span class="token keyword">COMMIT</span><span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 
-#调用
-CALL t_wout_insert()
+<span class="token comment">#调用</span>
+<span class="token keyword">CALL</span> t_wout_insert<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>创建表2：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE t_with_index(
-a INT PRIMARY KEY AUTO_INCREMENT,
-b INT,
-INDEX idx_b(b)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> t_with_index<span class="token punctuation">(</span>
+a <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+b <span class="token keyword">INT</span><span class="token punctuation">,</span>
+<span class="token keyword">INDEX</span> idx_b<span class="token punctuation">(</span>b<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>创建存储过程2：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#创建存储过程
-DELIMITER //
-CREATE PROCEDURE t_with_insert()
-BEGIN
-    DECLARE i INT DEFAULT 1;
-    WHILE i &lt;= 900
-    DO
-        INSERT INTO t_with_index(b) SELECT RAND()*10000;
-        SET i = i + 1;
-    END WHILE;
-    COMMIT;
-END //
-DELIMITER ;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#创建存储过程</span>
+<span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> t_with_insert<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">BEGIN</span>
+    <span class="token keyword">DECLARE</span> i <span class="token keyword">INT</span> <span class="token keyword">DEFAULT</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">WHILE</span> i <span class="token operator">&lt;=</span> <span class="token number">900</span>
+    <span class="token keyword">DO</span>
+        <span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> t_with_index<span class="token punctuation">(</span>b<span class="token punctuation">)</span> <span class="token keyword">SELECT</span> RAND<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">10000</span><span class="token punctuation">;</span>
+        <span class="token keyword">SET</span> i <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">END</span> <span class="token keyword">WHILE</span><span class="token punctuation">;</span>
+    <span class="token keyword">COMMIT</span><span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 
-#调用
-CALL t_with_insert();
+<span class="token comment">#调用</span>
+<span class="token keyword">CALL</span> t_with_insert<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>查询对比：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from t_without_index where b = 9879;
-+------+------+
-| a | b |
-+------+------+
-| 1242 | 9879 |
-+------+------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> t_without_index <span class="token keyword">where</span> b <span class="token operator">=</span> <span class="token number">9879</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span>
+<span class="token operator">|</span> a <span class="token operator">|</span> b <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span>
+<span class="token operator">|</span> <span class="token number">1242</span> <span class="token operator">|</span> <span class="token number">9879</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from t_with_index where b = 9879;
-+-----+------+
-| a | b |
-+-----+------+
-| 112 | 9879 |
-+-----+------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> t_with_index <span class="token keyword">where</span> b <span class="token operator">=</span> <span class="token number">9879</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+------+</span>
+<span class="token operator">|</span> a <span class="token operator">|</span> b <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+------+</span>
+<span class="token operator">|</span> <span class="token number">112</span> <span class="token operator">|</span> <span class="token number">9879</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>你能看到运行结果相同，但是在数据量不大的情况下，索引就发挥不出作用了。</p>
 <blockquote>
 <p>结论：在数据表中的数据行数比较少的情况下，比如不到 1000 行，是不需要创建索引的。</p>
@@ -548,14 +548,14 @@ mysql&gt; select * from t_with_index where b = 9879;
 <p>举例1：要在 100 万行数据中查找其中的 50 万行（比如性别为男的数据），一旦创建了索引，你需要先 访问 50 万次索引，然后再访问 50 万次数据表，这样加起来的开销比不使用索引可能还要大。</p>
 <p>举例2：假设有一个学生表，学生总数为 100 万人，男性只有 10 个人，也就是占总人口的 10 万分之 1。</p>
 <p>学生表 student_gender 结构如下。其中数据表中的 student_gender 字段取值为 0 或 1，0 代表女性，1 代表男性。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE student_gender(
-    student_id INT(11) NOT NULL,
-    student_name VARCHAR(50) NOT NULL,
-    student_gender TINYINT(1) NOT NULL,
-    PRIMARY KEY(student_id)
-)ENGINE = INNODB;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> student_gender<span class="token punctuation">(</span>
+    student_id <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    student_name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    student_gender <span class="token keyword">TINYINT</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span>student_id<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token keyword">ENGINE</span> <span class="token operator">=</span> <span class="token keyword">INNODB</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>如果我们要筛选出这个学生表中的男性，可以使用：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM student_gender WHERE student_gender = 1;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> student_gender <span class="token keyword">WHERE</span> student_gender <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><blockquote>
 <p>结论：当数据重复度大，比如 高于 10% 的时候，也不需要对这个字段使用索引。</p>
 </blockquote>
@@ -569,24 +569,24 @@ mysql&gt; select * from t_with_index where b = 9879;
 <h4 id="_7-不要定义夯余或重复的索引" tabindex="-1"><a class="header-anchor" href="#_7-不要定义夯余或重复的索引" aria-hidden="true">#</a> 7. 不要定义夯余或重复的索引</h4>
 <p>① 冗余索引</p>
 <p>举例：建表语句如下</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE person_info(
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    birthday DATE NOT NULL,
-    phone_number CHAR(11) NOT NULL,
-    country varchar(100) NOT NULL,
-    PRIMARY KEY (id),
-    KEY idx_name_birthday_phone_number (name(10), birthday, phone_number),
-    KEY idx_name (name(10))
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> person_info<span class="token punctuation">(</span>
+    id <span class="token keyword">INT</span> <span class="token keyword">UNSIGNED</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+    name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    birthday <span class="token keyword">DATE</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    phone_number <span class="token keyword">CHAR</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    country <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">KEY</span> idx_name_birthday_phone_number <span class="token punctuation">(</span>name<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span> birthday<span class="token punctuation">,</span> phone_number<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">KEY</span> idx_name <span class="token punctuation">(</span>name<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>我们知道，通过 idx_name_birthday_phone_number 索引就可以对 name 列进行快速搜索，再创建一 个专门针对 name 列的索引就算是一个 冗余索引 ，维护这个索引只会增加维护的成本，并不会对搜索有 什么好处。</p>
 <p>② 重复索引</p>
 <p>另一种情况，我们可能会对某个列 重复建立索引 ，比方说这样：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE repeat_index_demo (
-col1 INT PRIMARY KEY,
-col2 INT,
-UNIQUE uk_idx_c1 (col1),
-INDEX idx_c1 (col1)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> repeat_index_demo <span class="token punctuation">(</span>
+col1 <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span>
+col2 <span class="token keyword">INT</span><span class="token punctuation">,</span>
+<span class="token keyword">UNIQUE</span> uk_idx_c1 <span class="token punctuation">(</span>col1<span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token keyword">INDEX</span> idx_c1 <span class="token punctuation">(</span>col1<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>我们看到，col1 既是主键、又给它定义为一个唯一索引，还给它定义了一个普通索引，可是主键本身就 会生成聚簇索引，所以定义的唯一索引和普通索引是重复的，这种情况要避免。</p>
 </div></template>

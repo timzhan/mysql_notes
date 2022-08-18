@@ -150,60 +150,60 @@
 <p>答案：不会对插入的数据有任何影响，还是按照类型的实际宽度进行保存，即<code v-pre>显示宽度与类型可以存储的值范围无关</code>。<strong>从MySQL 8.0.17开始，整数数据类型不推荐使用显示宽度属性。</strong></p>
 <p>整型数据类型可以在定义表结构时指定所需要的显示宽度，如果不指定，则系统为每一种类型指定默认的宽度值。</p>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_int1 ( x TINYINT,　y SMALLINT,　z MEDIUMINT,　m INT,　n BIGINT );
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_int1 <span class="token punctuation">(</span> x <span class="token keyword">TINYINT</span><span class="token punctuation">,</span>　y <span class="token keyword">SMALLINT</span><span class="token punctuation">,</span>　z <span class="token keyword">MEDIUMINT</span><span class="token punctuation">,</span>　m <span class="token keyword">INT</span><span class="token punctuation">,</span>　n <span class="token keyword">BIGINT</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>查看表结构 （MySQL5.7中显式如下，MySQL8中不再显式范围）</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; desc test_int1;
-+-------+--------------+------+-----+---------+-------+
-| Field | Type         | Null | Key | Default | Extra |
-+-------+--------------+------+-----+---------+-------+
-|   x   | tinyint(4)   | YES  |     | NULL    |       |
-| 　y   | smallint(6)  | YES  |     | NULL    |       |
-| 　z   | mediumint(9) | YES  |     | NULL    |       |
-| 　m   | int(11)      | YES  |     | NULL    |       |
-| 　n   | bigint(20)   | YES  |     | NULL    |       |
-+-------+--------------+------+-----+---------+-------+
-5 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>TINYINT有符号数和无符号数的取值范围分别为-128~127和0~255，由于负号占了一个数字位，因此TINYINT默认的显示宽度为4。同理，其他整数类型的默认显示宽度与其有符号数的最小值的宽度相同。</p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">desc</span> test_int1<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------+--------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> Field <span class="token operator">|</span> <span class="token keyword">Type</span>         <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+--------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span>   x   <span class="token operator">|</span> <span class="token keyword">tinyint</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>   <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> 　y   <span class="token operator">|</span> <span class="token keyword">smallint</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>  <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> 　z   <span class="token operator">|</span> <span class="token keyword">mediumint</span><span class="token punctuation">(</span><span class="token number">9</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> 　m   <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>      <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> 　n   <span class="token operator">|</span> <span class="token keyword">bigint</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>   <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+--------------+------+-----+---------+-------+</span>
+<span class="token number">5</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>TINYINT有符号数和无符号数的取值范围分别为-128<sub>127和0</sub>255，由于负号占了一个数字位，因此TINYINT默认的显示宽度为4。同理，其他整数类型的默认显示宽度与其有符号数的最小值的宽度相同。</p>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_int2(
-f1 INT,
-f2 INT(5),
-f3 INT(5) ZEROFILL
-)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_int2<span class="token punctuation">(</span>
+f1 <span class="token keyword">INT</span><span class="token punctuation">,</span>
+f2 <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+f3 <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span> ZEROFILL
+<span class="token punctuation">)</span>
 
-DESC test_int2;
+<span class="token keyword">DESC</span> test_int2<span class="token punctuation">;</span>
 
-INSERT INTO test_int2(f1,f2,f3)
-VALUES(1,123,123);
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_int2<span class="token punctuation">(</span>f1<span class="token punctuation">,</span>f2<span class="token punctuation">,</span>f3<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">123</span><span class="token punctuation">,</span><span class="token number">123</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_int2(f1,f2)
-VALUES(123456,123456);
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_int2<span class="token punctuation">(</span>f1<span class="token punctuation">,</span>f2<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">123456</span><span class="token punctuation">,</span><span class="token number">123456</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_int2(f1,f2,f3)
-VALUES(123456,123456,123456);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM test_int2;
-+--------+--------+--------+
-| f1     | f2     | f3     |
-+--------+--------+--------+
-|      1 |    123 |  00123 |
-| 123456 | 123456 |   NULL |
-| 123456 | 123456 | 123456 |
-+--------+--------+--------+
-3 rows in set (0.00 sec)
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_int2<span class="token punctuation">(</span>f1<span class="token punctuation">,</span>f2<span class="token punctuation">,</span>f3<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">123456</span><span class="token punctuation">,</span><span class="token number">123456</span><span class="token punctuation">,</span><span class="token number">123456</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test_int2<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+--------+--------+</span>
+<span class="token operator">|</span> f1     <span class="token operator">|</span> f2     <span class="token operator">|</span> f3     <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+--------+--------+</span>
+<span class="token operator">|</span>      <span class="token number">1</span> <span class="token operator">|</span>    <span class="token number">123</span> <span class="token operator">|</span>  <span class="token number">00123</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">123456</span> <span class="token operator">|</span> <span class="token number">123456</span> <span class="token operator">|</span>   <span class="token boolean">NULL</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">123456</span> <span class="token operator">|</span> <span class="token number">123456</span> <span class="token operator">|</span> <span class="token number">123456</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+--------+--------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="_2-2-2-unsigned" tabindex="-1"><a class="header-anchor" href="#_2-2-2-unsigned" aria-hidden="true">#</a> 2.2.2 UNSIGNED</h4>
 <p><code v-pre>UNSIGNED</code>: 无符号类型（非负），所有的整数类型都有一个可选的属性UNSIGNED（无符号属性），无符号整数类型的最小取值为0。所以，如果需要在MySQL数据库中保存非负整数值时，可以将整数类型设置为无符号类型。</p>
 <p>int类型默认显示宽度为int(11)，无符号int类型默认显示宽度为int(10)。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_int3(
-f1 INT UNSIGNED
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_int3<span class="token punctuation">(</span>
+f1 <span class="token keyword">INT</span> <span class="token keyword">UNSIGNED</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-mysql&gt; desc test_int3;
-+-------+------------------+------+-----+---------+-------+
-| Field | Type             | Null | Key | Default | Extra |
-+-------+------------------+------+-----+---------+-------+
-| f1    | int(10) unsigned | YES  |     | NULL    |       |
-+-------+------------------+------+-----+---------+-------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">desc</span> test_int3<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------+------------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> Field <span class="token operator">|</span> <span class="token keyword">Type</span>             <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+------------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> f1    <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token keyword">unsigned</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+------------------+------+-----+---------+-------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="_2-2-3-zerofill" tabindex="-1"><a class="header-anchor" href="#_2-2-3-zerofill" aria-hidden="true">#</a> 2.2.3 ZEROFILL</h4>
 <p><code v-pre>ZEROFILL</code>: 0填充,（如果某列是ZEROFILL，那么MySQL会自动为当前列添加UNSIGNED属性），如果指定了ZEROFILL只是表示不够M位时，用0在左边填充，如果超过M位，只要不超过数据存储范围即可。</p>
 <p>原来，在 int(M) 中，M 的值跟 int(M) 所占多少存储空间并无任何关系。 int(3)、int(4)、int(8) 在磁盘上都是占用 4 bytes 的存储空间。也就是说，**int(M)，必须和UNSIGNED ZEROFILL一起使用才有意义。**如果整数值超过M位，就按照实际位数存储。只是无须再用字符 0 进行填充。</p>
@@ -225,11 +225,11 @@ mysql&gt; desc test_int3;
 <li>FLOAT 表示单精度浮点数；</li>
 <li>DOUBLE 表示双精度浮点数；</li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/image-20211007173312237.png" alt="image-20211007173312237"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211007173312237.png" alt="image-20211007173312237" loading="lazy"></p>
 <ul>
 <li>
 <p>REAL默认就是 DOUBLE。如果你把 SQL 模式设定为启用“<code v-pre>REAL_AS_FLOAT</code>”，那 么，MySQL 就认为 REAL 是 FLOAT。如果要启用“REAL_AS_FLOAT”，可以通过以下 SQL 语句实现：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET sql_mode = “REAL_AS_FLOAT”;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> sql_mode <span class="token operator">=</span> “REAL_AS_FLOAT”<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></li>
 </ul>
 <p>**问题1：**FLOAT 和 DOUBLE 这两种数据类型的区别是啥呢？</p>
@@ -269,49 +269,49 @@ mysql&gt; desc test_int3;
 </li>
 <li>
 <p>举例</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_double1(
-f1 FLOAT,
-f2 FLOAT(5,2),
-f3 DOUBLE,
-f4 DOUBLE(5,2)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_double1<span class="token punctuation">(</span>
+f1 <span class="token keyword">FLOAT</span><span class="token punctuation">,</span>
+f2 <span class="token keyword">FLOAT</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+f3 <span class="token keyword">DOUBLE</span><span class="token punctuation">,</span>
+f4 <span class="token keyword">DOUBLE</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-DESC test_double1;
+<span class="token keyword">DESC</span> test_double1<span class="token punctuation">;</span>
 
-INSERT INTO test_double1
-VALUES(123.456,123.456,123.4567,123.45);
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_double1
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">123.456</span><span class="token punctuation">,</span><span class="token number">123.456</span><span class="token punctuation">,</span><span class="token number">123.4567</span><span class="token punctuation">,</span><span class="token number">123.45</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-#Out of range value for column 'f2' at row 1
-INSERT INTO test_double1
-VALUES(123.456,1234.456,123.4567,123.45); 
+<span class="token comment">#Out of range value for column 'f2' at row 1</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_double1
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">123.456</span><span class="token punctuation">,</span><span class="token number">1234.456</span><span class="token punctuation">,</span><span class="token number">123.4567</span><span class="token punctuation">,</span><span class="token number">123.45</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
 
-SELECT * FROM test_double1;
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test_double1<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
 </ul>
 <h3 id="_3-3-精度误差说明" tabindex="-1"><a class="header-anchor" href="#_3-3-精度误差说明" aria-hidden="true">#</a> 3.3 精度误差说明</h3>
 <p>浮点数类型有个缺陷，就是不精准。下面我来重点解释一下为什么 MySQL 的浮点数不够精准。比如，我们设计一个表，有f1这个字段，插入值分别为0.47,0.44,0.19，我们期待的运行结果是：0.47 + 0.44 + 0.19 = 1.1。而使用sum之后查询：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_double2(
-f1 DOUBLE
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_double2<span class="token punctuation">(</span>
+f1 <span class="token keyword">DOUBLE</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_double2
-VALUES(0.47),(0.44),(0.19);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT SUM(f1)
-    -&gt; FROM test_double2;
-+--------------------+
-| SUM(f1)            |
-+--------------------+
-| 1.0999999999999999 |
-+--------------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT SUM(f1) = 1.1,1.1 = 1.1
-    -&gt; FROM test_double2;
-+---------------+-----------+
-| SUM(f1) = 1.1 | 1.1 = 1.1 |
-+---------------+-----------+
-|             0 |         1 |
-+---------------+-----------+
-1 row in set (0.00 sec)
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_double2
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">0.47</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">0.44</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">0.19</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token function">SUM</span><span class="token punctuation">(</span>f1<span class="token punctuation">)</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">FROM</span> test_double2<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------------------+</span>
+<span class="token operator">|</span> <span class="token function">SUM</span><span class="token punctuation">(</span>f1<span class="token punctuation">)</span>            <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------+</span>
+<span class="token operator">|</span> <span class="token number">1.0999999999999999</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token function">SUM</span><span class="token punctuation">(</span>f1<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">1.1</span><span class="token punctuation">,</span><span class="token number">1.1</span> <span class="token operator">=</span> <span class="token number">1.1</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">FROM</span> test_double2<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------+-----------+</span>
+<span class="token operator">|</span> <span class="token function">SUM</span><span class="token punctuation">(</span>f1<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">1.1</span> <span class="token operator">|</span> <span class="token number">1.1</span> <span class="token operator">=</span> <span class="token number">1.1</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------+-----------+</span>
+<span class="token operator">|</span>             <span class="token number">0</span> <span class="token operator">|</span>         <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------+-----------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>查询结果是 1.0999999999999999。看到了吗？虽然误差很小，但确实有误差。 你也可以尝试把数据类型改成 FLOAT，然后运行求和查询，得到的是， 1.0999999940395355。显然，误差更大了。</p>
 <p>那么，为什么会存在这样的误差呢？问题还是出在 MySQL 对浮点类型数据的存储方式上。</p>
 <p>MySQL 用 4 个字节存储 FLOAT 类型数据，用 8 个字节来存储 DOUBLE 类型数据。无论哪个，都是采用二进制的方式来进行存储的。比如 9.625，用二进制来表达，就是 1001.101，或者表达成 1.001101×2^3。如果尾数不是 0 或 5（比如 9.624），你就无法用一个二进制数来精确表达。进而，就只好在取值允许的范围内进行四舍五入。</p>
@@ -357,49 +357,49 @@ VALUES(0.47),(0.44),(0.19);
 </li>
 <li>
 <p>举例</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_decimal1(
-f1 DECIMAL,
-f2 DECIMAL(5,2)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_decimal1<span class="token punctuation">(</span>
+f1 <span class="token keyword">DECIMAL</span><span class="token punctuation">,</span>
+f2 <span class="token keyword">DECIMAL</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-DESC test_decimal1;
+<span class="token keyword">DESC</span> test_decimal1<span class="token punctuation">;</span>
 
-INSERT INTO test_decimal1(f1,f2)
-VALUES(123.123,123.456);
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_decimal1<span class="token punctuation">(</span>f1<span class="token punctuation">,</span>f2<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">123.123</span><span class="token punctuation">,</span><span class="token number">123.456</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-#Out of range value for column 'f2' at row 1
-INSERT INTO test_decimal1(f2)
-VALUES(1234.34);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM test_decimal1;
-+------+--------+
-| f1   | f2     |
-+------+--------+
-|  123 | 123.46 |
-+------+--------+
-1 row in set (0.00 sec)
+<span class="token comment">#Out of range value for column 'f2' at row 1</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_decimal1<span class="token punctuation">(</span>f2<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">1234.34</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test_decimal1<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> f1   <span class="token operator">|</span> f2     <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span>  <span class="token number">123</span> <span class="token operator">|</span> <span class="token number">123.46</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
 <li>
 <p>举例</p>
 <p>我们运行下面的语句，把test_double2表中字段“f1”的数据类型修改为 DECIMAL(5,2)：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE test_double2
-MODIFY f1 DECIMAL(5,2);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> test_double2
+<span class="token keyword">MODIFY</span> f1 <span class="token keyword">DECIMAL</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>然后，我们再一次运行求和语句：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT SUM(f1)
-    -&gt; FROM test_double2;
-+---------+
-| SUM(f1) |
-+---------+
-|    1.10 |
-+---------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT SUM(f1) = 1.1
-    -&gt; FROM test_double2;
-+---------------+
-| SUM(f1) = 1.1 |
-+---------------+
-|             1 |
-+---------------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token function">SUM</span><span class="token punctuation">(</span>f1<span class="token punctuation">)</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">FROM</span> test_double2<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------+</span>
+<span class="token operator">|</span> <span class="token function">SUM</span><span class="token punctuation">(</span>f1<span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------+</span>
+<span class="token operator">|</span>    <span class="token number">1.10</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token function">SUM</span><span class="token punctuation">(</span>f1<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">1.1</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">FROM</span> test_double2<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------+</span>
+<span class="token operator">|</span> <span class="token function">SUM</span><span class="token punctuation">(</span>f1<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">1.1</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------+</span>
+<span class="token operator">|</span>             <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
 </ul>
 <h3 id="_4-2-开发中经验" tabindex="-1"><a class="header-anchor" href="#_4-2-开发中经验" aria-hidden="true">#</a> 4.2 开发中经验</h3>
@@ -427,49 +427,49 @@ MODIFY f1 DECIMAL(5,2);
 </tbody>
 </table>
 <p>BIT类型，如果没有指定(M)，默认是1位。这个1位，表示只能存1位的二进制值。这里(M)是表示二进制的位数，位数最小值为1，最大值为64。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_bit1(
-f1 BIT,
-f2 BIT(5),
-f3 BIT(64)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_bit1<span class="token punctuation">(</span>
+f1 <span class="token keyword">BIT</span><span class="token punctuation">,</span>
+f2 <span class="token keyword">BIT</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+f3 <span class="token keyword">BIT</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_bit1(f1)
-VALUES(1);
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_bit1<span class="token punctuation">(</span>f1<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-#Data too long for column 'f1' at row 1
-INSERT INTO test_bit1(f1)
-VALUES(2);
+<span class="token comment">#Data too long for column 'f1' at row 1</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_bit1<span class="token punctuation">(</span>f1<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_bit1(f2)
-VALUES(23);
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_bit1<span class="token punctuation">(</span>f2<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>注意：在向BIT类型的字段中插入数据时，一定要确保插入的数据在BIT类型支持的范围内。</p>
 <p>使用SELECT命令查询位字段时，可以用<code v-pre>BIN()</code>或<code v-pre>HEX()</code>函数进行读取。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM test_bit1;
-+------------+------------+------------+
-| f1         | f2         | f3         |
-+------------+------------+------------+
-| 0x01       | NULL       | NULL       |
-| NULL       | 0x17       | NULL       |
-+------------+------------+------------+
-2 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT BIN(f2),HEX(f2)
-    -&gt; FROM test_bit1;
-+---------+---------+
-| BIN(f2) | HEX(f2) |
-+---------+---------+
-| NULL    | NULL    |
-| 10111   | 17      |
-+---------+---------+
-2 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT f2 + 0
-    -&gt; FROM test_bit1;
-+--------+
-| f2 + 0 |
-+--------+
-|   NULL |
-|     23 |
-+--------+
-2 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test_bit1<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------------+------------+------------+</span>
+<span class="token operator">|</span> f1         <span class="token operator">|</span> f2         <span class="token operator">|</span> f3         <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------+------------+------------+</span>
+<span class="token operator">|</span> <span class="token number">0x01</span>       <span class="token operator">|</span> <span class="token boolean">NULL</span>       <span class="token operator">|</span> <span class="token boolean">NULL</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token boolean">NULL</span>       <span class="token operator">|</span> <span class="token number">0x17</span>       <span class="token operator">|</span> <span class="token boolean">NULL</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------+------------+------------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> BIN<span class="token punctuation">(</span>f2<span class="token punctuation">)</span><span class="token punctuation">,</span>HEX<span class="token punctuation">(</span>f2<span class="token punctuation">)</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">FROM</span> test_bit1<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------+---------+</span>
+<span class="token operator">|</span> BIN<span class="token punctuation">(</span>f2<span class="token punctuation">)</span> <span class="token operator">|</span> HEX<span class="token punctuation">(</span>f2<span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------+---------+</span>
+<span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">10111</span>   <span class="token operator">|</span> <span class="token number">17</span>      <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------+---------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> f2 <span class="token operator">+</span> <span class="token number">0</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">FROM</span> test_bit1<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+</span>
+<span class="token operator">|</span> f2 <span class="token operator">+</span> <span class="token number">0</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+</span>
+<span class="token operator">|</span>   <span class="token boolean">NULL</span> <span class="token operator">|</span>
+<span class="token operator">|</span>     <span class="token number">23</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>可以看到，使用b+0查询数据时，可以直接查询出存储的十进制数据的值。</p>
 <h2 id="_6-日期与时间类型" tabindex="-1"><a class="header-anchor" href="#_6-日期与时间类型" aria-hidden="true">#</a> 6. 日期与时间类型</h2>
 <p>日期与时间是重要的信息，在我们的系统中，几乎所有的数据表都用得到。原因是客户需要知道数据的时间标签，从而进行数据查询、统计和处理。</p>
@@ -552,43 +552,43 @@ VALUES(23);
 </li>
 </ul>
 <p><strong>从MySQL5.5.27开始，2位格式的YEAR已经不推荐使用</strong>。YEAR默认格式就是“YYYY”，没必要写成YEAR(4)，从MySQL 8.0.19开始，不推荐使用指定显示宽度的YEAR(4)数据类型。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_year(
-f1 YEAR,
-f2 YEAR(4)
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; DESC test_year;
-+-------+---------+------+-----+---------+-------+
-| Field | Type    | Null | Key | Default | Extra |
-+-------+---------+------+-----+---------+-------+
-| f1    | year(4) | YES  |     | NULL    |       |
-| f2    | year(4) | YES  |     | NULL    |       |
-+-------+---------+------+-----+---------+-------+
-2 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_year
-VALUES('2020','2021');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_year<span class="token punctuation">(</span>
+f1 <span class="token keyword">YEAR</span><span class="token punctuation">,</span>
+f2 <span class="token keyword">YEAR</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">DESC</span> test_year<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------+---------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> Field <span class="token operator">|</span> <span class="token keyword">Type</span>    <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+---------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> f1    <span class="token operator">|</span> <span class="token keyword">year</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> f2    <span class="token operator">|</span> <span class="token keyword">year</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+---------+------+-----+---------+-------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_year
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'2020'</span><span class="token punctuation">,</span><span class="token string">'2021'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-mysql&gt; SELECT * FROM test_year;
-+------+------+
-| f1   | f2   |
-+------+------+
-| 2020 | 2021 |
-+------+------+
-1 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_year
-VALUES('45','71');
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test_year<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span>
+<span class="token operator">|</span> f1   <span class="token operator">|</span> f2   <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span>
+<span class="token operator">|</span> <span class="token number">2020</span> <span class="token operator">|</span> <span class="token number">2021</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span>
+<span class="token number">1</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_year
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'45'</span><span class="token punctuation">,</span><span class="token string">'71'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_year
-VALUES(0,'0');
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_year
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-mysql&gt; SELECT * FROM test_year;
-+------+------+
-| f1   | f2   |
-+------+------+
-| 2020 | 2021 |
-| 2045 | 1971 |
-| 0000 | 2000 |
-+------+------+
-3 rows in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test_year<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span>
+<span class="token operator">|</span> f1   <span class="token operator">|</span> f2   <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span>
+<span class="token operator">|</span> <span class="token number">2020</span> <span class="token operator">|</span> <span class="token number">2021</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2045</span> <span class="token operator">|</span> <span class="token number">1971</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">0000</span> <span class="token operator">|</span> <span class="token number">2000</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_6-2-date类型" tabindex="-1"><a class="header-anchor" href="#_6-2-date类型" aria-hidden="true">#</a> 6.2 DATE类型</h3>
 <p>DATE类型表示日期，没有时间部分，格式为<code v-pre>YYYY-MM-DD</code>，其中，YYYY表示年份，MM表示月份，DD表示日期。需要<code v-pre>3个字节</code>的存储空间。在向DATE类型的字段插入数据时，同样需要满足一定的格式条件。</p>
 <ul>
@@ -598,25 +598,25 @@ mysql&gt; SELECT * FROM test_year;
 </ul>
 <p><strong>举例：</strong></p>
 <p>创建数据表，表中只包含一个DATE类型的字段f1。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_date1(
-f1 DATE
-);
-Query OK, 0 rows affected (0.13 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_date1<span class="token punctuation">(</span>
+f1 <span class="token keyword">DATE</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.13</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>插入数据：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_date1
-VALUES ('2020-10-01'), ('20201001'),(20201001);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_date1
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'2020-10-01'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'20201001'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">20201001</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_date1
-VALUES ('00-01-01'), ('000101'), ('69-10-01'), ('691001'), ('70-01-01'), ('700101'), ('99-01-01'), ('990101');
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_date1
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'00-01-01'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'000101'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'69-10-01'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'691001'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'70-01-01'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'700101'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'99-01-01'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'990101'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_date1
-VALUES (000301), (690301), (700301), (990301); 
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_date1
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token number">000301</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">690301</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">700301</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">990301</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
 
-INSERT INTO test_date1
-VALUES (CURRENT_DATE()), (NOW());
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_date1
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token keyword">CURRENT_DATE</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-SELECT *
-FROM test_date1;
+<span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> test_date1<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_6-3-time类型" tabindex="-1"><a class="header-anchor" href="#_6-3-time类型" aria-hidden="true">#</a> 6.3 TIME类型</h3>
 <p>TIME类型用来表示时间，不包含日期部分。在MySQL中，需要<code v-pre>3个字节</code>的存储空间来存储TIME类型的数据，可以使用“HH:MM:SS”格式来表示TIME类型，其中，HH表示小时，MM表示分钟，SS表示秒。</p>
 <p>在MySQL中，向TIME类型的字段插入数据时，也可以使用几种不同的格式。
@@ -625,20 +625,20 @@ FROM test_date1;
 （3）使用<code v-pre>CURRENT_TIME()</code>或者<code v-pre>NOW()</code>，会插入当前系统的时间。</p>
 <p><strong>举例：</strong></p>
 <p>创建数据表，表中包含一个TIME类型的字段f1。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_time1(
-f1 TIME
-);
-Query OK, 0 rows affected (0.02 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_time1
-VALUES('2 12:30:29'), ('12:35:29'), ('12:40'), ('2 12:40'),('1 05'), ('45');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_time1<span class="token punctuation">(</span>
+f1 <span class="token keyword">TIME</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.02</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_time1
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'2 12:30:29'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'12:35:29'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'12:40'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'2 12:40'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token string">'1 05'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'45'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_time1
-VALUES ('123520'), (124011),(1210);
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_time1
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'123520'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">124011</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">1210</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_time1
-VALUES (NOW()), (CURRENT_TIME());
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_time1
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">CURRENT_TIME</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-SELECT * FROM test_time1;
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test_time1<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_6-4-datetime类型" tabindex="-1"><a class="header-anchor" href="#_6-4-datetime类型" aria-hidden="true">#</a> 6.4 DATETIME类型</h3>
 <p>DATETIME类型在所有的日期时间类型中占用的存储空间最大，总共需要<code v-pre>8</code>个字节的存储空间。在格式上为DATE类型和TIME类型的组合，可以表示为<code v-pre>YYYY-MM-DD HH:MM:SS</code>，其中YYYY表示年份，MM表示月份，DD表示日期，HH表示小时，MM表示分钟，SS表示秒。</p>
 <p>在向DATETIME类型的字段插入数据时，同样需要满足一定的格式条件。</p>
@@ -653,22 +653,22 @@ SELECT * FROM test_time1;
 </ul>
 <p><strong>举例：</strong></p>
 <p>创建数据表，表中包含一个DATETIME类型的字段dt。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_datetime1(
-dt DATETIME
-);
-Query OK, 0 rows affected (0.02 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_datetime1<span class="token punctuation">(</span>
+dt <span class="token keyword">DATETIME</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.02</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>插入数据：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_datetime1
-VALUES ('2021-01-01 06:50:30'), ('20210101065030');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_datetime1
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'2021-01-01 06:50:30'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'20210101065030'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_datetime1
-VALUES ('99-01-01 00:00:00'), ('990101000000'), ('20-01-01 00:00:00'), ('200101000000');
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_datetime1
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'99-01-01 00:00:00'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'990101000000'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'20-01-01 00:00:00'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'200101000000'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_datetime1
-VALUES (20200101000000), (200101000000), (19990101000000), (990101000000);
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_datetime1
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token number">20200101000000</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">200101000000</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">19990101000000</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">990101000000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
  
-INSERT INTO test_datetime1
-VALUES (CURRENT_TIMESTAMP()), (NOW());
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_datetime1
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token keyword">CURRENT_TIMESTAMP</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_6-5-timestamp类型" tabindex="-1"><a class="header-anchor" href="#_6-5-timestamp类型" aria-hidden="true">#</a> 6.5 TIMESTAMP类型</h3>
 <p>TIMESTAMP类型也可以表示日期时间，其显示格式与DATETIME类型相同，都是<code v-pre>YYYY-MM-DD HH:MM:SS</code>，需要4个字节的存储空间。但是TIMESTAMP存储的时间范围比DATETIME要小很多，只能存储“1970-01-01 00:00:01 UTC”到“2038-01-19 03:14:07 UTC”之间的时间。其中，UTC表示世界统一时间，也叫作世界标准时间。</p>
 <ul>
@@ -678,22 +678,22 @@ VALUES (CURRENT_TIMESTAMP()), (NOW());
 <p>如果向TIMESTAMP类型的字段插入的时间超出了TIMESTAMP类型的范围，则MySQL会抛出错误信息。</p>
 <p><strong>举例：</strong></p>
 <p>创建数据表，表中包含一个TIMESTAMP类型的字段ts。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_timestamp1(
-ts TIMESTAMP
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_timestamp1<span class="token punctuation">(</span>
+ts <span class="token keyword">TIMESTAMP</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>插入数据：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_timestamp1
-VALUES ('1999-01-01 03:04:50'), ('19990101030405'), ('99-01-01 03:04:05'), ('990101030405');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_timestamp1
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'1999-01-01 03:04:50'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'19990101030405'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'99-01-01 03:04:05'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'990101030405'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_timestamp1
-VALUES ('2020@01@01@00@00@00'), ('20@01@01@00@00@00');
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_timestamp1
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'2020@01@01@00@00@00'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'20@01@01@00@00@00'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_timestamp1
-VALUES (CURRENT_TIMESTAMP()), (NOW());
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_timestamp1
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token keyword">CURRENT_TIMESTAMP</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-#Incorrect datetime value
-INSERT INTO test_timestamp1
-VALUES ('2038-01-20 03:14:07');
+<span class="token comment">#Incorrect datetime value</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_timestamp1
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'2038-01-20 03:14:07'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>TIMESTAMP和DATETIME的区别：</strong></p>
 <ul>
 <li>
@@ -707,47 +707,47 @@ VALUES ('2038-01-20 03:14:07');
 </li>
 <li>
 <p>TIMESTAMP和时区有关。TIMESTAMP会根据用户的时区不同，显示不同的结果。而DATETIME则只能反映出插入时当地的时区，其他时区的人查看数据必然会有误差的。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE temp_time(
-d1 DATETIME,
-d2 TIMESTAMP
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO temp_time VALUES('2021-9-2 14:45:52','2021-9-2 14:45:52');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> temp_time<span class="token punctuation">(</span>
+d1 <span class="token keyword">DATETIME</span><span class="token punctuation">,</span>
+d2 <span class="token keyword">TIMESTAMP</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> temp_time <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'2021-9-2 14:45:52'</span><span class="token punctuation">,</span><span class="token string">'2021-9-2 14:45:52'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO temp_time VALUES(NOW(),NOW());
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM temp_time;
-+---------------------+---------------------+
-| d1                  | d2                  |
-+---------------------+---------------------+
-| 2021-09-02 14:45:52 | 2021-09-02 14:45:52 |
-| 2021-11-03 17:38:17 | 2021-11-03 17:38:17 |
-+---------------------+---------------------+
-2 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#修改当前的时区
-SET time_zone = '+9:00';
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM temp_time;
-+---------------------+---------------------+
-| d1                  | d2                  |
-+---------------------+---------------------+
-| 2021-09-02 14:45:52 | 2021-09-02 15:45:52 |
-| 2021-11-03 17:38:17 | 2021-11-03 18:38:17 |
-+---------------------+---------------------+
-2 rows in set (0.00 sec)
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> temp_time <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> temp_time<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------------+---------------------+</span>
+<span class="token operator">|</span> d1                  <span class="token operator">|</span> d2                  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------+---------------------+</span>
+<span class="token operator">|</span> <span class="token number">2021</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">02</span> <span class="token number">14</span>:<span class="token number">45</span>:<span class="token number">52</span> <span class="token operator">|</span> <span class="token number">2021</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">02</span> <span class="token number">14</span>:<span class="token number">45</span>:<span class="token number">52</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2021</span><span class="token operator">-</span><span class="token number">11</span><span class="token operator">-</span><span class="token number">03</span> <span class="token number">17</span>:<span class="token number">38</span>:<span class="token number">17</span> <span class="token operator">|</span> <span class="token number">2021</span><span class="token operator">-</span><span class="token number">11</span><span class="token operator">-</span><span class="token number">03</span> <span class="token number">17</span>:<span class="token number">38</span>:<span class="token number">17</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------+---------------------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#修改当前的时区</span>
+<span class="token keyword">SET</span> time_zone <span class="token operator">=</span> <span class="token string">'+9:00'</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> temp_time<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------------+---------------------+</span>
+<span class="token operator">|</span> d1                  <span class="token operator">|</span> d2                  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------+---------------------+</span>
+<span class="token operator">|</span> <span class="token number">2021</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">02</span> <span class="token number">14</span>:<span class="token number">45</span>:<span class="token number">52</span> <span class="token operator">|</span> <span class="token number">2021</span><span class="token operator">-</span><span class="token number">09</span><span class="token operator">-</span><span class="token number">02</span> <span class="token number">15</span>:<span class="token number">45</span>:<span class="token number">52</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2021</span><span class="token operator">-</span><span class="token number">11</span><span class="token operator">-</span><span class="token number">03</span> <span class="token number">17</span>:<span class="token number">38</span>:<span class="token number">17</span> <span class="token operator">|</span> <span class="token number">2021</span><span class="token operator">-</span><span class="token number">11</span><span class="token operator">-</span><span class="token number">03</span> <span class="token number">18</span>:<span class="token number">38</span>:<span class="token number">17</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------+---------------------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
 </ul>
 <h3 id="_6-6-开发中经验" tabindex="-1"><a class="header-anchor" href="#_6-6-开发中经验" aria-hidden="true">#</a> 6.6 开发中经验</h3>
 <p>用得最多的日期时间类型，就是 <code v-pre>DATETIME</code>。虽然 MySQL 也支持 YEAR（年）、 TIME（时间）、DATE（日期），以及 TIMESTAMP 类型，但是在实际项目中，尽量用 DATETIME 类型。因为这个数据类型包括了完整的日期和时间信息，取值范围也最大，使用起来比较方便。毕竟，如果日期时间信息分散在好几个字段，很不容易记，而且查询的时候，SQL 语句也会更加复杂。</p>
 <p>此外，一般存注册时间、商品发布时间等，不建议使用DATETIME存储，而是使用<code v-pre>时间戳</code>，因为DATETIME虽然直观，但不便于计算。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT UNIX_TIMESTAMP();
-+------------------+
-| UNIX_TIMESTAMP() |
-+------------------+
-|       1635932762 |
-+------------------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> UNIX_TIMESTAMP<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------------------+</span>
+<span class="token operator">|</span> UNIX_TIMESTAMP<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------+</span>
+<span class="token operator">|</span>       <span class="token number">1635932762</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_7-文本字符串类型" tabindex="-1"><a class="header-anchor" href="#_7-文本字符串类型" aria-hidden="true">#</a> 7. 文本字符串类型</h2>
 <p>在实际的项目中，我们还经常遇到一种数据，就是字符串数据。</p>
 <p>MySQL中，文本字符串总体上分为<code v-pre>CHAR</code>、<code v-pre>VARCHAR</code>、<code v-pre>TINYTEXT</code>、<code v-pre>TEXT</code>、<code v-pre>MEDIUMTEXT</code>、<code v-pre>LONGTEXT</code>、<code v-pre>ENUM</code>、<code v-pre>SET</code>等类型。</p>
-<p><img src="@source/notes/base_mysql/images/image-20211012003508730.png" alt="image-20211012003508730"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211012003508730.png" alt="image-20211012003508730" loading="lazy"></p>
 <h3 id="_7-1-char与varchar类型" tabindex="-1"><a class="header-anchor" href="#_7-1-char与varchar类型" aria-hidden="true">#</a> 7.1 CHAR与VARCHAR类型</h3>
 <p>CHAR和VARCHAR类型都可以存储比较短的字符串。</p>
 <table>
@@ -783,44 +783,44 @@ SET time_zone = '+9:00';
 <li>如果保存时，数据的实际长度比CHAR类型声明的长度小，则会在<code v-pre>右侧填充</code>空格以达到指定的长度。当MySQL检索CHAR类型的数据时，CHAR类型的字段会去除尾部的空格。</li>
 <li>定义CHAR类型字段时，声明的字段长度即为CHAR类型字段所占的存储空间的字节数。</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_char1(
-c1 CHAR,
-c2 CHAR(5)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_char1<span class="token punctuation">(</span>
+c1 <span class="token keyword">CHAR</span><span class="token punctuation">,</span>
+c2 <span class="token keyword">CHAR</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-DESC test_char1;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_char1
-VALUES('a','Tom');
+<span class="token keyword">DESC</span> test_char1<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_char1
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">,</span><span class="token string">'Tom'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-SELECT c1,CONCAT(c2,'***') FROM test_char1;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_char1(c2)
-VALUES('a  ');
+<span class="token keyword">SELECT</span> c1<span class="token punctuation">,</span>CONCAT<span class="token punctuation">(</span>c2<span class="token punctuation">,</span><span class="token string">'***'</span><span class="token punctuation">)</span> <span class="token keyword">FROM</span> test_char1<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_char1<span class="token punctuation">(</span>c2<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'a  '</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-SELECT CHAR_LENGTH(c2)
-FROM test_char1;
+<span class="token keyword">SELECT</span> CHAR_LENGTH<span class="token punctuation">(</span>c2<span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> test_char1<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>VARCHAR类型：</strong></p>
 <ul>
 <li>VARCHAR(M) 定义时，<code v-pre>必须指定</code>长度M，否则报错。</li>
 <li>MySQL4.0版本以下，varchar(20)：指的是20字节，如果存放UTF8汉字时，只能存6个（每个汉字3字节） ；MySQL5.0版本以上，varchar(20)：指的是20字符。</li>
 <li>检索VARCHAR类型的字段数据时，会保留数据尾部的空格。VARCHAR类型的字段所占用的存储空间为字符串实际长度加1个字节。</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_varchar1(
-NAME VARCHAR  #错误
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#Column length too big for column 'NAME' (max = 21845);
-CREATE TABLE test_varchar2(
-NAME VARCHAR(65535)  #错误
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_varchar3(
-NAME VARCHAR(5)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_varchar1<span class="token punctuation">(</span>
+NAME <span class="token keyword">VARCHAR</span>  <span class="token comment">#错误</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#Column length too big for column 'NAME' (max = 21845);</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_varchar2<span class="token punctuation">(</span>
+NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">65535</span><span class="token punctuation">)</span>  <span class="token comment">#错误</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_varchar3<span class="token punctuation">(</span>
+NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_varchar3
-VALUES('尚硅谷'),('尚硅谷教育');
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_varchar3
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'尚硅谷'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token string">'尚硅谷教育'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-#Data too long for column 'NAME' at row 1
-INSERT INTO test_varchar3
-VALUES('尚硅谷IT教育');
+<span class="token comment">#Data too long for column 'NAME' at row 1</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_varchar3
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'尚硅谷IT教育'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>哪些情况使用 CHAR 或 VARCHAR 更好</strong></p>
 <table>
 <thead>
@@ -912,14 +912,14 @@ VALUES('尚硅谷IT教育');
 <p><strong>由于实际存储的长度不确定，MySQL 不允许 TEXT 类型的字段做主键</strong>。遇到这种情况，你只能采用 CHAR(M)，或者 VARCHAR(M)。</p>
 <p><strong>举例：</strong></p>
 <p>创建数据表：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_text(
-tx TEXT
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_text
-VALUES('atguigu   ');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_text<span class="token punctuation">(</span>
+tx <span class="token keyword">TEXT</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_text
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'atguigu   '</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-SELECT CHAR_LENGTH(tx)
-FROM test_text; #10
+<span class="token keyword">SELECT</span> CHAR_LENGTH<span class="token punctuation">(</span>tx<span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> test_text<span class="token punctuation">;</span> <span class="token comment">#10</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>说明在保存和查询数据时，并没有删除TEXT类型的数据尾部的空格。</p>
 <p><strong>开发中经验：</strong></p>
 <p>TEXT文本类型，可以存比较大的文本段，搜索速度稍慢，因此如果不是特别大的内容，建议使用CHAR，VARCHAR来代替。还有TEXT类型不用加默认值，加了也没用。而且text和blob类型的数据删除后容易导致“空洞”，使得文件碎片比较多，所以频繁使用的表不建议包含TEXT类型字段，建议单独分出去，单独用一个表。</p>
@@ -957,28 +957,28 @@ FROM test_text; #10
 </ul>
 <p>举例：</p>
 <p>创建表如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_enum(
-season ENUM('春','夏','秋','冬','unknow')
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_enum<span class="token punctuation">(</span>
+season <span class="token keyword">ENUM</span><span class="token punctuation">(</span><span class="token string">'春'</span><span class="token punctuation">,</span><span class="token string">'夏'</span><span class="token punctuation">,</span><span class="token string">'秋'</span><span class="token punctuation">,</span><span class="token string">'冬'</span><span class="token punctuation">,</span><span class="token string">'unknow'</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>添加数据：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_enum
-VALUES('春'),('秋');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_enum
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'春'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token string">'秋'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-# 忽略大小写
-INSERT INTO test_enum
-VALUES('UNKNOW');
+<span class="token comment"># 忽略大小写</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_enum
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'UNKNOW'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-# 允许按照角标的方式获取指定索引位置的枚举值
-INSERT INTO test_enum
-VALUES('1'),(3);
+<span class="token comment"># 允许按照角标的方式获取指定索引位置的枚举值</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_enum
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'1'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-# Data truncated for column 'season' at row 1
-INSERT INTO test_enum
-VALUES('ab');
+<span class="token comment"># Data truncated for column 'season' at row 1</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_enum
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'ab'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-# 当ENUM类型的字段没有声明为NOT NULL时，插入NULL也是有效的
-INSERT INTO test_enum
-VALUES(NULL);
+<span class="token comment"># 当ENUM类型的字段没有声明为NOT NULL时，插入NULL也是有效的</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_enum
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_9-set类型" tabindex="-1"><a class="header-anchor" href="#_9-set类型" aria-hidden="true">#</a> 9. SET类型</h2>
 <p>SET表示一个字符串对象，可以包含0个或多个成员，但成员个数的上限为<code v-pre>64</code>。设置字段值时，可以取取值范围内的 0 个或多个值。</p>
 <p>当SET类型包含的成员个数不同时，其所占用的存储空间也是不同的，具体如下：</p>
@@ -1015,35 +1015,35 @@ VALUES(NULL);
 <p>SET类型在存储数据时成员个数越多，其占用的存储空间越大。注意：SET类型在选取成员时，可以一次选择多个成员，这一点与ENUM类型不同。</p>
 <p>举例：</p>
 <p>创建表：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_set(
-s SET ('A', 'B', 'C')
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_set<span class="token punctuation">(</span>
+s <span class="token keyword">SET</span> <span class="token punctuation">(</span><span class="token string">'A'</span><span class="token punctuation">,</span> <span class="token string">'B'</span><span class="token punctuation">,</span> <span class="token string">'C'</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>向表中插入数据：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_set (s) VALUES ('A'), ('A,B');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_set <span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'A'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'A,B'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-#插入重复的SET类型成员时，MySQL会自动删除重复的成员
-INSERT INTO test_set (s) VALUES ('A,B,C,A');
+<span class="token comment">#插入重复的SET类型成员时，MySQL会自动删除重复的成员</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_set <span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'A,B,C,A'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-#向SET类型的字段插入SET成员中不存在的值时，MySQL会抛出错误。
-INSERT INTO test_set (s) VALUES ('A,B,C,D');
+<span class="token comment">#向SET类型的字段插入SET成员中不存在的值时，MySQL会抛出错误。</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_set <span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'A,B,C,D'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-SELECT *
-FROM test_set;
+<span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> test_set<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE temp_mul(
-gender ENUM('男','女'),
-hobby SET('吃饭','睡觉','打豆豆','写代码')
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO temp_mul VALUES('男','睡觉,打豆豆'); #成功
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> temp_mul<span class="token punctuation">(</span>
+gender <span class="token keyword">ENUM</span><span class="token punctuation">(</span><span class="token string">'男'</span><span class="token punctuation">,</span><span class="token string">'女'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+hobby <span class="token keyword">SET</span><span class="token punctuation">(</span><span class="token string">'吃饭'</span><span class="token punctuation">,</span><span class="token string">'睡觉'</span><span class="token punctuation">,</span><span class="token string">'打豆豆'</span><span class="token punctuation">,</span><span class="token string">'写代码'</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> temp_mul <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'男'</span><span class="token punctuation">,</span><span class="token string">'睡觉,打豆豆'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">#成功</span>
 
-# Data truncated for column 'gender' at row 1
-INSERT INTO temp_mul VALUES('男,女','睡觉,写代码'); #失败
+<span class="token comment"># Data truncated for column 'gender' at row 1</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> temp_mul <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'男,女'</span><span class="token punctuation">,</span><span class="token string">'睡觉,写代码'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">#失败</span>
 
-# Data truncated for column 'gender' at row 1
-INSERT INTO temp_mul VALUES('妖','睡觉,写代码');#失败
+<span class="token comment"># Data truncated for column 'gender' at row 1</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> temp_mul <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'妖'</span><span class="token punctuation">,</span><span class="token string">'睡觉,写代码'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#失败</span>
 
 
-INSERT INTO temp_mul VALUES('男','睡觉,写代码,吃饭'); #成功
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> temp_mul <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'男'</span><span class="token punctuation">,</span><span class="token string">'睡觉,写代码,吃饭'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">#成功</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_10-二进制字符串类型" tabindex="-1"><a class="header-anchor" href="#_10-二进制字符串类型" aria-hidden="true">#</a> 10. 二进制字符串类型</h2>
 <p>MySQL中的二进制字符串类型主要存储一些二进制数据，比如可以存储图片、音频和视频等二进制数据。</p>
 <p>MySQL中支持的二进制字符串类型主要包括BINARY、VARBINARY、TINYBLOB、BLOB、MEDIUMBLOB 和 LONGBLOB类型。</p>
@@ -1077,30 +1077,30 @@ INSERT INTO temp_mul VALUES('男','睡觉,写代码,吃饭'); #成功
 </table>
 <p>举例：</p>
 <p>创建表：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_binary1(
-f1 BINARY,
-f2 BINARY(3),
-# f3 VARBINARY,
-f4 VARBINARY(10)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_binary1<span class="token punctuation">(</span>
+f1 <span class="token keyword">BINARY</span><span class="token punctuation">,</span>
+f2 <span class="token keyword">BINARY</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token comment"># f3 VARBINARY,</span>
+f4 <span class="token keyword">VARBINARY</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>添加数据：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_binary1(f1,f2)
-VALUES('a','a');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_binary1<span class="token punctuation">(</span>f1<span class="token punctuation">,</span>f2<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO test_binary1(f1,f2)
-VALUES('尚','尚');#失败
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_binary1(f2,f4)
-VALUES('ab','ab');
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_binary1<span class="token punctuation">(</span>f1<span class="token punctuation">,</span>f2<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'尚'</span><span class="token punctuation">,</span><span class="token string">'尚'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#失败</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_binary1<span class="token punctuation">(</span>f2<span class="token punctuation">,</span>f4<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'ab'</span><span class="token punctuation">,</span><span class="token string">'ab'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-mysql&gt; SELECT LENGTH(f2),LENGTH(f4)
-    -&gt; FROM test_binary1;
-+------------+------------+
-| LENGTH(f2) | LENGTH(f4) |
-+------------+------------+
-|          3 |       NULL |
-|          3 |          2 |
-+------------+------------+
-2 rows in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> LENGTH<span class="token punctuation">(</span>f2<span class="token punctuation">)</span><span class="token punctuation">,</span>LENGTH<span class="token punctuation">(</span>f4<span class="token punctuation">)</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">FROM</span> test_binary1<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------------+------------+</span>
+<span class="token operator">|</span> LENGTH<span class="token punctuation">(</span>f2<span class="token punctuation">)</span> <span class="token operator">|</span> LENGTH<span class="token punctuation">(</span>f4<span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------+------------+</span>
+<span class="token operator">|</span>          <span class="token number">3</span> <span class="token operator">|</span>       <span class="token boolean">NULL</span> <span class="token operator">|</span>
+<span class="token operator">|</span>          <span class="token number">3</span> <span class="token operator">|</span>          <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------+------------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="blob类型" tabindex="-1"><a class="header-anchor" href="#blob类型" aria-hidden="true">#</a> BLOB类型</h4>
 <p>BLOB是一个<code v-pre>二进制大对象</code>，可以容纳可变数量的数据。</p>
 <p>MySQL中的BLOB类型包括TINYBLOB、BLOB、MEDIUMBLOB和LONGBLOB 4种类型，它们可容纳值的最大长度不同。可以存储一个二进制的大对象，比如<code v-pre>图片</code>、<code v-pre>音频</code>和<code v-pre>视频</code>等。</p>
@@ -1142,10 +1142,10 @@ mysql&gt; SELECT LENGTH(f2),LENGTH(f4)
 </tbody>
 </table>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_blob1(
-id INT,
-img MEDIUMBLOB
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_blob1<span class="token punctuation">(</span>
+id <span class="token keyword">INT</span><span class="token punctuation">,</span>
+img <span class="token keyword">MEDIUMBLOB</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>TEXT和BLOB的使用注意事项：</strong></p>
 <p>在使用text和blob字段类型时要注意以下几点，以便更好的发挥数据库的性能。</p>
 <p>① BLOB和TEXT值也会引起自己的一些问题，特别是执行了大量的删除或更新操作的时候。删除这种值会在数据表中留下很大的&quot;<code v-pre>空洞</code>&quot;，以后填入这些&quot;空洞&quot;的记录可能长度不同。为了提高性能，建议定期使用 OPTIMIZE TABLE 功能对这类表进行<code v-pre>碎片整理</code>。</p>
@@ -1155,26 +1155,26 @@ img MEDIUMBLOB
 <p>JSON（JavaScript Object Notation）是一种轻量级的<code v-pre>数据交换格式</code>。简洁和清晰的层次结构使得 JSON 成为理想的数据交换语言。它易于人阅读和编写，同时也易于机器解析和生成，并有效地提升网络传输效率。<strong>JSON 可以将 JavaScript 对象中表示的一组数据转换为字符串，然后就可以在网络或者程序之间轻松地传递这个字符串，并在需要的时候将它还原为各编程语言所支持的数据格式。</strong></p>
 <p>在MySQL 5.7中，就已经支持JSON数据类型。在MySQL 8.x版本中，JSON类型提供了可以进行自动验证的JSON文档和优化的存储结构，使得在MySQL中存储和读取JSON类型的数据更加方便和高效。
 创建数据表，表中包含一个JSON类型的字段 js 。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_json(
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_json<span class="token punctuation">(</span>
 js json
 
-);
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>向表中插入JSON数据。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_json (js) 
-VALUES ('{&quot;name&quot;:&quot;songhk&quot;, &quot;age&quot;:18, &quot;address&quot;:{&quot;province&quot;:&quot;beijing&quot;, &quot;city&quot;:&quot;beijing&quot;}}');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_json <span class="token punctuation">(</span>js<span class="token punctuation">)</span> 
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'{"name":"songhk", "age":18, "address":{"province":"beijing", "city":"beijing"}}'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>查询t19表中的数据。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT *
-    -&gt; FROM test_json;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211104192516324.png" alt="image-20211104192516324"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">FROM</span> test_json<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211104192516324.png" alt="image-20211104192516324" loading="lazy"></p>
 <p>当需要检索JSON类型的字段中数据的某个具体值时，可以使用“-&gt;”和“-&gt;&gt;”符号。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT js -&gt; '$.name' AS NAME,js -&gt; '$.age' AS age ,js -&gt; '$.address.province' AS province, js -&gt; '$.address.city' AS city
-    -&gt; FROM test_json;
-+----------+------+-----------+-----------+
-| NAME     | age  | province  | city      |
-+----------+------+-----------+-----------+
-| &quot;songhk&quot; | 18   | &quot;beijing&quot; | &quot;beijing&quot; |
-+----------+------+-----------+-----------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> js <span class="token operator">-</span><span class="token operator">></span> <span class="token string">'$.name'</span> <span class="token keyword">AS</span> NAME<span class="token punctuation">,</span>js <span class="token operator">-</span><span class="token operator">></span> <span class="token string">'$.age'</span> <span class="token keyword">AS</span> age <span class="token punctuation">,</span>js <span class="token operator">-</span><span class="token operator">></span> <span class="token string">'$.address.province'</span> <span class="token keyword">AS</span> province<span class="token punctuation">,</span> js <span class="token operator">-</span><span class="token operator">></span> <span class="token string">'$.address.city'</span> <span class="token keyword">AS</span> city
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">FROM</span> test_json<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------+------+-----------+-----------+</span>
+<span class="token operator">|</span> NAME     <span class="token operator">|</span> age  <span class="token operator">|</span> province  <span class="token operator">|</span> city      <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------+------+-----------+-----------+</span>
+<span class="token operator">|</span> <span class="token string">"songhk"</span> <span class="token operator">|</span> <span class="token number">18</span>   <span class="token operator">|</span> <span class="token string">"beijing"</span> <span class="token operator">|</span> <span class="token string">"beijing"</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------+------+-----------+-----------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>通过“-&gt;”和“-&gt;&gt;”符号，从JSON字段中正确查询出了指定的JSON数据的值。</p>
 <h2 id="_12-空间类型" tabindex="-1"><a class="header-anchor" href="#_12-空间类型" aria-hidden="true">#</a> 12. 空间类型</h2>
 <p>MySQL 空间类型扩展支持地理特征的生成、存储和分析。这里的地理特征表示世界上具有位置的任何东西，可以是一个实体，例如一座山；可以是空间，例如一座办公楼；也可以是一个可定义的位置，例如一个十字路口等等。MySQL中使用<code v-pre>Geometry（几何）</code>来表示所有地理特征。Geometry指一个点或点的集合，代表世界上任何具有位置的事物。</p>
@@ -1189,12 +1189,12 @@ VALUES ('{&quot;name&quot;:&quot;songhk&quot;, &quot;age&quot;:18, &quot;address
 </li>
 </ul>
 <p>下面展示几种常见的几何图形元素：</p>
-<p><img src="@source/notes/base_mysql/images/image-20211104192912988.png" alt="image-20211104192912988"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211104192912988.png" alt="image-20211104192912988" loading="lazy"></p>
 <ul>
 <li>MultiPoint、MultiLineString、MultiPolygon、GeometryCollection 这4种类型都是集合类，是多个Point、LineString或Polygon组合而成。</li>
 </ul>
 <p>下面展示的是多个同类或异类几何图形元素的组合：</p>
-<p><img src="@source/notes/base_mysql/images/image-20211104193330204.png" alt="image-20211104193330204"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211104193330204.png" alt="image-20211104193330204" loading="lazy"></p>
 <h2 id="_13-小结及选择建议" tabindex="-1"><a class="header-anchor" href="#_13-小结及选择建议" aria-hidden="true">#</a> 13. 小结及选择建议</h2>
 <p>在定义数据类型时，如果确定是<code v-pre>整数</code>，就用<code v-pre> INT</code>； 如果是<code v-pre>小数</code>，一定用定点数类型 <code v-pre>DECIMAL(M,D)</code>； 如果是日期与时间，就用 <code v-pre>DATETIME</code>。</p>
 <p>这样做的好处是，首先确保你的系统不会因为数据类型定义出错。不过，凡事都是有两面的，可靠性好，并不意味着高效。比如，TEXT 虽然使用方便，但是效率不如 CHAR(M) 和 VARCHAR(M)。</p>

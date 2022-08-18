@@ -190,7 +190,7 @@ systemctl disable mysqld.service
 
 ##### **3.2修改密码**
 
-```mysql
+```sql
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';
 ```
 
@@ -252,7 +252,7 @@ firewall-cmd --reload
 
 - 修改允许远程登陆
 
-```mysql
+```sql
 use mysql;
 select Host,User from user;
 update user set host = '%' where user ='root';
@@ -269,7 +269,7 @@ flush privileges;
 
 **解决方法二：**
 
-```mysql
+```sql
 ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'abc123';
 ```
 
@@ -277,7 +277,7 @@ ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'abc123';
 
 ##### **5.1各级别的字符集**
 
-```mysql
+```sql
 show variables like 'character%';
 ```
 
@@ -289,18 +289,18 @@ show variables like 'character%';
 
 操作2：修改字符集
 
-```mysql
+```sql
 vim /etc/my.cnf
 ```
 在MySQL5.7或之前的版本中，在/etc/my.cnf文件最后加上中文字符集配置：
-```mysql
+```sql
 character_set_server=utf8
 ```
 ![](./images/6e7f2fd6-e801-4c01-9c4f-b54d8bebe8e6.png)
 
 操作3：重新启动MySQL服务
 
-```mysql
+```sql
 systemctl restart mysqld
 ```
 

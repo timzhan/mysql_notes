@@ -14,27 +14,27 @@
 <li><strong>ORDER BY 子句在SELECT语句的结尾。</strong></li>
 </ul>
 <h3 id="_1-2-单列排序" tabindex="-1"><a class="header-anchor" href="#_1-2-单列排序" aria-hidden="true">#</a> 1.2 单列排序</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT   last_name, job_id, department_id, hire_date
-FROM     employees
-ORDER BY hire_date ;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554974255957.png" alt="1554974255957"></p>
-<p><img src="@source/notes/base_mysql/images/1554974260133.png" alt="1554974260133"></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT   last_name, job_id, department_id, hire_date
-FROM     employees
-ORDER BY hire_date DESC ;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554974822229.png" alt="1554974822229"></p>
-<p><img src="@source/notes/base_mysql/images/1554974827522.png" alt="1554974827522"></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT employee_id, last_name, salary*12 annsal
-FROM   employees
-ORDER BY annsal;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554974853194.png" alt="1554974853194"></p>
-<p><img src="@source/notes/base_mysql/images/1554974858252.png" alt="1554974858252"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span>   last_name<span class="token punctuation">,</span> job_id<span class="token punctuation">,</span> department_id<span class="token punctuation">,</span> hire_date
+<span class="token keyword">FROM</span>     employees
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> hire_date <span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554974255957.png" alt="1554974255957" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554974260133.png" alt="1554974260133" loading="lazy"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span>   last_name<span class="token punctuation">,</span> job_id<span class="token punctuation">,</span> department_id<span class="token punctuation">,</span> hire_date
+<span class="token keyword">FROM</span>     employees
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> hire_date <span class="token keyword">DESC</span> <span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554974822229.png" alt="1554974822229" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554974827522.png" alt="1554974827522" loading="lazy"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span> last_name<span class="token punctuation">,</span> salary<span class="token operator">*</span><span class="token number">12</span> annsal
+<span class="token keyword">FROM</span>   employees
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> annsal<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554974853194.png" alt="1554974853194" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554974858252.png" alt="1554974858252" loading="lazy"></p>
 <h3 id="_1-3-多列排序" tabindex="-1"><a class="header-anchor" href="#_1-3-多列排序" aria-hidden="true">#</a> 1.3 多列排序</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT last_name, department_id, salary
-FROM   employees
-ORDER BY department_id, salary DESC;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554974901572.png" alt="1554974901572"></p>
-<p><img src="@source/notes/base_mysql/images/1554974907498.png" alt="1554974907498"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span> department_id<span class="token punctuation">,</span> salary
+<span class="token keyword">FROM</span>   employees
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> department_id<span class="token punctuation">,</span> salary <span class="token keyword">DESC</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554974901572.png" alt="1554974901572" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554974907498.png" alt="1554974907498" loading="lazy"></p>
 <ul>
 <li>可以使用不在SELECT列表中的列排序。</li>
 <li>在对多列进行排序的时候，首先排序的第一列必须有相同的列值，才会对第二列进行排序。如果第一列数据中所有值都是唯一的，将不再对第二列进行排序。</li>
@@ -54,31 +54,31 @@ ORDER BY department_id, salary DESC;
 </li>
 <li>
 <p>格式：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>LIMIT [位置偏移量,] 行数
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">LIMIT</span> <span class="token punctuation">[</span>位置偏移量<span class="token punctuation">,</span><span class="token punctuation">]</span> 行数
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>第一个“位置偏移量”参数指示MySQL从哪一行开始显示，是一个可选参数，如果不指定“位置偏移量”，将会从表中的第一条记录开始（第一条记录的位置偏移量是0，第二条记录的位置偏移量是1，以此类推）；第二个参数“行数”指示返回的记录条数。</p>
 </li>
 <li>
 <p>举例</p>
 </li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>--前10条记录：
-SELECT * FROM 表名 LIMIT 0,10;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">--前10条记录：</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> 表名 <span class="token keyword">LIMIT</span> <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">;</span>
 或者
-SELECT * FROM 表名 LIMIT 10;
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> 表名 <span class="token keyword">LIMIT</span> <span class="token number">10</span><span class="token punctuation">;</span>
 
---第11至20条记录：
-SELECT * FROM 表名 LIMIT 10,10;
+<span class="token comment">--第11至20条记录：</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> 表名 <span class="token keyword">LIMIT</span> <span class="token number">10</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">;</span>
 
---第21至30条记录： 
-SELECT * FROM 表名 LIMIT 20,10;
+<span class="token comment">--第21至30条记录： </span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> 表名 <span class="token keyword">LIMIT</span> <span class="token number">20</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><blockquote>
 <p>MySQL 8.0中可以使用“LIMIT 3 OFFSET 4”，意思是获取从第5条记录开始后面的3条记录，和“LIMIT 4,3;”返回的结果相同。</p>
 </blockquote>
 <ul>
 <li>分页显式公式**：（当前页数-1）<em>每页条数，每页条数</em>*</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM table 
-LIMIT(PageNo - 1)*PageSize,PageSize;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> <span class="token keyword">table</span> 
+<span class="token keyword">LIMIT</span><span class="token punctuation">(</span>PageNo <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span>PageSize<span class="token punctuation">,</span>PageSize<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li><strong>注意：LIMIT 子句必须放在整个SELECT语句的最后！</strong></li>
 <li>使用 LIMIT 的好处</li>
@@ -89,21 +89,21 @@ LIMIT(PageNo - 1)*PageSize,PageSize;
 <ul>
 <li>如果是 SQL Server 和 Access，需要使用 <code v-pre>TOP</code> 关键字，比如：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT TOP 5 name, hp_max FROM heros ORDER BY hp_max DESC
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token keyword">TOP</span> <span class="token number">5</span> name<span class="token punctuation">,</span> hp_max <span class="token keyword">FROM</span> heros <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> hp_max <span class="token keyword">DESC</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>如果是 DB2，使用<code v-pre>FETCH FIRST 5 ROWS ONLY</code>这样的关键字：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT name, hp_max FROM heros ORDER BY hp_max DESC FETCH FIRST 5 ROWS ONLY
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> name<span class="token punctuation">,</span> hp_max <span class="token keyword">FROM</span> heros <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> hp_max <span class="token keyword">DESC</span> <span class="token keyword">FETCH</span> <span class="token keyword">FIRST</span> <span class="token number">5</span> <span class="token keyword">ROWS</span> ONLY
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>如果是 Oracle，你需要基于 <code v-pre>ROWNUM</code> 来统计行数：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT rownum,last_name,salary FROM employees WHERE rownum &lt; 5 ORDER BY salary DESC;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> rownum<span class="token punctuation">,</span>last_name<span class="token punctuation">,</span>salary <span class="token keyword">FROM</span> employees <span class="token keyword">WHERE</span> rownum <span class="token operator">&lt;</span> <span class="token number">5</span> <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> salary <span class="token keyword">DESC</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>需要说明的是，这条语句是先取出来前 5 条数据行，然后再按照 hp_max 从高到低的顺序进行排序。但这样产生的结果和上述方法的并不一样。我会在后面讲到子查询，你可以使用</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT rownum, last_name,salary
-FROM (
-    SELECT last_name,salary
-    FROM employees
-    ORDER BY salary DESC)
-WHERE rownum &lt; 10;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> rownum<span class="token punctuation">,</span> last_name<span class="token punctuation">,</span>salary
+<span class="token keyword">FROM</span> <span class="token punctuation">(</span>
+    <span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>salary
+    <span class="token keyword">FROM</span> employees
+    <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> salary <span class="token keyword">DESC</span><span class="token punctuation">)</span>
+<span class="token keyword">WHERE</span> rownum <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>得到与上述方法一致的结果。</p>
 </div></template>

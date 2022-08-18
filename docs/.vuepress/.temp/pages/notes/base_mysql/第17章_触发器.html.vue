@@ -12,10 +12,10 @@
 <h2 id="_2-触发器的创建" tabindex="-1"><a class="header-anchor" href="#_2-触发器的创建" aria-hidden="true">#</a> 2. 触发器的创建</h2>
 <h3 id="_2-1-创建触发器语法" tabindex="-1"><a class="header-anchor" href="#_2-1-创建触发器语法" aria-hidden="true">#</a> 2.1 创建触发器语法</h3>
 <p>创建触发器的语法结构是：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TRIGGER 触发器名称 
-{BEFORE|AFTER} {INSERT|UPDATE|DELETE} ON 表名 
-FOR EACH ROW 
-触发器执行的语句块;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TRIGGER</span> 触发器名称 
+{BEFORE<span class="token operator">|</span><span class="token keyword">AFTER</span>} {<span class="token keyword">INSERT</span><span class="token operator">|</span><span class="token keyword">UPDATE</span><span class="token operator">|</span><span class="token keyword">DELETE</span>} <span class="token keyword">ON</span> 表名 
+<span class="token keyword">FOR EACH ROW</span> 
+触发器执行的语句块<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>说明：</p>
 <ul>
 <li>
@@ -39,99 +39,99 @@ FOR EACH ROW
 <h3 id="_2-2-代码举例" tabindex="-1"><a class="header-anchor" href="#_2-2-代码举例" aria-hidden="true">#</a> 2.2 代码举例</h3>
 <p><strong>举例1：</strong></p>
 <p>1、创建数据表：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_trigger (
-id INT PRIMARY KEY AUTO_INCREMENT,
-t_note VARCHAR(30)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_trigger <span class="token punctuation">(</span>
+id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+t_note <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 
-CREATE TABLE test_trigger_log (
-id INT PRIMARY KEY AUTO_INCREMENT,
-t_log VARCHAR(30)
-);
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_trigger_log <span class="token punctuation">(</span>
+id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+t_log <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>2、创建触发器：创建名称为before_insert的触发器，向test_trigger数据表插入数据之前，向test_trigger_log数据表中插入before_insert的日志信息。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER //
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
 
-CREATE TRIGGER before_insert
-BEFORE INSERT ON test_trigger 
-FOR EACH ROW
-BEGIN
-	INSERT INTO test_trigger_log (t_log)
-	VALUES('before_insert');
+<span class="token keyword">CREATE</span> <span class="token keyword">TRIGGER</span> before_insert
+BEFORE <span class="token keyword">INSERT</span> <span class="token keyword">ON</span> test_trigger 
+<span class="token keyword">FOR EACH ROW</span>
+<span class="token keyword">BEGIN</span>
+	<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_trigger_log <span class="token punctuation">(</span>t_log<span class="token punctuation">)</span>
+	<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'before_insert'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-END //
+<span class="token keyword">END</span> <span class="token comment">//</span>
 
-DELIMITER ;
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>3、向test_trigger数据表中插入数据</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_trigger (t_note) VALUES ('测试 BEFORE INSERT 触发器');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_trigger <span class="token punctuation">(</span>t_note<span class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'测试 BEFORE INSERT 触发器'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>4、查看test_trigger_log数据表中的数据</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM test_trigger_log;
-+----+---------------+
-| id | t_log         |
-+----+---------------+
-|  1 | before_insert |
-+----+---------------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test_trigger_log<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+---------------+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> t_log         <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+---------------+</span>
+<span class="token operator">|</span>  <span class="token number">1</span> <span class="token operator">|</span> before_insert <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+---------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>举例2：</strong></p>
 <p>1、创建名称为after_insert的触发器，向test_trigger数据表插入数据之后，向test_trigger_log数据表中插入after_insert的日志信息。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER //
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
 
-CREATE TRIGGER after_insert
-AFTER INSERT ON test_trigger
-FOR EACH ROW
-BEGIN
-	INSERT INTO test_trigger_log (t_log)
-	VALUES('after_insert');
-END //
+<span class="token keyword">CREATE</span> <span class="token keyword">TRIGGER</span> after_insert
+<span class="token keyword">AFTER</span> <span class="token keyword">INSERT</span> <span class="token keyword">ON</span> test_trigger
+<span class="token keyword">FOR EACH ROW</span>
+<span class="token keyword">BEGIN</span>
+	<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_trigger_log <span class="token punctuation">(</span>t_log<span class="token punctuation">)</span>
+	<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'after_insert'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
 
-DELIMITER ;
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>2、向test_trigger数据表中插入数据。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test_trigger (t_note) VALUES ('测试 AFTER INSERT 触发器');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_trigger <span class="token punctuation">(</span>t_note<span class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'测试 AFTER INSERT 触发器'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>3、查看test_trigger_log数据表中的数据</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM test_trigger_log;
-+----+---------------+
-| id | t_log         |
-+----+---------------+
-|  1 | before_insert |
-|  2 | before_insert |
-|  3 | after_insert  |
-+----+---------------+
-3 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test_trigger_log<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+---------------+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> t_log         <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+---------------+</span>
+<span class="token operator">|</span>  <span class="token number">1</span> <span class="token operator">|</span> before_insert <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">2</span> <span class="token operator">|</span> before_insert <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">3</span> <span class="token operator">|</span> after_insert  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+---------------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>**举例3：**定义触发器“salary_check_trigger”，基于员工表“employees”的INSERT事件，在INSERT之前检查将要添加的新员工薪资是否大于他领导的薪资，如果大于领导薪资，则报sqlstate_value为'HY000'的错误，从而使得添加失败。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER //
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
 
-CREATE TRIGGER salary_check_trigger
-BEFORE INSERT ON employees FOR EACH ROW
-BEGIN
-	DECLARE mgrsalary DOUBLE;
-	SELECT salary INTO mgrsalary FROM employees WHERE employee_id = NEW.manager_id;
+<span class="token keyword">CREATE</span> <span class="token keyword">TRIGGER</span> salary_check_trigger
+BEFORE <span class="token keyword">INSERT</span> <span class="token keyword">ON</span> employees <span class="token keyword">FOR EACH ROW</span>
+<span class="token keyword">BEGIN</span>
+	<span class="token keyword">DECLARE</span> mgrsalary <span class="token keyword">DOUBLE</span><span class="token punctuation">;</span>
+	<span class="token keyword">SELECT</span> salary <span class="token keyword">INTO</span> mgrsalary <span class="token keyword">FROM</span> employees <span class="token keyword">WHERE</span> employee_id <span class="token operator">=</span> NEW<span class="token punctuation">.</span>manager_id<span class="token punctuation">;</span>
 
-	IF NEW.salary &gt; mgrsalary THEN
-		SIGNAL SQLSTATE 'HY000' SET MESSAGE_TEXT = '薪资高于领导薪资错误';
-	END IF;
-END //
+	<span class="token keyword">IF</span> NEW<span class="token punctuation">.</span>salary <span class="token operator">></span> mgrsalary <span class="token keyword">THEN</span>
+		SIGNAL SQLSTATE <span class="token string">'HY000'</span> <span class="token keyword">SET</span> MESSAGE_TEXT <span class="token operator">=</span> <span class="token string">'薪资高于领导薪资错误'</span><span class="token punctuation">;</span>
+	<span class="token keyword">END</span> <span class="token keyword">IF</span><span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
 
-DELIMITER ;
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>上面触发器声明过程中的NEW关键字代表INSERT添加语句的新记录。</p>
 <h2 id="_3-查看、删除触发器" tabindex="-1"><a class="header-anchor" href="#_3-查看、删除触发器" aria-hidden="true">#</a> 3. 查看、删除触发器</h2>
 <h3 id="_3-1-查看触发器" tabindex="-1"><a class="header-anchor" href="#_3-1-查看触发器" aria-hidden="true">#</a> 3.1 查看触发器</h3>
 <p>查看触发器是查看数据库中已经存在的触发器的定义、状态和语法信息等。</p>
 <p>方式1：查看当前数据库的所有触发器的定义</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW TRIGGERS\G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> TRIGGERS\G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>方式2：查看当前数据库中某个触发器的定义</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW CREATE TRIGGER 触发器名
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">CREATE</span> <span class="token keyword">TRIGGER</span> 触发器名
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>方式3：从系统库information_schema的TRIGGERS表中查询“salary_check_trigger”触发器的信息。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM information_schema.TRIGGERS;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> information_schema<span class="token punctuation">.</span>TRIGGERS<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_3-2-删除触发器" tabindex="-1"><a class="header-anchor" href="#_3-2-删除触发器" aria-hidden="true">#</a> 3.2 删除触发器</h3>
 <p>触发器也是数据库对象，删除触发器也用DROP语句，语法格式如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP TRIGGER  IF EXISTS 触发器名称;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> <span class="token keyword">TRIGGER</span>  <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> 触发器名称<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="_4-触发器的优缺点" tabindex="-1"><a class="header-anchor" href="#_4-触发器的优缺点" aria-hidden="true">#</a> 4. 触发器的优缺点</h2>
 <h3 id="_4-1-优点" tabindex="-1"><a class="header-anchor" href="#_4-1-优点" aria-hidden="true">#</a> 4.1 优点</h3>
 <p><strong>1、触发器可以确保数据的完整性</strong>。</p>
 <p>假设我们用<code v-pre>进货单头表</code>（demo.importhead）来保存进货单的总体信息，包括进货单编号、供货商编号、仓库编号、总计进货数量、总计进货金额和验收日期。</p>
-<p><img src="@source/notes/base_mysql/images/image-20211010233336012.png" alt="image-20211010233336012"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211010233336012.png" alt="image-20211010233336012" loading="lazy"></p>
 <p>用<code v-pre>进货单明细表</code>（demo.importdetails）来保存进货商品的明细，包括进货单编号、商品编号、进货数量、进货价格和进货金额。</p>
-<p><img src="@source/notes/base_mysql/images/image-20211010233344125.png" alt="image-20211010233344125"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211010233344125.png" alt="image-20211010233344125" loading="lazy"></p>
 <p>每当我们录入、删除和修改一条进货单明细数据的时候，进货单明细表里的数据就会发生变动。这个时候，在进货单头表中的总计数量和总计金额就必须重新计算，否则，进货单头表中的总计数量和总计金额就不等于进货单明细表中数量合计和金额合计了，这就是数据不一致。</p>
 <p>为了解决这个问题，我们就可以使用触发器，<strong>规定每当进货单明细表有数据插入、修改和删除的操作时，自动触发 2 步操作：</strong></p>
 <p>1）重新计算进货单明细表中的数量合计和金额合计；</p>
@@ -145,8 +145,8 @@ DELIMITER ;
 <p><strong>1、触发器最大的一个问题就是可读性差。</strong></p>
 <p>因为触发器存储在数据库中，并且由事件驱动，这就意味着触发器有可能<code v-pre>不受应用层的控制</code>。这对系统维护是非常有挑战的。</p>
 <p>比如，创建触发器用于修改会员储值操作。如果触发器中的操作出了问题，会导致会员储值金额更新失败。我用下面的代码演示一下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; update demo.membermaster set memberdeposit=20 where memberid = 2;
-ERROR 1054 (42S22): Unknown column 'aa' in 'field list'
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">update</span> demo<span class="token punctuation">.</span>membermaster <span class="token keyword">set</span> memberdeposit<span class="token operator">=</span><span class="token number">20</span> <span class="token keyword">where</span> memberid <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+ERROR <span class="token number">1054</span> <span class="token punctuation">(</span><span class="token number">42</span>S22<span class="token punctuation">)</span>: Unknown <span class="token keyword">column</span> <span class="token string">'aa'</span> <span class="token operator">in</span> <span class="token string">'field list'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>结果显示，系统提示错误，字段“aa”不存在。</p>
 <p>这是因为，触发器中的数据插入操作多了一个字段，系统提示错误。可是，如果你不了解这个触发器，很可能会认为是更新语句本身的问题，或者是会员信息表的结构出了问题。说不定你还会给会员信息表添加一个叫“aa”的字段，试图解决这个问题，结果只能是白费力。</p>
 <p><strong>2、相关数据的变更，可能会导致触发器出错。</strong></p>

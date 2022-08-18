@@ -6,7 +6,7 @@
 <h3 id="_1-1-一条数据存储的过程" tabindex="-1"><a class="header-anchor" href="#_1-1-一条数据存储的过程" aria-hidden="true">#</a> 1.1 一条数据存储的过程</h3>
 <p><code v-pre>存储数据是处理数据的第一步</code>。只有正确地把数据存储起来，我们才能进行有效的处理和分析。否则，只能是一团乱麻，无从下手。</p>
 <p>那么，怎样才能把用户各种经营相关的、纷繁复杂的数据，有序、高效地存储起来呢？ 在 MySQL 中，一个完整的数据存储过程总共有 4 步，分别是创建数据库、确认字段、创建数据表、插入数据。</p>
-<p><img src="@source/notes/base_mysql/images/image-20211007155810920.png" alt="image-20211007155810920"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211007155810920.png" alt="image-20211007155810920" loading="lazy"></p>
 <p>我们要先创建一个数据库，而不是直接创建数据表呢？</p>
 <p>因为从系统架构的层次上看，MySQL 数据库系统从大到小依次是<code v-pre>数据库服务器</code>、<code v-pre>数据库</code>、<code v-pre>数据表</code>、数据表的<code v-pre>行与列</code>。</p>
 <p>MySQL 数据库服务器之前已经安装。所以，我们就从创建数据库开始。</p>
@@ -85,7 +85,7 @@
 <tbody>
 <tr>
 <td>INT</td>
-<td>从-2^31到2^31-1的整型数据。存储大小为 4个字节</td>
+<td>从-2<sup>31到2</sup>31-1的整型数据。存储大小为 4个字节</td>
 </tr>
 <tr>
 <td>CHAR(size)</td>
@@ -126,15 +126,15 @@
 <ul>
 <li>方式1：创建数据库</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE DATABASE 数据库名; 
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> 数据库名<span class="token punctuation">;</span> 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>方式2：创建数据库并指定字符集</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE DATABASE 数据库名 CHARACTER SET 字符集;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> 数据库名 <span class="token keyword">CHARACTER</span> <span class="token keyword">SET</span> 字符集<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>方式3：判断数据库是否已经存在，不存在则创建数据库（<code v-pre>推荐</code>）</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE DATABASE IF NOT EXISTS 数据库名; 
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> 数据库名<span class="token punctuation">;</span> 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>如果MySQL中已经存在相关的数据库，则忽略创建语句，不再创建数据库。</p>
 <blockquote>
 <p>注意：DATABASE 不能改名。一些可视化工具可以改名，它是建新库，把所有表复制到新库，再删旧库完成的。</p>
@@ -143,25 +143,25 @@
 <ul>
 <li>查看当前所有的数据库</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW DATABASES; #有一个S，代表多个数据库
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">DATABASES</span><span class="token punctuation">;</span> <span class="token comment">#有一个S，代表多个数据库</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>查看当前正在使用的数据库</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT DATABASE();  #使用的一个 mysql 中的全局函数
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token keyword">DATABASE</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">#使用的一个 mysql 中的全局函数</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>查看指定库下所有的表</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW TABLES FROM 数据库名;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">TABLES</span> <span class="token keyword">FROM</span> 数据库名<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>查看数据库的创建信息</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW CREATE DATABASE 数据库名;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> 数据库名<span class="token punctuation">;</span>
 或者：
-SHOW CREATE DATABASE 数据库名\G
+<span class="token keyword">SHOW</span> <span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> 数据库名\G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>使用/切换数据库</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>USE 数据库名;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">USE</span> 数据库名<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><blockquote>
 <p>注意：要操作表格和数据之前必须先说明是对哪个数据库进行操作，否则就要对所有对象加上“数据库名.”。</p>
 </blockquote>
@@ -169,16 +169,16 @@ SHOW CREATE DATABASE 数据库名\G
 <ul>
 <li>更改数据库字符集</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER DATABASE 数据库名 CHARACTER SET 字符集;  #比如：gbk、utf8等
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">DATABASE</span> 数据库名 <span class="token keyword">CHARACTER</span> <span class="token keyword">SET</span> 字符集<span class="token punctuation">;</span>  <span class="token comment">#比如：gbk、utf8等</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_2-4-删除数据库" tabindex="-1"><a class="header-anchor" href="#_2-4-删除数据库" aria-hidden="true">#</a> 2.4 删除数据库</h3>
 <ul>
 <li>方式1：删除指定的数据库</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP DATABASE 数据库名;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> <span class="token keyword">DATABASE</span> 数据库名<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>方式2：删除指定的数据库（<code v-pre>推荐</code>）</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP DATABASE IF EXISTS 数据库名;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> <span class="token keyword">DATABASE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> 数据库名<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="_3-创建表" tabindex="-1"><a class="header-anchor" href="#_3-创建表" aria-hidden="true">#</a> 3. 创建表</h2>
 <h3 id="_3-1-创建方式1" tabindex="-1"><a class="header-anchor" href="#_3-1-创建方式1" aria-hidden="true">#</a> 3.1 创建方式1</h3>
 <ul>
@@ -190,13 +190,13 @@ SHOW CREATE DATABASE 数据库名\G
 </li>
 <li><strong>语法格式：</strong></li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE [IF NOT EXISTS] 表名(
-	字段1, 数据类型 [约束条件] [默认值],
-	字段2, 数据类型 [约束条件] [默认值],
-	字段3, 数据类型 [约束条件] [默认值],
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token punctuation">[</span><span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span><span class="token punctuation">]</span> 表名<span class="token punctuation">(</span>
+	字段<span class="token number">1</span><span class="token punctuation">,</span> 数据类型 <span class="token punctuation">[</span>约束条件<span class="token punctuation">]</span> <span class="token punctuation">[</span>默认值<span class="token punctuation">]</span><span class="token punctuation">,</span>
+	字段<span class="token number">2</span><span class="token punctuation">,</span> 数据类型 <span class="token punctuation">[</span>约束条件<span class="token punctuation">]</span> <span class="token punctuation">[</span>默认值<span class="token punctuation">]</span><span class="token punctuation">,</span>
+	字段<span class="token number">3</span><span class="token punctuation">,</span> 数据类型 <span class="token punctuation">[</span>约束条件<span class="token punctuation">]</span> <span class="token punctuation">[</span>默认值<span class="token punctuation">]</span><span class="token punctuation">,</span>
 	……
-	[表约束条件]
-);
+	<span class="token punctuation">[</span>表约束条件<span class="token punctuation">]</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><blockquote>
 <p>加上了IF NOT EXISTS关键字，则表示：如果当前数据库中不存在要创建的数据表，则创建数据表；如果当前数据库中已经存在要创建的数据表，则忽略建表语句，不再创建数据表。</p>
 </blockquote>
@@ -215,33 +215,33 @@ SHOW CREATE DATABASE 数据库名\G
 </li>
 <li>创建表举例1：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>-- 创建表
-CREATE TABLE emp (
-  -- int类型
-  emp_id INT,
-  -- 最多保存20个中英文字符
-  emp_name VARCHAR(20),
-  -- 总位数不超过15位
-  salary DOUBLE,
-  -- 日期类型
-  birthday DATE
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DESC emp;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211016160557995.png" alt="image-20211016160557995"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">-- 创建表</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> emp <span class="token punctuation">(</span>
+  <span class="token comment">-- int类型</span>
+  emp_id <span class="token keyword">INT</span><span class="token punctuation">,</span>
+  <span class="token comment">-- 最多保存20个中英文字符</span>
+  emp_name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token comment">-- 总位数不超过15位</span>
+  salary <span class="token keyword">DOUBLE</span><span class="token punctuation">,</span>
+  <span class="token comment">-- 日期类型</span>
+  birthday <span class="token keyword">DATE</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DESC</span> emp<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211016160557995.png" alt="image-20211016160557995" loading="lazy"></p>
 <p>MySQL在执行建表语句时，将id字段的类型设置为int(11)，这里的11实际上是int类型指定的显示宽度，默认的显示宽度为11。也可以在创建数据表的时候指定数据的显示宽度。</p>
 <ul>
 <li>创建表举例2：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE dept(
-    -- int类型，自增
-	deptno INT(2) AUTO_INCREMENT,
-	dname VARCHAR(14),
-	loc VARCHAR(13),
-    -- 主键
-    PRIMARY KEY (deptno)
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DESCRIBE dept;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211016160643445.png" alt="image-20211016160643445"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> dept<span class="token punctuation">(</span>
+    <span class="token comment">-- int类型，自增</span>
+	deptno <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+	dname <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">14</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+	loc <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">13</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">-- 主键</span>
+    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span>deptno<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DESCRIBE</span> dept<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211016160643445.png" alt="image-20211016160643445" loading="lazy"></p>
 <blockquote>
 <p>在MySQL 8.x版本中，不再推荐为INT类型指定显示长度，并在未来的版本中可能去掉这样的语法。</p>
 </blockquote>
@@ -249,7 +249,7 @@ CREATE TABLE emp (
 <ul>
 <li>
 <p>使用 AS subquery 选项，<strong>将创建表和插入数据结合起来</strong></p>
-<p><img src="@source/notes/base_mysql/images/1554997882872.png" alt="1554997882872"></p>
+<p><img src="@source/notes/base_mysql/images/1554997882872.png" alt="1554997882872" loading="lazy"></p>
 </li>
 <li>
 <p>指定的列和子查询中的列要一一对应</p>
@@ -258,22 +258,22 @@ CREATE TABLE emp (
 <p>通过列名和默认值定义列</p>
 </li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE emp1 AS SELECT * FROM employees;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> emp1 <span class="token keyword">AS</span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> employees<span class="token punctuation">;</span>
 
-CREATE TABLE emp2 AS SELECT * FROM employees WHERE 1=2; -- 创建的emp2是空表
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE dept80
-AS 
-SELECT  employee_id, last_name, salary*12 ANNSAL, hire_date
-FROM    employees
-WHERE   department_id = 80;
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> emp2 <span class="token keyword">AS</span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> employees <span class="token keyword">WHERE</span> <span class="token number">1</span><span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span> <span class="token comment">-- 创建的emp2是空表</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> dept80
+<span class="token keyword">AS</span> 
+<span class="token keyword">SELECT</span>  employee_id<span class="token punctuation">,</span> last_name<span class="token punctuation">,</span> salary<span class="token operator">*</span><span class="token number">12</span> ANNSAL<span class="token punctuation">,</span> hire_date
+<span class="token keyword">FROM</span>    employees
+<span class="token keyword">WHERE</span>   department_id <span class="token operator">=</span> <span class="token number">80</span><span class="token punctuation">;</span>
 
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DESCRIBE dept80;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554997998148.png" alt="1554997998148"></p>
-<p><img src="@source/notes/base_mysql/images/1554998004494.png" alt="1554998004494"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DESCRIBE</span> dept80<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554997998148.png" alt="1554997998148" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554998004494.png" alt="1554998004494" loading="lazy"></p>
 <h3 id="_3-3-查看数据表结构" tabindex="-1"><a class="header-anchor" href="#_3-3-查看数据表结构" aria-hidden="true">#</a> 3.3 查看数据表结构</h3>
 <p>在MySQL中创建好数据表之后，可以查看数据表的结构。MySQL支持使用<code v-pre>DESCRIBE/DESC</code>语句查看数据表结构，也支持使用<code v-pre>SHOW CREATE TABLE</code>语句查看数据表结构。</p>
 <p>语法格式如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW CREATE TABLE 表名\G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> 表名\G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>使用SHOW CREATE TABLE语句不仅可以查看表创建时的详细语句，还可以查看存储引擎和字符编码。</p>
 <h2 id="_4-修改表" tabindex="-1"><a class="header-anchor" href="#_4-修改表" aria-hidden="true">#</a> 4. 修改表</h2>
 <p>修改表指的是修改数据库中已经存在的数据表的结构。</p>
@@ -294,11 +294,11 @@ WHERE   department_id = 80;
 </ul>
 <h3 id="_4-1-追加一个列" tabindex="-1"><a class="header-anchor" href="#_4-1-追加一个列" aria-hidden="true">#</a> 4.1 追加一个列</h3>
 <p>语法格式如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE 表名 ADD 【COLUMN】 字段名 字段类型 【FIRST|AFTER 字段名】;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 表名 <span class="token keyword">ADD</span> 【<span class="token keyword">COLUMN</span>】 字段名 字段类型 【<span class="token keyword">FIRST</span><span class="token operator">|</span><span class="token keyword">AFTER</span> 字段名】<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE dept80 
-ADD job_id varchar(15);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554998139815.png" alt="1554998139815"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> dept80 
+<span class="token keyword">ADD</span> job_id <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554998139815.png" alt="1554998139815" loading="lazy"></p>
 <h3 id="_4-2-修改一个列" tabindex="-1"><a class="header-anchor" href="#_4-2-修改一个列" aria-hidden="true">#</a> 4.2 修改一个列</h3>
 <ul>
 <li>
@@ -308,41 +308,41 @@ ADD job_id varchar(15);
 <p>修改字段数据类型、长度、默认值、位置的语法格式如下：</p>
 </li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE 表名 MODIFY 【COLUMN】 字段名1 字段类型 【DEFAULT 默认值】【FIRST|AFTER 字段名2】;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 表名 <span class="token keyword">MODIFY</span> 【<span class="token keyword">COLUMN</span>】 字段名<span class="token number">1</span> 字段类型 【<span class="token keyword">DEFAULT</span> 默认值】【<span class="token keyword">FIRST</span><span class="token operator">|</span><span class="token keyword">AFTER</span> 字段名<span class="token number">2</span>】<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>举例：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE	dept80
-MODIFY last_name VARCHAR(30);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE	dept80
-MODIFY salary double(9,2) default 1000;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span>	dept80
+<span class="token keyword">MODIFY</span> last_name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span>	dept80
+<span class="token keyword">MODIFY</span> salary <span class="token keyword">double</span><span class="token punctuation">(</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token number">1000</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>对默认值的修改只影响今后对表的修改</li>
 <li>此外，还可以通过此种方式修改列的约束。这里暂先不讲。</li>
 </ul>
 <h3 id="_4-3-重命名一个列" tabindex="-1"><a class="header-anchor" href="#_4-3-重命名一个列" aria-hidden="true">#</a> 4.3 重命名一个列</h3>
 <p>使用 CHANGE old_column  new_column  dataType子句重命名列。语法格式如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE 表名 CHANGE 【column】 列名 新列名 新数据类型;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 表名 CHANGE 【<span class="token keyword">column</span>】 列名 新列名 新数据类型<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE  dept80
-CHANGE department_name dept_name varchar(15); 
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span>  dept80
+CHANGE department_name dept_name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_4-4-删除一个列" tabindex="-1"><a class="header-anchor" href="#_4-4-删除一个列" aria-hidden="true">#</a> 4.4 删除一个列</h3>
 <p>删除表中某个字段的语法格式如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE 表名 DROP 【COLUMN】字段名
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 表名 <span class="token keyword">DROP</span> 【<span class="token keyword">COLUMN</span>】字段名
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE  dept80
-DROP COLUMN  job_id; 
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span>  dept80
+<span class="token keyword">DROP</span> <span class="token keyword">COLUMN</span>  job_id<span class="token punctuation">;</span> 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_5-重命名表" tabindex="-1"><a class="header-anchor" href="#_5-重命名表" aria-hidden="true">#</a> 5. 重命名表</h2>
 <ul>
 <li>方式一：使用RENAME</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>RENAME TABLE emp
-TO myemp;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">RENAME</span> <span class="token keyword">TABLE</span> emp
+<span class="token keyword">TO</span> myemp<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>方式二：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER table dept
-RENAME [TO] detail_dept;  -- [TO]可以省略
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">table</span> dept
+<span class="token keyword">RENAME</span> <span class="token punctuation">[</span><span class="token keyword">TO</span><span class="token punctuation">]</span> detail_dept<span class="token punctuation">;</span>  <span class="token comment">-- [TO]可以省略</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>必须是对象的拥有者</li>
 </ul>
@@ -364,12 +364,12 @@ RENAME [TO] detail_dept;  -- [TO]可以省略
 <p>语法格式：</p>
 </li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP TABLE [IF EXISTS] 数据表1 [, 数据表2, …, 数据表n];
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token punctuation">[</span><span class="token keyword">IF</span> <span class="token keyword">EXISTS</span><span class="token punctuation">]</span> 数据表<span class="token number">1</span> <span class="token punctuation">[</span><span class="token punctuation">,</span> 数据表<span class="token number">2</span><span class="token punctuation">,</span> …<span class="token punctuation">,</span> 数据表n<span class="token punctuation">]</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><code v-pre>IF EXISTS</code>的含义为：如果当前数据库中存在相应的数据表，则删除数据表；如果当前数据库中不存在相应的数据表，则忽略删除语句，不再执行删除数据表的操作。</p>
 <ul>
 <li>举例：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP TABLE dept80;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> dept80<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>DROP TABLE 语句不能回滚</li>
 </ul>
@@ -386,7 +386,7 @@ RENAME [TO] detail_dept;  -- [TO]可以省略
 <p>举例：</p>
 </li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>TRUNCATE TABLE detail_dept;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">TRUNCATE</span> <span class="token keyword">TABLE</span> detail_dept<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>
 <p>TRUNCATE语句<strong>不能回滚</strong>，而使用 DELETE 语句删除数据，可以回滚</p>
@@ -395,16 +395,16 @@ RENAME [TO] detail_dept;  -- [TO]可以省略
 <p>对比：</p>
 </li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET autocommit = FALSE;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> autocommit <span class="token operator">=</span> <span class="token boolean">FALSE</span><span class="token punctuation">;</span>
   
-DELETE FROM emp2; 
-#TRUNCATE TABLE emp2;
+<span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> emp2<span class="token punctuation">;</span> 
+<span class="token comment">#TRUNCATE TABLE emp2;</span>
   
-SELECT * FROM emp2;
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> emp2<span class="token punctuation">;</span>
   
-ROLLBACK;
+<span class="token keyword">ROLLBACK</span><span class="token punctuation">;</span>
   
-SELECT * FROM emp2;
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> emp2<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><blockquote>
 <p>阿里开发规范：</p>
 <p>【参考】TRUNCATE TABLE 比 DELETE 速度快，且使用的系统和事务日志资源少，但 TRUNCATE 无事务且不触发 TRIGGER，有可能造成事故，故不建议在开发代码中使用此语句。</p>
@@ -443,7 +443,7 @@ SELECT * FROM emp2;
 <ul>
 <li>正例：无符号值可以避免误存负数，且扩大了表示范围。</li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/image-20211024012735469.png" alt="image-20211024012735469"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211024012735469.png" alt="image-20211024012735469" loading="lazy"></p>
 </li>
 </ul>
 <h3 id="拓展2-如何理解清空表、删除表等操作需谨慎" tabindex="-1"><a class="header-anchor" href="#拓展2-如何理解清空表、删除表等操作需谨慎" aria-hidden="true">#</a> 拓展2：如何理解清空表、删除表等操作需谨慎？！</h3>
@@ -452,35 +452,35 @@ SELECT * FROM emp2;
 <h3 id="拓展3-mysql8新特性—ddl的原子化" tabindex="-1"><a class="header-anchor" href="#拓展3-mysql8新特性—ddl的原子化" aria-hidden="true">#</a> 拓展3：MySQL8新特性—DDL的原子化</h3>
 <p>在MySQL 8.0版本中，InnoDB表的DDL支持事务完整性，即<code v-pre>DDL操作要么成功要么回滚</code>。DDL操作回滚日志写入到data dictionary数据字典表mysql.innodb_ddl_log（该表是隐藏的表，通过show tables无法看到）中，用于回滚操作。通过设置参数，可将DDL操作日志打印输出到MySQL错误日志中。</p>
 <p>分别在MySQL 5.7版本和MySQL 8.0版本中创建数据库和数据表，结果如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE DATABASE mytest;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> mytest<span class="token punctuation">;</span>
 
-USE mytest;
+<span class="token keyword">USE</span> mytest<span class="token punctuation">;</span>
 
-CREATE TABLE book1(
-book_id INT ,
-book_name VARCHAR(255)
-);
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> book1<span class="token punctuation">(</span>
+book_id <span class="token keyword">INT</span> <span class="token punctuation">,</span>
+book_name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-SHOW TABLES;
+<span class="token keyword">SHOW</span> <span class="token keyword">TABLES</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>（1）在MySQL 5.7版本中，测试步骤如下：
 删除数据表book1和数据表book2，结果如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; DROP TABLE book1,book2;
-ERROR 1051 (42S02): Unknown table 'mytest.book2'
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> book1<span class="token punctuation">,</span>book2<span class="token punctuation">;</span>
+ERROR <span class="token number">1051</span> <span class="token punctuation">(</span><span class="token number">42</span>S02<span class="token punctuation">)</span>: Unknown <span class="token keyword">table</span> <span class="token string">'mytest.book2'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>再次查询数据库中的数据表名称，结果如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SHOW TABLES;
-Empty set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SHOW</span> <span class="token keyword">TABLES</span><span class="token punctuation">;</span>
+Empty <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>从结果可以看出，虽然删除操作时报错了，但是仍然删除了数据表book1。</p>
 <p>（2）在MySQL 8.0版本中，测试步骤如下：
 删除数据表book1和数据表book2，结果如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; DROP TABLE book1,book2;
-ERROR 1051 (42S02): Unknown table 'mytest.book2'
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> book1<span class="token punctuation">,</span>book2<span class="token punctuation">;</span>
+ERROR <span class="token number">1051</span> <span class="token punctuation">(</span><span class="token number">42</span>S02<span class="token punctuation">)</span>: Unknown <span class="token keyword">table</span> <span class="token string">'mytest.book2'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>再次查询数据库中的数据表名称，结果如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show tables;
-+------------------+
-| Tables_in_mytest |
-+------------------+
-| book1            |
-+------------------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> <span class="token keyword">tables</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------------------+</span>
+<span class="token operator">|</span> Tables_in_mytest <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------+</span>
+<span class="token operator">|</span> book1            <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>从结果可以看出，数据表book1并没有被删除。</p>
 </div></template>

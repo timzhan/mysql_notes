@@ -6,57 +6,56 @@
 <p>前提条件：这些一起查询的表之间是有关系的（一对一、一对多），它们之间一定是有关联字段，这个关联字段可能建立了外键，也可能没有建立外键。比如：员工表和部门表，这两个表依靠“部门编号”进行关联。</p>
 <h2 id="_1-一个案例引发的多表连接" tabindex="-1"><a class="header-anchor" href="#_1-一个案例引发的多表连接" aria-hidden="true">#</a> 1. 一个案例引发的多表连接</h2>
 <h3 id="_1-1-案例说明" tabindex="-1"><a class="header-anchor" href="#_1-1-案例说明" aria-hidden="true">#</a> 1.1 案例说明</h3>
-<p><img src="@source/notes/base_mysql/images/1554974984600.png" alt="1554974984600"></p>
+<p><img src="@source/notes/base_mysql/images/1554974984600.png" alt="1554974984600" loading="lazy"></p>
 <p>从多个表中获取数据：</p>
-<p><img src="@source/notes/base_mysql/images/1554975020388.png" alt="1554975020388"></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#案例：查询员工的姓名及其部门名称
-SELECT last_name, department_name
-FROM employees, departments;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554975097631.png" alt="1554975097631"></p>
+<p><img src="@source/notes/base_mysql/images/1554975020388.png" alt="1554975020388" loading="lazy"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#案例：查询员工的姓名及其部门名称</span>
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span> department_name
+<span class="token keyword">FROM</span> employees<span class="token punctuation">,</span> departments<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554975097631.png" alt="1554975097631" loading="lazy"></p>
 <p>查询结果：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>+-----------+----------------------+
-| last_name | department_name      |
-+-----------+----------------------+
-| King      | Administration       |
-| King      | Marketing            |
-| King      | Purchasing           |
-| King      | Human Resources      |
-| King      | Shipping             |
-| King      | IT                   |
-| King      | Public Relations     |
-| King      | Sales                |
-| King      | Executive            |
-| King      | Finance              |
-| King      | Accounting           |
-| King      | Treasury             |
-...
-| Gietz     | IT Support           |
-| Gietz     | NOC                  |
-| Gietz     | IT Helpdesk          |
-| Gietz     | Government Sales     |
-| Gietz     | Retail Sales         |
-| Gietz     | Recruiting           |
-| Gietz     | Payroll              |
-+-----------+----------------------+
-2889 rows in set (0.01 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token operator">+</span><span class="token comment">-----------+----------------------+</span>
+<span class="token operator">|</span> last_name <span class="token operator">|</span> department_name      <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------+----------------------+</span>
+<span class="token operator">|</span> King      <span class="token operator">|</span> Administration       <span class="token operator">|</span>
+<span class="token operator">|</span> King      <span class="token operator">|</span> Marketing            <span class="token operator">|</span>
+<span class="token operator">|</span> King      <span class="token operator">|</span> Purchasing           <span class="token operator">|</span>
+<span class="token operator">|</span> King      <span class="token operator">|</span> Human Resources      <span class="token operator">|</span>
+<span class="token operator">|</span> King      <span class="token operator">|</span> Shipping             <span class="token operator">|</span>
+<span class="token operator">|</span> King      <span class="token operator">|</span> IT                   <span class="token operator">|</span>
+<span class="token operator">|</span> King      <span class="token operator">|</span> <span class="token keyword">Public</span> Relations     <span class="token operator">|</span>
+<span class="token operator">|</span> King      <span class="token operator">|</span> Sales                <span class="token operator">|</span>
+<span class="token operator">|</span> King      <span class="token operator">|</span> Executive            <span class="token operator">|</span>
+<span class="token operator">|</span> King      <span class="token operator">|</span> Finance              <span class="token operator">|</span>
+<span class="token operator">|</span> King      <span class="token operator">|</span> Accounting           <span class="token operator">|</span>
+<span class="token operator">|</span> King      <span class="token operator">|</span> Treasury             <span class="token operator">|</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token operator">|</span> Gietz     <span class="token operator">|</span> IT Support           <span class="token operator">|</span>
+<span class="token operator">|</span> Gietz     <span class="token operator">|</span> NOC                  <span class="token operator">|</span>
+<span class="token operator">|</span> Gietz     <span class="token operator">|</span> IT Helpdesk          <span class="token operator">|</span>
+<span class="token operator">|</span> Gietz     <span class="token operator">|</span> Government Sales     <span class="token operator">|</span>
+<span class="token operator">|</span> Gietz     <span class="token operator">|</span> Retail Sales         <span class="token operator">|</span>
+<span class="token operator">|</span> Gietz     <span class="token operator">|</span> Recruiting           <span class="token operator">|</span>
+<span class="token operator">|</span> Gietz     <span class="token operator">|</span> Payroll              <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------+----------------------+</span>
+<span class="token number">2889</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>分析错误情况：</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT COUNT(employee_id) FROM employees;
-#输出107行
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span>employee_id<span class="token punctuation">)</span> <span class="token keyword">FROM</span> employees<span class="token punctuation">;</span>
+<span class="token comment">#输出107行</span>
 
-SELECT COUNT(department_id)FROM departments;
-#输出27行
+<span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span>department_id<span class="token punctuation">)</span><span class="token keyword">FROM</span> departments<span class="token punctuation">;</span>
+<span class="token comment">#输出27行</span>
 
-SELECT 107*27 FROM dual;
+<span class="token keyword">SELECT</span> <span class="token number">107</span><span class="token operator">*</span><span class="token number">27</span> <span class="token keyword">FROM</span> dual<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>我们把上述多表查询中出现的问题称为：笛卡尔积的错误。</p>
 <h3 id="_1-2-笛卡尔积-或交叉连接-的理解" tabindex="-1"><a class="header-anchor" href="#_1-2-笛卡尔积-或交叉连接-的理解" aria-hidden="true">#</a> 1.2 笛卡尔积（或交叉连接）的理解</h3>
 <p>笛卡尔乘积是一个数学运算。假设我有两个集合 X 和 Y，那么 X 和 Y 的笛卡尔积就是 X 和 Y 的所有可能组合，也就是第一个对象来自于 X，第二个对象来自于 Y 的所有可能。组合的个数即为两个集合中元素个数的乘积数。</p>
-<img src="https://images0.cnblogs.com/i/595518/201403/302046364841977.jpg" alt="img" style="zoom:80%;" />
 <p>SQL92中，笛卡尔积也称为<code v-pre>交叉连接</code>，英文是 <code v-pre>CROSS JOIN</code>。在 SQL99 中也是使用 CROSS JOIN表示交叉连接。它的作用就是可以把任意表进行连接，即使这两张表不相关。在MySQL中如下情况会出现笛卡尔积：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#查询员工姓名和所在部门名称
-SELECT last_name,department_name FROM employees,departments;
-SELECT last_name,department_name FROM employees CROSS JOIN departments;
-SELECT last_name,department_name FROM employees INNER JOIN departments;
-SELECT last_name,department_name FROM employees JOIN departments;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#查询员工姓名和所在部门名称</span>
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>department_name <span class="token keyword">FROM</span> employees<span class="token punctuation">,</span>departments<span class="token punctuation">;</span>
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>department_name <span class="token keyword">FROM</span> employees <span class="token keyword">CROSS</span> <span class="token keyword">JOIN</span> departments<span class="token punctuation">;</span>
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>department_name <span class="token keyword">FROM</span> employees <span class="token keyword">INNER</span> <span class="token keyword">JOIN</span> departments<span class="token punctuation">;</span>
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>department_name <span class="token keyword">FROM</span> employees <span class="token keyword">JOIN</span> departments<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_1-3-案例分析与问题解决" tabindex="-1"><a class="header-anchor" href="#_1-3-案例分析与问题解决" aria-hidden="true">#</a> 1.3 案例分析与问题解决</h3>
 <ul>
 <li>
@@ -72,19 +71,19 @@ SELECT last_name,department_name FROM employees JOIN departments;
 </li>
 <li>
 <p>加入连接条件后，查询语法：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT	table1.column, table2.column
-FROM	table1, table2
-WHERE	table1.column1 = table2.column2;  #连接条件
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span>	table1<span class="token punctuation">.</span><span class="token keyword">column</span><span class="token punctuation">,</span> table2<span class="token punctuation">.</span><span class="token keyword">column</span>
+<span class="token keyword">FROM</span>	table1<span class="token punctuation">,</span> table2
+<span class="token keyword">WHERE</span>	table1<span class="token punctuation">.</span>column1 <span class="token operator">=</span> table2<span class="token punctuation">.</span>column2<span class="token punctuation">;</span>  <span class="token comment">#连接条件</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li><strong>在 WHERE子句中写入连接条件。</strong></li>
 </ul>
 </li>
 <li>
 <p>正确写法：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#案例：查询员工的姓名及其部门名称
-SELECT last_name, department_name
-FROM employees, departments
-WHERE employees.department_id = departments.department_id;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#案例：查询员工的姓名及其部门名称</span>
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span> department_name
+<span class="token keyword">FROM</span> employees<span class="token punctuation">,</span> departments
+<span class="token keyword">WHERE</span> employees<span class="token punctuation">.</span>department_id <span class="token operator">=</span> departments<span class="token punctuation">.</span>department_id<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
 <li>
 <p><strong>在表中有相同列时，在列名之前加上表名前缀。</strong></p>
@@ -93,24 +92,24 @@ WHERE employees.department_id = departments.department_id;
 <h2 id="_2-多表查询分类讲解" tabindex="-1"><a class="header-anchor" href="#_2-多表查询分类讲解" aria-hidden="true">#</a> 2. 多表查询分类讲解</h2>
 <h3 id="分类1-等值连接-vs-非等值连接" tabindex="-1"><a class="header-anchor" href="#分类1-等值连接-vs-非等值连接" aria-hidden="true">#</a> 分类1：等值连接 vs 非等值连接</h3>
 <h4 id="等值连接" tabindex="-1"><a class="header-anchor" href="#等值连接" aria-hidden="true">#</a> 等值连接</h4>
-<p><img src="@source/notes/base_mysql/images/1554975496900.png" alt="1554975496900"></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT employees.employee_id, employees.last_name, 
-       employees.department_id, departments.department_id,
-       departments.location_id
-FROM   employees, departments
-WHERE  employees.department_id = departments.department_id;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554975522600.png" alt="1554975522600"></p>
-<p><img src="@source/notes/base_mysql/images/1554975526339.png" alt="1554975526339"></p>
+<p><img src="@source/notes/base_mysql/images/1554975496900.png" alt="1554975496900" loading="lazy"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> employees<span class="token punctuation">.</span>employee_id<span class="token punctuation">,</span> employees<span class="token punctuation">.</span>last_name<span class="token punctuation">,</span> 
+       employees<span class="token punctuation">.</span>department_id<span class="token punctuation">,</span> departments<span class="token punctuation">.</span>department_id<span class="token punctuation">,</span>
+       departments<span class="token punctuation">.</span>location_id
+<span class="token keyword">FROM</span>   employees<span class="token punctuation">,</span> departments
+<span class="token keyword">WHERE</span>  employees<span class="token punctuation">.</span>department_id <span class="token operator">=</span> departments<span class="token punctuation">.</span>department_id<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554975522600.png" alt="1554975522600" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554975526339.png" alt="1554975526339" loading="lazy"></p>
 <p><strong>拓展1：多个连接条件与 AND 操作符</strong></p>
-<p><img src="@source/notes/base_mysql/images/1554975606231.png" alt="1554975606231"></p>
+<p><img src="@source/notes/base_mysql/images/1554975606231.png" alt="1554975606231" loading="lazy"></p>
 <p><strong>拓展2：区分重复的列名</strong></p>
 <ul>
 <li><strong>多个表中有相同列时，必须在列名之前加上表名前缀。</strong></li>
 <li>在不同表中具有相同列名的列可以用<code v-pre>表名</code>加以区分。</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT employees.last_name, departments.department_name,employees.department_id
-FROM employees, departments
-WHERE employees.department_id = departments.department_id;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> employees<span class="token punctuation">.</span>last_name<span class="token punctuation">,</span> departments<span class="token punctuation">.</span>department_name<span class="token punctuation">,</span>employees<span class="token punctuation">.</span>department_id
+<span class="token keyword">FROM</span> employees<span class="token punctuation">,</span> departments
+<span class="token keyword">WHERE</span> employees<span class="token punctuation">.</span>department_id <span class="token operator">=</span> departments<span class="token punctuation">.</span>department_id<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>拓展3：表的别名</strong></p>
 <ul>
 <li>
@@ -120,10 +119,10 @@ WHERE employees.department_id = departments.department_id;
 <p>列名前使用表名前缀可以提高查询效率。</p>
 </li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT e.employee_id, e.last_name, e.department_id,
-       d.department_id, d.location_id
-FROM   employees e , departments d
-WHERE  e.department_id = d.department_id;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> e<span class="token punctuation">.</span>employee_id<span class="token punctuation">,</span> e<span class="token punctuation">.</span>last_name<span class="token punctuation">,</span> e<span class="token punctuation">.</span>department_id<span class="token punctuation">,</span>
+       d<span class="token punctuation">.</span>department_id<span class="token punctuation">,</span> d<span class="token punctuation">.</span>location_id
+<span class="token keyword">FROM</span>   employees e <span class="token punctuation">,</span> departments d
+<span class="token keyword">WHERE</span>  e<span class="token punctuation">.</span>department_id <span class="token operator">=</span> d<span class="token punctuation">.</span>department_id<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><blockquote>
 <p>需要注意的是，如果我们使用了表的别名，在查询字段中、过滤条件中就只能使用别名进行代替，不能使用原有的表名，否则就会报错。</p>
 </blockquote>
@@ -131,36 +130,36 @@ WHERE  e.department_id = d.department_id;
 <p><code v-pre>阿里开发规范</code>：</p>
 <p>【<code v-pre>强制</code>】对于数据库中表记录的查询和变更，只要涉及多个表，都需要在列名前加表的别名（或 表名）进行限定。</p>
 <p><code v-pre>说明</code>：对多表进行查询记录、更新记录、删除记录时，如果对操作列没有限定表的别名（或表名），并且操作列在多个表中存在时，就会抛异常。</p>
-<p><code v-pre>正例</code>：select t1.name from table_first as t1 , table_second as t2 where t1.id=t2.id;</p>
+<p><code v-pre>正例</code>：select <a href="http://t1.name" target="_blank" rel="noopener noreferrer">t1.name<ExternalLinkIcon/></a> from table_first as t1 , table_second as t2 where <a href="http://t1.id=t2.id" target="_blank" rel="noopener noreferrer">t1.id=t2.id<ExternalLinkIcon/></a>;</p>
 <p><code v-pre>反例</code>：在某业务中，由于多表关联查询语句没有加表的别名（或表名）的限制，正常运行两年后，最近在 某个表中增加一个同名字段，在预发布环境做数据库变更后，线上查询语句出现出 1052 异常：Column  'name' in field list is ambiguous。</p>
 </blockquote>
 <p><strong>拓展4：连接多个表</strong></p>
-<p><img src="@source/notes/base_mysql/images/1554978354431.png" alt="1554978354431"></p>
+<p><img src="@source/notes/base_mysql/images/1554978354431.png" alt="1554978354431" loading="lazy"></p>
 <p>**总结：连接 n个表,至少需要n-1个连接条件。**比如，连接三个表，至少需要两个连接条件。</p>
 <p>练习：查询出公司员工的 last_name,department_name, city</p>
 <h4 id="非等值连接" tabindex="-1"><a class="header-anchor" href="#非等值连接" aria-hidden="true">#</a> 非等值连接</h4>
-<p><img src="@source/notes/base_mysql/images/1554978442447.png" alt="1554978442447"></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT e.last_name, e.salary, j.grade_level
-FROM   employees e, job_grades j
-WHERE  e.salary BETWEEN j.lowest_sal AND j.highest_sal;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554978477013.png" alt="1554978477013"></p>
-<p><img src="@source/notes/base_mysql/images/1554978482652.png" alt="1554978482652"></p>
+<p><img src="@source/notes/base_mysql/images/1554978442447.png" alt="1554978442447" loading="lazy"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> e<span class="token punctuation">.</span>last_name<span class="token punctuation">,</span> e<span class="token punctuation">.</span>salary<span class="token punctuation">,</span> j<span class="token punctuation">.</span>grade_level
+<span class="token keyword">FROM</span>   employees e<span class="token punctuation">,</span> job_grades j
+<span class="token keyword">WHERE</span>  e<span class="token punctuation">.</span>salary <span class="token operator">BETWEEN</span> j<span class="token punctuation">.</span>lowest_sal <span class="token operator">AND</span> j<span class="token punctuation">.</span>highest_sal<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554978477013.png" alt="1554978477013" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554978482652.png" alt="1554978482652" loading="lazy"></p>
 <h3 id="分类2-自连接-vs-非自连接" tabindex="-1"><a class="header-anchor" href="#分类2-自连接-vs-非自连接" aria-hidden="true">#</a> 分类2：自连接 vs 非自连接</h3>
-<p><img src="@source/notes/base_mysql/images/1554978514321.png" alt="1554978514321"></p>
+<p><img src="@source/notes/base_mysql/images/1554978514321.png" alt="1554978514321" loading="lazy"></p>
 <ul>
 <li>当table1和table2本质上是同一张表，只是用取别名的方式虚拟成两张表以代表不同的意义。然后两个表再进行内连接，外连接等查询。</li>
 </ul>
 <p><strong>题目：查询employees表，返回“Xxx  works for Xxx”</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT CONCAT(worker.last_name ,' works for ' 
-       , manager.last_name)
-FROM   employees worker, employees manager
-WHERE  worker.manager_id = manager.employee_id ;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554978684947.png" alt="1554978684947"></p>
-<p><img src="@source/notes/base_mysql/images/1554978690764.png" alt="1554978690764"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> CONCAT<span class="token punctuation">(</span>worker<span class="token punctuation">.</span>last_name <span class="token punctuation">,</span><span class="token string">' works for '</span> 
+       <span class="token punctuation">,</span> manager<span class="token punctuation">.</span>last_name<span class="token punctuation">)</span>
+<span class="token keyword">FROM</span>   employees worker<span class="token punctuation">,</span> employees manager
+<span class="token keyword">WHERE</span>  worker<span class="token punctuation">.</span>manager_id <span class="token operator">=</span> manager<span class="token punctuation">.</span>employee_id <span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554978684947.png" alt="1554978684947" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554978690764.png" alt="1554978690764" loading="lazy"></p>
 <p>练习：查询出last_name为 ‘Chen’ 的员工的 manager 的信息。</p>
 <h3 id="分类3-内连接-vs-外连接" tabindex="-1"><a class="header-anchor" href="#分类3-内连接-vs-外连接" aria-hidden="true">#</a> 分类3：内连接 vs 外连接</h3>
 <p>除了查询满足条件的记录以外，外连接还可以查询某一方不满足条件的记录。</p>
-<p><img src="@source/notes/base_mysql/images/1554978955659.png" alt="1554978955659"></p>
+<p><img src="@source/notes/base_mysql/images/1554978955659.png" alt="1554978955659" loading="lazy"></p>
 <ul>
 <li>
 <p>内连接: 合并具有同一列的两个以上的表的行, <strong>结果集中不包含一个表与另一个表不匹配的行</strong></p>
@@ -180,15 +179,15 @@ WHERE  worker.manager_id = manager.employee_id ;
 </li>
 <li>
 <p>Oracle 对 SQL92 支持较好，而 MySQL 则不支持 SQL92 的外连接。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#左外连接
-SELECT last_name,department_name
-FROM employees ,departments
-WHERE employees.department_id = departments.department_id(+);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#左外连接</span>
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees <span class="token punctuation">,</span>departments
+<span class="token keyword">WHERE</span> employees<span class="token punctuation">.</span>department_id <span class="token operator">=</span> departments<span class="token punctuation">.</span>department_id<span class="token punctuation">(</span><span class="token operator">+</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-#右外连接
-SELECT last_name,department_name
-FROM employees ,departments
-WHERE employees.department_id(+) = departments.department_id;
+<span class="token comment">#右外连接</span>
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees <span class="token punctuation">,</span>departments
+<span class="token keyword">WHERE</span> employees<span class="token punctuation">.</span>department_id<span class="token punctuation">(</span><span class="token operator">+</span><span class="token punctuation">)</span> <span class="token operator">=</span> departments<span class="token punctuation">.</span>department_id<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
 <li>
 <p>而且在 SQL92 中，只有左外连接和右外连接，没有满（或全）外连接。</p>
@@ -199,17 +198,17 @@ WHERE employees.department_id(+) = departments.department_id;
 <ul>
 <li>
 <p>使用JOIN...ON子句创建连接的语法结构：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT table1.column, table2.column,table3.column
-FROM table1
-    JOIN table2 ON table1 和 table2 的连接条件
-        JOIN table3 ON table2 和 table3 的连接条件
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> table1<span class="token punctuation">.</span><span class="token keyword">column</span><span class="token punctuation">,</span> table2<span class="token punctuation">.</span><span class="token keyword">column</span><span class="token punctuation">,</span>table3<span class="token punctuation">.</span><span class="token keyword">column</span>
+<span class="token keyword">FROM</span> table1
+    <span class="token keyword">JOIN</span> table2 <span class="token keyword">ON</span> table1 和 table2 的连接条件
+        <span class="token keyword">JOIN</span> table3 <span class="token keyword">ON</span> table2 和 table3 的连接条件
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>它的嵌套逻辑类似我们使用的 FOR 循环：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>for t1 in table1:
-    for t2 in table2:
-       if condition1:
-           for t3 in table3:
-              if condition2:
-                  output t1 + t2 + t3
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">for</span> t1 <span class="token operator">in</span> table1:
+    <span class="token keyword">for</span> t2 <span class="token operator">in</span> table2:
+       <span class="token keyword">if</span> condition1:
+           <span class="token keyword">for</span> t3 <span class="token operator">in</span> table3:
+              <span class="token keyword">if</span> condition2:
+                  output t1 <span class="token operator">+</span> t2 <span class="token operator">+</span> t3
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>SQL99 采用的这种嵌套结构非常清爽、层次性更强、可读性更强，即使再多的表进行连接也都清晰可见。如果你采用 SQL92，可读性就会大打折扣。</p>
 </li>
 <li>
@@ -226,61 +225,61 @@ FROM table1
 <ul>
 <li>语法：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT 字段列表
-FROM A表 INNER JOIN B表
-ON 关联条件
-WHERE 等其他子句;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> 字段列表
+<span class="token keyword">FROM</span> A表 <span class="token keyword">INNER</span> <span class="token keyword">JOIN</span> B表
+<span class="token keyword">ON</span> 关联条件
+<span class="token keyword">WHERE</span> 等其他子句<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>题目1：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT e.employee_id, e.last_name, e.department_id, 
-       d.department_id, d.location_id
-FROM   employees e JOIN departments d
-ON     (e.department_id = d.department_id);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554979073996.png" alt="1554979073996"></p>
-<p><img src="@source/notes/base_mysql/images/1554979079395.png" alt="1554979079395"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> e<span class="token punctuation">.</span>employee_id<span class="token punctuation">,</span> e<span class="token punctuation">.</span>last_name<span class="token punctuation">,</span> e<span class="token punctuation">.</span>department_id<span class="token punctuation">,</span> 
+       d<span class="token punctuation">.</span>department_id<span class="token punctuation">,</span> d<span class="token punctuation">.</span>location_id
+<span class="token keyword">FROM</span>   employees e <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">ON</span>     <span class="token punctuation">(</span>e<span class="token punctuation">.</span>department_id <span class="token operator">=</span> d<span class="token punctuation">.</span>department_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554979073996.png" alt="1554979073996" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554979079395.png" alt="1554979079395" loading="lazy"></p>
 <p>题目2：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT employee_id, city, department_name
-FROM   employees e 
-JOIN   departments d
-ON     d.department_id = e.department_id 
-JOIN   locations l
-ON     d.location_id = l.location_id;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554979110008.png" alt="1554979110008"></p>
-<p><img src="@source/notes/base_mysql/images/1554979115642.png" alt="1554979115642"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span> city<span class="token punctuation">,</span> department_name
+<span class="token keyword">FROM</span>   employees e 
+<span class="token keyword">JOIN</span>   departments d
+<span class="token keyword">ON</span>     d<span class="token punctuation">.</span>department_id <span class="token operator">=</span> e<span class="token punctuation">.</span>department_id 
+<span class="token keyword">JOIN</span>   locations l
+<span class="token keyword">ON</span>     d<span class="token punctuation">.</span>location_id <span class="token operator">=</span> l<span class="token punctuation">.</span>location_id<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554979110008.png" alt="1554979110008" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554979115642.png" alt="1554979115642" loading="lazy"></p>
 <h3 id="_3-3-外连接-outer-join-的实现" tabindex="-1"><a class="header-anchor" href="#_3-3-外连接-outer-join-的实现" aria-hidden="true">#</a> 3.3 外连接(OUTER JOIN)的实现</h3>
 <h4 id="_3-3-1-左外连接-left-outer-join" tabindex="-1"><a class="header-anchor" href="#_3-3-1-左外连接-left-outer-join" aria-hidden="true">#</a> 3.3.1 左外连接(LEFT OUTER JOIN)</h4>
 <ul>
 <li>语法：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#实现查询结果是A
-SELECT 字段列表
-FROM A表 LEFT JOIN B表
-ON 关联条件
-WHERE 等其他子句;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#实现查询结果是A</span>
+<span class="token keyword">SELECT</span> 字段列表
+<span class="token keyword">FROM</span> A表 <span class="token keyword">LEFT</span> <span class="token keyword">JOIN</span> B表
+<span class="token keyword">ON</span> 关联条件
+<span class="token keyword">WHERE</span> 等其他子句<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>举例：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT e.last_name, e.department_id, d.department_name
-FROM   employees e
-LEFT OUTER JOIN departments d
-ON   (e.department_id = d.department_id) ;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554979200961.png" alt="1554979200961"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> e<span class="token punctuation">.</span>last_name<span class="token punctuation">,</span> e<span class="token punctuation">.</span>department_id<span class="token punctuation">,</span> d<span class="token punctuation">.</span>department_name
+<span class="token keyword">FROM</span>   employees e
+<span class="token keyword">LEFT</span> <span class="token keyword">OUTER</span> <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">ON</span>   <span class="token punctuation">(</span>e<span class="token punctuation">.</span>department_id <span class="token operator">=</span> d<span class="token punctuation">.</span>department_id<span class="token punctuation">)</span> <span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554979200961.png" alt="1554979200961" loading="lazy"></p>
 <h4 id="_3-3-2-右外连接-right-outer-join" tabindex="-1"><a class="header-anchor" href="#_3-3-2-右外连接-right-outer-join" aria-hidden="true">#</a> 3.3.2 右外连接(RIGHT OUTER JOIN)</h4>
 <ul>
 <li>语法：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#实现查询结果是B
-SELECT 字段列表
-FROM A表 RIGHT JOIN B表
-ON 关联条件
-WHERE 等其他子句;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#实现查询结果是B</span>
+<span class="token keyword">SELECT</span> 字段列表
+<span class="token keyword">FROM</span> A表 <span class="token keyword">RIGHT</span> <span class="token keyword">JOIN</span> B表
+<span class="token keyword">ON</span> 关联条件
+<span class="token keyword">WHERE</span> 等其他子句<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>举例：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT e.last_name, e.department_id, d.department_name
-FROM   employees e
-RIGHT OUTER JOIN departments d
-ON    (e.department_id = d.department_id) ;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554979243194.png" alt="1554979243194"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> e<span class="token punctuation">.</span>last_name<span class="token punctuation">,</span> e<span class="token punctuation">.</span>department_id<span class="token punctuation">,</span> d<span class="token punctuation">.</span>department_name
+<span class="token keyword">FROM</span>   employees e
+<span class="token keyword">RIGHT</span> <span class="token keyword">OUTER</span> <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">ON</span>    <span class="token punctuation">(</span>e<span class="token punctuation">.</span>department_id <span class="token operator">=</span> d<span class="token punctuation">.</span>department_id<span class="token punctuation">)</span> <span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554979243194.png" alt="1554979243194" loading="lazy"></p>
 <blockquote>
 <p>需要注意的是，LEFT JOIN 和 RIGHT JOIN 只存在于 SQL99 及以后的标准中，在 SQL92 中不存在，只能用 (+) 表示。</p>
 </blockquote>
@@ -294,9 +293,9 @@ ON    (e.department_id = d.department_id) ;
 <p><strong>合并查询结果</strong>
 利用UNION关键字，可以给出多条SELECT语句，并将它们的结果组合成单个结果集。合并时，两个表对应的列数和数据类型必须相同，并且相互对应。各个SELECT语句之间使用UNION或UNION ALL关键字分隔。</p>
 <p>语法格式：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT column,... FROM table1
-UNION [ALL]
-SELECT column,... FROM table2
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token keyword">column</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">FROM</span> table1
+<span class="token keyword">UNION</span> <span class="token punctuation">[</span><span class="token keyword">ALL</span><span class="token punctuation">]</span>
+<span class="token keyword">SELECT</span> <span class="token keyword">column</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">FROM</span> table2
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>UNION操作符</strong></p>
 <img src="@source/notes/base_mysql/images/1554979317187.png" alt="1554979317187" style="zoom: 67%;" />
 <p>UNION 操作符返回两个查询的结果集的并集，去除重复记录。</p>
@@ -307,131 +306,131 @@ SELECT column,... FROM table2
 <p>注意：执行UNION ALL语句时所需要的资源比UNION语句少。如果明确知道合并数据后的结果数据不存在重复数据，或者不需要去除重复的数据，则尽量使用UNION ALL语句，以提高数据查询的效率。</p>
 </blockquote>
 <p>举例：查询部门编号&gt;90或邮箱包含a的员工信息</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#方式1
-SELECT * FROM employees WHERE email LIKE '%a%' OR department_id&gt;90;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#方式2
-SELECT * FROM employees  WHERE email LIKE '%a%'
-UNION
-SELECT * FROM employees  WHERE department_id&gt;90;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#方式1</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> employees <span class="token keyword">WHERE</span> email <span class="token operator">LIKE</span> <span class="token string">'%a%'</span> <span class="token operator">OR</span> department_id<span class="token operator">></span><span class="token number">90</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#方式2</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> employees  <span class="token keyword">WHERE</span> email <span class="token operator">LIKE</span> <span class="token string">'%a%'</span>
+<span class="token keyword">UNION</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> employees  <span class="token keyword">WHERE</span> department_id<span class="token operator">></span><span class="token number">90</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例：查询中国用户中男性的信息以及美国用户中年男性的用户信息</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT id,cname FROM t_chinamale WHERE csex='男'
-UNION ALL
-SELECT id,tname FROM t_usmale WHERE tGender='male';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> id<span class="token punctuation">,</span>cname <span class="token keyword">FROM</span> t_chinamale <span class="token keyword">WHERE</span> csex<span class="token operator">=</span><span class="token string">'男'</span>
+<span class="token keyword">UNION</span> <span class="token keyword">ALL</span>
+<span class="token keyword">SELECT</span> id<span class="token punctuation">,</span>tname <span class="token keyword">FROM</span> t_usmale <span class="token keyword">WHERE</span> tGender<span class="token operator">=</span><span class="token string">'male'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_5-7种sql-joins的实现" tabindex="-1"><a class="header-anchor" href="#_5-7种sql-joins的实现" aria-hidden="true">#</a> 5. 7种SQL JOINS的实现</h2>
 <img src="@source/notes/base_mysql/images/1554979255233.png" alt="1554979255233" style="zoom:80%;" />
 <h3 id="_5-7-1-代码实现" tabindex="-1"><a class="header-anchor" href="#_5-7-1-代码实现" aria-hidden="true">#</a> 5.7.1 代码实现</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#中图：内连接 A∩B
-SELECT employee_id,last_name,department_name
-FROM employees e JOIN departments d
-ON e.`department_id` = d.`department_id`;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#左上图：左外连接
-SELECT employee_id,last_name,department_name
-FROM employees e LEFT JOIN departments d
-ON e.`department_id` = d.`department_id`;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#右上图：右外连接
-SELECT employee_id,last_name,department_name
-FROM employees e RIGHT JOIN departments d
-ON e.`department_id` = d.`department_id`;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#左中图：A - A∩B
-SELECT employee_id,last_name,department_name
-FROM employees e LEFT JOIN departments d
-ON e.`department_id` = d.`department_id`
-WHERE d.`department_id` IS NULL
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#右中图：B-A∩B
-SELECT employee_id,last_name,department_name
-FROM employees e RIGHT JOIN departments d
-ON e.`department_id` = d.`department_id`
-WHERE e.`department_id` IS NULL
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#左下图：满外连接
-# 左中图 + 右上图  A∪B
-SELECT employee_id,last_name,department_name
-FROM employees e LEFT JOIN departments d
-ON e.`department_id` = d.`department_id`
-WHERE d.`department_id` IS NULL
-UNION ALL  #没有去重操作，效率高
-SELECT employee_id,last_name,department_name
-FROM employees e RIGHT JOIN departments d
-ON e.`department_id` = d.`department_id`;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#右下图
-#左中图 + 右中图  A ∪B- A∩B 或者 (A -  A∩B) ∪ （B - A∩B）
-SELECT employee_id,last_name,department_name
-FROM employees e LEFT JOIN departments d
-ON e.`department_id` = d.`department_id`
-WHERE d.`department_id` IS NULL
-UNION ALL
-SELECT employee_id,last_name,department_name
-FROM employees e RIGHT JOIN departments d
-ON e.`department_id` = d.`department_id`
-WHERE e.`department_id` IS NULL
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#中图：内连接 A∩B</span>
+<span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span>last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees e <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">ON</span> e<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">=</span> d<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#左上图：左外连接</span>
+<span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span>last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees e <span class="token keyword">LEFT</span> <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">ON</span> e<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">=</span> d<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#右上图：右外连接</span>
+<span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span>last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees e <span class="token keyword">RIGHT</span> <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">ON</span> e<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">=</span> d<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#左中图：A - A∩B</span>
+<span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span>last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees e <span class="token keyword">LEFT</span> <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">ON</span> e<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">=</span> d<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span>
+<span class="token keyword">WHERE</span> d<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">IS</span> <span class="token boolean">NULL</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#右中图：B-A∩B</span>
+<span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span>last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees e <span class="token keyword">RIGHT</span> <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">ON</span> e<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">=</span> d<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span>
+<span class="token keyword">WHERE</span> e<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">IS</span> <span class="token boolean">NULL</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#左下图：满外连接</span>
+<span class="token comment"># 左中图 + 右上图  A∪B</span>
+<span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span>last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees e <span class="token keyword">LEFT</span> <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">ON</span> e<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">=</span> d<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span>
+<span class="token keyword">WHERE</span> d<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">IS</span> <span class="token boolean">NULL</span>
+<span class="token keyword">UNION</span> <span class="token keyword">ALL</span>  <span class="token comment">#没有去重操作，效率高</span>
+<span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span>last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees e <span class="token keyword">RIGHT</span> <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">ON</span> e<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">=</span> d<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#右下图</span>
+<span class="token comment">#左中图 + 右中图  A ∪B- A∩B 或者 (A -  A∩B) ∪ （B - A∩B）</span>
+<span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span>last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees e <span class="token keyword">LEFT</span> <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">ON</span> e<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">=</span> d<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span>
+<span class="token keyword">WHERE</span> d<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">IS</span> <span class="token boolean">NULL</span>
+<span class="token keyword">UNION</span> <span class="token keyword">ALL</span>
+<span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span>last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees e <span class="token keyword">RIGHT</span> <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">ON</span> e<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">=</span> d<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span>
+<span class="token keyword">WHERE</span> e<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">IS</span> <span class="token boolean">NULL</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_5-7-2-语法格式小结" tabindex="-1"><a class="header-anchor" href="#_5-7-2-语法格式小结" aria-hidden="true">#</a> 5.7.2 语法格式小结</h3>
 <ul>
 <li>左中图</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#实现A -  A∩B
-select 字段列表
-from A表 left join B表
-on 关联条件
-where 从表关联字段 is null and 等其他子句;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#实现A -  A∩B</span>
+<span class="token keyword">select</span> 字段列表
+<span class="token keyword">from</span> A表 <span class="token keyword">left</span> <span class="token keyword">join</span> B表
+<span class="token keyword">on</span> 关联条件
+<span class="token keyword">where</span> 从表关联字段 <span class="token operator">is</span> <span class="token boolean">null</span> <span class="token operator">and</span> 等其他子句<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>右中图</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#实现B -  A∩B
-select 字段列表
-from A表 right join B表
-on 关联条件
-where 从表关联字段 is null and 等其他子句;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#实现B -  A∩B</span>
+<span class="token keyword">select</span> 字段列表
+<span class="token keyword">from</span> A表 <span class="token keyword">right</span> <span class="token keyword">join</span> B表
+<span class="token keyword">on</span> 关联条件
+<span class="token keyword">where</span> 从表关联字段 <span class="token operator">is</span> <span class="token boolean">null</span> <span class="token operator">and</span> 等其他子句<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>左下图</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#实现查询结果是A∪B
-#用左外的A，union 右外的B
-select 字段列表
-from A表 left join B表
-on 关联条件
-where 等其他子句
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#实现查询结果是A∪B</span>
+<span class="token comment">#用左外的A，union 右外的B</span>
+<span class="token keyword">select</span> 字段列表
+<span class="token keyword">from</span> A表 <span class="token keyword">left</span> <span class="token keyword">join</span> B表
+<span class="token keyword">on</span> 关联条件
+<span class="token keyword">where</span> 等其他子句
 
-union 
+<span class="token keyword">union</span> 
 
-select 字段列表
-from A表 right join B表
-on 关联条件
-where 等其他子句;
+<span class="token keyword">select</span> 字段列表
+<span class="token keyword">from</span> A表 <span class="token keyword">right</span> <span class="token keyword">join</span> B表
+<span class="token keyword">on</span> 关联条件
+<span class="token keyword">where</span> 等其他子句<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>右下图</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#实现A∪B -  A∩B  或   (A -  A∩B) ∪ （B - A∩B）
-#使用左外的 (A -  A∩B)  union 右外的（B - A∩B）
-select 字段列表
-from A表 left join B表
-on 关联条件
-where 从表关联字段 is null and 等其他子句
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#实现A∪B -  A∩B  或   (A -  A∩B) ∪ （B - A∩B）</span>
+<span class="token comment">#使用左外的 (A -  A∩B)  union 右外的（B - A∩B）</span>
+<span class="token keyword">select</span> 字段列表
+<span class="token keyword">from</span> A表 <span class="token keyword">left</span> <span class="token keyword">join</span> B表
+<span class="token keyword">on</span> 关联条件
+<span class="token keyword">where</span> 从表关联字段 <span class="token operator">is</span> <span class="token boolean">null</span> <span class="token operator">and</span> 等其他子句
 
-union
+<span class="token keyword">union</span>
 
-select 字段列表
-from A表 right join B表
-on 关联条件
-where 从表关联字段 is null and 等其他子句
+<span class="token keyword">select</span> 字段列表
+<span class="token keyword">from</span> A表 <span class="token keyword">right</span> <span class="token keyword">join</span> B表
+<span class="token keyword">on</span> 关联条件
+<span class="token keyword">where</span> 从表关联字段 <span class="token operator">is</span> <span class="token boolean">null</span> <span class="token operator">and</span> 等其他子句
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_6-sql99语法新特性" tabindex="-1"><a class="header-anchor" href="#_6-sql99语法新特性" aria-hidden="true">#</a> 6. SQL99语法新特性</h2>
 <h3 id="_6-1-自然连接" tabindex="-1"><a class="header-anchor" href="#_6-1-自然连接" aria-hidden="true">#</a> 6.1 自然连接</h3>
 <p>SQL99 在 SQL92 的基础上提供了一些特殊语法，比如 <code v-pre>NATURAL JOIN</code> 用来表示自然连接。我们可以把自然连接理解为 SQL92 中的等值连接。它会帮你自动查询两张连接表中<code v-pre>所有相同的字段</code>，然后进行<code v-pre>等值连接</code>。</p>
 <p>在SQL92标准中：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT employee_id,last_name,department_name
-FROM employees e JOIN departments d
-ON e.`department_id` = d.`department_id`
-AND e.`manager_id` = d.`manager_id`;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span>last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees e <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">ON</span> e<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span> <span class="token operator">=</span> d<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>department_id<span class="token punctuation">`</span></span>
+<span class="token operator">AND</span> e<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>manager_id<span class="token punctuation">`</span></span> <span class="token operator">=</span> d<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>manager_id<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>在 SQL99 中你可以写成：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT employee_id,last_name,department_name
-FROM employees e NATURAL JOIN departments d;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span>last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees e <span class="token keyword">NATURAL</span> <span class="token keyword">JOIN</span> departments d<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_6-2-using连接" tabindex="-1"><a class="header-anchor" href="#_6-2-using连接" aria-hidden="true">#</a> 6.2 USING连接</h3>
 <p>当我们进行连接的时候，SQL99还支持使用 USING 指定数据表里的<code v-pre>同名字段</code>进行等值连接。但是只能配合JOIN一起使用。比如：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT employee_id,last_name,department_name
-FROM employees e JOIN departments d
-USING (department_id);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span>last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees e <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">USING</span> <span class="token punctuation">(</span>department_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>你能看出与自然连接 NATURAL JOIN 不同的是，USING 指定了具体的相同的字段名称，你需要在 USING 的括号 () 中填入要指定的同名字段。同时使用 <code v-pre>JOIN...USING</code> 可以简化 JOIN ON 的等值连接。它与下面的 SQL 查询结果是相同的：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT employee_id,last_name,department_name
-FROM employees e ,departments d
-WHERE e.department_id = d.department_id;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span>last_name<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees e <span class="token punctuation">,</span>departments d
+<span class="token keyword">WHERE</span> e<span class="token punctuation">.</span>department_id <span class="token operator">=</span> d<span class="token punctuation">.</span>department_id<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_7-章节小结" tabindex="-1"><a class="header-anchor" href="#_7-章节小结" aria-hidden="true">#</a> 7. 章节小结</h2>
 <p>表连接的约束条件可以有三种方式：WHERE, ON, USING</p>
 <ul>
@@ -445,41 +444,41 @@ WHERE e.department_id = d.department_id;
 <p>USING：只能和JOIN一起使用，而且要求<strong>两个</strong>关联字段在关联表中名称一致，而且只能表示关联字段值相等</p>
 </li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#关联条件
-#把关联条件写在where后面
-SELECT last_name,department_name 
-FROM employees,departments 
-WHERE employees.department_id = departments.department_id;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#关联条件</span>
+<span class="token comment">#把关联条件写在where后面</span>
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>department_name 
+<span class="token keyword">FROM</span> employees<span class="token punctuation">,</span>departments 
+<span class="token keyword">WHERE</span> employees<span class="token punctuation">.</span>department_id <span class="token operator">=</span> departments<span class="token punctuation">.</span>department_id<span class="token punctuation">;</span>
 
-#把关联条件写在on后面，只能和JOIN一起使用
-SELECT last_name,department_name 
-FROM employees INNER JOIN departments 
-ON employees.department_id = departments.department_id;
+<span class="token comment">#把关联条件写在on后面，只能和JOIN一起使用</span>
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>department_name 
+<span class="token keyword">FROM</span> employees <span class="token keyword">INNER</span> <span class="token keyword">JOIN</span> departments 
+<span class="token keyword">ON</span> employees<span class="token punctuation">.</span>department_id <span class="token operator">=</span> departments<span class="token punctuation">.</span>department_id<span class="token punctuation">;</span>
 
-SELECT last_name,department_name 
-FROM employees CROSS JOIN departments 
-ON employees.department_id = departments.department_id;
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>department_name 
+<span class="token keyword">FROM</span> employees <span class="token keyword">CROSS</span> <span class="token keyword">JOIN</span> departments 
+<span class="token keyword">ON</span> employees<span class="token punctuation">.</span>department_id <span class="token operator">=</span> departments<span class="token punctuation">.</span>department_id<span class="token punctuation">;</span>
 
-SELECT last_name,department_name  
-FROM employees JOIN departments 
-ON employees.department_id = departments.department_id;
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>department_name  
+<span class="token keyword">FROM</span> employees <span class="token keyword">JOIN</span> departments 
+<span class="token keyword">ON</span> employees<span class="token punctuation">.</span>department_id <span class="token operator">=</span> departments<span class="token punctuation">.</span>department_id<span class="token punctuation">;</span>
 
-#把关联字段写在using()中，只能和JOIN一起使用
-#而且两个表中的关联字段必须名称相同，而且只能表示=
-#查询员工姓名与基本工资
-SELECT last_name,job_title
-FROM employees INNER JOIN jobs USING(job_id);
+<span class="token comment">#把关联字段写在using()中，只能和JOIN一起使用</span>
+<span class="token comment">#而且两个表中的关联字段必须名称相同，而且只能表示=</span>
+<span class="token comment">#查询员工姓名与基本工资</span>
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>job_title
+<span class="token keyword">FROM</span> employees <span class="token keyword">INNER</span> <span class="token keyword">JOIN</span> jobs <span class="token keyword">USING</span><span class="token punctuation">(</span>job_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-#n张表关联，需要n-1个关联条件
-#查询员工姓名，基本工资，部门名称
-SELECT last_name,job_title,department_name FROM employees,departments,jobs 
-WHERE employees.department_id = departments.department_id 
-AND employees.job_id = jobs.job_id;
+<span class="token comment">#n张表关联，需要n-1个关联条件</span>
+<span class="token comment">#查询员工姓名，基本工资，部门名称</span>
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>job_title<span class="token punctuation">,</span>department_name <span class="token keyword">FROM</span> employees<span class="token punctuation">,</span>departments<span class="token punctuation">,</span>jobs 
+<span class="token keyword">WHERE</span> employees<span class="token punctuation">.</span>department_id <span class="token operator">=</span> departments<span class="token punctuation">.</span>department_id 
+<span class="token operator">AND</span> employees<span class="token punctuation">.</span>job_id <span class="token operator">=</span> jobs<span class="token punctuation">.</span>job_id<span class="token punctuation">;</span>
 
-SELECT last_name,job_title,department_name 
-FROM employees INNER JOIN departments INNER JOIN jobs 
-ON employees.department_id = departments.department_id 
-AND employees.job_id = jobs.job_id;
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>job_title<span class="token punctuation">,</span>department_name 
+<span class="token keyword">FROM</span> employees <span class="token keyword">INNER</span> <span class="token keyword">JOIN</span> departments <span class="token keyword">INNER</span> <span class="token keyword">JOIN</span> jobs 
+<span class="token keyword">ON</span> employees<span class="token punctuation">.</span>department_id <span class="token operator">=</span> departments<span class="token punctuation">.</span>department_id 
+<span class="token operator">AND</span> employees<span class="token punctuation">.</span>job_id <span class="token operator">=</span> jobs<span class="token punctuation">.</span>job_id<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>注意：</strong></p>
 <p>我们要<code v-pre>控制连接表的数量</code>。多表连接就相当于嵌套 for 循环一样，非常消耗资源，会让 SQL 查询性能下降得很严重，因此不要连接不必要的表。在许多 DBMS 中，也都会有最大连接表的限制。</p>
 <blockquote>

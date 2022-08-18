@@ -87,4 +87,18 @@ export const pagesData = {
   "v-b03e44b6": () => import(/* webpackChunkName: "v-b03e44b6" */"/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/pages/notes/senior_mysql/第19章 数据库备份与恢复.html.js").then(({ data }) => data),
   // path: /404.html
   "v-3706649a": () => import(/* webpackChunkName: "v-3706649a" */"/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/pages/404.html.js").then(({ data }) => data),
+  // path: /category/
+  "v-5bc93818": () => import(/* webpackChunkName: "v-5bc93818" */"/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/pages/category/index.html.js").then(({ data }) => data),
+  // path: /tag/
+  "v-744d024e": () => import(/* webpackChunkName: "v-744d024e" */"/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/pages/tag/index.html.js").then(({ data }) => data),
+  // path: /article/
+  "v-e52c881c": () => import(/* webpackChunkName: "v-e52c881c" */"/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/pages/article/index.html.js").then(({ data }) => data),
+  // path: /encrypted/
+  "v-75ed4ea4": () => import(/* webpackChunkName: "v-75ed4ea4" */"/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/pages/encrypted/index.html.js").then(({ data }) => data),
+  // path: /slide/
+  "v-d804e652": () => import(/* webpackChunkName: "v-d804e652" */"/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/pages/slide/index.html.js").then(({ data }) => data),
+  // path: /star/
+  "v-154dc4c4": () => import(/* webpackChunkName: "v-154dc4c4" */"/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/pages/star/index.html.js").then(({ data }) => data),
+  // path: /timeline/
+  "v-01560935": () => import(/* webpackChunkName: "v-01560935" */"/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/pages/timeline/index.html.js").then(({ data }) => data),
 }

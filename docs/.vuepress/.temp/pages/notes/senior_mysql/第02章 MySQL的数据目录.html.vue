@@ -9,13 +9,13 @@
 <div class="language-bash ext-sh line-numbers-mode"><pre v-pre class="language-bash"><code><span class="token function">find</span> / -name mysql
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h5 id="_1-1数据库文件的存放路径" tabindex="-1"><a class="header-anchor" href="#_1-1数据库文件的存放路径" aria-hidden="true">#</a> <strong>1.1数据库文件的存放路径</strong></h5>
 <p>MySQL数据库文件的存放路径:/var/lib/mysql/</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show variables like 'datadir';
-+---------------+-----------------+
-| Variable_name | Value           |
-+---------------+-----------------+
-| datadir       | /var/lib/mysql/ |
-+---------------+-----------------+
-1 row in set (0.04 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'datadir'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------+-----------------+</span>
+<span class="token operator">|</span> Variable_name <span class="token operator">|</span> <span class="token keyword">Value</span>           <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------+-----------------+</span>
+<span class="token operator">|</span> datadir       <span class="token operator">|</span> <span class="token operator">/</span>var<span class="token operator">/</span>lib<span class="token operator">/</span>mysql<span class="token operator">/</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------+-----------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.04</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h5 id="_1-2相关命令目录" tabindex="-1"><a class="header-anchor" href="#_1-2相关命令目录" aria-hidden="true">#</a> <strong>1.2相关命令目录</strong></h5>
 <p><strong>相关命令目录：/usr/bin 和/usr/sbin。</strong></p>
 <h5 id="_1-3配置文件目录" tabindex="-1"><a class="header-anchor" href="#_1-3配置文件目录" aria-hidden="true">#</a> <strong>1.3配置文件目录</strong></h5>
@@ -24,7 +24,7 @@
 <h5 id="_2-1表在文件系统中的表示" tabindex="-1"><a class="header-anchor" href="#_2-1表在文件系统中的表示" aria-hidden="true">#</a> <strong>2.1表在文件系统中的表示</strong></h5>
 <p>2.1 查看默认数据库
 查看一下在我的计算机上当前有哪些数据库:</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SHOW DATABASES;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SHOW</span> <span class="token keyword">DATABASES</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>可以看到有4个数据库是属于MySQL自带的系统数据库。</p>
 <ul>
 <li>
@@ -45,24 +45,24 @@ innodb_sys 开头的表，用于表示内部系统表。</p>
 MySQL 系统自带的数据库，这个数据库主要是通过 视图 的形式把 information_schema 和 performance_schema 结合起来，帮助系统管理员和开发人员监控 MySQL 的技术性能。</p>
 </li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; USE information_schema;
-Database changed
-mysql&gt; SHOW TABLES LIKE 'innodb_sys%';
-+--------------------------------------------+
-| Tables_in_information_schema (innodb_sys%) |
-+--------------------------------------------+
-| INNODB_SYS_DATAFILES                       |
-| INNODB_SYS_VIRTUAL                         |
-| INNODB_SYS_INDEXES                         |
-| INNODB_SYS_TABLES                          |
-| INNODB_SYS_FIELDS                          |
-| INNODB_SYS_TABLESPACES                     |
-| INNODB_SYS_FOREIGN_COLS                    |
-| INNODB_SYS_COLUMNS                         |
-| INNODB_SYS_FOREIGN                         |
-| INNODB_SYS_TABLESTATS                      |
-+--------------------------------------------+
-10 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">USE</span> information_schema<span class="token punctuation">;</span>
+<span class="token keyword">Database</span> changed
+mysql<span class="token operator">></span> <span class="token keyword">SHOW</span> <span class="token keyword">TABLES</span> <span class="token operator">LIKE</span> <span class="token string">'innodb_sys%'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------------------------------------------+</span>
+<span class="token operator">|</span> Tables_in_information_schema <span class="token punctuation">(</span>innodb_sys<span class="token operator">%</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------------------------------+</span>
+<span class="token operator">|</span> INNODB_SYS_DATAFILES                       <span class="token operator">|</span>
+<span class="token operator">|</span> INNODB_SYS_VIRTUAL                         <span class="token operator">|</span>
+<span class="token operator">|</span> INNODB_SYS_INDEXES                         <span class="token operator">|</span>
+<span class="token operator">|</span> INNODB_SYS_TABLES                          <span class="token operator">|</span>
+<span class="token operator">|</span> INNODB_SYS_FIELDS                          <span class="token operator">|</span>
+<span class="token operator">|</span> INNODB_SYS_TABLESPACES                     <span class="token operator">|</span>
+<span class="token operator">|</span> INNODB_SYS_FOREIGN_COLS                    <span class="token operator">|</span>
+<span class="token operator">|</span> INNODB_SYS_COLUMNS                         <span class="token operator">|</span>
+<span class="token operator">|</span> INNODB_SYS_FOREIGN                         <span class="token operator">|</span>
+<span class="token operator">|</span> INNODB_SYS_TABLESTATS                      <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------------------------------+</span>
+<span class="token number">10</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h5 id="_2-2表在文件系统中的表示" tabindex="-1"><a class="header-anchor" href="#_2-2表在文件系统中的表示" aria-hidden="true">#</a> <strong>2.2表在文件系统中的表示</strong></h5>
 <p>看一下我的计算机上的数据目录下的内容:</p>
 <div class="language-bash ext-sh line-numbers-mode"><pre v-pre class="language-bash"><code><span class="token builtin class-name">cd</span> /var/lib/mysql
@@ -74,12 +74,12 @@ ll
 <p>为了保存表结构，<code v-pre>InnoDB</code>在<code v-pre>数据目录</code>下对应的数据库子目录下创建了一个专门用于<code v-pre>描述表结构的文件</code></p>
 <div class="language-text ext-text line-numbers-mode"><pre v-pre class="language-text"><code>表名.frm
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>在dbs数据库下创建一个名为 test 的表:</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; USE dbs;
-Database changed
-mysql&gt; CREATE TABLE test (
-    -&gt;     c1 INT
-    -&gt; );
-Query OK, 0 rows affected (0.03 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">USE</span> dbs<span class="token punctuation">;</span>
+<span class="token keyword">Database</span> changed
+mysql<span class="token operator">></span> <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test <span class="token punctuation">(</span>
+    <span class="token operator">-</span><span class="token operator">></span>     c1 <span class="token keyword">INT</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.03</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>那在数据库dbs对应的子目录下会创建一个test.frm的用于描述表结构的文件，这个文件在各平台是相同的， .frm是以二进制存储的</p>
 <p><strong>2.表中数据和索引</strong></p>
 <p><strong>① 系统表空间（system tablespace）</strong></p>
@@ -102,17 +102,17 @@ Query OK, 0 rows affected (0.03 sec)
 <div class="language-text ext-text line-numbers-mode"><pre v-pre class="language-text"><code>表名.frm
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><strong>2.表中数据和索引</strong></p>
 <p>在MyISAM中的索引全部都是<code v-pre>二级索引</code>，该存储引擎的<code v-pre>数据和索引是分开存放</code>的。所以在文件系统中也是使用不同的文件来存储数据文件和索引文件，同时表数据都存放在对应的数据库子目录下。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>test.frm 存储表结构 #MySQL8.0 改为了 b.xxx.sdi
-test.MYD 存储数据 (MYData) 
-test.MYI 存储索引 (MYIndex
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>test<span class="token punctuation">.</span>frm 存储表结构 <span class="token comment">#MySQL8.0 改为了 b.xxx.sdi</span>
+test<span class="token punctuation">.</span>MYD 存储数据 <span class="token punctuation">(</span>MYData<span class="token punctuation">)</span> 
+test<span class="token punctuation">.</span>MYI 存储索引 <span class="token punctuation">(</span>MYIndex
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例:创建一个 MyISAM 表，使用 ENGINE 选项显式指定引擎。因为 InnoDB 是默认引擎。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE `student_myisam` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) DEFAULT NULL,
-  `age` int DEFAULT NULL,
-  `sex` varchar(2) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-)ENGINE=MYISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb3;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>student_myisam<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+  <span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">bigint</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>age<span class="token punctuation">`</span></span> <span class="token keyword">int</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>sex<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token keyword">ENGINE</span><span class="token operator">=</span>MYISAM <span class="token keyword">AUTO_INCREMENT</span><span class="token operator">=</span><span class="token number">0</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8mb3<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_2-4-小结" tabindex="-1"><a class="header-anchor" href="#_2-4-小结" aria-hidden="true">#</a> 2.4 小结</h3>
 <p>举例: 数据库a ， 表b 。</p>
 <p>1、如果表b采用 InnoDB ，data\a中会产生1个或者2个文件:</p>

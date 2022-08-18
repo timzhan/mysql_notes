@@ -8,7 +8,7 @@
 <li><strong>什么是聚合函数</strong></li>
 </ul>
 <p>聚合函数作用于一组数据，并对一组数据返回一个值。</p>
-<p><img src="@source/notes/base_mysql/images/1554980924940.png" alt="1554980924940"></p>
+<p><img src="@source/notes/base_mysql/images/1554980924940.png" alt="1554980924940" loading="lazy"></p>
 <ul>
 <li>
 <p><strong>聚合函数类型</strong></p>
@@ -24,7 +24,7 @@
 <p>聚合函数语法</p>
 </li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/1554981029920.png" alt="1554981029920"></p>
+<p><img src="@source/notes/base_mysql/images/1554981029920.png" alt="1554981029920" loading="lazy"></p>
 <ul>
 <li>聚合函数不能嵌套调用。比如不能出现类似“AVG(SUM(字段名称))”形式的调用。</li>
 </ul>
@@ -33,12 +33,12 @@
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token function">AVG</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">MAX</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">MIN</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">SUM</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span>
 <span class="token keyword">FROM</span>   employees
 <span class="token keyword">WHERE</span>  job_id <span class="token operator">LIKE</span> <span class="token string">'%REP%'</span><span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981279723.png" alt="1554981279723"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981279723.png" alt="1554981279723" loading="lazy"></p>
 <h3 id="_1-2-min和max函数" tabindex="-1"><a class="header-anchor" href="#_1-2-min和max函数" aria-hidden="true">#</a> 1.2 MIN和MAX函数</h3>
 <p>可以对<strong>任意数据类型</strong>的数据使用 MIN 和 MAX 函数。</p>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token function">MIN</span><span class="token punctuation">(</span>hire_date<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">MAX</span><span class="token punctuation">(</span>hire_date<span class="token punctuation">)</span>
 <span class="token keyword">FROM</span>	  employees<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981253194.png" alt="1554981253194"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981253194.png" alt="1554981253194" loading="lazy"></p>
 <h3 id="_1-3-count函数" tabindex="-1"><a class="header-anchor" href="#_1-3-count函数" aria-hidden="true">#</a> 1.3 COUNT函数</h3>
 <ul>
 <li>COUNT(*)返回表中记录总数，适用于<strong>任意数据类型</strong>。</li>
@@ -46,14 +46,14 @@
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
 <span class="token keyword">FROM</span>	  employees
 <span class="token keyword">WHERE</span>  department_id <span class="token operator">=</span> <span class="token number">50</span><span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981241299.png" alt="1554981241299"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981241299.png" alt="1554981241299" loading="lazy"></p>
 <ul>
 <li>COUNT(expr) 返回<strong>expr不为空</strong>的记录总数。</li>
 </ul>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span>commission_pct<span class="token punctuation">)</span>
 <span class="token keyword">FROM</span>   employees
 <span class="token keyword">WHERE</span>  department_id <span class="token operator">=</span> <span class="token number">50</span><span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981328678.png" alt="1554981328678"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981328678.png" alt="1554981328678" loading="lazy"></p>
 <ul>
 <li>
 <p><strong>问题：用count(*)，count(1)，count(列名)谁好呢?</strong></p>
@@ -68,7 +68,7 @@
 </ul>
 <h2 id="_2-group-by" tabindex="-1"><a class="header-anchor" href="#_2-group-by" aria-hidden="true">#</a> 2. GROUP BY</h2>
 <h3 id="_2-1-基本使用" tabindex="-1"><a class="header-anchor" href="#_2-1-基本使用" aria-hidden="true">#</a> 2.1 基本使用</h3>
-<p><img src="@source/notes/base_mysql/images/1554981374920.png" alt="1554981374920"></p>
+<p><img src="@source/notes/base_mysql/images/1554981374920.png" alt="1554981374920" loading="lazy"></p>
 <p><strong>可以使用GROUP BY子句将表中的数据分成若干组</strong></p>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token keyword">column</span><span class="token punctuation">,</span> group_function<span class="token punctuation">(</span><span class="token keyword">column</span><span class="token punctuation">)</span>
 <span class="token keyword">FROM</span> <span class="token keyword">table</span>
@@ -82,33 +82,33 @@
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span>   department_id<span class="token punctuation">,</span> <span class="token function">AVG</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span>
 <span class="token keyword">FROM</span>     employees
 <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> department_id <span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981539408.png" alt="1554981539408"></p>
-<p><img src="@source/notes/base_mysql/images/1554981544191.png" alt="1554981544191"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981539408.png" alt="1554981539408" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554981544191.png" alt="1554981544191" loading="lazy"></p>
 <p>包含在 GROUP BY 子句中的列不必包含在SELECT 列表中</p>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span>   <span class="token function">AVG</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span>
 <span class="token keyword">FROM</span>     employees
 <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> department_id <span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981574152.png" alt="1554981574152"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981574152.png" alt="1554981574152" loading="lazy"></p>
 <h3 id="_2-2-使用多个列分组" tabindex="-1"><a class="header-anchor" href="#_2-2-使用多个列分组" aria-hidden="true">#</a> 2.2 使用多个列分组</h3>
-<p><img src="@source/notes/base_mysql/images/1554981607442.png" alt="1554981607442"></p>
+<p><img src="@source/notes/base_mysql/images/1554981607442.png" alt="1554981607442" loading="lazy"></p>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span>   department_id dept_id<span class="token punctuation">,</span> job_id<span class="token punctuation">,</span> <span class="token function">SUM</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span>
 <span class="token keyword">FROM</span>     employees
 <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> department_id<span class="token punctuation">,</span> job_id <span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981624864.png" alt="1554981624864"></p>
-<p><img src="@source/notes/base_mysql/images/1554981629733.png" alt="1554981629733"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981624864.png" alt="1554981624864" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554981629733.png" alt="1554981629733" loading="lazy"></p>
 <h3 id="_2-3-group-by中使用with-rollup" tabindex="-1"><a class="header-anchor" href="#_2-3-group-by中使用with-rollup" aria-hidden="true">#</a> 2.3 GROUP BY中使用WITH ROLLUP</h3>
 <p>使用<code v-pre>WITH ROLLUP</code>关键字之后，在所有查询出的分组记录之后增加一条记录，该记录计算查询出的所有记录的总和，即统计记录数量。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT department_id,AVG(salary)
-FROM employees
-WHERE department_id &gt; 80
-GROUP BY department_id WITH ROLLUP;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> department_id<span class="token punctuation">,</span><span class="token function">AVG</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> employees
+<span class="token keyword">WHERE</span> department_id <span class="token operator">></span> <span class="token number">80</span>
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> department_id <span class="token keyword">WITH ROLLUP</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><blockquote>
 <p>注意：</p>
 <p>当使用ROLLUP时，不能同时使用ORDER BY子句进行结果排序，即ROLLUP和ORDER BY是互相排斥的。</p>
 </blockquote>
 <h2 id="_3-having" tabindex="-1"><a class="header-anchor" href="#_3-having" aria-hidden="true">#</a> 3. HAVING</h2>
 <h3 id="_3-1-基本使用" tabindex="-1"><a class="header-anchor" href="#_3-1-基本使用" aria-hidden="true">#</a> 3.1 基本使用</h3>
-<p><img src="@source/notes/base_mysql/images/1554981656798.png" alt="1554981656798"></p>
+<p><img src="@source/notes/base_mysql/images/1554981656798.png" alt="1554981656798" loading="lazy"></p>
 <p><strong>过滤分组：HAVING子句</strong></p>
 <ol>
 <li>行已经被分组。</li>
@@ -116,12 +116,12 @@ GROUP BY department_id WITH ROLLUP;
 <li>满足HAVING 子句中条件的分组将被显示。</li>
 <li>HAVING 不能单独使用，必须要跟 GROUP BY 一起使用。</li>
 </ol>
-<p><img src="@source/notes/base_mysql/images/1554981808091.png" alt="1554981808091"></p>
+<p><img src="@source/notes/base_mysql/images/1554981808091.png" alt="1554981808091" loading="lazy"></p>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span>   department_id<span class="token punctuation">,</span> <span class="token function">MAX</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span>
 <span class="token keyword">FROM</span>     employees
 <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> department_id
 <span class="token keyword">HAVING</span>   <span class="token function">MAX</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span><span class="token operator">></span><span class="token number">10000</span> <span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981824564.png" alt="1554981824564"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981824564.png" alt="1554981824564" loading="lazy"></p>
 <ul>
 <li>**非法使用聚合函数 ： 不能在 WHERE 子句中使用聚合函数。**如下：</li>
 </ul>
@@ -129,7 +129,7 @@ GROUP BY department_id WITH ROLLUP;
 <span class="token keyword">FROM</span>     employees
 <span class="token keyword">WHERE</span>    <span class="token function">AVG</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">8000</span>
 <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> department_id<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981724375.png" alt="1554981724375"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554981724375.png" alt="1554981724375" loading="lazy"></p>
 <h3 id="_3-2-where和having的对比" tabindex="-1"><a class="header-anchor" href="#_3-2-where和having的对比" aria-hidden="true">#</a> 3.2 WHERE和HAVING的对比</h3>
 <p><strong>区别1：WHERE 可以直接使用表中的字段作为筛选条件，但不能使用分组中的计算函数作为筛选条件；HAVING 必须要与 GROUP BY 配合使用，可以把分组计算的函数和分组字段作为筛选条件。</strong></p>
 <p>这决定了，在需要对数据进行分组统计的时候，HAVING 可以完成 WHERE 不能完成的任务。这是因为，在查询语法结构中，WHERE 在 GROUP BY 之前，所以无法对分组结果进行筛选。HAVING 在 GROUP BY 之后，可以使用分组字段和分组中的计算函数，对分组的结果集进行筛选，这个功能是 WHERE 无法完成的。另外，WHERE排除的记录不再包括在分组中。</p>
@@ -160,52 +160,52 @@ GROUP BY department_id WITH ROLLUP;
 <p>WHERE 和 HAVING 也不是互相排斥的，我们可以在一个查询里面同时使用 WHERE 和 HAVING。包含分组统计函数的条件用 HAVING，普通条件用 WHERE。这样，我们就既利用了 WHERE 条件的高效快速，又发挥了 HAVING 可以使用包含分组统计函数的查询条件的优点。当数据量特别大的时候，运行效率会有很大的差别。</p>
 <h2 id="_4-select的执行过程" tabindex="-1"><a class="header-anchor" href="#_4-select的执行过程" aria-hidden="true">#</a> 4. SELECT的执行过程</h2>
 <h3 id="_4-1-查询的结构" tabindex="-1"><a class="header-anchor" href="#_4-1-查询的结构" aria-hidden="true">#</a> 4.1 查询的结构</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#方式1：
-SELECT ...,....,...
-FROM ...,...,....
-WHERE 多表的连接条件
-AND 不包含组函数的过滤条件
-GROUP BY ...,...
-HAVING 包含组函数的过滤条件
-ORDER BY ... ASC/DESC
-LIMIT ...,...
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#方式1：</span>
+<span class="token keyword">SELECT</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">FROM</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">WHERE</span> 多表的连接条件
+<span class="token operator">AND</span> 不包含组函数的过滤条件
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">HAVING</span> 包含组函数的过滤条件
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">ASC</span><span class="token operator">/</span><span class="token keyword">DESC</span>
+<span class="token keyword">LIMIT</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 
-#方式2：
-SELECT ...,....,...
-FROM ... JOIN ... 
-ON 多表的连接条件
-JOIN ...
-ON ...
-WHERE 不包含组函数的过滤条件
-AND/OR 不包含组函数的过滤条件
-GROUP BY ...,...
-HAVING 包含组函数的过滤条件
-ORDER BY ... ASC/DESC
-LIMIT ...,...
+<span class="token comment">#方式2：</span>
+<span class="token keyword">SELECT</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">FROM</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">JOIN</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> 
+<span class="token keyword">ON</span> 多表的连接条件
+<span class="token keyword">JOIN</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">ON</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">WHERE</span> 不包含组函数的过滤条件
+<span class="token operator">AND</span><span class="token operator">/</span><span class="token operator">OR</span> 不包含组函数的过滤条件
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">HAVING</span> 包含组函数的过滤条件
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">ASC</span><span class="token operator">/</span><span class="token keyword">DESC</span>
+<span class="token keyword">LIMIT</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 
-#其中：
-#（1）from：从哪些表中筛选
-#（2）on：关联多表查询时，去除笛卡尔积
-#（3）where：从表中筛选的条件
-#（4）group by：分组依据
-#（5）having：在统计结果中再次筛选
-#（6）order by：排序
-#（7）limit：分页
+<span class="token comment">#其中：</span>
+<span class="token comment">#（1）from：从哪些表中筛选</span>
+<span class="token comment">#（2）on：关联多表查询时，去除笛卡尔积</span>
+<span class="token comment">#（3）where：从表中筛选的条件</span>
+<span class="token comment">#（4）group by：分组依据</span>
+<span class="token comment">#（5）having：在统计结果中再次筛选</span>
+<span class="token comment">#（6）order by：排序</span>
+<span class="token comment">#（7）limit：分页</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_4-2-select执行顺序" tabindex="-1"><a class="header-anchor" href="#_4-2-select执行顺序" aria-hidden="true">#</a> 4.2 SELECT执行顺序</h3>
 <p>你需要记住 SELECT 查询时的两个顺序：</p>
 <p><strong>1. 关键字的顺序是不能颠倒的：</strong></p>
 <div class="language-text ext-text line-numbers-mode"><pre v-pre class="language-text"><code>SELECT ... FROM ... WHERE ... GROUP BY ... HAVING ... ORDER BY ... LIMIT...
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><strong>2.SELECT 语句的执行顺序</strong>（在 MySQL 和 Oracle 中，SELECT 执行顺序基本相同）：</p>
 <div class="language-text ext-text line-numbers-mode"><pre v-pre class="language-text"><code>FROM -> WHERE -> GROUP BY -> HAVING -> SELECT 的字段 -> DISTINCT -> ORDER BY -> LIMIT
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1566872301088.png" alt="1566872301088"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1566872301088.png" alt="1566872301088" loading="lazy"></p>
 <p>比如你写了一个 SQL 语句，那么它的关键字顺序和执行顺序是下面这样的：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT DISTINCT player_id, player_name, count(*) as num # 顺序 5
-FROM player JOIN team ON player.team_id = team.team_id # 顺序 1
-WHERE height &gt; 1.80 # 顺序 2
-GROUP BY player.team_id # 顺序 3
-HAVING num &gt; 2 # 顺序 4
-ORDER BY num DESC # 顺序 6
-LIMIT 2 # 顺序 7
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span> player_id<span class="token punctuation">,</span> player_name<span class="token punctuation">,</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">as</span> num <span class="token comment"># 顺序 5</span>
+<span class="token keyword">FROM</span> player <span class="token keyword">JOIN</span> team <span class="token keyword">ON</span> player<span class="token punctuation">.</span>team_id <span class="token operator">=</span> team<span class="token punctuation">.</span>team_id <span class="token comment"># 顺序 1</span>
+<span class="token keyword">WHERE</span> height <span class="token operator">></span> <span class="token number">1.80</span> <span class="token comment"># 顺序 2</span>
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> player<span class="token punctuation">.</span>team_id <span class="token comment"># 顺序 3</span>
+<span class="token keyword">HAVING</span> num <span class="token operator">></span> <span class="token number">2</span> <span class="token comment"># 顺序 4</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> num <span class="token keyword">DESC</span> <span class="token comment"># 顺序 6</span>
+<span class="token keyword">LIMIT</span> <span class="token number">2</span> <span class="token comment"># 顺序 7</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>在 SELECT 语句执行这些步骤的时候，每个步骤都会产生一个<code v-pre>虚拟表</code>，然后将这个虚拟表传入下一个步骤中作为输入。需要注意的是，这些步骤隐含在 SQL 的执行过程中，对于我们来说是不可见的。</p>
 <h3 id="_4-3-sql-的执行原理" tabindex="-1"><a class="header-anchor" href="#_4-3-sql-的执行原理" aria-hidden="true">#</a> 4.3 SQL 的执行原理</h3>
 <p>SELECT 是先执行 FROM 这一步的。在这个阶段，如果是多张表联查，还会经历下面的几个步骤：</p>

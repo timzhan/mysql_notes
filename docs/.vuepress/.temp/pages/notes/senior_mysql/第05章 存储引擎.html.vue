@@ -3,45 +3,45 @@
 <ul>
 <li>查看mysql提供什么存储引擎</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show engines;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220615223831995.png" alt="image-20220615223831995"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> engines<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220615223831995.png" alt="image-20220615223831995" loading="lazy"></p>
 <h2 id="_2-设置系统默认的存储引擎" tabindex="-1"><a class="header-anchor" href="#_2-设置系统默认的存储引擎" aria-hidden="true">#</a> 2. 设置系统默认的存储引擎</h2>
 <ul>
 <li>查看默认的存储引擎</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show variables like '%storage_engine%';
-#或
-SELECT @@default_storage_engine;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'%storage_engine%'</span><span class="token punctuation">;</span>
+<span class="token comment">#或</span>
+<span class="token keyword">SELECT</span> @<span class="token variable">@default_storage_engine</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220615224249491.png" alt="image-20220615224249491" style="zoom:60%;" />
 <ul>
 <li>修改默认的存储引擎</li>
 </ul>
 <p>如果在创建表的语句中没有显式指定表的存储引擎的话，那就会默认使用 InnoDB 作为表的存储引擎。 如果我们想改变表的默认存储引擎的话，可以这样写启动服务器的命令行：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET DEFAULT_STORAGE_ENGINE=MyISAM;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> DEFAULT_STORAGE_ENGINE<span class="token operator">=</span>MyISAM<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>或者修改 my.cnf 文件：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>default-storage-engine=MyISAM
-# 重启服务
-systemctl restart mysqld.service
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">default</span><span class="token operator">-</span>storage<span class="token operator">-</span><span class="token keyword">engine</span><span class="token operator">=</span>MyISAM
+<span class="token comment"># 重启服务</span>
+systemctl restart mysqld<span class="token punctuation">.</span>service
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_3-设置表的存储引擎" tabindex="-1"><a class="header-anchor" href="#_3-设置表的存储引擎" aria-hidden="true">#</a> 3. 设置表的存储引擎</h2>
 <p>存储引擎是负责对表中的数据进行提取和写入工作的，我们可以为 不同的表设置不同的存储引擎 ，也就是 说不同的表可以有不同的物理存储结构，不同的提取和写入方式。</p>
 <h3 id="_3-1-创建表时指定存储引擎" tabindex="-1"><a class="header-anchor" href="#_3-1-创建表时指定存储引擎" aria-hidden="true">#</a> 3.1 创建表时指定存储引擎</h3>
 <p>我们之前创建表的语句都没有指定表的存储引擎，那就会使用默认的存储引擎 InnoDB 。如果我们想显 式的指定一下表的存储引擎，那可以这么写：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE 表名(
-建表语句;
-) ENGINE = 存储引擎名称;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> 表名<span class="token punctuation">(</span>
+建表语句<span class="token punctuation">;</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span> <span class="token operator">=</span> 存储引擎名称<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-2-修改表的存储引擎" tabindex="-1"><a class="header-anchor" href="#_3-2-修改表的存储引擎" aria-hidden="true">#</a> 3.2 修改表的存储引擎</h3>
 <p>如果表已经建好了，我们也可以使用下边这个语句来修改表的存储引擎：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE 表名 ENGINE = 存储引擎名称;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 表名 <span class="token keyword">ENGINE</span> <span class="token operator">=</span> 存储引擎名称<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>比如我们修改一下 engine_demo_table 表的存储引擎：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; ALTER TABLE engine_demo_table ENGINE = InnoDB;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> engine_demo_table <span class="token keyword">ENGINE</span> <span class="token operator">=</span> <span class="token keyword">InnoDB</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>这时我们再查看一下 engine_demo_table 的表结构：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SHOW CREATE TABLE engine_demo_table\G
-*************************** 1. row ***************************
-Table: engine_demo_table
-Create Table: CREATE TABLE `engine_demo_table` (
-`i` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
-1 row in set (0.01 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SHOW</span> <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> engine_demo_table\G
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">1.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+<span class="token keyword">Table</span>: engine_demo_table
+<span class="token keyword">Create</span> <span class="token keyword">Table</span>: <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>engine_demo_table<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+<span class="token identifier"><span class="token punctuation">`</span>i<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_4-引擎介绍" tabindex="-1"><a class="header-anchor" href="#_4-引擎介绍" aria-hidden="true">#</a> 4. 引擎介绍</h2>
 <h3 id="_4-1-innodb-引擎-具备外键支持功能的事务存储引擎" tabindex="-1"><a class="header-anchor" href="#_4-1-innodb-引擎-具备外键支持功能的事务存储引擎" aria-hidden="true">#</a> 4.1 InnoDB 引擎：具备外键支持功能的事务存储引擎</h3>
 <ul>
@@ -84,26 +84,26 @@ Create Table: CREATE TABLE `engine_demo_table` (
 <h3 id="_4-4-blackhole-引擎-丢弃写操作-读操作会返回空内容" tabindex="-1"><a class="header-anchor" href="#_4-4-blackhole-引擎-丢弃写操作-读操作会返回空内容" aria-hidden="true">#</a> 4.4 Blackhole 引擎：丢弃写操作，读操作会返回空内容</h3>
 <h3 id="_4-5-csv-引擎-存储数据时-以逗号分隔各个数据项" tabindex="-1"><a class="header-anchor" href="#_4-5-csv-引擎-存储数据时-以逗号分隔各个数据项" aria-hidden="true">#</a> 4.5 CSV 引擎：存储数据时，以逗号分隔各个数据项</h3>
 <p>使用案例如下</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; CREATE TABLE test (i INT NOT NULL, c CHAR(10) NOT NULL) ENGINE = CSV;
-Query OK, 0 rows affected (0.06 sec)
-mysql&gt; INSERT INTO test VALUES(1,'record one'),(2,'record two');
-Query OK, 2 rows affected (0.05 sec)
-Records: 2 Duplicates: 0 Warnings: 0
-mysql&gt; SELECT * FROM test;
-+---+------------+
-| i |      c     |
-+---+------------+
-| 1 | record one |
-| 2 | record two |
-+---+------------+
-2 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test <span class="token punctuation">(</span>i <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span> c <span class="token keyword">CHAR</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">)</span> <span class="token keyword">ENGINE</span> <span class="token operator">=</span> CSV<span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.06</span> sec<span class="token punctuation">)</span>
+mysql<span class="token operator">></span> <span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'record one'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'record two'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">2</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.05</span> sec<span class="token punctuation">)</span>
+Records: <span class="token number">2</span> Duplicates: <span class="token number">0</span> <span class="token keyword">Warnings</span>: <span class="token number">0</span>
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---+------------+</span>
+<span class="token operator">|</span> i <span class="token operator">|</span>      c     <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---+------------+</span>
+<span class="token operator">|</span> <span class="token number">1</span> <span class="token operator">|</span> record one <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2</span> <span class="token operator">|</span> record two <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---+------------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>创建CSV表还会创建相应的元文件 ，用于 存储表的状态 和 表中存在的行数 。此文件的名称与表的名称相 同，后缀为 CSM 。如图所示</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616125342599.png" alt="image-20220616125342599"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616125342599.png" alt="image-20220616125342599" loading="lazy"></p>
 <p>如果检查 test.CSV 通过执行上述语句创建的数据库目录中的文件，其内容使用Notepad++打开如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>&quot;1&quot;,&quot;record one&quot;
-&quot;2&quot;,&quot;record two&quot;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token string">"1"</span><span class="token punctuation">,</span><span class="token string">"record one"</span>
+<span class="token string">"2"</span><span class="token punctuation">,</span><span class="token string">"record two"</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>这种格式可以被 Microsoft Excel 等电子表格应用程序读取，甚至写入。使用Microsoft Excel打开如图所示</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616125448555.png" alt="image-20220616125448555"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616125448555.png" alt="image-20220616125448555" loading="lazy"></p>
 <h3 id="_4-6-memory-引擎-置于内存的表" tabindex="-1"><a class="header-anchor" href="#_4-6-memory-引擎-置于内存的表" aria-hidden="true">#</a> 4.6 Memory 引擎：置于内存的表</h3>
 <p><strong>概述：</strong></p>
 <p>Memory采用的逻辑介质是内存 ，响应速度很快 ，但是当mysqld守护进程崩溃的时候数据会丢失 。另外，要求存储的数据是数据长度不变的格式，比如，Blob和Text类型的数据不可用(长度不固定的)。</p>
@@ -128,8 +128,8 @@ mysql&gt; SELECT * FROM test;
 <p>也叫做 NDB Cluster 存储引擎，主要用于 MySQL Cluster 分布式集群 环境，类似于 Oracle 的 RAC 集 群。</p>
 <h3 id="_4-10-引擎对比" tabindex="-1"><a class="header-anchor" href="#_4-10-引擎对比" aria-hidden="true">#</a> 4.10 引擎对比</h3>
 <p>MySQL中同一个数据库，不同的表可以选择不同的存储引擎。如下表对常用存储引擎做出了对比。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616125928861.png" alt="image-20220616125928861"></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616125945304.png" alt="image-20220616125945304"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616125928861.png" alt="image-20220616125928861" loading="lazy"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616125945304.png" alt="image-20220616125945304" loading="lazy"></p>
 <p>其实这些东西大家没必要立即就给记住，列出来的目的就是想让大家明白不同的存储引擎支持不同的功能。</p>
 <p>其实我们最常用的就是 InnoDB 和 MyISAM ，有时会提一下 Memory 。其中 InnoDB 是 MySQL 默认的存储引擎。</p>
 <h2 id="_5-myisam和innodb" tabindex="-1"><a class="header-anchor" href="#_5-myisam和innodb" aria-hidden="true">#</a> 5. MyISAM和InnoDB</h2>

@@ -9,7 +9,7 @@
 <p>目前关系型数据库有六种常见范式，按照范式级别，从低到高分别是：第一范式（1NF）、第二范式 （2NF）、第三范式（3NF）、巴斯-科德范式（BCNF）、第四范式(4NF）和第五范式（5NF，又称完美范式）。</p>
 <p>数据库的范式设计越高阶，夯余度就越低，同时高阶的范式一定符合低阶范式的要求，满足最低要求的范式是第一范式（1NF）。在第一范式的基础上进一步满足更多规范的要求称为第二范式（2NF），其余范式以此类推。</p>
 <p>一般来说，在关系型数据库设计中，最高也就遵循到<code v-pre>BCNF</code>, 普遍还是<code v-pre>3NF</code>。但也不绝对，有时候为了提高某些查询性能，我们还需要破坏范式规则，也就是<code v-pre>反规范化</code>。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220706165020939.png" alt="image-20220706165020939"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220706165020939.png" alt="image-20220706165020939" loading="lazy"></p>
 <h3 id="_2-3-键和相关属性的概念" tabindex="-1"><a class="header-anchor" href="#_2-3-键和相关属性的概念" aria-hidden="true">#</a> 2.3 键和相关属性的概念</h3>
 <img src="@source/notes/senior_mysql/images/image-20220706165231022.png" alt="image-20220706165231022" style="float:left;" />
 <p><strong>举例:</strong></p>
@@ -28,31 +28,31 @@
 <p>我们在设计某个字段的时候，对于字段X来说，不能把字段X拆分成字段X-1和字段X-2。事实上，任何的DBMS都会满足第一范式的要求，不会将字段进行拆分。</p>
 <p><strong>举例1：</strong></p>
 <p>假设一家公司要存储员工的姓名和联系方式。它创建一个如下表：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220706171057270.png" alt="image-20220706171057270"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220706171057270.png" alt="image-20220706171057270" loading="lazy"></p>
 <p>该表不符合 1NF ，因为规则说“表的每个属性必须具有原子（单个）值”，lisi和zhaoliu员工的 emp_mobile 值违反了该规则。为了使表符合 1NF ，我们应该有如下表数据：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220706171130851.png" alt="image-20220706171130851"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220706171130851.png" alt="image-20220706171130851" loading="lazy"></p>
 <p><strong>举例2：</strong></p>
 <p>user 表的设计不符合第一范式</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220706171225292.png" alt="image-20220706171225292"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220706171225292.png" alt="image-20220706171225292" loading="lazy"></p>
 <p>其中，user_info字段为用户信息，可以进一步拆分成更小粒度的字段，不符合数据库设计对第一范式的 要求。将user_info拆分后如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220706171242455.png" alt="image-20220706171242455"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220706171242455.png" alt="image-20220706171242455" loading="lazy"></p>
 <p><strong>举例3：</strong></p>
 <p>属性的原子性是 主观的 。例如，Employees关系中雇员姓名应当使用1个（fullname）、2个（firstname 和lastname）还是3个（firstname、middlename和lastname）属性表示呢？答案取决于应用程序。如果应 用程序需要分别处理雇员的姓名部分（如：用于搜索目的），则有必要把它们分开。否则，不需要。</p>
 <p>表1：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220706171442919.png" alt="image-20220706171442919"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220706171442919.png" alt="image-20220706171442919" loading="lazy"></p>
 <p>表2：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220706171456873.png" alt="image-20220706171456873"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220706171456873.png" alt="image-20220706171456873" loading="lazy"></p>
 <h3 id="_2-5-第二范式-2nd-nf" tabindex="-1"><a class="header-anchor" href="#_2-5-第二范式-2nd-nf" aria-hidden="true">#</a> 2.5 第二范式(2nd NF)</h3>
 <p>第二范式要求，在满足第一范式的基础上，还要<strong>满足数据库里的每一条数据记录，都是可唯一标识的。而且所有非主键字段，都必须完全依赖主键，不能只依赖主键的一部分</strong>。如果知道主键的所有属性的值，就可以检索到任何元组（行）的任何属性的任何值。（要求中的主键，其实可以扩展替换为候选键）。</p>
 <p><strong>举例1：</strong></p>
 <p><code v-pre>成绩表</code> （学号，课程号，成绩）关系中，（学号，课程号）可以决定成绩，但是学号不能决定成绩，课 程号也不能决定成绩，所以“（学号，课程号）→成绩”就是 <code v-pre>完全依赖关系</code> 。</p>
 <p><strong>举例2：</strong></p>
 <p><code v-pre>比赛表 player_game</code> ，里面包含球员编号、姓名、年龄、比赛编号、比赛时间和比赛场地等属性，这 里候选键和主键都为（球员编号，比赛编号），我们可以通过候选键（或主键）来决定如下的关系：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>(球员编号, 比赛编号) → (姓名, 年龄, 比赛时间, 比赛场地，得分)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token punctuation">(</span>球员编号<span class="token punctuation">,</span> 比赛编号<span class="token punctuation">)</span> → <span class="token punctuation">(</span>姓名<span class="token punctuation">,</span> 年龄<span class="token punctuation">,</span> 比赛时间<span class="token punctuation">,</span> 比赛场地，得分<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>但是这个数据表不满足第二范式，因为数据表中的字段之间还存在着如下的对应关系：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>(球员编号) → (姓名，年龄)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token punctuation">(</span>球员编号<span class="token punctuation">)</span> → <span class="token punctuation">(</span>姓名，年龄<span class="token punctuation">)</span>
 
-(比赛编号) → (比赛时间, 比赛场地)
+<span class="token punctuation">(</span>比赛编号<span class="token punctuation">)</span> → <span class="token punctuation">(</span>比赛时间<span class="token punctuation">,</span> 比赛场地<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>对于非主属性来说，并非完全依赖候选键。这样会产生怎样的问题呢？</p>
 <ol>
 <li><code v-pre>数据冗余</code> ：如果一个球员可以参加 m 场比赛，那么球员的姓名和年龄就重复了 m-1 次。一个比赛 也可能会有 n 个球员参加，比赛的时间和地点就重复了 n-1 次。</li>
@@ -61,18 +61,18 @@
 <li><code v-pre>更新异常</code> ：如果我们调整了某个比赛的时间，那么数据表中所有这个比赛的时间都需要进行调 整，否则就会出现一场比赛时间不同的情况。</li>
 </ol>
 <p>为了避免出现上述的情况，我们可以把球员比赛表设计为下面的三张表。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707122639894.png" alt="image-20220707122639894"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707122639894.png" alt="image-20220707122639894" loading="lazy"></p>
 <p>这样的话，每张数据表都符合第二范式，也就避免了异常情况的发生。</p>
 <blockquote>
 <p>1NF 告诉我们字段属性需要是原子性的，而 2NF 告诉我们一张表就是一个独立的对象，一张表只表达一个意思。</p>
 </blockquote>
 <p><strong>举例3：</strong></p>
 <p>定义了一个名为 Orders 的关系，表示订单和订单行的信息：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707123038469.png" alt="image-20220707123038469"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707123038469.png" alt="image-20220707123038469" loading="lazy"></p>
 <p>违反了第二范式，因为有非主键属性仅依赖于候选键（或主键）的一部分。例如，可以仅通过orderid找 到订单的 orderdate，以及 customerid 和 companyname，而没有必要再去使用productid。</p>
 <p>修改：</p>
 <p>Orders表和OrderDetails表如下，此时符合第二范式。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707123104009.png" alt="image-20220707123104009"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707123104009.png" alt="image-20220707123104009" loading="lazy"></p>
 <blockquote>
 <p>小结：第二范式（2NF）要求实体的属性完全依赖主关键字。如果存在不完全依赖，那么这个属性和主关键字的这一部分应该分离出来形成一个新的实体，新实体与元实体之间是一对多的关系。</p>
 </blockquote>
@@ -84,24 +84,24 @@
 <p><code v-pre>员工信息表 </code>：每个员工有员工编号、姓名、部门编号。列出部门编号后就不能再将部门名称、部门简介 等与部门有关的信息再加入员工信息表中。</p>
 <p>如果不存在部门信息表，则根据第三范式（3NF）也应该构建它，否则就会有大量的数据冗余。</p>
 <p><strong>举例2：</strong></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707124011654.png" alt="image-20220707124011654"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707124011654.png" alt="image-20220707124011654" loading="lazy"></p>
 <p>商品类别名称依赖于商品类别编号，不符合第三范式。</p>
 <p>修改：</p>
 <p>表1：符合第三范式的 <code v-pre>商品类别表</code> 的设计</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707124040899.png" alt="image-20220707124040899"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707124040899.png" alt="image-20220707124040899" loading="lazy"></p>
 <p>表2：符合第三范式的 <code v-pre>商品表</code> 的设计</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707124058174.png" alt="image-20220707124058174"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707124058174.png" alt="image-20220707124058174" loading="lazy"></p>
 <p>商品表goods通过商品类别id字段（category_id）与商品类别表goods_category进行关联。</p>
 <p><strong>举例3：</strong></p>
 <p><code v-pre>球员player表</code> ：球员编号、姓名、球队名称和球队主教练。现在，我们把属性之间的依赖关系画出来，如下图所示:</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707124136228.png" alt="image-20220707124136228"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707124136228.png" alt="image-20220707124136228" loading="lazy"></p>
 <p>你能看到球员编号决定了球队名称，同时球队名称决定了球队主教练，非主属性球队主教练就会传递依 赖于球员编号，因此不符合 3NF 的要求。</p>
 <p>如果要达到 3NF 的要求，需要把数据表拆成下面这样：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707124152312.png" alt="image-20220707124152312"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707124152312.png" alt="image-20220707124152312" loading="lazy"></p>
 <p><strong>举例4：</strong></p>
 <p>修改第二范式中的举例3。</p>
 <p>此时的Orders关系包含 orderid、orderdate、customerid 和 companyname 属性，主键定义为 orderid。 customerid 和companyname均依赖于主键——orderid。例如，你需要通过orderid主键来查找代表订单中 客户的customerid，同样，你需要通过 orderid 主键查找订单中客户的公司名称（companyname）。然 而， customerid和companyname也是互相依靠的。为满足第三范式，可以改写如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707124212114.png" alt="image-20220707124212114"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707124212114.png" alt="image-20220707124212114" loading="lazy"></p>
 <blockquote>
 <p>符合3NF后的数据模型通俗地讲，2NF和3NF通常以这句话概括：“每个非键属性依赖于键，依赖于 整个键，并且除了键别无他物”。</p>
 </blockquote>
@@ -122,24 +122,24 @@
 <h3 id="_3-2-应用举例" tabindex="-1"><a class="header-anchor" href="#_3-2-应用举例" aria-hidden="true">#</a> 3.2 应用举例</h3>
 <p><strong>举例1：</strong></p>
 <p>员工的信息存储在 <code v-pre>employees 表</code> 中，部门信息存储在 <code v-pre>departments 表</code> 中。通过 employees 表中的 department_id字段与 departments 表建立关联关系。如果要查询一个员工所在部门的名称：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>select employee_id,department_name
-from employees e join departments d
-on e.department_id = d.department_id;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> employee_id<span class="token punctuation">,</span>department_name
+<span class="token keyword">from</span> employees e <span class="token keyword">join</span> departments d
+<span class="token keyword">on</span> e<span class="token punctuation">.</span>department_id <span class="token operator">=</span> d<span class="token punctuation">.</span>department_id<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>如果经常需要进行这个操作，连接查询就会浪费很多时间。可以在 employees 表中增加一个冗余字段 department_name，这样就不用每次都进行连接操作了。</p>
 <p><strong>举例2：</strong></p>
 <p>反范式化的 <code v-pre>goods商品信息表</code> 设计如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707125118808.png" alt="image-20220707125118808"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707125118808.png" alt="image-20220707125118808" loading="lazy"></p>
 <p><strong>举例3：</strong></p>
 <p>我们有 2 个表，分别是 <code v-pre>商品流水表（atguigu.trans ）</code>和 <code v-pre>商品信息表 （atguigu.goodsinfo）</code> 。商品流水表里有 400 万条流水记录，商品信息表里有 2000 条商品记录。</p>
 <p>商品流水表：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707125401029.png" alt="image-20220707125401029"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707125401029.png" alt="image-20220707125401029" loading="lazy"></p>
 <p>商品信息表：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707125447317.png" alt="image-20220707125447317"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707125447317.png" alt="image-20220707125447317" loading="lazy"></p>
 <p>新的商品流水表如下所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707125500378.png" alt="image-20220707125500378"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707125500378.png" alt="image-20220707125500378" loading="lazy"></p>
 <p><strong>举例4：</strong></p>
 <p><code v-pre>课程评论表 class_comment</code> ，对应的字段名称及含义如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707125531172.png" alt="image-20220707125531172"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707125531172.png" alt="image-20220707125531172" loading="lazy"></p>
 <p><code v-pre>学生表 student</code> ，对应的字段名称及含义如下：</p>
 <img src="@source/notes/senior_mysql/images/image-20220707125545891.png" alt="image-20220707125545891" style="zoom:80%;" />
 <p>在实际应用中，我们在显示课程评论的时候，通常会显示这个学生的昵称，而不是学生 ID，因此当我们 想要查询某个课程的前 1000 条评论时，需要关联 class_comment 和 student这两张表来进行查询。</p>
@@ -147,21 +147,21 @@ on e.department_id = d.department_id;
 <p>为了更好地进行 SQL 优化实验，我们需要给学生表和课程评论表随机模拟出百万量级的数据。我们可以 通过存储过程来实现模拟数据。</p>
 <p><strong>反范式优化实验对比</strong></p>
 <p>如果我们想要查询课程 ID 为 10001 的前 1000 条评论，需要写成下面这样：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT p.comment_text, p.comment_time, stu.stu_name
-FROM class_comment AS p LEFT JOIN student AS stu
-ON p.stu_id = stu.stu_id
-WHERE p.class_id = 10001
-ORDER BY p.comment_id DESC
-LIMIT 1000;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> p<span class="token punctuation">.</span>comment_text<span class="token punctuation">,</span> p<span class="token punctuation">.</span>comment_time<span class="token punctuation">,</span> stu<span class="token punctuation">.</span>stu_name
+<span class="token keyword">FROM</span> class_comment <span class="token keyword">AS</span> p <span class="token keyword">LEFT</span> <span class="token keyword">JOIN</span> student <span class="token keyword">AS</span> stu
+<span class="token keyword">ON</span> p<span class="token punctuation">.</span>stu_id <span class="token operator">=</span> stu<span class="token punctuation">.</span>stu_id
+<span class="token keyword">WHERE</span> p<span class="token punctuation">.</span>class_id <span class="token operator">=</span> <span class="token number">10001</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> p<span class="token punctuation">.</span>comment_id <span class="token keyword">DESC</span>
+<span class="token keyword">LIMIT</span> <span class="token number">1000</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>运行结果（1000 条数据行）：</p>
 <img src="@source/notes/senior_mysql/images/image-20220707125642908.png" alt="image-20220707125642908" style="zoom:80%;" />
 <p>运行时长为 0.395 秒，对于网站的响应来说，这已经很慢了，用户体验会非常差。</p>
 <p>如果我们想要提升查询的效率，可以允许适当的数据冗余，也就是在商品评论表中增加用户昵称字段， 在 class_comment 数据表的基础上增加 stu_name 字段，就得到了 class_comment2 数据表。</p>
 <p>这样一来，只需单表查询就可以得到数据集结果：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT comment_text, comment_time, stu_name
-FROM class_comment2
-WHERE class_id = 10001
-ORDER BY class_id DESC LIMIT 1000;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> comment_text<span class="token punctuation">,</span> comment_time<span class="token punctuation">,</span> stu_name
+<span class="token keyword">FROM</span> class_comment2
+<span class="token keyword">WHERE</span> class_id <span class="token operator">=</span> <span class="token number">10001</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> class_id <span class="token keyword">DESC</span> <span class="token keyword">LIMIT</span> <span class="token number">1000</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>运行结果（1000 条数据）：</p>
 <img src="@source/notes/senior_mysql/images/image-20220707125718469.png" alt="image-20220707125718469" style="zoom:80%;" />
 <p>优化之后只需要扫描一次聚集索引即可，运行时间为 0.039 秒，查询时间是之前的 1/10。 你能看到， 在数据量大的情况下，查询效率会有显著的提升。</p>
@@ -223,13 +223,13 @@ ORDER BY class_id DESC LIMIT 1000;
 <p>这样就不存在主属性对于候选键的部分依赖或传递依赖，上面数据表的设计就符合 BCNF。</p>
 <p>再举例：</p>
 <p>有一个 <code v-pre>学生导师表</code> ，其中包含字段：学生ID，专业，导师，专业GPA，这其中学生ID和专业是联合主键。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707132038425.png" alt="image-20220707132038425"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707132038425.png" alt="image-20220707132038425" loading="lazy"></p>
 <p>这个表的设计满足三范式，但是这里存在另一个依赖关系，“专业”依赖于“导师”，也就是说每个导师只做一个专业方面的导师，只要知道了是哪个导师，我们自然就知道是哪个专业的了。</p>
 <p>所以这个表的部分主键Major依赖于非主键属性Advisor，那么我们可以进行以下的调整，拆分成2个表：</p>
 <p>学生导师表：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707132344634.png" alt="image-20220707132344634"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707132344634.png" alt="image-20220707132344634" loading="lazy"></p>
 <p>导师表：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707132355841.png" alt="image-20220707132355841"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707132355841.png" alt="image-20220707132355841" loading="lazy"></p>
 <h2 id="_5-第四范式" tabindex="-1"><a class="header-anchor" href="#_5-第四范式" aria-hidden="true">#</a> 5. 第四范式</h2>
 <p>多值依赖的概念：</p>
 <ul>
@@ -246,13 +246,13 @@ ORDER BY class_id DESC LIMIT 1000;
 <p>比如我们建立课程、教师、教材的模型。我们规定，每门课程有对应的一组教师，每门课程也有对应的一组教材，一门课程使用的教材和教师没有关系。我们建立的关系表如下：</p>
 <p>课程ID，教师ID，教材ID；这三列作为联合主键。</p>
 <p>为了表述方便，我们用Name代替ID，这样更容易看懂：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707133830721.png" alt="image-20220707133830721"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707133830721.png" alt="image-20220707133830721" loading="lazy"></p>
 <p>这个表除了主键，就没有其他字段了，所以肯定满足BC范式，但是却存在 <code v-pre>多值依赖</code> 导致的异常。</p>
 <p>假如我们下学期想采用一本新的英版高数教材，但是还没确定具体哪个老师来教，那么我们就无法在这 个表中维护Course高数和Book英版高数教材的的关系。</p>
 <p>解决办法是我们把这个多值依赖的表拆解成2个表，分别建立关系。这是我们拆分后的表：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707134028730.png" alt="image-20220707134028730"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707134028730.png" alt="image-20220707134028730" loading="lazy"></p>
 <p>以及</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707134220820.png" alt="image-20220707134220820"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707134220820.png" alt="image-20220707134220820" loading="lazy"></p>
 <h2 id="_6-第五范式、域键范式" tabindex="-1"><a class="header-anchor" href="#_6-第五范式、域键范式" aria-hidden="true">#</a> 6. 第五范式、域键范式</h2>
 <p>除了第四范式外，我们还有更高级的第五范式（又称完美范式）和域键范式（DKNF）。</p>
 <p>在满足第四范式（4NF）的基础上，消除不是由候选键所蕴含的连接依赖。<strong>如果关系模式R中的每一个连 接依赖均由R的候选键所隐含</strong>，则称此关系模式符合第五范式。</p>
@@ -261,7 +261,7 @@ ORDER BY class_id DESC LIMIT 1000;
 <h2 id="_7-实战案例" tabindex="-1"><a class="header-anchor" href="#_7-实战案例" aria-hidden="true">#</a> 7. 实战案例</h2>
 <p>商超进货系统中的<code v-pre>进货单表</code>进行剖析：</p>
 <p>进货单表：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707134636225.png" alt="image-20220707134636225"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707134636225.png" alt="image-20220707134636225" loading="lazy"></p>
 <p>这个表中的字段很多，表里的数据量也很惊人。大量重复导致表变得庞大，效率极低。如何改造？</p>
 <blockquote>
 <p>在实际工作场景中，这种由于数据表结构设计不合理，而导致的数据重复的现象并不少见。往往是系统虽然能够运行，承载能力却很差，稍微有点流量，就会出现内存不足、CPU使用率飙升的情况，甚至会导致整个项目失败。</p>
@@ -269,7 +269,7 @@ ORDER BY class_id DESC LIMIT 1000;
 <h3 id="_7-1-迭代1次-考虑1nf" tabindex="-1"><a class="header-anchor" href="#_7-1-迭代1次-考虑1nf" aria-hidden="true">#</a> 7.1 迭代1次：考虑1NF</h3>
 <p>第一范式要求：<strong>所有的字段都是基本数据类型，不可进行拆分</strong>。这里需要确认，所有的列中，每个字段只包含一种数据。</p>
 <p>这张表里，我们把“property&quot;这一字段，拆分成”specification (规格)&quot; 和 &quot;unit (单位)&quot;，这两个字段如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707154400580.png" alt="image-20220707154400580"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707154400580.png" alt="image-20220707154400580" loading="lazy"></p>
 <h3 id="_7-2-迭代2次-考虑2nf" tabindex="-1"><a class="header-anchor" href="#_7-2-迭代2次-考虑2nf" aria-hidden="true">#</a> 7.2 迭代2次：考虑2NF</h3>
 <p>第二范式要求，在满足第一范式的基础上，<strong>还要满足数据表里的每一条数据记录，都是可唯一标识的。而且所有字段，都必须完全依赖主键，不能只依赖主键的一部分</strong>。</p>
 <p>第1步，就是要确定这个表的主键。通过观察发现，字段“listnumber（单号）&quot;+&quot;barcode（条码）&quot;可以唯一标识每一条记录，可以作为主键。</p>
@@ -283,11 +283,11 @@ ORDER BY class_id DESC LIMIT 1000;
 <p>此外，字段&quot;supplierid(供应商编号)&quot;&quot;suppliername(供应商名称)&quot;&quot;stock(仓库)“只依赖于&quot;listnumber(单号)&quot;，不完全依赖于主键，所以，我们可以把&quot;supplierid&quot;&quot;suppliername&quot;&quot;stock&quot;这3个字段拆出去，再加上它们依赖的字段&quot;listnumber(单号)&quot;，就形成了一个新的表&quot;进货单头表&quot;。剩下的字段，会组成新的表，我们叫它&quot;进货单明细表&quot;。</p>
 <p>原来的数据表就拆分成了3个表。</p>
 <p>进货单头表：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707164128704.png" alt="image-20220707164128704"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707164128704.png" alt="image-20220707164128704" loading="lazy"></p>
 <p>进货单明细表：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707164146216.png" alt="image-20220707164146216"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707164146216.png" alt="image-20220707164146216" loading="lazy"></p>
 <p>商品信息表：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707164227845.png" alt="image-20220707164227845"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707164227845.png" alt="image-20220707164227845" loading="lazy"></p>
 <p>现在，我们再来分析一下拆分后的3个表，保证这3个表都满足第二范式的要求。</p>
 <p>第3步，在“商品信息表”中，字段“barcode&quot;是有<code v-pre>可能存在重复</code>的，比如，用户门店可能有散装称重商品和自产商品，会存在条码共用的情况。所以，所有的字段都不能唯一标识表里的记录。这个时候，我们必须给这个表加上一个主键，比如说是<code v-pre>自增字段&quot;itemnumber&quot;</code>。</p>
 <h3 id="_7-3-迭代3次-考虑3nf" tabindex="-1"><a class="header-anchor" href="#_7-3-迭代3次-考虑3nf" aria-hidden="true">#</a> 7.3 迭代3次：考虑3NF</h3>
@@ -336,7 +336,7 @@ ORDER BY class_id DESC LIMIT 1000;
 <li>订单详情实体</li>
 </ul>
 <p>其中， 用户 和 商品分类 是强实体，因为它们不需要依赖其他任何实体。而其他属于弱实体，因为它们 虽然都可以独立存在，但是它们都依赖用户这个实体，因此都是弱实体。知道了这些要素，我们就可以 给电商业务创建 ER 模型了，如图：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707170608782.png" alt="image-20220707170608782"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707170608782.png" alt="image-20220707170608782" loading="lazy"></p>
 <p>在这个图中，地址和用户之间的添加关系，是一对多的关系，而商品和商品详情示一对1的关系，商品和 订单是多对多的关系。 这个 ER 模型，包括了 8个实体之间的 8种关系。</p>
 <p>（1）用户可以在电商平台添加多个地址；</p>
 <p>（2）用户只能拥有一个购物车；</p>
@@ -359,7 +359,7 @@ ORDER BY class_id DESC LIMIT 1000;
 <p>（7） <code v-pre>评论实体</code> 包括评论id、评论内容、评论时间、用户编号、商品编号</p>
 <p>（8） <code v-pre>商品分类实体</code> 包括类别编号、类别名称、父类别编号</p>
 <p>这样细分之后，我们就可以重新设计电商业务了，ER 模型如图：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707171022246.png" alt="image-20220707171022246"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707171022246.png" alt="image-20220707171022246" loading="lazy"></p>
 <h3 id="_8-5-er-模型图转换成数据表" tabindex="-1"><a class="header-anchor" href="#_8-5-er-模型图转换成数据表" aria-hidden="true">#</a> 8.5 ER 模型图转换成数据表</h3>
 <p>通过绘制 ER 模型，我们已经理清了业务逻辑，现在，我们就要进行非常重要的一步了：把绘制好的 ER 模型，转换成具体的数据表，下面介绍下转换的原则：</p>
 <p>（1）一个 实体 通常转换成一个 数据表 ；</p>
@@ -386,7 +386,7 @@ ORDER BY class_id DESC LIMIT 1000;
 <img src="@source/notes/senior_mysql/images/image-20220707172609833.png" alt="image-20220707172609833" style="float:left;" />
 <h4 id="_4-把属性转换成表的字段" tabindex="-1"><a class="header-anchor" href="#_4-把属性转换成表的字段" aria-hidden="true">#</a> 4. 把属性转换成表的字段</h4>
 <img src="@source/notes/senior_mysql/images/image-20220707172819174.png" alt="image-20220707172819174" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220707172918017.png" alt="image-20220707172918017"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707172918017.png" alt="image-20220707172918017" loading="lazy"></p>
 <h2 id="_9-数据表的设计原则" tabindex="-1"><a class="header-anchor" href="#_9-数据表的设计原则" aria-hidden="true">#</a> 9. 数据表的设计原则</h2>
 <p>综合以上内容，总结出数据表设计的一般原则：&quot;三少一多&quot;</p>
 <p><strong>1. 数据表的个数越少越好</strong></p>
@@ -461,27 +461,27 @@ ORDER BY class_id DESC LIMIT 1000;
 <p>【示范】一个较为规范的建表语句：</p>
 </li>
 </ol>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE user_info (
-`id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
-`user_id` bigint(11) NOT NULL COMMENT '用户id',
-`username` varchar(45) NOT NULL COMMENT '真实姓名',
-`email` varchar(30) NOT NULL COMMENT '用户邮箱',
-`nickname` varchar(45) NOT NULL COMMENT '昵称',
-`birthday` date NOT NULL COMMENT '生日',
-`sex` tinyint(4) DEFAULT '0' COMMENT '性别',
-`short_introduce` varchar(150) DEFAULT NULL COMMENT '一句话介绍自己，最多50个汉字',
-`user_resume` varchar(300) NOT NULL COMMENT '用户提交的简历存放地址',
-`user_register_ip` int NOT NULL COMMENT '用户注册时的源ip',
-`create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-`update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE
-CURRENT_TIMESTAMP COMMENT '修改时间',
-`user_review_status` tinyint NOT NULL COMMENT '用户资料审核状态，1为通过，2为审核中，3为未
-通过，4为还未提交审核',
-PRIMARY KEY (`id`),
-UNIQUE KEY `uniq_user_id` (`user_id`),
-KEY `idx_username`(`username`),
-KEY `idx_create_time_status`(`create_time`,`user_review_status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='网站用户基本信息
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> user_info <span class="token punctuation">(</span>
+<span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span> <span class="token keyword">unsigned</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span> <span class="token keyword">COMMENT</span> <span class="token string">'自增主键'</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>user_id<span class="token punctuation">`</span></span> <span class="token keyword">bigint</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'用户id'</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>username<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">45</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'真实姓名'</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>email<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'用户邮箱'</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>nickname<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">45</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'昵称'</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>birthday<span class="token punctuation">`</span></span> <span class="token keyword">date</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'生日'</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>sex<span class="token punctuation">`</span></span> <span class="token keyword">tinyint</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">'0'</span> <span class="token keyword">COMMENT</span> <span class="token string">'性别'</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>short_introduce<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">150</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'一句话介绍自己，最多50个汉字'</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>user_resume<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">300</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'用户提交的简历存放地址'</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>user_register_ip<span class="token punctuation">`</span></span> <span class="token keyword">int</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'用户注册时的源ip'</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>create_time<span class="token punctuation">`</span></span> <span class="token keyword">timestamp</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CURRENT_TIMESTAMP</span> <span class="token keyword">COMMENT</span> <span class="token string">'创建时间'</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>update_time<span class="token punctuation">`</span></span> <span class="token keyword">timestamp</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CURRENT_TIMESTAMP</span> <span class="token keyword">ON</span> <span class="token keyword">UPDATE</span>
+<span class="token keyword">CURRENT_TIMESTAMP</span> <span class="token keyword">COMMENT</span> <span class="token string">'修改时间'</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>user_review_status<span class="token punctuation">`</span></span> <span class="token keyword">tinyint</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'用户资料审核状态，1为通过，2为审核中，3为未
+通过，4为还未提交审核'</span><span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token keyword">UNIQUE</span> <span class="token keyword">KEY</span> <span class="token identifier"><span class="token punctuation">`</span>uniq_user_id<span class="token punctuation">`</span></span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>user_id<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token keyword">KEY</span> <span class="token identifier"><span class="token punctuation">`</span>idx_username<span class="token punctuation">`</span></span><span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>username<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token keyword">KEY</span> <span class="token identifier"><span class="token punctuation">`</span>idx_create_time_status<span class="token punctuation">`</span></span><span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>create_time<span class="token punctuation">`</span></span><span class="token punctuation">,</span><span class="token identifier"><span class="token punctuation">`</span>user_review_status<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8 <span class="token keyword">COMMENT</span><span class="token operator">=</span>'网站用户基本信息
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ol start="17">
 <li>【建议】创建表时，可以使用可视化工具。这样可以确保表、字段相关的约定都能设置上。</li>
 </ol>
@@ -562,7 +562,7 @@ KEY `idx_create_time_status`(`create_time`,`user_review_status`)
 <p>多对多需要注意的是自己可以手动点击按钮将关系调整称为多对多的关系many对many的关系，然后点击应用和确定即可</p>
 <img src="@source/notes/senior_mysql/images/image-20220707180159184.png" alt="image-20220707180159184" style="float:left;" />
 <p>综上即可完成最简单的学生，班级，教师这种概念数据模型的设计，需要考虑数据的类型和主标识码， 是否为空。关系是一对一还是一对多还是多对多的关系，自己需要先规划好再设计，然后就ok了。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707180254510.png" alt="image-20220707180254510"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707180254510.png" alt="image-20220707180254510" loading="lazy"></p>
 <h3 id="_11-3-物理数据模型" tabindex="-1"><a class="header-anchor" href="#_11-3-物理数据模型" aria-hidden="true">#</a> 11.3 物理数据模型</h3>
 <p>上面是概念数据模型，下面介绍一下物理数据模型，以后 经常使用 的就是物理数据模型。打开 PowerDesigner，然后点击File--&gt;New Model然后选择如下图所示的物理数据模型，物理数据模型的名字自己起，然后选择自己所使用的数据库即可。</p>
 <img src="@source/notes/senior_mysql/images/image-20220707180327712.png" alt="image-20220707180327712" style="float:left;" />
@@ -603,25 +603,25 @@ KEY `idx_create_time_status`(`create_time`,`user_review_status`)
 <img src="@source/notes/senior_mysql/images/image-20220707194158936.png" alt="image-20220707194158936" style="float:left;" />
 <h3 id="_11-4-概念模型转为物理模型" tabindex="-1"><a class="header-anchor" href="#_11-4-概念模型转为物理模型" aria-hidden="true">#</a> 11.4 概念模型转为物理模型</h3>
 <p>1：如下图所示先打开概念模型图，然后点击Tool,如下图所示</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707194228064.png" alt="image-20220707194228064"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707194228064.png" alt="image-20220707194228064" loading="lazy"></p>
 <p>点开的页面如下所示，name和code已经从概念模型1改成物理模型1了</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707194248236.png" alt="image-20220707194248236"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707194248236.png" alt="image-20220707194248236" loading="lazy"></p>
 <p>完成后如下图所示，将自行打开修改的物理模型，需要注意的是这些表的数据类型已经自行改变了，而 且中间表出现两个主键，即双主键</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707194308595.png" alt="image-20220707194308595"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707194308595.png" alt="image-20220707194308595" loading="lazy"></p>
 <h3 id="_11-5-物理模型转为概念模型" tabindex="-1"><a class="header-anchor" href="#_11-5-物理模型转为概念模型" aria-hidden="true">#</a> 11.5 物理模型转为概念模型</h3>
 <p>上面介绍了概念模型转物理模型，下面介绍一下物理模型转概念模型（如下图点击操作即可）</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707194405358.png" alt="image-20220707194405358"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707194405358.png" alt="image-20220707194405358" loading="lazy"></p>
 <p>然后出现如下图所示界面，然后将物理修改为概念 ，点击应用确认即可</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707194419360.png" alt="image-20220707194419360"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707194419360.png" alt="image-20220707194419360" loading="lazy"></p>
 <p>点击确认后将自行打开如下图所示的页面，自己观察有何变化，如果转换为oracle的，数据类型会发生变 化，比如Varchar2等等）；</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707194433407.png" alt="image-20220707194433407"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707194433407.png" alt="image-20220707194433407" loading="lazy"></p>
 <h3 id="_11-6-物理模型导出sql语句" tabindex="-1"><a class="header-anchor" href="#_11-6-物理模型导出sql语句" aria-hidden="true">#</a> 11.6 物理模型导出SQL语句</h3>
-<p><img src="@source/notes/senior_mysql/images/image-20220707194544714.png" alt="image-20220707194544714"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707194544714.png" alt="image-20220707194544714" loading="lazy"></p>
 <p>打开之后如图所示，修改好存在sql语句的位置和生成文件的名称即可</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707194557554.png" alt="image-20220707194557554"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707194557554.png" alt="image-20220707194557554" loading="lazy"></p>
 <p>在Selection中选择需要导出的表，然后点击应用和确认即可</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707194637242.png" alt="image-20220707194637242"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707194637242.png" alt="image-20220707194637242" loading="lazy"></p>
 <p>完成以后出现如下图所示，可以点击Edit或者close按钮</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707194727849.png" alt="image-20220707194727849"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707194727849.png" alt="image-20220707194727849" loading="lazy"></p>
 <p>自此，就完成了导出sql语句，就可以到自己指定的位置查看导出的sql语句了；PowerDesigner在以后在 项目开发过程中用来做需求分析和数据库的设计非常的方便和快捷。</p>
 </div></template>

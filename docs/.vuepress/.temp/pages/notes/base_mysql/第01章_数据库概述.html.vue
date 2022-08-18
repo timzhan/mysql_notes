@@ -9,7 +9,7 @@
 </ul>
 <img src="@source/notes/base_mysql/images/image-20211020202152071.png" alt="image-20211020202152071" style="zoom:50%;" />
 <p>生活中的例子：</p>
-<p><img src="@source/notes/base_mysql/images/image_20211020132711.jpg" alt=""></p>
+<p><img src="@source/notes/base_mysql/images/image_20211020132711.jpg" alt="" loading="lazy"></p>
 <h2 id="_2-数据库与数据库管理系统" tabindex="-1"><a class="header-anchor" href="#_2-数据库与数据库管理系统" aria-hidden="true">#</a> 2. 数据库与数据库管理系统</h2>
 <h3 id="_2-1-数据库的相关概念" tabindex="-1"><a class="header-anchor" href="#_2-1-数据库的相关概念" aria-hidden="true">#</a> 2.1 数据库的相关概念</h3>
 <table>
@@ -39,15 +39,15 @@
 <h3 id="_2-2-数据库与数据库管理系统的关系" tabindex="-1"><a class="header-anchor" href="#_2-2-数据库与数据库管理系统的关系" aria-hidden="true">#</a> 2.2 数据库与数据库管理系统的关系</h3>
 <p>数据库管理系统(DBMS)可以管理多个数据库，一般开发人员会针对每一个应用创建一个数据库。为保存应用中实体的数据，一般会在数据库创建多个表，以保存程序中实体用户的数据。</p>
 <p>数据库管理系统、数据库和表的关系如图所示：</p>
-<p><img src="@source/notes/base_mysql/images/image-20211013202511233.png" alt="image-20211013202511233"></p>
-<p><img src="@source/notes/base_mysql/images/image-20210915112546261.png" alt="image-20210915112546261"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211013202511233.png" alt="image-20211013202511233" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210915112546261.png" alt="image-20210915112546261" loading="lazy"></p>
 <h3 id="_2-3-常见的数据库管理系统排名-dbms" tabindex="-1"><a class="header-anchor" href="#_2-3-常见的数据库管理系统排名-dbms" aria-hidden="true">#</a> 2.3 常见的数据库管理系统排名(DBMS)</h3>
-<p>目前互联网上常见的数据库管理软件有Oracle、MySQL、MS SQL Server、DB2、PostgreSQL、Access、Sybase、Informix这几种。以下是2021年<strong>DB-Engines Ranking</strong> 对各数据库受欢迎程度进行调查后的统计结果：（查看数据库最新排名:https://db-engines.com/en/ranking）</p>
-<p><img src="@source/notes/base_mysql/images/image-20211013202815851.png" alt="image-20211013202815851"></p>
+<p>目前互联网上常见的数据库管理软件有Oracle、MySQL、MS SQL Server、DB2、PostgreSQL、Access、Sybase、Informix这几种。以下是2021年<strong>DB-Engines Ranking</strong> 对各数据库受欢迎程度进行调查后的统计结果：（查看数据库最新排名:<a href="https://db-engines.com/en/ranking%EF%BC%89" target="_blank" rel="noopener noreferrer">https://db-engines.com/en/ranking）<ExternalLinkIcon/></a></p>
+<p><img src="@source/notes/base_mysql/images/image-20211013202815851.png" alt="image-20211013202815851" loading="lazy"></p>
 <p>。。。</p>
-<p><img src="@source/notes/base_mysql/images/image-20211013202940798.png" alt="image-20211013202940798"></p>
-<p>对应的走势图：（https://db-engines.com/en/ranking_trend）</p>
-<p><img src="@source/notes/base_mysql/images/image-20211013203029492.png" alt="image-20211013203029492"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211013202940798.png" alt="image-20211013202940798" loading="lazy"></p>
+<p>对应的走势图：（<a href="https://db-engines.com/en/ranking_trend%EF%BC%89" target="_blank" rel="noopener noreferrer">https://db-engines.com/en/ranking_trend）<ExternalLinkIcon/></a></p>
+<p><img src="@source/notes/base_mysql/images/image-20211013203029492.png" alt="image-20211013203029492" loading="lazy"></p>
 <h3 id="_2-4-常见的数据库介绍" tabindex="-1"><a class="header-anchor" href="#_2-4-常见的数据库介绍" aria-hidden="true">#</a> 2.4 常见的数据库介绍</h3>
 <p><strong>Oracle</strong></p>
 <p>1979 年，Oracle 2 诞生，它是第一个商用的 RDBMS（关系型数据库管理系统）。随着 Oracle 软件的名气越来越大，公司也改名叫 Oracle 公司。</p>
@@ -68,7 +68,7 @@
 <p><strong>informix</strong></p>
 <p>IBM公司出品，取自Information 和Unix的结合，它是第一个被移植到Linux上的商业数据库产品。仅运行于unix/linux平台，命令行操作。 性能较高，支持集群，适应于安全性要求极高的系统，尤其是银行，证券系统的应用。</p>
 <h2 id="_3-mysql介绍" tabindex="-1"><a class="header-anchor" href="#_3-mysql介绍" aria-hidden="true">#</a> 3. MySQL介绍</h2>
-<p><img src="@source/notes/base_mysql/images/image-20210829230656830.png" alt="image-20210829230656830"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210829230656830.png" alt="image-20210829230656830" loading="lazy"></p>
 <h3 id="_3-1-概述" tabindex="-1"><a class="header-anchor" href="#_3-1-概述" aria-hidden="true">#</a> 3.1 概述</h3>
 <ul>
 <li>MySQL是一个<code v-pre>开放源代码的关系型数据库管理系统</code>，由瑞典MySQL AB（创始人Michael Widenius）公司1995年开发，迅速成为开源数据库的 No.1。</li>
@@ -84,11 +84,11 @@
 </ul>
 <h3 id="_3-2-mysql发展史重大事件" tabindex="-1"><a class="header-anchor" href="#_3-2-mysql发展史重大事件" aria-hidden="true">#</a> 3.2 MySQL发展史重大事件</h3>
 <p>MySQL的历史就是整个互联网的发展史。互联网业务从社交领域、电商领域到金融领域的发展，推动着应用对数据库的需求提升，对传统的数据库服务能力提出了挑战。高并发、高性能、高可用、轻资源、易维护、易扩展的需求，促进了MySQL的长足发展。</p>
-<p><img src="@source/notes/base_mysql/images/image-20210730161043856.png" alt="image-20210730161043856"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210730161043856.png" alt="image-20210730161043856" loading="lazy"></p>
 <h3 id="_1-4-关于mysql-8-0" tabindex="-1"><a class="header-anchor" href="#_1-4-关于mysql-8-0" aria-hidden="true">#</a> 1.4 关于MySQL 8.0</h3>
 <p><code v-pre>MySQL从5.7版本直接跳跃发布了8.0版本</code>，可见这是一个令人兴奋的里程碑版本。MySQL 8版本在功能上做了显著的改进与增强，开发者对MySQL的源代码进行了重构，最突出的一点是多MySQL Optimizer优化器进行了改进。不仅在速度上得到了改善，还为用户带来了更好的性能和更棒的体验。</p>
 <h3 id="_1-5-why-choose-mysql" tabindex="-1"><a class="header-anchor" href="#_1-5-why-choose-mysql" aria-hidden="true">#</a> 1.5 Why choose MySQL?</h3>
-<p><img src="@source/notes/base_mysql/images/image-20211013210429011.png" alt="image-20211013210429011"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211013210429011.png" alt="image-20211013210429011" loading="lazy"></p>
 <p>为什么如此多的厂商要选用MySQL？大概总结的原因主要有以下几点：</p>
 <ol>
 <li>
@@ -117,7 +117,7 @@
 <ul>
 <li>
 <p>这种类型的数据库是<code v-pre>最古老</code>的数据库类型，关系型数据库模型是把复杂的数据结构归结为简单的<code v-pre>二元关系</code>（即二维表格形式）。</p>
-<p><img src="@source/notes/base_mysql/images/image-20211020145811031.png" alt="image-20211020145811031"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211020145811031.png" alt="image-20211020145811031" loading="lazy"></p>
 </li>
 <li>
 <p>关系型数据库以<code v-pre>行(row)</code>和<code v-pre>列(column)</code>的形式存储数据，以便于用户理解。这一系列的行和列被称为<code v-pre>表(table)</code>，一组表组成了一个库(database)。</p>
@@ -129,7 +129,7 @@
 <p>SQL 就是关系型数据库的查询语言。</p>
 </li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/image-20210914235413708.png" alt="image-20210914235413708"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210914235413708.png" alt="image-20210914235413708" loading="lazy"></p>
 <h4 id="_4-1-2-优势" tabindex="-1"><a class="header-anchor" href="#_4-1-2-优势" aria-hidden="true">#</a> 4.1.2 优势</h4>
 <ul>
 <li><strong>复杂查询</strong>
@@ -146,7 +146,7 @@
 <p><strong>键值型数据库</strong></p>
 <p>键值型数据库通过 Key-Value 键值的方式来存储数据，其中 Key 和 Value 可以是简单的对象，也可以是复杂的对象。Key 作为唯一的标识符，优点是查找速度快，在这方面明显优于关系型数据库，缺点是无法像关系型数据库一样使用条件过滤（比如 WHERE），如果你不知道去哪里找数据，就要遍历所有的键，这就会消耗大量的计算。</p>
 <p>键值型数据库典型的使用场景是作为<code v-pre>内存缓存</code>。<code v-pre>Redis </code>是最流行的键值型数据库。</p>
-<p><img src="@source/notes/base_mysql/images/image-20211020172958427.png" alt="image-20211020172958427"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211020172958427.png" alt="image-20211020172958427" loading="lazy"></p>
 <p><strong>文档型数据库</strong></p>
 <p>此类数据库可存放并获取文档，可以是XML、JSON等格式。在数据库中文档作为处理信息的基本单位，一个文档就相当于一条记录。文档数据库所存放的文档，就相当于键值数据库所存放的“值”。MongoDB 是最流行的文档型数据库。此外，还有CouchDB等。</p>
 <p><strong>搜索引擎数据库</strong></p>
@@ -154,7 +154,7 @@
 <p>典型产品：Solr、Elasticsearch、Splunk 等。</p>
 <p><strong>列式数据库</strong></p>
 <p>列式数据库是相对于行式存储的数据库，Oracle、MySQL、SQL Server 等数据库都是采用的行式存储（Row-based），而列式数据库是将数据按照列存储到数据库中，这样做的好处是可以大量降低系统的 I/O，适合于分布式文件系统，不足在于功能相对有限。典型产品：HBase等。</p>
-<p><img src="@source/notes/base_mysql/images/image-20211020173921726.png" alt="image-20211020173921726"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211020173921726.png" alt="image-20211020173921726" loading="lazy"></p>
 <p><strong>图形数据库</strong></p>
 <p>图形数据库，利用了图这种数据结构存储了实体（对象）之间的关系。图形数据库最典型的例子就是社交网络中人与人的关系，数据模型主要是以节点和边（关系）来实现，特点在于能高效地解决复杂的关系问题。</p>
 <p>图形数据库顾名思义，就是一种存储图形关系的数据库。它利用了图这种数据结构存储了实体（对象）之间的关系。关系型数据用于存储明确关系的数据，但对于复杂关系的数据存储却有些力不从心。如社交网络中人物之间的关系，如果用关系型数据库则非常复杂，用图形数据库将非常简单。典型产品：Neo4J、InfoGrid等。</p>
@@ -193,7 +193,7 @@
 <p>一个实体集（class）对应于数据库中的一个表（table），一个实体（instance）则对应于数据库表中的一行（row），也称为一条记录（record）。一个属性（attribute）对应于数据库表中的一列（column），也称为一个字段（field）。</p>
 </li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/image-20210914235450032-1634141235163.png" alt="image-20210914235450032"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210914235450032-1634141235163.png" alt="image-20210914235450032" loading="lazy"></p>
 <div class="language-text ext-text line-numbers-mode"><pre v-pre class="language-text"><code>ORM思想 (Object Relational Mapping)体现：
 数据库中的一个表  &lt;---> Java或Python中的一个类
 表中的一条数据  &lt;---> 类中的一个对象（或实体）
@@ -230,7 +230,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/image-20210914235534452.png" alt="image-20210914235534452"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210914235534452.png" alt="image-20210914235534452" loading="lazy"></p>
 <h4 id="_5-2-2-一对多关系-one-to-many" tabindex="-1"><a class="header-anchor" href="#_5-2-2-一对多关系-one-to-many" aria-hidden="true">#</a> 5.2.2 一对多关系（one-to-many）</h4>
 <ul>
 <li>常见实例场景：<code v-pre>客户表和订单表</code>，<code v-pre>分类表和商品表</code>，<code v-pre>部门表和员工表</code>。</li>
@@ -246,12 +246,12 @@
 </li>
 <li>一对多建表原则：在从表(多方)创建一个字段，字段作为外键指向主表(一方)的主键</li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/image-20210915001013524.png" alt="image-20210915001013524"></p>
-<p><img src="@source/notes/base_mysql/images/image-20210914235610597.png" alt="image-20210914235610597"></p>
-<p><img src="@source/notes/base_mysql/images/image-20210915084623432.png" alt="image-20210915084623432"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210915001013524.png" alt="image-20210915001013524" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210914235610597.png" alt="image-20210914235610597" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210915084623432.png" alt="image-20210915084623432" loading="lazy"></p>
 <h4 id="_5-2-3-多对多-many-to-many" tabindex="-1"><a class="header-anchor" href="#_5-2-3-多对多-many-to-many" aria-hidden="true">#</a> 5.2.3 多对多（many-to-many）</h4>
 <p>要表示多对多关系，必须创建第三个表，该表通常称为<code v-pre>联接表</code>，它将多对多关系划分为两个一对多关系。将这两个表的主键都插入到第三个表中。</p>
-<p><img src="@source/notes/base_mysql/images/image-20210915001048215.png" alt="image-20210915001048215"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210915001048215.png" alt="image-20210915001048215" loading="lazy"></p>
 <ul>
 <li>
 <p><strong>举例1：学生-课程</strong></p>
@@ -281,12 +281,12 @@
 </ul>
 </li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/image-20210914235637068.png" alt="image-20210914235637068"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210914235637068.png" alt="image-20210914235637068" loading="lazy"></p>
 <ul>
 <li><strong>举例3：用户-角色</strong></li>
 <li>多对多关系建表原则：需要创建第三张表，中间表中至少两个字段，这两个字段分别作为外键指向各自一方的主键。</li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/image-20210915084707586.png" alt="image-20210915084707586"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210915084707586.png" alt="image-20210915084707586" loading="lazy"></p>
 <h4 id="_5-3-4-自我引用-self-reference" tabindex="-1"><a class="header-anchor" href="#_5-3-4-自我引用-self-reference" aria-hidden="true">#</a> 5.3.4 自我引用(Self reference)</h4>
-<p><img src="@source/notes/base_mysql/images/image-20210914235651997.png" alt="image-20210914235651997"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210914235651997.png" alt="image-20210914235651997" loading="lazy"></p>
 </div></template>

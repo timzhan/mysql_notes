@@ -12,190 +12,190 @@
 <li>将表中的所有记录转换为一条INSERT语句。</li>
 </ul>
 <p><strong>基本语法：</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump –u 用户名称 –h 主机名称 –p密码 待备份的数据库名称[tbname, [tbname...]]&gt; 备份文件名称.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump –u 用户名称 –h 主机名称 –p密码 待备份的数据库名称<span class="token punctuation">[</span>tbname<span class="token punctuation">,</span> <span class="token punctuation">[</span>tbname<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">></span> 备份文件名称<span class="token punctuation">.</span><span class="token keyword">sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><blockquote>
 <p>说明： 备份的文件并非一定要求后缀名为.sql，例如后缀名为.txt的文件也是可以的。</p>
 </blockquote>
 <p>举例：使用root用户备份atguigu数据库：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump -uroot -p atguigu&gt;atguigu.sql #备份文件存储在当前目录下
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump -uroot -p atguigudb1 &gt; /var/lib/mysql/atguigu.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>p atguigu<span class="token operator">></span>atguigu<span class="token punctuation">.</span><span class="token keyword">sql</span> <span class="token comment">#备份文件存储在当前目录下</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>p atguigudb1 <span class="token operator">></span> <span class="token operator">/</span>var<span class="token operator">/</span>lib<span class="token operator">/</span>mysql<span class="token operator">/</span>atguigu<span class="token punctuation">.</span><span class="token keyword">sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>备份文件剖析：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>-- MySQL dump 10.13 Distrib 8.0.26, for Linux (x86_64)
---
--- Host: localhost Database: atguigu
--- ------------------------------------------------------
--- Server version 8.0.26
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">-- MySQL dump 10.13 Distrib 8.0.26, for Linux (x86_64)</span>
+<span class="token comment">--</span>
+<span class="token comment">-- Host: localhost Database: atguigu</span>
+<span class="token comment">-- ------------------------------------------------------</span>
+<span class="token comment">-- Server version 8.0.26</span>
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+<span class="token comment">/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!50503 SET NAMES utf8mb4 */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40103 SET TIME_ZONE='+00:00' */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */</span><span class="token punctuation">;</span>
 
---
--- Current Database: `atguigu`
---
+<span class="token comment">--</span>
+<span class="token comment">-- Current Database: `atguigu`</span>
+<span class="token comment">--</span>
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `atguigu` /*!40100 DEFAULT CHARACTER SET
-utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+<span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token comment">/*!32312 IF NOT EXISTS*/</span> <span class="token identifier"><span class="token punctuation">`</span>atguigu<span class="token punctuation">`</span></span> <span class="token comment">/*!40100 DEFAULT CHARACTER SET
+utf8mb4 COLLATE utf8mb4_0900_ai_ci */</span> <span class="token comment">/*!80016 DEFAULT ENCRYPTION='N' */</span><span class="token punctuation">;</span>
 
-USE `atguigu`;
+<span class="token keyword">USE</span> <span class="token identifier"><span class="token punctuation">`</span>atguigu<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
 
---
--- Table structure for table `student`
---
+<span class="token comment">--</span>
+<span class="token comment">-- Table structure for table `student`</span>
+<span class="token comment">--</span>
 
-DROP TABLE IF EXISTS `student`;
-/*!40101 SET @saved_cs_client = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `student` (
-`studentno` int NOT NULL,
-`name` varchar(20) DEFAULT NULL,
-`class` varchar(20) DEFAULT NULL,
-PRIMARY KEY (`studentno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `student` VALUES (1,'张三_back','一班'),(3,'李四','一班'),(8,'王五','二班'),
-(15,'赵六','二班'),(20,'钱七','&gt;三班'),(22,'zhang3_update','1ban'),(24,'wang5','2ban');
-/*!40000 ALTER TABLE `student` ENABLE KEYS */;
-UNLOCK TABLES;
-        .
-        .
-        .
-        .
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
--- Dump completed on 2022-01-07 9:58:23
+<span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> <span class="token identifier"><span class="token punctuation">`</span>student<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @saved_cs_client = @@character_set_client */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!50503 SET character_set_client = utf8mb4 */</span><span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>student<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+<span class="token identifier"><span class="token punctuation">`</span>studentno<span class="token punctuation">`</span></span> <span class="token keyword">int</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>class<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>studentno<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8mb3<span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET character_set_client = @saved_cs_client */</span><span class="token punctuation">;</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> <span class="token identifier"><span class="token punctuation">`</span>student<span class="token punctuation">`</span></span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三_back'</span><span class="token punctuation">,</span><span class="token string">'一班'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'李四'</span><span class="token punctuation">,</span><span class="token string">'一班'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token string">'王五'</span><span class="token punctuation">,</span><span class="token string">'二班'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token string">'赵六'</span><span class="token punctuation">,</span><span class="token string">'二班'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span><span class="token string">'钱七'</span><span class="token punctuation">,</span><span class="token string">'>三班'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">22</span><span class="token punctuation">,</span><span class="token string">'zhang3_update'</span><span class="token punctuation">,</span><span class="token string">'1ban'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">24</span><span class="token punctuation">,</span><span class="token string">'wang5'</span><span class="token punctuation">,</span><span class="token string">'2ban'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40000 ALTER TABLE `student` ENABLE KEYS */</span><span class="token punctuation">;</span>
+<span class="token keyword">UNLOCK</span> <span class="token keyword">TABLES</span><span class="token punctuation">;</span>
+        <span class="token punctuation">.</span>
+        <span class="token punctuation">.</span>
+        <span class="token punctuation">.</span>
+        <span class="token punctuation">.</span>
+<span class="token comment">/*!40101 SET SQL_MODE=@OLD_SQL_MODE */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */</span><span class="token punctuation">;</span>
+<span class="token comment">-- Dump completed on 2022-01-07 9:58:23</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_2-2-备份全部数据库" tabindex="-1"><a class="header-anchor" href="#_2-2-备份全部数据库" aria-hidden="true">#</a> 2.2 备份全部数据库</h3>
 <p>若想用mysqldump备份整个实例，可以使用 --all-databases 或 -A 参数：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump -uroot -pxxxxxx --all-databases &gt; all_database.sql
-mysqldump -uroot -pxxxxxx -A &gt; all_database.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>pxxxxxx <span class="token comment">--all-databases > all_database.sql</span>
+mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>pxxxxxx <span class="token operator">-</span>A <span class="token operator">></span> all_database<span class="token punctuation">.</span><span class="token keyword">sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_2-3-备份部分数据库" tabindex="-1"><a class="header-anchor" href="#_2-3-备份部分数据库" aria-hidden="true">#</a> 2.3 备份部分数据库</h3>
 <p>使用 <code v-pre>--databases</code> 或 <code v-pre>-B</code> 参数了，该参数后面跟数据库名称，多个数据库间用空格隔开。如果指定 databases参数，备份文件中会存在创建数据库的语句，如果不指定参数，则不存在。语法如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump –u user –h host –p --databases [数据库的名称1 [数据库的名称2...]] &gt; 备份文件名称.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump –u <span class="token keyword">user</span> –h host –p <span class="token comment">--databases [数据库的名称1 [数据库的名称2...]] > 备份文件名称.sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump -uroot -p --databases atguigu atguigu12 &gt;two_database.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>p <span class="token comment">--databases atguigu atguigu12 >two_database.sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>或</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump -uroot -p -B atguigu atguigu12 &gt; two_database.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>p <span class="token operator">-</span>B atguigu atguigu12 <span class="token operator">></span> two_database<span class="token punctuation">.</span><span class="token keyword">sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_2-4-备份部分表" tabindex="-1"><a class="header-anchor" href="#_2-4-备份部分表" aria-hidden="true">#</a> 2.4 备份部分表</h3>
 <p>比如，在表变更前做个备份。语法如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump –u user –h host –p 数据库的名称 [表名1 [表名2...]] &gt; 备份文件名称.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump –u <span class="token keyword">user</span> –h host –p 数据库的名称 <span class="token punctuation">[</span>表名<span class="token number">1</span> <span class="token punctuation">[</span>表名<span class="token number">2.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">></span> 备份文件名称<span class="token punctuation">.</span><span class="token keyword">sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>举例：备份atguigu数据库下的book表</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump -uroot -p atguigu book&gt; book.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>p atguigu book<span class="token operator">></span> book<span class="token punctuation">.</span><span class="token keyword">sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>book.sql文件内容如下</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump -uroot -p atguigu book&gt; book.sql^C
-[root@node1 ~]# ls
-kk kubekey kubekey-v1.1.1-linux-amd64.tar.gz README.md test1.sql two_database.sql
-[root@node1 ~]# mysqldump -uroot -p atguigu book&gt; book.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>p atguigu book<span class="token operator">></span> book<span class="token punctuation">.</span><span class="token keyword">sql</span><span class="token operator">^</span>C
+<span class="token punctuation">[</span>root<span class="token variable">@node1</span> <span class="token operator">~</span><span class="token punctuation">]</span><span class="token comment"># ls</span>
+kk kubekey kubekey<span class="token operator">-</span>v1<span class="token punctuation">.</span><span class="token number">1.1</span><span class="token operator">-</span>linux<span class="token operator">-</span>amd64<span class="token punctuation">.</span>tar<span class="token punctuation">.</span>gz README<span class="token punctuation">.</span>md test1<span class="token punctuation">.</span><span class="token keyword">sql</span> two_database<span class="token punctuation">.</span><span class="token keyword">sql</span>
+<span class="token punctuation">[</span>root<span class="token variable">@node1</span> <span class="token operator">~</span><span class="token punctuation">]</span><span class="token comment"># mysqldump -uroot -p atguigu book> book.sql</span>
 Enter password:
-[root@node1 ~]# ls
-book.sql kk kubekey kubekey-v1.1.1-linux-amd64.tar.gz README.md test1.sql
-two_database.sql
-[root@node1 ~]# vi book.sql
--- MySQL dump 10.13 Distrib 8.0.26, for Linux (x86_64)
---
--- Host: localhost Database: atguigu
--- ------------------------------------------------------
--- Server version 8.0.26
+<span class="token punctuation">[</span>root<span class="token variable">@node1</span> <span class="token operator">~</span><span class="token punctuation">]</span><span class="token comment"># ls</span>
+book<span class="token punctuation">.</span><span class="token keyword">sql</span> kk kubekey kubekey<span class="token operator">-</span>v1<span class="token punctuation">.</span><span class="token number">1.1</span><span class="token operator">-</span>linux<span class="token operator">-</span>amd64<span class="token punctuation">.</span>tar<span class="token punctuation">.</span>gz README<span class="token punctuation">.</span>md test1<span class="token punctuation">.</span><span class="token keyword">sql</span>
+two_database<span class="token punctuation">.</span><span class="token keyword">sql</span>
+<span class="token punctuation">[</span>root<span class="token variable">@node1</span> <span class="token operator">~</span><span class="token punctuation">]</span><span class="token comment"># vi book.sql</span>
+<span class="token comment">-- MySQL dump 10.13 Distrib 8.0.26, for Linux (x86_64)</span>
+<span class="token comment">--</span>
+<span class="token comment">-- Host: localhost Database: atguigu</span>
+<span class="token comment">-- ------------------------------------------------------</span>
+<span class="token comment">-- Server version 8.0.26</span>
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+<span class="token comment">/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!50503 SET NAMES utf8mb4 */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40103 SET TIME_ZONE='+00:00' */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */</span><span class="token punctuation">;</span>
 
---
--- Table structure for table `book`
---
+<span class="token comment">--</span>
+<span class="token comment">-- Table structure for table `book`</span>
+<span class="token comment">--</span>
 
-DROP TABLE IF EXISTS `book`;
-/*!40101 SET @saved_cs_client = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `book` (
-`bookid` int unsigned NOT NULL AUTO_INCREMENT,
-`card` int unsigned NOT NULL,
-`test` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-PRIMARY KEY (`bookid`),
-KEY `Y` (`card`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
+<span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> <span class="token identifier"><span class="token punctuation">`</span>book<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @saved_cs_client = @@character_set_client */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!50503 SET character_set_client = utf8mb4 */</span><span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>book<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+<span class="token identifier"><span class="token punctuation">`</span>bookid<span class="token punctuation">`</span></span> <span class="token keyword">int</span> <span class="token keyword">unsigned</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>card<span class="token punctuation">`</span></span> <span class="token keyword">int</span> <span class="token keyword">unsigned</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>test<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token keyword">COLLATE</span> utf8_bin <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>bookid<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token keyword">KEY</span> <span class="token identifier"><span class="token punctuation">`</span>Y<span class="token punctuation">`</span></span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>card<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token operator">=</span><span class="token number">101</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8mb3 <span class="token keyword">COLLATE</span><span class="token operator">=</span>utf8_bin<span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET character_set_client = @saved_cs_client */</span><span class="token punctuation">;</span>
 
---
--- Dumping data for table `book`
---
+<span class="token comment">--</span>
+<span class="token comment">-- Dumping data for table `book`</span>
+<span class="token comment">--</span>
 
-LOCK TABLES `book` WRITE;
-/*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (1,9,NULL),(2,10,NULL),(3,4,NULL),(4,8,NULL),(5,7,NULL),
-(6,10,NULL),(7,11,NULL),(8,3,NULL),(9,1,NULL),(10,17,NULL),(11,19,NULL),(12,4,NULL),
-(13,1,NULL),(14,14,NULL),(15,5,NULL),(16,5,NULL),(17,8,NULL),(18,3,NULL),(19,12,NULL),
-(20,11,NULL),(21,9,NULL),(22,20,NULL),(23,13,NULL),(24,3,NULL),(25,18,NULL),
-(26,20,NULL),(27,5,NULL),(28,6,NULL),(29,15,NULL),(30,15,NULL),(31,12,NULL),
-(32,11,NULL),(33,20,NULL),(34,5,NULL),(35,4,NULL),(36,6,NULL),(37,17,NULL),
-(38,5,NULL),(39,16,NULL),(40,6,NULL),(41,18,NULL),(42,12,NULL),(43,6,NULL),
-(44,12,NULL),(45,2,NULL),(46,12,NULL),(47,15,NULL),(48,17,NULL),(49,2,NULL),
-(50,16,NULL),(51,13,NULL),(52,17,NULL),(53,7,NULL),(54,2,NULL),(55,9,NULL),
-(56,1,NULL),(57,14,NULL),(58,7,NULL),(59,15,NULL),(60,12,NULL),(61,13,NULL),
-(62,8,NULL),(63,2,NULL),(64,6,NULL),(65,2,NULL),(66,12,NULL),(67,12,NULL),(68,4,NULL),
-(69,5,NULL),(70,10,NULL),(71,16,NULL),(72,8,NULL),(73,14,NULL),(74,5,NULL),
-(75,4,NULL),(76,3,NULL),(77,2,NULL),(78,2,NULL),(79,2,NULL),(80,3,NULL),(81,8,NULL),
-(82,14,NULL),(83,5,NULL),(84,4,NULL),(85,2,NULL),(86,20,NULL),(87,12,NULL),
-(88,1,NULL),(89,8,NULL),(90,18,NULL),(91,3,NULL),(92,3,NULL),(93,6,NULL),(94,1,NULL),
-(95,4,NULL),(96,17,NULL),(97,15,NULL),(98,1,NULL),(99,20,NULL),(100,15,NULL);
-/*!40000 ALTER TABLE `book` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+<span class="token keyword">LOCK</span> <span class="token keyword">TABLES</span> <span class="token identifier"><span class="token punctuation">`</span>book<span class="token punctuation">`</span></span> <span class="token keyword">WRITE</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40000 ALTER TABLE `book` DISABLE KEYS */</span><span class="token punctuation">;</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> <span class="token identifier"><span class="token punctuation">`</span>book<span class="token punctuation">`</span></span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">11</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">17</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">,</span><span class="token number">19</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">14</span><span class="token punctuation">,</span><span class="token number">14</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">17</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">18</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">19</span><span class="token punctuation">,</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span><span class="token number">11</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">21</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">22</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">23</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">24</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">,</span><span class="token number">18</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">26</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">27</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">28</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">29</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">31</span><span class="token punctuation">,</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">,</span><span class="token number">11</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">33</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">34</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">35</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">36</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">37</span><span class="token punctuation">,</span><span class="token number">17</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">38</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">39</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">40</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">41</span><span class="token punctuation">,</span><span class="token number">18</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">42</span><span class="token punctuation">,</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">43</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">44</span><span class="token punctuation">,</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">45</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">46</span><span class="token punctuation">,</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">47</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">48</span><span class="token punctuation">,</span><span class="token number">17</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">49</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">51</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">52</span><span class="token punctuation">,</span><span class="token number">17</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">53</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">54</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">55</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">56</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">57</span><span class="token punctuation">,</span><span class="token number">14</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">58</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">59</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">60</span><span class="token punctuation">,</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">61</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">62</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">63</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">65</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">66</span><span class="token punctuation">,</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">67</span><span class="token punctuation">,</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">68</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">69</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">70</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">71</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">72</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">73</span><span class="token punctuation">,</span><span class="token number">14</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">74</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">75</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">76</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">77</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">78</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">79</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">81</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">82</span><span class="token punctuation">,</span><span class="token number">14</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">83</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">84</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">85</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">86</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">87</span><span class="token punctuation">,</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">88</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">89</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">90</span><span class="token punctuation">,</span><span class="token number">18</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">91</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">92</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">93</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">94</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">95</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">96</span><span class="token punctuation">,</span><span class="token number">17</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">97</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">98</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">99</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40000 ALTER TABLE `book` ENABLE KEYS */</span><span class="token punctuation">;</span>
+<span class="token keyword">UNLOCK</span> <span class="token keyword">TABLES</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>可以看到，book文件和备份的库文件类似。不同的是，book文件只包含book表的DROP、CREATE和 INSERT语句。</p>
 <p>备份多张表使用下面的命令，比如备份book和account表：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#备份多张表
-mysqldump -uroot -p atguigu book account &gt; 2_tables_bak.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#备份多张表</span>
+mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>p atguigu book account <span class="token operator">></span> <span class="token number">2</span>_tables_bak<span class="token punctuation">.</span><span class="token keyword">sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_2-5-备份单表的部分数据" tabindex="-1"><a class="header-anchor" href="#_2-5-备份单表的部分数据" aria-hidden="true">#</a> 2.5 备份单表的部分数据</h3>
 <p>有些时候一张表的数据量很大，我们只需要部分数据。这时就可以使用 --where 选项了。where后面附带需要满足的条件。</p>
 <p>举例：备份student表中id小于10的数据：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump -uroot -p atguigu student --where=&quot;id &lt; 10 &quot; &gt; student_part_id10_low_bak.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>p atguigu student <span class="token comment">--where="id &lt; 10 " > student_part_id10_low_bak.sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>内容如下所示，insert语句只有id小于10的部分</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>LOCK TABLES `student` WRITE;
-/*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (1,100002,'JugxTY',157,280),(2,100003,'QyUcCJ',251,277),
-(3,100004,'lATUPp',80,404),(4,100005,'BmFsXI',240,171),(5,100006,'mkpSwJ',388,476),
-(6,100007,'ujMgwN',259,124),(7,100008,'HBJTqX',429,168),(8,100009,'dvQSQA',61,504),
-(9,100010,'HljpVJ',234,185);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">LOCK</span> <span class="token keyword">TABLES</span> <span class="token identifier"><span class="token punctuation">`</span>student<span class="token punctuation">`</span></span> <span class="token keyword">WRITE</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40000 ALTER TABLE `student` DISABLE KEYS */</span><span class="token punctuation">;</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> <span class="token identifier"><span class="token punctuation">`</span>student<span class="token punctuation">`</span></span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">100002</span><span class="token punctuation">,</span><span class="token string">'JugxTY'</span><span class="token punctuation">,</span><span class="token number">157</span><span class="token punctuation">,</span><span class="token number">280</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">100003</span><span class="token punctuation">,</span><span class="token string">'QyUcCJ'</span><span class="token punctuation">,</span><span class="token number">251</span><span class="token punctuation">,</span><span class="token number">277</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">100004</span><span class="token punctuation">,</span><span class="token string">'lATUPp'</span><span class="token punctuation">,</span><span class="token number">80</span><span class="token punctuation">,</span><span class="token number">404</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">100005</span><span class="token punctuation">,</span><span class="token string">'BmFsXI'</span><span class="token punctuation">,</span><span class="token number">240</span><span class="token punctuation">,</span><span class="token number">171</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">100006</span><span class="token punctuation">,</span><span class="token string">'mkpSwJ'</span><span class="token punctuation">,</span><span class="token number">388</span><span class="token punctuation">,</span><span class="token number">476</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">100007</span><span class="token punctuation">,</span><span class="token string">'ujMgwN'</span><span class="token punctuation">,</span><span class="token number">259</span><span class="token punctuation">,</span><span class="token number">124</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">100008</span><span class="token punctuation">,</span><span class="token string">'HBJTqX'</span><span class="token punctuation">,</span><span class="token number">429</span><span class="token punctuation">,</span><span class="token number">168</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">100009</span><span class="token punctuation">,</span><span class="token string">'dvQSQA'</span><span class="token punctuation">,</span><span class="token number">61</span><span class="token punctuation">,</span><span class="token number">504</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">100010</span><span class="token punctuation">,</span><span class="token string">'HljpVJ'</span><span class="token punctuation">,</span><span class="token number">234</span><span class="token punctuation">,</span><span class="token number">185</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_2-6-排除某些表的备份" tabindex="-1"><a class="header-anchor" href="#_2-6-排除某些表的备份" aria-hidden="true">#</a> 2.6 排除某些表的备份</h3>
 <p>如果我们想备份某个库，但是某些表数据量很大或者与业务关联不大，这个时候可以考虑排除掉这些表，同样的，选项 <code v-pre>--ignore-table</code> 可以完成这个功能。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump -uroot -p atguigu --ignore-table=atguigu.student &gt; no_stu_bak.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>p atguigu <span class="token comment">--ignore-table=atguigu.student > no_stu_bak.sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>通过如下指定判定文件中没有student表结构：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>grep &quot;student&quot; no_stu_bak.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>grep <span class="token string">"student"</span> no_stu_bak<span class="token punctuation">.</span><span class="token keyword">sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_2-7-只备份结构或只备份数据" tabindex="-1"><a class="header-anchor" href="#_2-7-只备份结构或只备份数据" aria-hidden="true">#</a> 2.7 只备份结构或只备份数据</h3>
 <p>只备份结构的话可以使用 <code v-pre>--no-data</code> 简写为 <code v-pre>-d</code> 选项；只备份数据可以使用 <code v-pre>--no-create-info</code> 简写为 <code v-pre>-t</code>选项。</p>
 <ul>
 <li>
 <p>只备份结构</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump -uroot -p atguigu --no-data &gt; atguigu_no_data_bak.sql
-#使用grep命令，没有找到insert相关语句，表示没有数据备份。
-[root@node1 ~]# grep &quot;INSERT&quot; atguigu_no_data_bak.sql
-[root@node1 ~]#
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>p atguigu <span class="token comment">--no-data > atguigu_no_data_bak.sql</span>
+<span class="token comment">#使用grep命令，没有找到insert相关语句，表示没有数据备份。</span>
+<span class="token punctuation">[</span>root<span class="token variable">@node1</span> <span class="token operator">~</span><span class="token punctuation">]</span><span class="token comment"># grep "INSERT" atguigu_no_data_bak.sql</span>
+<span class="token punctuation">[</span>root<span class="token variable">@node1</span> <span class="token operator">~</span><span class="token punctuation">]</span><span class="token comment">#</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
 <li>
 <p>只备份数据</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump -uroot -p atguigu --no-create-info &gt; atguigu_no_create_info_bak.sql
-#使用grep命令，没有找到create相关语句，表示没有数据结构。
-[root@node1 ~]# grep &quot;CREATE&quot; atguigu_no_create_info_bak.sql
-[root@node1 ~]#
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>p atguigu <span class="token comment">--no-create-info > atguigu_no_create_info_bak.sql</span>
+<span class="token comment">#使用grep命令，没有找到create相关语句，表示没有数据结构。</span>
+<span class="token punctuation">[</span>root<span class="token variable">@node1</span> <span class="token operator">~</span><span class="token punctuation">]</span><span class="token comment"># grep "CREATE" atguigu_no_create_info_bak.sql</span>
+<span class="token punctuation">[</span>root<span class="token variable">@node1</span> <span class="token operator">~</span><span class="token punctuation">]</span><span class="token comment">#</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
 </ul>
 <h3 id="_2-8-备份中包含存储过程、函数、事件" tabindex="-1"><a class="header-anchor" href="#_2-8-备份中包含存储过程、函数、事件" aria-hidden="true">#</a> 2.8 备份中包含存储过程、函数、事件</h3>
@@ -204,160 +204,160 @@ INSERT INTO `student` VALUES (1,100002,'JugxTY',157,280),(2,100003,'QyUcCJ',251,
 <ul>
 <li>使用下面的SQL可以查看当前库有哪些存储过程或者函数</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT SPECIFIC_NAME,ROUTINE_TYPE ,ROUTINE_SCHEMA FROM
-information_schema.Routines WHERE ROUTINE_SCHEMA=&quot;atguigu&quot;;
-+---------------+--------------+----------------+
-| SPECIFIC_NAME | ROUTINE_TYPE | ROUTINE_SCHEMA |
-+---------------+--------------+----------------+
-| rand_num      | FUNCTION     | atguigu        |
-| rand_string   | FUNCTION     | atguigu        |
-| BatchInsert   | PROCEDURE    | atguigu        |
-| insert_class  | PROCEDURE    | atguigu        |
-| insert_order  | PROCEDURE    | atguigu        |
-| insert_stu    | PROCEDURE    | atguigu        |
-| insert_user   | PROCEDURE    | atguigu        |
-| ts_insert     | PROCEDURE    | atguigu        |
-+---------------+--------------+----------------+
-9 rows in set (0.02 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> SPECIFIC_NAME<span class="token punctuation">,</span>ROUTINE_TYPE <span class="token punctuation">,</span>ROUTINE_SCHEMA <span class="token keyword">FROM</span>
+information_schema<span class="token punctuation">.</span>Routines <span class="token keyword">WHERE</span> ROUTINE_SCHEMA<span class="token operator">=</span><span class="token string">"atguigu"</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------+--------------+----------------+</span>
+<span class="token operator">|</span> SPECIFIC_NAME <span class="token operator">|</span> ROUTINE_TYPE <span class="token operator">|</span> ROUTINE_SCHEMA <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------+--------------+----------------+</span>
+<span class="token operator">|</span> rand_num      <span class="token operator">|</span> <span class="token keyword">FUNCTION</span>     <span class="token operator">|</span> atguigu        <span class="token operator">|</span>
+<span class="token operator">|</span> rand_string   <span class="token operator">|</span> <span class="token keyword">FUNCTION</span>     <span class="token operator">|</span> atguigu        <span class="token operator">|</span>
+<span class="token operator">|</span> BatchInsert   <span class="token operator">|</span> <span class="token keyword">PROCEDURE</span>    <span class="token operator">|</span> atguigu        <span class="token operator">|</span>
+<span class="token operator">|</span> insert_class  <span class="token operator">|</span> <span class="token keyword">PROCEDURE</span>    <span class="token operator">|</span> atguigu        <span class="token operator">|</span>
+<span class="token operator">|</span> insert_order  <span class="token operator">|</span> <span class="token keyword">PROCEDURE</span>    <span class="token operator">|</span> atguigu        <span class="token operator">|</span>
+<span class="token operator">|</span> insert_stu    <span class="token operator">|</span> <span class="token keyword">PROCEDURE</span>    <span class="token operator">|</span> atguigu        <span class="token operator">|</span>
+<span class="token operator">|</span> insert_user   <span class="token operator">|</span> <span class="token keyword">PROCEDURE</span>    <span class="token operator">|</span> atguigu        <span class="token operator">|</span>
+<span class="token operator">|</span> ts_insert     <span class="token operator">|</span> <span class="token keyword">PROCEDURE</span>    <span class="token operator">|</span> atguigu        <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------+--------------+----------------+</span>
+<span class="token number">9</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.02</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>下面备份atguigu库的数据，函数以及存储过程。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump -uroot -p -R -E --databases atguigu &gt; fun_atguigu_bak.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>p <span class="token operator">-</span>R <span class="token operator">-</span>E <span class="token comment">--databases atguigu > fun_atguigu_bak.sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>查询备份文件中是否存在函数，如下所示，可以看到确实包含了函数。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>grep -C 5 &quot;rand_num&quot; fun_atguigu_bak.sql
---
---
--- Dumping routines for database 'atguigu'
---
-/*!50003 DROP FUNCTION IF EXISTS `rand_num` */;
-/*!50003 SET @saved_cs_client = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client = utf8mb3 */ ;
-/*!50003 SET character_set_results = utf8mb3 */ ;
-/*!50003 SET collation_connection = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode = @@sql_mode */ ;
-/*!50003 SET sql_mode =
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>grep <span class="token operator">-</span>C <span class="token number">5</span> <span class="token string">"rand_num"</span> fun_atguigu_bak<span class="token punctuation">.</span><span class="token keyword">sql</span>
+<span class="token comment">--</span>
+<span class="token comment">--</span>
+<span class="token comment">-- Dumping routines for database 'atguigu'</span>
+<span class="token comment">--</span>
+<span class="token comment">/*!50003 DROP FUNCTION IF EXISTS `rand_num` */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!50003 SET @saved_cs_client = @@character_set_client */</span> <span class="token punctuation">;</span>
+<span class="token comment">/*!50003 SET @saved_cs_results = @@character_set_results */</span> <span class="token punctuation">;</span>
+<span class="token comment">/*!50003 SET @saved_col_connection = @@collation_connection */</span> <span class="token punctuation">;</span>
+<span class="token comment">/*!50003 SET character_set_client = utf8mb3 */</span> <span class="token punctuation">;</span>
+<span class="token comment">/*!50003 SET character_set_results = utf8mb3 */</span> <span class="token punctuation">;</span>
+<span class="token comment">/*!50003 SET collation_connection = utf8_general_ci */</span> <span class="token punctuation">;</span>
+<span class="token comment">/*!50003 SET @saved_sql_mode = @@sql_mode */</span> <span class="token punctuation">;</span>
+<span class="token comment">/*!50003 SET sql_mode =
 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISIO
-N_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`%` FUNCTION `rand_num`(from_num BIGINT ,to_num BIGINT) RETURNS
-bigint
-BEGIN
-DECLARE i BIGINT DEFAULT 0;
-SET i = FLOOR(from_num +RAND()*(to_num - from_num+1)) ;
-RETURN i;
-END ;;
---
-BEGIN
-DECLARE i INT DEFAULT 0;
-    SET autocommit = 0;
-    REPEAT
-    SET i = i + 1;
-    INSERT INTO class ( classname,address,monitor ) VALUES
-    (rand_string(8),rand_string(10),rand_num());
-    UNTIL i = max_num
-    END REPEAT;
-    COMMIT;
-END ;;
-DELIMITER ;
---
-BEGIN
-DECLARE i INT DEFAULT 0;
-    SET autocommit = 0; #设置手动提交事务
-    REPEAT #循环
-    SET i = i + 1; #赋值
-    INSERT INTO order_test (order_id, trans_id ) VALUES
-    (rand_num(1,7000000),rand_num(100000000000000000,700000000000000000));
-    UNTIL i = max_num
-    END REPEAT;
-    COMMIT; #提交事务
-END ;;
-DELIMITER ;
---
-BEGIN
-DECLARE i INT DEFAULT 0;
-    SET autocommit = 0; #设置手动提交事务
-    REPEAT #循环
-    SET i = i + 1; #赋值
-    INSERT INTO student (stuno, name ,age ,classId ) VALUES
-    ((START+i),rand_string(6),rand_num(),rand_num());
-    UNTIL i = max_num
-    END REPEAT;
-    COMMIT; #提交事务
-END ;;
-DELIMITER ;
---
-BEGIN
-DECLARE i INT DEFAULT 0;
-    SET autocommit = 0;
-    REPEAT
-    SET i = i + 1;
-    INSERT INTO `user` ( name,age,sex ) VALUES (&quot;atguigu&quot;,rand_num(1,20),&quot;male&quot;);
-    UNTIL i = max_num
-    END REPEAT;
-    COMMIT;
-END ;;
-DELIMITER ;
+N_BY_ZERO,NO_ENGINE_SUBSTITUTION' */</span> <span class="token punctuation">;</span>
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">DEFINER</span><span class="token operator">=</span><span class="token identifier"><span class="token punctuation">`</span>root<span class="token punctuation">`</span></span><span class="token variable">@`%`</span> <span class="token keyword">FUNCTION</span> <span class="token identifier"><span class="token punctuation">`</span>rand_num<span class="token punctuation">`</span></span><span class="token punctuation">(</span>from_num <span class="token keyword">BIGINT</span> <span class="token punctuation">,</span>to_num <span class="token keyword">BIGINT</span><span class="token punctuation">)</span> <span class="token keyword">RETURNS</span>
+<span class="token keyword">bigint</span>
+<span class="token keyword">BEGIN</span>
+<span class="token keyword">DECLARE</span> i <span class="token keyword">BIGINT</span> <span class="token keyword">DEFAULT</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> i <span class="token operator">=</span> FLOOR<span class="token punctuation">(</span>from_num <span class="token operator">+</span>RAND<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span>to_num <span class="token operator">-</span> from_num<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+<span class="token keyword">RETURN</span> i<span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token comment">--</span>
+<span class="token keyword">BEGIN</span>
+<span class="token keyword">DECLARE</span> i <span class="token keyword">INT</span> <span class="token keyword">DEFAULT</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">SET</span> autocommit <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">REPEAT</span>
+    <span class="token keyword">SET</span> i <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> class <span class="token punctuation">(</span> classname<span class="token punctuation">,</span>address<span class="token punctuation">,</span>monitor <span class="token punctuation">)</span> <span class="token keyword">VALUES</span>
+    <span class="token punctuation">(</span>rand_string<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">,</span>rand_string<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>rand_num<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    UNTIL i <span class="token operator">=</span> max_num
+    <span class="token keyword">END</span> <span class="token keyword">REPEAT</span><span class="token punctuation">;</span>
+    <span class="token keyword">COMMIT</span><span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
+<span class="token comment">--</span>
+<span class="token keyword">BEGIN</span>
+<span class="token keyword">DECLARE</span> i <span class="token keyword">INT</span> <span class="token keyword">DEFAULT</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">SET</span> autocommit <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">#设置手动提交事务</span>
+    <span class="token keyword">REPEAT</span> <span class="token comment">#循环</span>
+    <span class="token keyword">SET</span> i <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">#赋值</span>
+    <span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> order_test <span class="token punctuation">(</span>order_id<span class="token punctuation">,</span> trans_id <span class="token punctuation">)</span> <span class="token keyword">VALUES</span>
+    <span class="token punctuation">(</span>rand_num<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">7000000</span><span class="token punctuation">)</span><span class="token punctuation">,</span>rand_num<span class="token punctuation">(</span><span class="token number">100000000000000000</span><span class="token punctuation">,</span><span class="token number">700000000000000000</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    UNTIL i <span class="token operator">=</span> max_num
+    <span class="token keyword">END</span> <span class="token keyword">REPEAT</span><span class="token punctuation">;</span>
+    <span class="token keyword">COMMIT</span><span class="token punctuation">;</span> <span class="token comment">#提交事务</span>
+<span class="token keyword">END</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
+<span class="token comment">--</span>
+<span class="token keyword">BEGIN</span>
+<span class="token keyword">DECLARE</span> i <span class="token keyword">INT</span> <span class="token keyword">DEFAULT</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">SET</span> autocommit <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">#设置手动提交事务</span>
+    <span class="token keyword">REPEAT</span> <span class="token comment">#循环</span>
+    <span class="token keyword">SET</span> i <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">#赋值</span>
+    <span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> student <span class="token punctuation">(</span>stuno<span class="token punctuation">,</span> name <span class="token punctuation">,</span>age <span class="token punctuation">,</span>classId <span class="token punctuation">)</span> <span class="token keyword">VALUES</span>
+    <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">START</span><span class="token operator">+</span>i<span class="token punctuation">)</span><span class="token punctuation">,</span>rand_string<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">,</span>rand_num<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>rand_num<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    UNTIL i <span class="token operator">=</span> max_num
+    <span class="token keyword">END</span> <span class="token keyword">REPEAT</span><span class="token punctuation">;</span>
+    <span class="token keyword">COMMIT</span><span class="token punctuation">;</span> <span class="token comment">#提交事务</span>
+<span class="token keyword">END</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
+<span class="token comment">--</span>
+<span class="token keyword">BEGIN</span>
+<span class="token keyword">DECLARE</span> i <span class="token keyword">INT</span> <span class="token keyword">DEFAULT</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">SET</span> autocommit <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">REPEAT</span>
+    <span class="token keyword">SET</span> i <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> <span class="token identifier"><span class="token punctuation">`</span>user<span class="token punctuation">`</span></span> <span class="token punctuation">(</span> name<span class="token punctuation">,</span>age<span class="token punctuation">,</span>sex <span class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">"atguigu"</span><span class="token punctuation">,</span>rand_num<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">"male"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    UNTIL i <span class="token operator">=</span> max_num
+    <span class="token keyword">END</span> <span class="token keyword">REPEAT</span><span class="token punctuation">;</span>
+    <span class="token keyword">COMMIT</span><span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_2-9-mysqldump常用选项" tabindex="-1"><a class="header-anchor" href="#_2-9-mysqldump常用选项" aria-hidden="true">#</a> 2.9 mysqldump常用选项</h3>
 <p>mysqldump其他常用选项如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>--add-drop-database：在每个CREATE DATABASE语句前添加DROP DATABASE语句。
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">--add-drop-database：在每个CREATE DATABASE语句前添加DROP DATABASE语句。</span>
 
---add-drop-tables：在每个CREATE TABLE语句前添加DROP TABLE语句。
+<span class="token comment">--add-drop-tables：在每个CREATE TABLE语句前添加DROP TABLE语句。</span>
 
---add-locking：用LOCK TABLES和UNLOCK TABLES语句引用每个表转储。重载转储文件时插入得更快。
+<span class="token comment">--add-locking：用LOCK TABLES和UNLOCK TABLES语句引用每个表转储。重载转储文件时插入得更快。</span>
 
---all-database, -A：转储所有数据库中的所有表。与使用--database选项相同，在命令行中命名所有数据库。
+<span class="token comment">--all-database, -A：转储所有数据库中的所有表。与使用--database选项相同，在命令行中命名所有数据库。</span>
 
---comment[=0|1]：如果设置为0，禁止转储文件中的其他信息，例如程序版本、服务器版本和主机。--skipcomments与--comments=0的结果相同。默认值为1，即包括额外信息。
+<span class="token comment">--comment[=0|1]：如果设置为0，禁止转储文件中的其他信息，例如程序版本、服务器版本和主机。--skipcomments与--comments=0的结果相同。默认值为1，即包括额外信息。</span>
 
---compact：产生少量输出。该选项禁用注释并启用--skip-add-drop-tables、--no-set-names、--skipdisable-keys和--skip-add-locking选项。
+<span class="token comment">--compact：产生少量输出。该选项禁用注释并启用--skip-add-drop-tables、--no-set-names、--skipdisable-keys和--skip-add-locking选项。</span>
 
---compatible=name：产生与其他数据库系统或旧的MySQL服务器更兼容的输出，值可以为ansi、MySQL323、MySQL40、postgresql、oracle、mssql、db2、maxdb、no_key_options、no_table_options或者no_field_options。
+<span class="token comment">--compatible=name：产生与其他数据库系统或旧的MySQL服务器更兼容的输出，值可以为ansi、MySQL323、MySQL40、postgresql、oracle、mssql、db2、maxdb、no_key_options、no_table_options或者no_field_options。</span>
 
---complete_insert, -c：使用包括列名的完整的INSERT语句。
+<span class="token comment">--complete_insert, -c：使用包括列名的完整的INSERT语句。</span>
 
---debug[=debug_options], -#[debug_options]：写调试日志。
+<span class="token comment">--debug[=debug_options], -#[debug_options]：写调试日志。</span>
 
---delete，-D：导入文本文件前清空表。
+<span class="token comment">--delete，-D：导入文本文件前清空表。</span>
 
---default-character-set=charset：使用charsets默认字符集。如果没有指定，就使用utf8。
+<span class="token comment">--default-character-set=charset：使用charsets默认字符集。如果没有指定，就使用utf8。</span>
 
---delete--master-logs：在主复制服务器上，完成转储操作后删除二进制日志。该选项自动启用-masterdata。
+<span class="token comment">--delete--master-logs：在主复制服务器上，完成转储操作后删除二进制日志。该选项自动启用-masterdata。</span>
 
---extended-insert，-e：使用包括几个VALUES列表的多行INSERT语法。这样使得转储文件更小，重载文件时可以加速插入。
+<span class="token comment">--extended-insert，-e：使用包括几个VALUES列表的多行INSERT语法。这样使得转储文件更小，重载文件时可以加速插入。</span>
 
---flush-logs，-F：开始转储前刷新MySQL服务器日志文件。该选项要求RELOAD权限。
+<span class="token comment">--flush-logs，-F：开始转储前刷新MySQL服务器日志文件。该选项要求RELOAD权限。</span>
 
---force，-f：在表转储过程中，即使出现SQL错误也继续。
+<span class="token comment">--force，-f：在表转储过程中，即使出现SQL错误也继续。</span>
 
---lock-all-tables，-x：对所有数据库中的所有表加锁。在整体转储过程中通过全局锁定来实现。该选项自动关闭--single-transaction和--lock-tables。
+<span class="token comment">--lock-all-tables，-x：对所有数据库中的所有表加锁。在整体转储过程中通过全局锁定来实现。该选项自动关闭--single-transaction和--lock-tables。</span>
 
---lock-tables，-l：开始转储前锁定所有表。用READ LOCAL锁定表以允许并行插入MyISAM表。对于事务表（例如InnoDB和BDB），--single-transaction是一个更好的选项，因为它根本不需要锁定表。
+<span class="token comment">--lock-tables，-l：开始转储前锁定所有表。用READ LOCAL锁定表以允许并行插入MyISAM表。对于事务表（例如InnoDB和BDB），--single-transaction是一个更好的选项，因为它根本不需要锁定表。</span>
 
---no-create-db，-n：该选项禁用CREATE DATABASE /*!32312 IF NOT EXIST*/db_name语句，如果给出--database或--all-database选项，就包含到输出中。
+<span class="token comment">--no-create-db，-n：该选项禁用CREATE DATABASE /*!32312 IF NOT EXIST*/db_name语句，如果给出--database或--all-database选项，就包含到输出中。</span>
 
---no-create-info，-t：只导出数据，而不添加CREATE TABLE语句。
+<span class="token comment">--no-create-info，-t：只导出数据，而不添加CREATE TABLE语句。</span>
 
---no-data，-d：不写表的任何行信息，只转储表的结构。
+<span class="token comment">--no-data，-d：不写表的任何行信息，只转储表的结构。</span>
 
---opt：该选项是速记，它可以快速进行转储操作并产生一个能很快装入MySQL服务器的转储文件。该选项默认开启，但可以用--skip-opt禁用。
+<span class="token comment">--opt：该选项是速记，它可以快速进行转储操作并产生一个能很快装入MySQL服务器的转储文件。该选项默认开启，但可以用--skip-opt禁用。</span>
 
---password[=password]，-p[password]：当连接服务器时使用的密码。
+<span class="token comment">--password[=password]，-p[password]：当连接服务器时使用的密码。</span>
 
--port=port_num，-P port_num：用于连接的TCP/IP端口号。
+<span class="token operator">-</span>port<span class="token operator">=</span>port_num，<span class="token operator">-</span>P port_num：用于连接的TCP<span class="token operator">/</span>IP端口号。
 
---protocol={TCP|SOCKET|PIPE|MEMORY}：使用的连接协议。
+<span class="token comment">--protocol={TCP|SOCKET|PIPE|MEMORY}：使用的连接协议。</span>
 
---replace，-r –replace和--ignore：控制替换或复制唯一键值已有记录的输入记录的处理。如果指定--replace，新行替换有相同的唯一键值的已有行；如果指定--ignore，复制已有的唯一键值的输入行被跳过。如果不指定这两个选项，当发现一个复制键值时会出现一个错误，并且忽视文本文件的剩余部分。
+<span class="token comment">--replace，-r –replace和--ignore：控制替换或复制唯一键值已有记录的输入记录的处理。如果指定--replace，新行替换有相同的唯一键值的已有行；如果指定--ignore，复制已有的唯一键值的输入行被跳过。如果不指定这两个选项，当发现一个复制键值时会出现一个错误，并且忽视文本文件的剩余部分。</span>
 
---silent，-s：沉默模式。只有出现错误时才输出。
+<span class="token comment">--silent，-s：沉默模式。只有出现错误时才输出。</span>
 
---socket=path，-S path：当连接localhost时使用的套接字文件（为默认主机）。
+<span class="token comment">--socket=path，-S path：当连接localhost时使用的套接字文件（为默认主机）。</span>
 
---user=user_name，-u user_name：当连接服务器时MySQL使用的用户名。
+<span class="token comment">--user=user_name，-u user_name：当连接服务器时MySQL使用的用户名。</span>
 
---verbose，-v：冗长模式，打印出程序操作的详细信息。
+<span class="token comment">--verbose，-v：冗长模式，打印出程序操作的详细信息。</span>
 
---xml，-X：产生XML输出。
+<span class="token comment">--xml，-X：产生XML输出。</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>运行帮助命令 <code v-pre>mysqldump --help</code> ，可以获得特定版本的完整选项列表。</p>
 <blockquote>
 <p>提示 如果运行mysqldump没有--quick或--opt选项，mysqldump在转储结果前将整个结果集装入内 存。如果转储大数据库可能会出现问题，该选项默认启用，但可以用--skip-opt禁用。如果使用最 新版本的mysqldump程序备份数据，并用于恢复到比较旧版本的MySQL服务器中，则不要使用--opt 或-e选项。</p>
@@ -366,37 +366,37 @@ DELIMITER ;
 <p>使用mysqldump命令将数据库中的数据备份成一个文本文件。需要恢复时，可以使用<code v-pre>mysql命令</code>来恢复备份的数据。</p>
 <p>mysql命令可以执行备份文件中的<code v-pre>CREATE语句</code>和<code v-pre>INSERT语句</code>。通过CREATE语句来创建数据库和表。通过INSERT语句来插入备份的数据。</p>
 <p>基本语法：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql –u root –p [dbname] &lt; backup.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql –u root –p <span class="token punctuation">[</span>dbname<span class="token punctuation">]</span> <span class="token operator">&lt;</span> <span class="token keyword">backup</span><span class="token punctuation">.</span><span class="token keyword">sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>其中，dbname参数表示数据库名称。该参数是可选参数，可以指定数据库名，也可以不指定。指定数据库名时，表示还原该数据库下的表。此时需要确保MySQL服务器中已经创建了该名的数据库。不指定数据库名，表示还原文件中所有的数据库。此时sql文件中包含有CREATE DATABASE语句，不需要MySQL服务器中已存在的这些数据库。</p>
 <h3 id="_3-1-单库备份中恢复单库" tabindex="-1"><a class="header-anchor" href="#_3-1-单库备份中恢复单库" aria-hidden="true">#</a> 3.1 单库备份中恢复单库</h3>
 <p>使用root用户，将之前练习中备份的atguigu.sql文件中的备份导入数据库中，命令如下：</p>
 <p>如果备份文件中包含了创建数据库的语句，则恢复的时候不需要指定数据库名称，如下所示</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql -uroot -p &lt; atguigu.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql <span class="token operator">-</span>uroot <span class="token operator">-</span>p <span class="token operator">&lt;</span> atguigu<span class="token punctuation">.</span><span class="token keyword">sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>否则需要指定数据库名称，如下所示</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql -uroot -p atguigu4&lt; atguigu.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql <span class="token operator">-</span>uroot <span class="token operator">-</span>p atguigu4<span class="token operator">&lt;</span> atguigu<span class="token punctuation">.</span><span class="token keyword">sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_3-2-全量备份恢复" tabindex="-1"><a class="header-anchor" href="#_3-2-全量备份恢复" aria-hidden="true">#</a> 3.2 全量备份恢复</h3>
 <p>如果我们现在有昨天的全量备份，现在想整个恢复，则可以这样操作：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql –u root –p &lt; all.sql
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql -uroot -pxxxxxx &lt; all.sql
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql –u root –p <span class="token operator">&lt;</span> <span class="token keyword">all</span><span class="token punctuation">.</span><span class="token keyword">sql</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql <span class="token operator">-</span>uroot <span class="token operator">-</span>pxxxxxx <span class="token operator">&lt;</span> <span class="token keyword">all</span><span class="token punctuation">.</span><span class="token keyword">sql</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>执行完后，MySQL数据库中就已经恢复了all.sql文件中的所有数据库。</p>
 <h3 id="_3-3-全量备份恢复" tabindex="-1"><a class="header-anchor" href="#_3-3-全量备份恢复" aria-hidden="true">#</a> 3.3 全量备份恢复</h3>
 <p>可能有这样的需求，比如说我们只想恢复某一个库，但是我们有的是整个实例的备份，这个时候我们可以从全量备份中分离出单个库的备份。</p>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>sed -n '/^-- Current Database: `atguigu`/,/^-- Current Database: `/p' all_database.sql &gt; atguigu.sql
-#分离完成后我们再导入atguigu.sql即可恢复单个库
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>sed <span class="token operator">-</span>n <span class="token string">'/^-- Current Database: `atguigu`/,/^-- Current Database: `/p'</span> all_database<span class="token punctuation">.</span><span class="token keyword">sql</span> <span class="token operator">></span> atguigu<span class="token punctuation">.</span><span class="token keyword">sql</span>
+<span class="token comment">#分离完成后我们再导入atguigu.sql即可恢复单个库</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-4-从单库备份中恢复单表" tabindex="-1"><a class="header-anchor" href="#_3-4-从单库备份中恢复单表" aria-hidden="true">#</a> 3.4 从单库备份中恢复单表</h3>
 <p>这个需求还是比较常见的。比如说我们知道哪个表误操作了，那么就可以用单表恢复的方式来恢复。</p>
 <p>举例：我们有atguigu整库的备份，但是由于class表误操作，需要单独恢复出这张表。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>cat atguigu.sql | sed -e '/./{H;$!d;}' -e 'x;/CREATE TABLE `class`/!d;q' &gt; class_structure.sql
-cat atguigu.sql | grep --ignore-case 'insert into `class`' &gt; class_data.sql
-#用shell语法分离出创建表的语句及插入数据的语句后 再依次导出即可完成恢复
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>cat atguigu<span class="token punctuation">.</span><span class="token keyword">sql</span> <span class="token operator">|</span> sed <span class="token operator">-</span>e <span class="token string">'/./{H;$!d;}'</span> <span class="token operator">-</span>e <span class="token string">'x;/CREATE TABLE `class`/!d;q'</span> <span class="token operator">></span> class_structure<span class="token punctuation">.</span><span class="token keyword">sql</span>
+cat atguigu<span class="token punctuation">.</span><span class="token keyword">sql</span> <span class="token operator">|</span> grep <span class="token comment">--ignore-case 'insert into `class`' > class_data.sql</span>
+<span class="token comment">#用shell语法分离出创建表的语句及插入数据的语句后 再依次导出即可完成恢复</span>
 
-use atguigu;
-mysql&gt; source class_structure.sql;
-Query OK, 0 rows affected, 1 warning (0.00 sec)
+<span class="token keyword">use</span> atguigu<span class="token punctuation">;</span>
+mysql<span class="token operator">></span> source class_structure<span class="token punctuation">.</span><span class="token keyword">sql</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected<span class="token punctuation">,</span> <span class="token number">1</span> warning <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; source class_data.sql;
-Query OK, 1 row affected (0.01 sec)
+mysql<span class="token operator">></span> source class_data<span class="token punctuation">.</span><span class="token keyword">sql</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token keyword">row</span> affected <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_4-物理备份-直接复制整个数据库" tabindex="-1"><a class="header-anchor" href="#_4-物理备份-直接复制整个数据库" aria-hidden="true">#</a> 4. 物理备份：直接复制整个数据库</h2>
 <p>直接将MySQL中的数据库文件复制出来。这种方法最简单，速度也最快。MySQL的数据库目录位置不一 定相同：</p>
 <ul>
@@ -434,7 +434,7 @@ Query OK, 1 row affected (0.01 sec)
 </li>
 <li>在Linux操作系统下，复制到数据库目录后，一定要将数据库的用户和组变成mysql，命令如下：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>chown -R mysql.mysql /var/lib/mysql/dbname
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>chown <span class="token operator">-</span>R mysql<span class="token punctuation">.</span>mysql <span class="token operator">/</span>var<span class="token operator">/</span>lib<span class="token operator">/</span>mysql<span class="token operator">/</span>dbname
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>其中，两个mysql分别表示组和用户；“-R”参数可以改变文件夹下的所有子文件的用户和组；“dbname”参数表示数据库目录。</p>
 <blockquote>
 <p>提示 Linux操作系统下的权限设置非常严格。通常情况下，MySQL数据库只有root用户和mysql用户 组下的mysql用户才可以访问，因此将数据库目录复制到指定文件夹后，一定要使用chown命令将 文件夹的用户组变为mysql，将用户变为mysql。</p>
@@ -445,229 +445,229 @@ Query OK, 1 row affected (0.01 sec)
 <p>在MySQL中，可以使用SELECT…INTO OUTFILE语句将表的内容导出成一个文本文件。</p>
 <p>**举例：**使用SELECT…INTO OUTFILE将atguigu数据库中account表中的记录导出到文本文件。</p>
 <p>（1）选择数据库atguigu，并查询account表，执行结果如下所示。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>use atguigu;
-select * from account;
-mysql&gt; select * from account;
-+----+--------+---------+
-| id | name | balance |
-+----+--------+---------+
-| 1 | 张三 | 90 |
-| 2 | 李四 | 100 |
-| 3 | 王五 | 0 |
-+----+--------+---------+
-3 rows in set (0.01 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">use</span> atguigu<span class="token punctuation">;</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> account<span class="token punctuation">;</span>
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> account<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+--------+---------+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> name <span class="token operator">|</span> balance <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+--------+---------+</span>
+<span class="token operator">|</span> <span class="token number">1</span> <span class="token operator">|</span> 张三 <span class="token operator">|</span> <span class="token number">90</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2</span> <span class="token operator">|</span> 李四 <span class="token operator">|</span> <span class="token number">100</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">3</span> <span class="token operator">|</span> 王五 <span class="token operator">|</span> <span class="token number">0</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+--------+---------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>（2）mysql默认对导出的目录有权限限制，也就是说使用命令行进行导出的时候，需要指定目录进行操作。</p>
 <p>查询secure_file_priv值：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SHOW GLOBAL VARIABLES LIKE '%secure%';
-+--------------------------+-----------------------+
-| Variable_name            | Value                 |
-+--------------------------+-----------------------+
-| require_secure_transport | OFF                   |
-| secure_file_priv         | /var/lib/mysql-files/ |
-+--------------------------+-----------------------+
-2 rows in set (0.02 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SHOW</span> <span class="token keyword">GLOBAL</span> VARIABLES <span class="token operator">LIKE</span> <span class="token string">'%secure%'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------------------------+-----------------------+</span>
+<span class="token operator">|</span> Variable_name            <span class="token operator">|</span> <span class="token keyword">Value</span>                 <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------------+-----------------------+</span>
+<span class="token operator">|</span> require_secure_transport <span class="token operator">|</span> <span class="token keyword">OFF</span>                   <span class="token operator">|</span>
+<span class="token operator">|</span> secure_file_priv         <span class="token operator">|</span> <span class="token operator">/</span>var<span class="token operator">/</span>lib<span class="token operator">/</span>mysql<span class="token operator">-</span>files<span class="token operator">/</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------------+-----------------------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.02</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220718163627669.png" alt="image-20220718163627669" style="float:left;" />
 <p>（3）上面结果中显示，secure_file_priv变量的值为/var/lib/mysql-files/，导出目录设置为该目录，SQL语句如下。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM account INTO OUTFILE &quot;/var/lib/mysql-files/account.txt&quot;;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> account <span class="token keyword">INTO</span> <span class="token keyword">OUTFILE</span> <span class="token string">"/var/lib/mysql-files/account.txt"</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>（4）查看 /var/lib/mysql-files/account.txt`文件。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>1 张三 90
-2 李四 100
-3 王五 0
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token number">1</span> 张三 <span class="token number">90</span>
+<span class="token number">2</span> 李四 <span class="token number">100</span>
+<span class="token number">3</span> 王五 <span class="token number">0</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="_2-使用mysqldump命令导出文本文件" tabindex="-1"><a class="header-anchor" href="#_2-使用mysqldump命令导出文本文件" aria-hidden="true">#</a> 2. 使用mysqldump命令导出文本文件</h4>
 <p>**举例1：**使用mysqldump命令将将atguigu数据库中account表中的记录导出到文本文件：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump -uroot -p -T &quot;/var/lib/mysql-files/&quot; atguigu account
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>p <span class="token operator">-</span>T <span class="token string">"/var/lib/mysql-files/"</span> atguigu account
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>mysqldump命令执行完毕后，在指定的目录/var/lib/mysql-files/下生成了account.sql和account.txt文件。</p>
 <p>打开account.sql文件，其内容包含创建account表的CREATE语句。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>[root@node1 mysql-files]# cat account.sql
--- MySQL dump 10.13 Distrib 8.0.26, for Linux (x86_64)
---
--- Host: localhost Database: atguigu
--- ------------------------------------------------------
--- Server version 8.0.26
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token punctuation">[</span>root<span class="token variable">@node1</span> mysql<span class="token operator">-</span>files<span class="token punctuation">]</span><span class="token comment"># cat account.sql</span>
+<span class="token comment">-- MySQL dump 10.13 Distrib 8.0.26, for Linux (x86_64)</span>
+<span class="token comment">--</span>
+<span class="token comment">-- Host: localhost Database: atguigu</span>
+<span class="token comment">-- ------------------------------------------------------</span>
+<span class="token comment">-- Server version 8.0.26</span>
+<span class="token comment">/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!50503 SET NAMES utf8mb4 */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40103 SET TIME_ZONE='+00:00' */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='' */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */</span><span class="token punctuation">;</span>
 
---
--- Table structure for table `account`
---
+<span class="token comment">--</span>
+<span class="token comment">-- Table structure for table `account`</span>
+<span class="token comment">--</span>
 
-DROP TABLE IF EXISTS `account`;
-/*!40101 SET @saved_cs_client = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `account` (
-`id` int NOT NULL AUTO_INCREMENT,
-`name` varchar(255) NOT NULL,
-`balance` int NOT NULL,
-PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
+<span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> <span class="token identifier"><span class="token punctuation">`</span>account<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @saved_cs_client = @@character_set_client */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!50503 SET character_set_client = utf8mb4 */</span><span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>account<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+<span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>balance<span class="token punctuation">`</span></span> <span class="token keyword">int</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token operator">=</span><span class="token number">4</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8mb3<span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET character_set_client = @saved_cs_client */</span><span class="token punctuation">;</span>
 
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+<span class="token comment">/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */</span><span class="token punctuation">;</span>
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+<span class="token comment">/*!40101 SET SQL_MODE=@OLD_SQL_MODE */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */</span><span class="token punctuation">;</span>
 
--- Dump completed on 2022-01-07 23:19:27
+<span class="token comment">-- Dump completed on 2022-01-07 23:19:27</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>打开account.txt文件，其内容只包含account表中的数据。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>[root@node1 mysql-files]# cat account.txt
-1 张三 90
-2 李四 100
-3 王五 0
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token punctuation">[</span>root<span class="token variable">@node1</span> mysql<span class="token operator">-</span>files<span class="token punctuation">]</span><span class="token comment"># cat account.txt</span>
+<span class="token number">1</span> 张三 <span class="token number">90</span>
+<span class="token number">2</span> 李四 <span class="token number">100</span>
+<span class="token number">3</span> 王五 <span class="token number">0</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>**举例2：**使用mysqldump将atguigu数据库中的account表导出到文本文件，使用FIELDS选项，要求字段之 间使用逗号“，”间隔，所有字符类型字段值用双引号括起来：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqldump -uroot -p -T &quot;/var/lib/mysql-files/&quot; atguigu account --fields-terminatedby=',' --fields-optionally-enclosed-by='\&quot;'
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqldump <span class="token operator">-</span>uroot <span class="token operator">-</span>p <span class="token operator">-</span>T <span class="token string">"/var/lib/mysql-files/"</span> atguigu account <span class="token comment">--fields-terminatedby=',' --fields-optionally-enclosed-by='\"'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>语句mysqldump语句执行成功之后，指定目录下会出现两个文件account.sql和account.txt。</p>
 <p>打开account.sql文件，其内容包含创建account表的CREATE语句。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>[root@node1 mysql-files]# cat account.sql
--- MySQL dump 10.13 Distrib 8.0.26, for Linux (x86_64)
---
--- Host: localhost Database: atguigu
--- ------------------------------------------------------
--- Server version 8.0.26
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
---
--- Table structure for table `account`
---
-DROP TABLE IF EXISTS `account`;
-/*!40101 SET @saved_cs_client = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `account` (
-`id` int NOT NULL AUTO_INCREMENT,
-`name` varchar(255) NOT NULL,
-`balance` int NOT NULL,
-PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
--- Dump completed on 2022-01-07 23:36:39
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token punctuation">[</span>root<span class="token variable">@node1</span> mysql<span class="token operator">-</span>files<span class="token punctuation">]</span><span class="token comment"># cat account.sql</span>
+<span class="token comment">-- MySQL dump 10.13 Distrib 8.0.26, for Linux (x86_64)</span>
+<span class="token comment">--</span>
+<span class="token comment">-- Host: localhost Database: atguigu</span>
+<span class="token comment">-- ------------------------------------------------------</span>
+<span class="token comment">-- Server version 8.0.26</span>
+<span class="token comment">/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!50503 SET NAMES utf8mb4 */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40103 SET TIME_ZONE='+00:00' */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='' */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */</span><span class="token punctuation">;</span>
+<span class="token comment">--</span>
+<span class="token comment">-- Table structure for table `account`</span>
+<span class="token comment">--</span>
+<span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> <span class="token identifier"><span class="token punctuation">`</span>account<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET @saved_cs_client = @@character_set_client */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!50503 SET character_set_client = utf8mb4 */</span><span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>account<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+<span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>balance<span class="token punctuation">`</span></span> <span class="token keyword">int</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token operator">=</span><span class="token number">4</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8mb3<span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET character_set_client = @saved_cs_client */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET SQL_MODE=@OLD_SQL_MODE */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */</span><span class="token punctuation">;</span>
+<span class="token comment">/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */</span><span class="token punctuation">;</span>
+<span class="token comment">-- Dump completed on 2022-01-07 23:36:39</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>打开account.txt文件，其内容包含创建account表的数据。从文件中可以看出，字段之间用逗号隔开，字 符类型的值被双引号括起来。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>[root@node1 mysql-files]# cat account.txt
-1,&quot;张三&quot;,90
-2,&quot;李四&quot;,100
-3,&quot;王五&quot;,0
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token punctuation">[</span>root<span class="token variable">@node1</span> mysql<span class="token operator">-</span>files<span class="token punctuation">]</span><span class="token comment"># cat account.txt</span>
+<span class="token number">1</span><span class="token punctuation">,</span><span class="token string">"张三"</span><span class="token punctuation">,</span><span class="token number">90</span>
+<span class="token number">2</span><span class="token punctuation">,</span><span class="token string">"李四"</span><span class="token punctuation">,</span><span class="token number">100</span>
+<span class="token number">3</span><span class="token punctuation">,</span><span class="token string">"王五"</span><span class="token punctuation">,</span><span class="token number">0</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="_3-使用mysql命令导出文本文件" tabindex="-1"><a class="header-anchor" href="#_3-使用mysql命令导出文本文件" aria-hidden="true">#</a> 3. 使用mysql命令导出文本文件</h4>
 <p>**举例1：**使用mysql语句导出atguigu数据中account表中的记录到文本文件：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql -uroot -p --execute=&quot;SELECT * FROM account;&quot; atguigu&gt; &quot;/var/lib/mysql-files/account.txt&quot;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql <span class="token operator">-</span>uroot <span class="token operator">-</span>p <span class="token comment">--execute="SELECT * FROM account;" atguigu> "/var/lib/mysql-files/account.txt"</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>打开account.txt文件，其内容包含创建account表的数据。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>[root@node1 mysql-files]# cat account.txt
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token punctuation">[</span>root<span class="token variable">@node1</span> mysql<span class="token operator">-</span>files<span class="token punctuation">]</span><span class="token comment"># cat account.txt</span>
 id name balance
-1 张三 90
-2 李四 100
-3 王五 0
+<span class="token number">1</span> 张三 <span class="token number">90</span>
+<span class="token number">2</span> 李四 <span class="token number">100</span>
+<span class="token number">3</span> 王五 <span class="token number">0</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>**举例2：**将atguigu数据库account表中的记录导出到文本文件，使用--veritcal参数将该条件记录分为多行显示：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql -uroot -p --vertical --execute=&quot;SELECT * FROM account;&quot; atguigu &gt; &quot;/var/lib/mysql-files/account_1.txt&quot;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql <span class="token operator">-</span>uroot <span class="token operator">-</span>p <span class="token comment">--vertical --execute="SELECT * FROM account;" atguigu > "/var/lib/mysql-files/account_1.txt"</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>打开account_1.txt文件，其内容包含创建account表的数据。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>[root@node1 mysql-files]# cat account_1.txt
-*************************** 1. row ***************************
-id: 1
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token punctuation">[</span>root<span class="token variable">@node1</span> mysql<span class="token operator">-</span>files<span class="token punctuation">]</span><span class="token comment"># cat account_1.txt</span>
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">1.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+id: <span class="token number">1</span>
 name: 张三
-balance: 90
-*************************** 2. row ***************************
-id: 2
+balance: <span class="token number">90</span>
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">2.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+id: <span class="token number">2</span>
 name: 李四
-balance: 100
-*************************** 3. row ***************************
-id: 3
+balance: <span class="token number">100</span>
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">3.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+id: <span class="token number">3</span>
 name: 王五
-balance: 0
+balance: <span class="token number">0</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>**举例3：**将atguigu数据库account表中的记录导出到xml文件，使用--xml参数，具体语句如下。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql -uroot -p --xml --execute=&quot;SELECT * FROM account;&quot; atguigu&gt;&quot;/var/lib/mysqlfiles/account_3.xml&quot;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>[root@node1 mysql-files]# cat account_3.xml
-&lt;?xml version=&quot;1.0&quot;?&gt;
-&lt;resultset statement=&quot;SELECT * FROM account&quot;
-xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
-&lt;row&gt;
-&lt;field name=&quot;id&quot;&gt;1&lt;/field&gt;
-&lt;field name=&quot;name&quot;&gt;张三&lt;/field&gt;
-&lt;field name=&quot;balance&quot;&gt;90&lt;/field&gt;
-&lt;/row&gt;
-&lt;row&gt;
-&lt;field name=&quot;id&quot;&gt;2&lt;/field&gt;
-&lt;field name=&quot;name&quot;&gt;李四&lt;/field&gt;
-&lt;field name=&quot;balance&quot;&gt;100&lt;/field&gt;
-&lt;/row&gt;
-&lt;row&gt;
-&lt;field name=&quot;id&quot;&gt;3&lt;/field&gt;
-&lt;field name=&quot;name&quot;&gt;王五&lt;/field&gt;
-&lt;field name=&quot;balance&quot;&gt;0&lt;/field&gt;
-&lt;/row&gt;
-&lt;/resultset&gt;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql <span class="token operator">-</span>uroot <span class="token operator">-</span>p <span class="token comment">--xml --execute="SELECT * FROM account;" atguigu>"/var/lib/mysqlfiles/account_3.xml"</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token punctuation">[</span>root<span class="token variable">@node1</span> mysql<span class="token operator">-</span>files<span class="token punctuation">]</span><span class="token comment"># cat account_3.xml</span>
+<span class="token operator">&lt;</span>?xml version<span class="token operator">=</span><span class="token string">"1.0"</span>?<span class="token operator">></span>
+<span class="token operator">&lt;</span>resultset statement<span class="token operator">=</span><span class="token string">"SELECT * FROM account"</span>
+xmlns:xsi<span class="token operator">=</span><span class="token string">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token keyword">row</span><span class="token operator">></span>
+<span class="token operator">&lt;</span>field name<span class="token operator">=</span><span class="token string">"id"</span><span class="token operator">></span><span class="token number">1</span><span class="token operator">&lt;</span><span class="token operator">/</span>field<span class="token operator">></span>
+<span class="token operator">&lt;</span>field name<span class="token operator">=</span><span class="token string">"name"</span><span class="token operator">></span>张三<span class="token operator">&lt;</span><span class="token operator">/</span>field<span class="token operator">></span>
+<span class="token operator">&lt;</span>field name<span class="token operator">=</span><span class="token string">"balance"</span><span class="token operator">></span><span class="token number">90</span><span class="token operator">&lt;</span><span class="token operator">/</span>field<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span><span class="token keyword">row</span><span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token keyword">row</span><span class="token operator">></span>
+<span class="token operator">&lt;</span>field name<span class="token operator">=</span><span class="token string">"id"</span><span class="token operator">></span><span class="token number">2</span><span class="token operator">&lt;</span><span class="token operator">/</span>field<span class="token operator">></span>
+<span class="token operator">&lt;</span>field name<span class="token operator">=</span><span class="token string">"name"</span><span class="token operator">></span>李四<span class="token operator">&lt;</span><span class="token operator">/</span>field<span class="token operator">></span>
+<span class="token operator">&lt;</span>field name<span class="token operator">=</span><span class="token string">"balance"</span><span class="token operator">></span><span class="token number">100</span><span class="token operator">&lt;</span><span class="token operator">/</span>field<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span><span class="token keyword">row</span><span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token keyword">row</span><span class="token operator">></span>
+<span class="token operator">&lt;</span>field name<span class="token operator">=</span><span class="token string">"id"</span><span class="token operator">></span><span class="token number">3</span><span class="token operator">&lt;</span><span class="token operator">/</span>field<span class="token operator">></span>
+<span class="token operator">&lt;</span>field name<span class="token operator">=</span><span class="token string">"name"</span><span class="token operator">></span>王五<span class="token operator">&lt;</span><span class="token operator">/</span>field<span class="token operator">></span>
+<span class="token operator">&lt;</span>field name<span class="token operator">=</span><span class="token string">"balance"</span><span class="token operator">></span><span class="token number">0</span><span class="token operator">&lt;</span><span class="token operator">/</span>field<span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span><span class="token keyword">row</span><span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>resultset<span class="token operator">></span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>说明：如果要将表数据导出到html文件中，可以使用 <code v-pre>--html</code> 选项。然后可以使用浏览器打开。</p>
 <h3 id="_6-2-表的导入" tabindex="-1"><a class="header-anchor" href="#_6-2-表的导入" aria-hidden="true">#</a> 6.2 表的导入</h3>
 <h4 id="_1-使用load-data-infile方式导入文本文件" tabindex="-1"><a class="header-anchor" href="#_1-使用load-data-infile方式导入文本文件" aria-hidden="true">#</a> 1. 使用LOAD DATA INFILE方式导入文本文件</h4>
 <p><strong>举例1：</strong></p>
 <p>使用SELECT...INTO OUTFILE将atguigu数据库中account表的记录导出到文本文件</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM atguigu.account INTO OUTFILE '/var/lib/mysql-files/account_0.txt';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> atguigu<span class="token punctuation">.</span>account <span class="token keyword">INTO</span> <span class="token keyword">OUTFILE</span> <span class="token string">'/var/lib/mysql-files/account_0.txt'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>删除account表中的数据：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELETE FROM atguigu.account;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> atguigu<span class="token punctuation">.</span>account<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>从文本文件account.txt中恢复数据：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>LOAD DATA INFILE '/var/lib/mysql-files/account_0.txt' INTO TABLE atguigu.account;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">LOAD</span> <span class="token keyword">DATA</span> <span class="token keyword">INFILE</span> <span class="token string">'/var/lib/mysql-files/account_0.txt'</span> <span class="token keyword">INTO</span> <span class="token keyword">TABLE</span> atguigu<span class="token punctuation">.</span>account<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>查询account表中的数据：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from account;
-+----+--------+---------+
-| id | name   | balance |
-+----+--------+---------+
-| 1 | 张三     | 90      |
-| 2 | 李四     | 100     |
-| 3 | 王五     | 0       |
-+----+--------+---------+
-3 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> account<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+--------+---------+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> name   <span class="token operator">|</span> balance <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+--------+---------+</span>
+<span class="token operator">|</span> <span class="token number">1</span> <span class="token operator">|</span> 张三     <span class="token operator">|</span> <span class="token number">90</span>      <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2</span> <span class="token operator">|</span> 李四     <span class="token operator">|</span> <span class="token number">100</span>     <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">3</span> <span class="token operator">|</span> 王五     <span class="token operator">|</span> <span class="token number">0</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+--------+---------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>举例2：</strong> 选择数据库atguigu，使用SELECT…INTO OUTFILE将atguigu数据库account表中的记录导出到文本文件，使用FIELDS选项和LINES选项，要求字段之间使用逗号&quot;，&quot;间隔，所有字段值用双引号括起来：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM atguigu.account INTO OUTFILE '/var/lib/mysql-files/account_1.txt' FIELDS TERMINATED BY ',' ENCLOSED BY '\&quot;';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> atguigu<span class="token punctuation">.</span>account <span class="token keyword">INTO</span> <span class="token keyword">OUTFILE</span> <span class="token string">'/var/lib/mysql-files/account_1.txt'</span> <span class="token keyword">FIELDS</span> <span class="token keyword">TERMINATED</span> <span class="token keyword">BY</span> <span class="token string">','</span> <span class="token keyword">ENCLOSED</span> <span class="token keyword">BY</span> <span class="token string">'\"'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>删除account表中的数据：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELETE FROM atguigu.account;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> atguigu<span class="token punctuation">.</span>account<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>从/var/lib/mysql-files/account.txt中导入数据到account表中：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>LOAD DATA INFILE '/var/lib/mysql-files/account_1.txt' INTO TABLE atguigu.account FIELDS TERMINATED BY ',' ENCLOSED BY '\&quot;';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">LOAD</span> <span class="token keyword">DATA</span> <span class="token keyword">INFILE</span> <span class="token string">'/var/lib/mysql-files/account_1.txt'</span> <span class="token keyword">INTO</span> <span class="token keyword">TABLE</span> atguigu<span class="token punctuation">.</span>account <span class="token keyword">FIELDS</span> <span class="token keyword">TERMINATED</span> <span class="token keyword">BY</span> <span class="token string">','</span> <span class="token keyword">ENCLOSED</span> <span class="token keyword">BY</span> <span class="token string">'\"'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>查询account表中的数据，具体SQL如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>select * from account;
-mysql&gt; select * from account;
-+----+--------+---------+
-| id | name   | balance |
-+----+--------+---------+
-| 1 | 张三     | 90      |
-| 2 | 李四     | 100     |
-| 3 | 王五     | 0       |
-+----+--------+---------+
-3 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> account<span class="token punctuation">;</span>
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> account<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+--------+---------+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> name   <span class="token operator">|</span> balance <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+--------+---------+</span>
+<span class="token operator">|</span> <span class="token number">1</span> <span class="token operator">|</span> 张三     <span class="token operator">|</span> <span class="token number">90</span>      <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2</span> <span class="token operator">|</span> 李四     <span class="token operator">|</span> <span class="token number">100</span>     <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">3</span> <span class="token operator">|</span> 王五     <span class="token operator">|</span> <span class="token number">0</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+--------+---------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="_2-使用mysqlimport方式导入文本文件" tabindex="-1"><a class="header-anchor" href="#_2-使用mysqlimport方式导入文本文件" aria-hidden="true">#</a> 2. 使用mysqlimport方式导入文本文件</h4>
 <p><strong>举例：</strong></p>
 <p>导出文件account.txt，字段之间使用逗号&quot;，&quot;间隔，字段值用双引号括起来：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM atguigu.account INTO OUTFILE '/var/lib/mysql-files/account.txt' FIELDS TERMINATED BY ',' ENCLOSED BY '\&quot;';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> atguigu<span class="token punctuation">.</span>account <span class="token keyword">INTO</span> <span class="token keyword">OUTFILE</span> <span class="token string">'/var/lib/mysql-files/account.txt'</span> <span class="token keyword">FIELDS</span> <span class="token keyword">TERMINATED</span> <span class="token keyword">BY</span> <span class="token string">','</span> <span class="token keyword">ENCLOSED</span> <span class="token keyword">BY</span> <span class="token string">'\"'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>删除account表中的数据：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELETE FROM atguigu.account;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> atguigu<span class="token punctuation">.</span>account<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>使用mysqlimport命令将account.txt文件内容导入到数据库atguigu的account表中：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqlimport -uroot -p atguigu '/var/lib/mysql-files/account.txt' --fields-terminated-by=',' --fields-optionally-enclosed-by='\&quot;'
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqlimport <span class="token operator">-</span>uroot <span class="token operator">-</span>p atguigu <span class="token string">'/var/lib/mysql-files/account.txt'</span> <span class="token comment">--fields-terminated-by=',' --fields-optionally-enclosed-by='\"'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>查询account表中的数据：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>select * from account;
-mysql&gt; select * from account;
-+----+--------+---------+
-| id | name   | balance |
-+----+--------+---------+
-| 1 | 张三     | 90      |
-| 2 | 李四     | 100     |
-| 3 | 王五     | 0       |
-+----+--------+---------+
-3 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> account<span class="token punctuation">;</span>
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> account<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+--------+---------+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> name   <span class="token operator">|</span> balance <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+--------+---------+</span>
+<span class="token operator">|</span> <span class="token number">1</span> <span class="token operator">|</span> 张三     <span class="token operator">|</span> <span class="token number">90</span>      <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2</span> <span class="token operator">|</span> 李四     <span class="token operator">|</span> <span class="token number">100</span>     <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">3</span> <span class="token operator">|</span> 王五     <span class="token operator">|</span> <span class="token number">0</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+--------+---------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_7-数据库迁移" tabindex="-1"><a class="header-anchor" href="#_7-数据库迁移" aria-hidden="true">#</a> 7. 数据库迁移</h2>
 <h3 id="_7-1-概述" tabindex="-1"><a class="header-anchor" href="#_7-1-概述" aria-hidden="true">#</a> 7.1 概述</h3>
 <p>数据迁移（data migration）是指选择、准备、提取和转换数据，并<strong>将数据从一个计算机存储系统永久地传输到另一个计算机存储系统的过程</strong>。此外，<code v-pre> 验证迁移数据的完整性</code> 和 <code v-pre>退役原来旧的数据存储</code> ，也被认为是整个数据迁移过程的一部分。</p>
@@ -690,8 +690,8 @@ mysql&gt; select * from account;
 <p><code v-pre>方式1</code>： 因为迁移前后MySQL数据库的 <code v-pre>主版本号相同</code> ，所以可以通过复制数据库目录来实现数据库迁移，但是物理迁移方式只适用于MyISAM引擎的表。对于InnoDB表，不能用直接复制文件的方式备份数据库。</p>
 <p><code v-pre>方式2</code>： 最常见和最安全的方式是使用 <code v-pre>mysqldump命令</code> 导出数据，然后在目标数据库服务器中使用 MySQL命令导入。</p>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#host1的机器中备份所有数据库,并将数据库迁移到名为host2的机器上
-mysqldump –h host1 –uroot –p –-all-databases|
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#host1的机器中备份所有数据库,并将数据库迁移到名为host2的机器上</span>
+mysqldump –h host1 –uroot –p –<span class="token operator">-</span><span class="token keyword">all</span><span class="token operator">-</span><span class="token keyword">databases</span><span class="token operator">|</span>
 mysql –h host2 –uroot –p
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>在上述语句中，“|”符号表示管道，其作用是将mysqldump备份的文件给mysql命令；“--all-databases”表示要迁移所有的数据库。通过这种方式可以直接实现迁移。</p>
 <p><strong>2. 不同版本的数据库之间迁移注意点</strong></p>
@@ -704,7 +704,7 @@ mysql –h host2 –uroot –p
 <p>另外，数据库厂商并没有完全按照SQL标准来设计数据库系统，导致不同的数据库系统的 <code v-pre>SQL语句</code> 有差别。例如，微软的SQL Server软件使用的是T-SQL语句，T-SQL中包含了非标准的SQL语句，不能和MySQL的SQL语句兼容。</p>
 <p>不同类型数据库之间的差异造成了互相 <code v-pre>迁移的困难</code> ，这些差异其实是商业公司故意造成的技术壁垒。但 是不同类型的数据库之间的迁移并 <code v-pre>不是完全不可能</code> 。例如，可以使用<code v-pre> MyODBC</code> 实现MySQL和SQL Server之 间的迁移。MySQL官方提供的工具 <code v-pre>MySQL Migration Toolkit</code> 也可以在不同数据之间进行数据迁移。 MySQL迁移到Oracle时，需要使用mysqldump命令导出sql文件，然后， <code v-pre>手动更改</code> sql文件中的CREATE语句。</p>
 <h3 id="_7-4-迁移小结" tabindex="-1"><a class="header-anchor" href="#_7-4-迁移小结" aria-hidden="true">#</a> 7.4 迁移小结</h3>
-<p><img src="@source/notes/senior_mysql/images/image-20220718165515965.png" alt="image-20220718165515965"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220718165515965.png" alt="image-20220718165515965" loading="lazy"></p>
 <h2 id="_8-删库了不敢跑-能干点啥" tabindex="-1"><a class="header-anchor" href="#_8-删库了不敢跑-能干点啥" aria-hidden="true">#</a> 8. 删库了不敢跑，能干点啥？</h2>
 <img src="@source/notes/senior_mysql/images/image-20220718165738367.png" alt="image-20220718165738367" style="float:left;" />
 <h3 id="_8-1-delete-误删行" tabindex="-1"><a class="header-anchor" href="#_8-1-delete-误删行" aria-hidden="true">#</a> 8.1 delete：误删行</h3>

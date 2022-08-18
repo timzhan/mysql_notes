@@ -1,10 +1,13 @@
-import clientConfig0 from '/Users/tuwei/Desktop/mysql-learning/node_modules/@vuepress/plugin-active-header-links/lib/client/config.js'
-import clientConfig1 from '/Users/tuwei/Desktop/mysql-learning/node_modules/@vuepress/plugin-back-to-top/lib/client/config.js'
-import clientConfig2 from '/Users/tuwei/Desktop/mysql-learning/node_modules/@vuepress/plugin-external-link-icon/lib/client/config.js'
-import clientConfig3 from '/Users/tuwei/Desktop/mysql-learning/node_modules/@vuepress/plugin-medium-zoom/lib/client/config.js'
+import clientConfig0 from '/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/sass-palette/load-hope.js'
+import clientConfig1 from '/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/components/config.js'
+import clientConfig2 from '/Users/tuwei/Desktop/mysql-learning/node_modules/@vuepress/plugin-active-header-links/lib/client/config.js'
+import clientConfig3 from '/Users/tuwei/Desktop/mysql-learning/node_modules/@vuepress/plugin-external-link-icon/lib/client/config.js'
 import clientConfig4 from '/Users/tuwei/Desktop/mysql-learning/node_modules/@vuepress/plugin-nprogress/lib/client/config.js'
 import clientConfig5 from '/Users/tuwei/Desktop/mysql-learning/node_modules/@vuepress/plugin-theme-data/lib/client/config.js'
-import clientConfig6 from '/Users/tuwei/Desktop/mysql-learning/node_modules/@vuepress/theme-default/lib/client/config.js'
+import clientConfig6 from '/Users/tuwei/Desktop/mysql-learning/node_modules/vuepress-plugin-copy-code2/lib/client/config.js'
+import clientConfig7 from '/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/md-enhance/config.js'
+import clientConfig8 from '/Users/tuwei/Desktop/mysql-learning/node_modules/vuepress-plugin-photo-swipe/lib/client/config.js'
+import clientConfig9 from '/Users/tuwei/Desktop/mysql-learning/docs/.vuepress/.temp/theme-hope/config.js'
 
 export const clientConfigs = [
   clientConfig0,
@@ -14,4 +17,7 @@ export const clientConfigs = [
   clientConfig4,
   clientConfig5,
   clientConfig6,
+  clientConfig7,
+  clientConfig8,
+  clientConfig9,
 ]

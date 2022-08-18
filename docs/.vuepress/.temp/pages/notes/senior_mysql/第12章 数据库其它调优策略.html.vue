@@ -95,16 +95,16 @@
 <li>
 <p>thread_cache_size ： 线程池缓存线程数量的大小 ，当客户端断开连接后将当前线程缓存起来， 当在接到新的连接请求时快速响应无需创建新的线程 。这尤其对那些使用短连接的应用程序来说可 以极大的提高创建连接的效率。那么为了提高性能可以增大该参数的值。默认为60，可以设置为 120。</p>
 <p>可以通过如下几个MySQL状态值来适当调整线程池的大小：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show global status like 'Thread%';
-+-------------------+-------+
-| Variable_name | Value |
-+-------------------+-------+
-| Threads_cached | 2 |
-| Threads_connected | 1 |
-| Threads_created | 3 |
-| Threads_running | 2 |
-+-------------------+-------+
-4 rows in set (0.01 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> <span class="token keyword">global</span> <span class="token keyword">status</span> <span class="token operator">like</span> <span class="token string">'Thread%'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------------------+-------+</span>
+<span class="token operator">|</span> Variable_name <span class="token operator">|</span> <span class="token keyword">Value</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------+-------+</span>
+<span class="token operator">|</span> Threads_cached <span class="token operator">|</span> <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span> Threads_connected <span class="token operator">|</span> <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">|</span> Threads_created <span class="token operator">|</span> <span class="token number">3</span> <span class="token operator">|</span>
+<span class="token operator">|</span> Threads_running <span class="token operator">|</span> <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------+-------+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>当 Threads_cached 越来越少，但 Threads_connected 始终不降，且 Threads_created 持续升高，可 适当增加 thread_cache_size 的大小。</p>
 </li>
 <li>
@@ -115,39 +115,39 @@
 </li>
 </ul>
 <p>这里给出一份my.cnf的参考配置：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqld]
-port = 3306 
-serverid = 1 
-socket = /tmp/mysql.sock 
-skip-locking #避免MySQL的外部锁定，减少出错几率增强稳定性。 
-skip-name-resolve #禁止MySQL对外部连接进行DNS解析，使用这一选项可以消除MySQL进行DNS解析的时间。但需要注意，如果开启该选项，则所有远程主机连接授权都要使用IP地址方式，否则MySQL将无法正常处理连接请求！ 
-back_log = 384
-key_buffer_size = 256M 
-max_allowed_packet = 4M 
-thread_stack = 256K
-table_cache = 128K 
-sort_buffer_size = 6M 
-read_buffer_size = 4M
-read_rnd_buffer_size=16M 
-join_buffer_size = 8M 
-myisam_sort_buffer_size =64M 
-table_cache = 512 
-thread_cache_size = 64 
-query_cache_size = 64M
-tmp_table_size = 256M 
-max_connections = 768 
-max_connect_errors = 10000000
-wait_timeout = 10 
-thread_concurrency = 8 #该参数取值为服务器逻辑CPU数量*2，在本例中，服务器有2颗物理CPU，而每颗物理CPU又支持H.T超线程，所以实际取值为4*2=8
-skip-networking #开启该选项可以彻底关闭MySQL的TCP/IP连接方式，如果WEB服务器是以远程连接的方式访问MySQL数据库服务器则不要开启该选项！否则将无法正常连接！ 
-table_cache=1024
-innodb_additional_mem_pool_size=4M #默认为2M 
-innodb_flush_log_at_trx_commit=1
-innodb_log_buffer_size=2M #默认为1M 
-innodb_thread_concurrency=8 #你的服务器CPU有几个就设置为几。建议用默认一般为8 
-tmp_table_size=64M #默认为16M，调到64-256最挂
-thread_cache_size=120 
-query_cache_size=32M
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqld<span class="token punctuation">]</span>
+port <span class="token operator">=</span> <span class="token number">3306</span> 
+serverid <span class="token operator">=</span> <span class="token number">1</span> 
+socket <span class="token operator">=</span> <span class="token operator">/</span>tmp<span class="token operator">/</span>mysql<span class="token punctuation">.</span>sock 
+skip<span class="token operator">-</span>locking <span class="token comment">#避免MySQL的外部锁定，减少出错几率增强稳定性。 </span>
+skip<span class="token operator">-</span>name<span class="token operator">-</span>resolve <span class="token comment">#禁止MySQL对外部连接进行DNS解析，使用这一选项可以消除MySQL进行DNS解析的时间。但需要注意，如果开启该选项，则所有远程主机连接授权都要使用IP地址方式，否则MySQL将无法正常处理连接请求！ </span>
+back_log <span class="token operator">=</span> <span class="token number">384</span>
+key_buffer_size <span class="token operator">=</span> <span class="token number">256</span>M 
+max_allowed_packet <span class="token operator">=</span> <span class="token number">4</span>M 
+thread_stack <span class="token operator">=</span> <span class="token number">256</span>K
+table_cache <span class="token operator">=</span> <span class="token number">128</span>K 
+sort_buffer_size <span class="token operator">=</span> <span class="token number">6</span>M 
+read_buffer_size <span class="token operator">=</span> <span class="token number">4</span>M
+read_rnd_buffer_size<span class="token operator">=</span><span class="token number">16</span>M 
+join_buffer_size <span class="token operator">=</span> <span class="token number">8</span>M 
+myisam_sort_buffer_size <span class="token operator">=</span><span class="token number">64</span>M 
+table_cache <span class="token operator">=</span> <span class="token number">512</span> 
+thread_cache_size <span class="token operator">=</span> <span class="token number">64</span> 
+query_cache_size <span class="token operator">=</span> <span class="token number">64</span>M
+tmp_table_size <span class="token operator">=</span> <span class="token number">256</span>M 
+max_connections <span class="token operator">=</span> <span class="token number">768</span> 
+max_connect_errors <span class="token operator">=</span> <span class="token number">10000000</span>
+wait_timeout <span class="token operator">=</span> <span class="token number">10</span> 
+thread_concurrency <span class="token operator">=</span> <span class="token number">8</span> <span class="token comment">#该参数取值为服务器逻辑CPU数量*2，在本例中，服务器有2颗物理CPU，而每颗物理CPU又支持H.T超线程，所以实际取值为4*2=8</span>
+skip<span class="token operator">-</span>networking <span class="token comment">#开启该选项可以彻底关闭MySQL的TCP/IP连接方式，如果WEB服务器是以远程连接的方式访问MySQL数据库服务器则不要开启该选项！否则将无法正常连接！ </span>
+table_cache<span class="token operator">=</span><span class="token number">1024</span>
+innodb_additional_mem_pool_size<span class="token operator">=</span><span class="token number">4</span>M <span class="token comment">#默认为2M </span>
+innodb_flush_log_at_trx_commit<span class="token operator">=</span><span class="token number">1</span>
+innodb_log_buffer_size<span class="token operator">=</span><span class="token number">2</span>M <span class="token comment">#默认为1M </span>
+innodb_thread_concurrency<span class="token operator">=</span><span class="token number">8</span> <span class="token comment">#你的服务器CPU有几个就设置为几。建议用默认一般为8 </span>
+tmp_table_size<span class="token operator">=</span><span class="token number">64</span>M <span class="token comment">#默认为16M，调到64-256最挂</span>
+thread_cache_size<span class="token operator">=</span><span class="token number">120</span> 
+query_cache_size<span class="token operator">=</span><span class="token number">32</span>M
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>很多情况还需要具体情况具体分析！</p>
 <p><strong>举例：</strong></p>
 <img src="@source/notes/senior_mysql/images/image-20220707210351452.png" alt="image-20220707210351452" style="float:left;" />
@@ -163,56 +163,56 @@ query_cache_size=32M
 <img src="@source/notes/senior_mysql/images/image-20220707211802756.png" alt="image-20220707211802756" style="float:left;" />
 <p><strong>举例1：</strong> <code v-pre>会员members表</code> 存储会员登录认证信息，该表中有很多字段，如id、姓名、密码、地址、电 话、个人描述字段。其中地址、电话、个人描述等字段并不常用，可以将这些不常用的字段分解出另一 个表。将这个表取名叫members_detail，表中有member_id、address、telephone、description等字段。 这样就把会员表分成了两个表，分别为 <code v-pre>members表</code> 和 <code v-pre>members_detail表</code> 。</p>
 <p>创建这两个表的SQL语句如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE members (
-    id int(11) NOT NULL AUTO_INCREMENT,
-    username varchar(50) DEFAULT NULL,
-    password varchar(50) DEFAULT NULL,
-    last_login_time datetime DEFAULT NULL,
-    last_login_ip varchar(100) DEFAULT NULL,
-    PRIMARY KEY(Id)
-);
-CREATE TABLE members_detail (
-    Member_id int(11) NOT NULL DEFAULT 0,
-    address varchar(255) DEFAULT NULL,
-    telephone varchar(255) DEFAULT NULL,
-    description text
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> members <span class="token punctuation">(</span>
+    id <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+    username <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    password <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    last_login_time <span class="token keyword">datetime</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    last_login_ip <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span>Id<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> members_detail <span class="token punctuation">(</span>
+    Member_id <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    address <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    telephone <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    description <span class="token keyword">text</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>如果需要查询会员的基本信息或详细信息，那么可以用会员的id来查询。如果需要将会员的基本信息和 详细信息同时显示，那么可以将members表和members_detail表进行联合查询，查询语句如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM members LEFT JOIN members_detail on members.id =
-members_detail.member_id;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> members <span class="token keyword">LEFT</span> <span class="token keyword">JOIN</span> members_detail <span class="token keyword">on</span> members<span class="token punctuation">.</span>id <span class="token operator">=</span>
+members_detail<span class="token punctuation">.</span>member_id<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>通过这种分解可以提高表的查询效率。对于字段很多且有些字段使用不频繁的表，可以通过这种分解的方式来优化数据库的性能。</p>
 <h3 id="_3-2-增加中间表" tabindex="-1"><a class="header-anchor" href="#_3-2-增加中间表" aria-hidden="true">#</a> 3.2 增加中间表</h3>
 <img src="@source/notes/senior_mysql/images/image-20220707212800544.png" alt="image-20220707212800544" style="float:left;" />
 <p>举例1： 学生信息表 和 班级表 的SQL语句如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE `class` (
-`id` INT(11) NOT NULL AUTO_INCREMENT,
-`className` VARCHAR(30) DEFAULT NULL,
-`address` VARCHAR(40) DEFAULT NULL,
-`monitor` INT NULL ,
-PRIMARY KEY (`id`)
-) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>class<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+<span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>className<span class="token punctuation">`</span></span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>address<span class="token punctuation">`</span></span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">40</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>monitor<span class="token punctuation">`</span></span> <span class="token keyword">INT</span> <span class="token boolean">NULL</span> <span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">INNODB</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token operator">=</span><span class="token number">1</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8<span class="token punctuation">;</span>
 
-CREATE TABLE `student` (
-`id` INT(11) NOT NULL AUTO_INCREMENT,
-`stuno` INT NOT NULL ,
-`name` VARCHAR(20) DEFAULT NULL,
-`age` INT(3) DEFAULT NULL,
-`classId` INT(11) DEFAULT NULL,
-PRIMARY KEY (`id`)
-) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>student<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+<span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>stuno<span class="token punctuation">`</span></span> <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>age<span class="token punctuation">`</span></span> <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>classId<span class="token punctuation">`</span></span> <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">INNODB</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token operator">=</span><span class="token number">1</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>现在有一个模块需要经常查询带有学生名称（name）、学生所在班级名称（className）、学生班级班 长（monitor）的学生信息。根据这种情况可以创建一个 temp_student 表。temp_student表中存储学生名称（stu_name）、学生所在班级名称（className）和学生班级班长（monitor）信息。创建表的语句如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE `temp_student` (
-`id` INT(11) NOT NULL AUTO_INCREMENT,
-`stu_name` INT NOT NULL ,
-`className` VARCHAR(20) DEFAULT NULL,
-`monitor` INT(3) DEFAULT NULL,
-PRIMARY KEY (`id`)
-) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>temp_student<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+<span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>stu_name<span class="token punctuation">`</span></span> <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>className<span class="token punctuation">`</span></span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>monitor<span class="token punctuation">`</span></span> <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">INNODB</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token operator">=</span><span class="token number">1</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>接下来，从学生信息表和班级表中查询相关信息存储到临时表中：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into temp_student(stu_name,className,monitor)
-            select s.name,c.className,c.monitor
-            from student as s,class as c
-            where s.classId = c.id
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> temp_student<span class="token punctuation">(</span>stu_name<span class="token punctuation">,</span>className<span class="token punctuation">,</span>monitor<span class="token punctuation">)</span>
+            <span class="token keyword">select</span> s<span class="token punctuation">.</span>name<span class="token punctuation">,</span>c<span class="token punctuation">.</span>className<span class="token punctuation">,</span>c<span class="token punctuation">.</span>monitor
+            <span class="token keyword">from</span> student <span class="token keyword">as</span> s<span class="token punctuation">,</span>class <span class="token keyword">as</span> c
+            <span class="token keyword">where</span> s<span class="token punctuation">.</span>classId <span class="token operator">=</span> c<span class="token punctuation">.</span>id
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>以后，可以直接从temp_student表中查询学生名称、班级名称和班级班长，而不用每次都进行联合查 询。这样可以提高数据库的查询速度。</p>
 <h3 id="_3-3-增加冗余字段" tabindex="-1"><a class="header-anchor" href="#_3-3-增加冗余字段" aria-hidden="true">#</a> 3.3 增加冗余字段</h3>
 <p>设计数据库表时应尽量遵循范式理论的规约，尽可能减少冗余字段，让数据库设计看起来精致、优雅。 但是，合理地加入冗余字段可以提高查询速度。</p>
@@ -248,16 +248,16 @@ PRIMARY KEY (`id`)
 <img src="@source/notes/senior_mysql/images/image-20220707215356893.png" alt="image-20220707215356893" style="float:left;" />
 <p><strong>③ 使用批量插入</strong></p>
 <p>插入多条记录时，可以使用一条INSERT语句插入一条数据，也可以使用一条INSERT语句插入多条数据。插入一条记录的INSERT语句情形如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into student values(1,'zhangsan',18,1);
-insert into student values(2,'lisi',17,1);
-insert into student values(3,'wangwu',17,1);
-insert into student values(4,'zhaoliu',19,1);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'zhangsan'</span><span class="token punctuation">,</span><span class="token number">18</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'lisi'</span><span class="token punctuation">,</span><span class="token number">17</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'wangwu'</span><span class="token punctuation">,</span><span class="token number">17</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token string">'zhaoliu'</span><span class="token punctuation">,</span><span class="token number">19</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>使用一条INSERT语句插入多条记录的情形如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into student values
-(1,'zhangsan',18,1),
-(2,'lisi',17,1),
-(3,'wangwu',17,1),
-(4,'zhaoliu',19,1);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span>
+<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'zhangsan'</span><span class="token punctuation">,</span><span class="token number">18</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'lisi'</span><span class="token punctuation">,</span><span class="token number">17</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'wangwu'</span><span class="token punctuation">,</span><span class="token number">17</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token string">'zhaoliu'</span><span class="token punctuation">,</span><span class="token number">19</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>第2种情形的插入速度要比第1种情形快。</p>
 <p><strong>④ 使用LOAD DATA INFILE 批量导入</strong></p>
 <p>当需要批量导入数据时，如果能用LOAD DATA INFILE语句，就尽量使用。因为LOAD DATA INFILE语句导入数据的速度比INSERT语句块。</p>
@@ -274,16 +274,16 @@ insert into student values(4,'zhaoliu',19,1);
 <p>MySQL提供了分析表、检查表和优化表的语句。<code v-pre>分析表</code>主要是分析关键字的分布，<code v-pre>检查表</code>主要是检查表是否存在错误，<code v-pre>优化表</code>主要是消除删除或者更新造成的空间浪费。</p>
 <h4 id="_1-分析表" tabindex="-1"><a class="header-anchor" href="#_1-分析表" aria-hidden="true">#</a> 1. 分析表</h4>
 <p>MySQL中提供了ANALYZE TABLE语句分析表，ANALYZE TABLE语句的基本语法如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ANALYZE [LOCAL | NO_WRITE_TO_BINLOG] TABLE tbl_name[,tbl_name]…
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ANALYZE</span> <span class="token punctuation">[</span><span class="token keyword">LOCAL</span> <span class="token operator">|</span> NO_WRITE_TO_BINLOG<span class="token punctuation">]</span> <span class="token keyword">TABLE</span> tbl_name<span class="token punctuation">[</span><span class="token punctuation">,</span>tbl_name<span class="token punctuation">]</span>…
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>默认的，MySQL服务会将 ANALYZE TABLE语句写到binlog中，以便在主从架构中，从服务能够同步数据。 可以添加参数LOCAL 或者 NO_WRITE_TO_BINLOG取消将语句写到binlog中。</p>
 <p>使用 <code v-pre>ANALYZE TABLE</code> 分析表的过程中，数据库系统会自动对表加一个 <code v-pre>只读锁</code> 。在分析期间，只能读取 表中的记录，不能更新和插入记录。ANALYZE TABLE语句能够分析InnoDB和MyISAM类型的表，但是不能作用于视图。</p>
 <p>ANALYZE TABLE分析后的统计结果会反应到 <code v-pre>cardinality</code> 的值，该值统计了表中某一键所在的列不重复 的值的个数。<strong>该值越接近表中的总行数，则在表连接查询或者索引查询时，就越优先被优化器选择使用</strong>。也就是索引列的cardinality的值与表中数据的总条数差距越大，即使查询的时候使用了该索引作为查 询条件，存储引擎实际查询的时候使用的概率就越小。下面通过例子来验证下。cardinality可以通过 SHOW INDEX FROM 表名查看。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; ANALYZE TABLE user;
-+--------------+---------+----------+---------+
-| Table        | Op      | Msg_type |Msg_text |
-+--------------+---------+----------+---------+
-| atguigu.user | analyze | status   | Ok      |
-+--------------+----------+---------+---------+
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">ANALYZE</span> <span class="token keyword">TABLE</span> <span class="token keyword">user</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------------+---------+----------+---------+</span>
+<span class="token operator">|</span> <span class="token keyword">Table</span>        <span class="token operator">|</span> Op      <span class="token operator">|</span> Msg_type <span class="token operator">|</span>Msg_text <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------+---------+----------+---------+</span>
+<span class="token operator">|</span> atguigu<span class="token punctuation">.</span><span class="token keyword">user</span> <span class="token operator">|</span> <span class="token keyword">analyze</span> <span class="token operator">|</span> <span class="token keyword">status</span>   <span class="token operator">|</span> Ok      <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------+----------+---------+---------+</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>上面结果显示的信息说明如下：</p>
 <ul>
 <li>Table: 表示分析的表的名称。</li>
@@ -294,8 +294,8 @@ insert into student values(4,'zhaoliu',19,1);
 <h4 id="_2-检查表" tabindex="-1"><a class="header-anchor" href="#_2-检查表" aria-hidden="true">#</a> 2. 检查表</h4>
 <p>MySQL中可以使用 <code v-pre>CHECK TABLE</code> 语句来检查表。CHECK TABLE语句能够检查InnoDB和MyISAM类型的表 是否存在错误。CHECK TABLE语句在执行过程中也会给表加上 <code v-pre>只读锁</code> 。</p>
 <p>对于MyISAM类型的表，CHECK TABLE语句还会更新关键字统计数据。而且，CHECK TABLE也可以检查视 图是否有错误，比如在视图定义中被引用的表已不存在。该语句的基本语法如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CHECK TABLE tbl_name [, tbl_name] ... [option] ...
-option = {QUICK | FAST | MEDIUM | EXTENDED | CHANGED}
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CHECK</span> <span class="token keyword">TABLE</span> tbl_name <span class="token punctuation">[</span><span class="token punctuation">,</span> tbl_name<span class="token punctuation">]</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">[</span><span class="token keyword">option</span><span class="token punctuation">]</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">option</span> <span class="token operator">=</span> {<span class="token keyword">QUICK</span> <span class="token operator">|</span> FAST <span class="token operator">|</span> MEDIUM <span class="token operator">|</span> <span class="token keyword">EXTENDED</span> <span class="token operator">|</span> CHANGED}
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>其中，tbl_name是表名；option参数有5个取值，分别是QUICK、FAST、MEDIUM、EXTENDED和 CHANGED。各个选项的意义分别是：</p>
 <ul>
 <li>QUICK ：不扫描行，不检查错误的连接。</li>
@@ -305,16 +305,16 @@ option = {QUICK | FAST | MEDIUM | EXTENDED | CHANGED}
 <li>EXTENDED ：对每行的所有关键字进行一个全面的关键字查找。这可以确保表是100%一致的，但 是花的时间较长。</li>
 </ul>
 <p>option只对MyISAM类型的表有效，对InnoDB类型的表无效。比如：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707221707254.png" alt="image-20220707221707254"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707221707254.png" alt="image-20220707221707254" loading="lazy"></p>
 <p>该语句对于检查的表可能会产生多行信息。最后一行有一个状态的 Msg_type 值，Msg_text 通常为 OK。 如果得到的不是 OK，通常要对其进行修复；是 OK 说明表已经是最新的了。表已经是最新的，意味着存 储引擎对这张表不必进行检查。</p>
 <h4 id="_3-优化表" tabindex="-1"><a class="header-anchor" href="#_3-优化表" aria-hidden="true">#</a> 3. 优化表</h4>
 <p><strong>方式1：OPTIMIZE TABLE</strong></p>
 <p>MySQL中使用 <code v-pre>OPTIMIZE TABLE</code> 语句来优化表。但是，OPTILMIZE TABLE语句只能优化表中的 <code v-pre>VARCHAR</code> 、 <code v-pre>BLOB</code> 或 <code v-pre>TEXT</code> 类型的字段。一个表使用了这些字段的数据类型，若已经 <code v-pre>删除</code> 了表的一大部 分数据，或者已经对含有可变长度行的表（含有VARCHAR、BLOB或TEXT列的表）进行了很多 <code v-pre>更新</code> ，则 应使用OPTIMIZE TABLE来重新利用未使用的空间，并整理数据文件的 <code v-pre>碎片</code> 。</p>
 <p>OPTIMIZE TABLE 语句对InnoDB和MyISAM类型的表都有效。该语句在执行过程中也会给表加上 <code v-pre>只读锁</code> 。</p>
 <p>OPTILMIZE TABLE语句的基本语法如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>OPTIMIZE [LOCAL | NO_WRITE_TO_BINLOG] TABLE tbl_name [, tbl_name] ...
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">OPTIMIZE</span> <span class="token punctuation">[</span><span class="token keyword">LOCAL</span> <span class="token operator">|</span> NO_WRITE_TO_BINLOG<span class="token punctuation">]</span> <span class="token keyword">TABLE</span> tbl_name <span class="token punctuation">[</span><span class="token punctuation">,</span> tbl_name<span class="token punctuation">]</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>LOCAL | NO_WRITE_TO_BINLOG关键字的意义和分析表相同，都是指定不写入二进制日志。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707221901664.png" alt="image-20220707221901664"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707221901664.png" alt="image-20220707221901664" loading="lazy"></p>
 <p>执行完毕，Msg_text显示</p>
 <blockquote>
 <p>‘numysql.SYS_APP_USER’, ‘optimize’, ‘note’, ‘Table does not support optimize, doing recreate + analyze instead’</p>
@@ -346,24 +346,24 @@ option = {QUICK | FAST | MEDIUM | EXTENDED | CHANGED}
 <ul>
 <li>一主一从模式：</li>
 </ul>
-<p><img src="@source/notes/senior_mysql/images/image-20220707222606097.png" alt="image-20220707222606097"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707222606097.png" alt="image-20220707222606097" loading="lazy"></p>
 <ul>
 <li>双主双从模式：</li>
 </ul>
-<p><img src="@source/notes/senior_mysql/images/image-20220707222623485.png" alt="image-20220707222623485"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707222623485.png" alt="image-20220707222623485" loading="lazy"></p>
 <h3 id="_4-3-垂直拆分" tabindex="-1"><a class="header-anchor" href="#_4-3-垂直拆分" aria-hidden="true">#</a> 4.3 垂直拆分</h3>
 <p>当数据量级达到 <code v-pre>千万级</code> 以上时，有时候我们需要把一个数据库切成多份，放到不同的数据库服务器上， 减少对单一数据库服务器的访问压力。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220707222648112.png" alt="image-20220707222648112"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707222648112.png" alt="image-20220707222648112" loading="lazy"></p>
 <ul>
 <li>如果数据库的数据表过多，可以采用<code v-pre>垂直分库</code>的方式，将关联的数据库部署在同一个数据库上。</li>
 <li>如果数据库中的列过多，可以采用<code v-pre>垂直分表</code>的方式，将一张数据表分拆成多张数据表，把经常一起使用的列放在同一张表里。</li>
 </ul>
-<p><img src="@source/notes/senior_mysql/images/image-20220707222910740.png" alt="image-20220707222910740"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707222910740.png" alt="image-20220707222910740" loading="lazy"></p>
 <p><code v-pre>垂直拆分的优点</code>： 可以使得列数据变小，在查询时减少读取的Block数，减少I/O次数。此外，垂直分区可以简化表的结构，易于维护。</p>
 <p><code v-pre>垂直拆分的缺点</code>： 主键会出现冗余，需要管理冗余列，并会引起 JOIN 操作。此外，垂直拆分会让事务变得更加复杂。</p>
 <h3 id="_4-4-水平拆分" tabindex="-1"><a class="header-anchor" href="#_4-4-水平拆分" aria-hidden="true">#</a> 4.4 水平拆分</h3>
 <img src="@source/notes/senior_mysql/images/image-20220707222954304.png" alt="image-20220707222954304" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220707222739120.png" alt="image-20220707222739120"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220707222739120.png" alt="image-20220707222739120" loading="lazy"></p>
 <img src="@source/notes/senior_mysql/images/image-20220707223024163.png" alt="image-20220707223024163" style="float:left;" />
 <p>下面补充一下数据库分片的两种常见方案：</p>
 <ul>
@@ -374,8 +374,8 @@ option = {QUICK | FAST | MEDIUM | EXTENDED | CHANGED}
 <h3 id="_5-1-服务器语句超时处理" tabindex="-1"><a class="header-anchor" href="#_5-1-服务器语句超时处理" aria-hidden="true">#</a> 5.1 服务器语句超时处理</h3>
 <p>在MySQL 8.0中可以设置 服务器语句超时的限制 ，单位可以达到 毫秒级别 。当中断的执行语句超过设置的 毫秒数后，服务器将终止查询影响不大的事务或连接，然后将错误报给客户端。</p>
 <p>设置服务器语句超时的限制，可以通过设置系统变量 MAX_EXECUTION_TIME 来实现。默认情况下， MAX_EXECUTION_TIME的值为0，代表没有时间限制。 例如：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET GLOBAL MAX_EXECUTION_TIME=2000;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET SESSION MAX_EXECUTION_TIME=2000; #指定该会话中SELECT语句的超时时间
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> <span class="token keyword">GLOBAL</span> MAX_EXECUTION_TIME<span class="token operator">=</span><span class="token number">2000</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> <span class="token keyword">SESSION</span> MAX_EXECUTION_TIME<span class="token operator">=</span><span class="token number">2000</span><span class="token punctuation">;</span> <span class="token comment">#指定该会话中SELECT语句的超时时间</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_5-2-创建全局通用表空间" tabindex="-1"><a class="header-anchor" href="#_5-2-创建全局通用表空间" aria-hidden="true">#</a> 5.2 创建全局通用表空间</h3>
 <img src="@source/notes/senior_mysql/images/image-20220707223246684.png" alt="image-20220707223246684" style="float:left;" />
 <img src="@source/notes/senior_mysql/images/image-20220707223349879.png" alt="image-20220707223349879" style="float:left;" />

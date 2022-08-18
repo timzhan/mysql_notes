@@ -32,7 +32,7 @@
 </ul>
 <p><code v-pre>另一个解决的思路</code> ：我们只是想让已经提交了的事务对数据库中数据所做的修改永久生效，即使后来系 统崩溃，在重启后也能把这种修改恢复出来。所以我们其实没有必要在每次事务提交时就把该事务在内 存中修改过的全部页面刷新到磁盘，只需要把 修改 了哪些东西 记录一下 就好。比如，某个事务将系统 表空间中 第10号 页面中偏移量为 100 处的那个字节的值 1 改成 2 。我们只需要记录一下：将第0号表 空间的10号页面的偏移量为100处的值更新为 2</p>
 <p>InnoDB引擎的事务采用了WAL技术 (<code v-pre>Write-Ahead Logging</code>)，这种技术的思想就是先写日志，再写磁盘，只有日志写入成功，才算事务提交成功，这里的日志就是redo log。当发生宕机且数据未刷到磁盘的时候，可以通过redo log来恢复，保证ACID中的D，这就是redo log的作用。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220710202517977.png" alt="image-20220710202517977"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220710202517977.png" alt="image-20220710202517977" loading="lazy"></p>
 <h3 id="_1-2-redo日志的好处、特点" tabindex="-1"><a class="header-anchor" href="#_1-2-redo日志的好处、特点" aria-hidden="true">#</a> 1.2 REDO日志的好处、特点</h3>
 <h4 id="_1-好处" tabindex="-1"><a class="header-anchor" href="#_1-好处" aria-hidden="true">#</a> 1. 好处</h4>
 <ul>
@@ -57,23 +57,23 @@
 <li><code v-pre>重做日志的缓冲 (redo log buffer)</code> ，保存在内存中，是易失的。</li>
 </ul>
 <p>在服务器启动时就会向操作系统申请了一大片称之为 redo log buffer 的 <code v-pre>连续内存</code> 空间，翻译成中文就是redo日志缓冲区。这片内存空间被划分为若干个连续的<code v-pre>redo log block</code>。一个redo log block占用<code v-pre>512字节</code>大小。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220710204114543.png" alt="image-20220710204114543"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220710204114543.png" alt="image-20220710204114543" loading="lazy"></p>
 <p><strong>参数设置：innodb_log_buffer_size：</strong></p>
 <p>redo log buffer 大小，默认 <code v-pre>16M</code> ，最大值是4096M，最小值为1M。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show variables like '%innodb_log_buffer_size%';
-+------------------------+----------+
-| Variable_name          | Value    |
-+------------------------+----------+
-| innodb_log_buffer_size | 16777216 |
-+------------------------+----------+
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'%innodb_log_buffer_size%'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------------------------+----------+</span>
+<span class="token operator">|</span> Variable_name          <span class="token operator">|</span> <span class="token keyword">Value</span>    <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------------+----------+</span>
+<span class="token operator">|</span> innodb_log_buffer_size <span class="token operator">|</span> <span class="token number">16777216</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------------+----------+</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li><code v-pre>重做日志文件 (redo log file) </code>，保存在硬盘中，是持久的。</li>
 </ul>
 <p>REDO日志文件如图所示，其中<code v-pre>ib_logfile0</code>和<code v-pre>ib_logfile1</code>即为REDO日志。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220710204427616.png" alt="image-20220710204427616"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220710204427616.png" alt="image-20220710204427616" loading="lazy"></p>
 <h3 id="_1-4-redo的整体流程" tabindex="-1"><a class="header-anchor" href="#_1-4-redo的整体流程" aria-hidden="true">#</a> 1.4 redo的整体流程</h3>
 <p>以一个更新事务为例，redo log 流转过程，如下图所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220710204810264-16574572910841.png" alt="image-20220710204810264"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220710204810264-16574572910841.png" alt="image-20220710204810264" loading="lazy"></p>
 <div class="language-text ext-text line-numbers-mode"><pre v-pre class="language-text"><code>第1步：先将原始数据从磁盘中读入内存中来，修改数据的内存拷贝
 第2步：生成一条重做日志并写入redo log buffer，记录的是数据被修改后的值
 第3步：当事务commit时，将redo log buffer中的内容刷新到 redo log file，对 redo log file采用追加写的方式
@@ -83,7 +83,7 @@
 </blockquote>
 <h3 id="_1-5-redo-log的刷盘策略" tabindex="-1"><a class="header-anchor" href="#_1-5-redo-log的刷盘策略" aria-hidden="true">#</a> 1.5 redo log的刷盘策略</h3>
 <p>redo log的写入并不是直接写入磁盘的，InnoDB引擎会在写redo log的时候先写redo log buffer，之后以<code v-pre>一 定的频率</code>刷入到真正的redo log file 中。这里的一定频率怎么看待呢？这就是我们要说的刷盘策略。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220710205015302.png" alt="image-20220710205015302"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220710205015302.png" alt="image-20220710205015302" loading="lazy"></p>
 <p>注意，redo log buffer刷盘到redo log file的过程并不是真正的刷到磁盘中去，只是刷入到 <code v-pre>文件系统缓存 （page cache）</code>中去（这是现代操作系统为了提高文件写入效率做的一个优化），真正的写入会交给系统自己来决定（比如page cache足够大了）。那么对于InnoDB来说就存在一个问题，如果交给系统来同 步，同样如果系统宕机，那么数据也丢失了（虽然整个系统宕机的概率还是比较小的）。</p>
 <p>针对这种情况，InnoDB给出 <code v-pre>innodb_flush_log_at_trx_commit</code> 参数，该参数控制 commit提交事务 时，如何将 redo log buffer 中的日志刷新到 redo log file 中。它支持三种策略：</p>
 <ul>
@@ -93,9 +93,9 @@
 </ul>
 <img src="@source/notes/senior_mysql/images/image-20220710205948156.png" alt="image-20220710205948156" style="float:left;" />
 <p>另外，InnoDB存储引擎有一个后台线程，每隔<code v-pre>1秒</code>，就会把<code v-pre>redo log buffer</code>中的内容写到文件系统缓存(<code v-pre>page cache</code>)，然后调用刷盘操作。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220710210339724.png" alt="image-20220710210339724"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220710210339724.png" alt="image-20220710210339724" loading="lazy"></p>
 <p>也就是说，一个没有提交事务的<code v-pre>redo log</code>记录，也可能会刷盘。因为在事务执行过程 redo log 记录是会写入 <code v-pre>redo log buffer</code>中，这些redo log 记录会被<code v-pre>后台线程</code>刷盘。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220710210532805.png" alt="image-20220710210532805"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220710210532805.png" alt="image-20220710210532805" loading="lazy"></p>
 <p>除了后台线程每秒<code v-pre>1次</code>的轮询操作，还有一种情况，当<code v-pre>redo log buffer</code>占用的空间即将达到<code v-pre>innodb_log_buffer_size</code>（这个参数默认是16M）的一半的时候，后台线程会主动刷盘。</p>
 <h3 id="_1-6-不同刷盘策略演示" tabindex="-1"><a class="header-anchor" href="#_1-6-不同刷盘策略演示" aria-hidden="true">#</a> 1.6 不同刷盘策略演示</h3>
 <h4 id="_1-流程图" tabindex="-1"><a class="header-anchor" href="#_1-流程图" aria-hidden="true">#</a> 1. 流程图</h4>
@@ -107,54 +107,54 @@
 <img src="@source/notes/senior_mysql/images/image-20220710212041563.png" alt="image-20220710212041563" style="float:left;" />
 <h4 id="_2-举例" tabindex="-1"><a class="header-anchor" href="#_2-举例" aria-hidden="true">#</a> 2. 举例</h4>
 <p>比较innodb_flush_log_at_trx_commit对事务的影响。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test_load(
-a INT,
-b CHAR(80)
-)ENGINE=INNODB;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER//
-CREATE PROCEDURE p_load(COUNT INT UNSIGNED)
-BEGIN
-DECLARE s INT UNSIGNED DEFAULT 1;
-DECLARE c CHAR(80) DEFAULT REPEAT('a',80);
-WHILE s&lt;=COUNT DO
-INSERT INTO test_load SELECT NULL, c;
-COMMIT;
-SET s=s+1;
-END WHILE;
-END //
-DELIMITER;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test_load<span class="token punctuation">(</span>
+a <span class="token keyword">INT</span><span class="token punctuation">,</span>
+b <span class="token keyword">CHAR</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">INNODB</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span><span class="token comment">//</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> p_load<span class="token punctuation">(</span>COUNT <span class="token keyword">INT</span> <span class="token keyword">UNSIGNED</span><span class="token punctuation">)</span>
+<span class="token keyword">BEGIN</span>
+<span class="token keyword">DECLARE</span> s <span class="token keyword">INT</span> <span class="token keyword">UNSIGNED</span> <span class="token keyword">DEFAULT</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">DECLARE</span> c <span class="token keyword">CHAR</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">REPEAT</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">,</span><span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">WHILE</span> s<span class="token operator">&lt;=</span>COUNT <span class="token keyword">DO</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test_load <span class="token keyword">SELECT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span> c<span class="token punctuation">;</span>
+<span class="token keyword">COMMIT</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> s<span class="token operator">=</span>s<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token keyword">WHILE</span><span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
+<span class="token keyword">DELIMITER</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220710215001482.png" alt="image-20220710215001482" style="float:left;" />
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; CALL p_load(30000);
-Query OK, 0 rows affected(1 min 23 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">CALL</span> p_load<span class="token punctuation">(</span><span class="token number">30000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected<span class="token punctuation">(</span><span class="token number">1</span> min <span class="token number">23</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><code v-pre>1 min 23 sec</code>的时间显然是不能接受的。而造成时间比较长的原因就在于fsync操作所需要的时间。</p>
 <p>修改参数innodb_flush_log_at_trx_commit，设置为0：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; set global innodb_flush_log_at_trx_commit = 0;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; CALL p_load(30000);
-Query OK, 0 rows affected(38 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">set</span> <span class="token keyword">global</span> innodb_flush_log_at_trx_commit <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">CALL</span> p_load<span class="token punctuation">(</span><span class="token number">30000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected<span class="token punctuation">(</span><span class="token number">38</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>修改参数innodb_flush_log_at_trx_commit，设置为2：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; set global innodb_flush_log_at_trx_commit = 2;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; CALL p_load(30000);
-Query OK, 0 rows affected(46 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">set</span> <span class="token keyword">global</span> innodb_flush_log_at_trx_commit <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">CALL</span> p_load<span class="token punctuation">(</span><span class="token number">30000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected<span class="token punctuation">(</span><span class="token number">46</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220710215353893.png" alt="image-20220710215353893" style="float:left;" />
 <h3 id="_1-7-写入redo-log-buffer-过程" tabindex="-1"><a class="header-anchor" href="#_1-7-写入redo-log-buffer-过程" aria-hidden="true">#</a> 1.7 写入redo log buffer 过程</h3>
 <h4 id="_1-补充概念-mini-transaction" tabindex="-1"><a class="header-anchor" href="#_1-补充概念-mini-transaction" aria-hidden="true">#</a> 1. 补充概念：Mini-Transaction</h4>
 <p>MySQL把对底层页面中的一次原子访问过程称之为一个<code v-pre>Mini-Transaction</code>，简称<code v-pre>mtr</code>，比如，向某个索引对应的B+树中插入一条记录的过程就是一个<code v-pre>Mini-Transaction</code>。一个所谓的<code v-pre>mtr</code>可以包含一组redo日志，在进行崩溃恢复时这一组<code v-pre>redo</code>日志可以作为一个不可分割的整体。</p>
 <p>一个事务可以包含若干条语句，每一条语句其实是由若干个 <code v-pre>mtr</code> 组成，每一个 <code v-pre>mtr</code> 又可以包含若干条 redo日志，画个图表示它们的关系就是这样：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220710220653131.png" alt="image-20220710220653131"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220710220653131.png" alt="image-20220710220653131" loading="lazy"></p>
 <h4 id="_2-redo-日志写入log-buffer" tabindex="-1"><a class="header-anchor" href="#_2-redo-日志写入log-buffer" aria-hidden="true">#</a> 2. redo 日志写入log buffer</h4>
 <img src="@source/notes/senior_mysql/images/image-20220710220838744.png" alt="image-20220710220838744" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220710220919271.png" alt="image-20220710220919271"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220710220919271.png" alt="image-20220710220919271" loading="lazy"></p>
 <img src="@source/notes/senior_mysql/images/image-20220710221221981.png" alt="image-20220710221221981" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220710221318271.png" alt="image-20220710221318271"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220710221318271.png" alt="image-20220710221318271" loading="lazy"></p>
 <p>不同的事务可能是 <code v-pre>并发</code> 执行的，所以 T1 、 T2 之间的 mtr 可能是 <code v-pre>交替执行</code> 的。没当一个mtr执行完成时，伴随该mtr生成的一组redo日志就需要被复制到log buffer中，也就是说不同事务的mtr可能是交替写入log buffer的，我们画个示意图（为了美观，我们把一个mtr中产生的所有redo日志当做一个整体来画）：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220710221620291.png" alt="image-20220710221620291"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220710221620291.png" alt="image-20220710221620291" loading="lazy"></p>
 <p>有的mtr产生的redo日志量非常大，比如<code v-pre>mtr_t1_2</code>产生的redo日志占用空间比较大，占用了3个block来存储。</p>
 <h4 id="_3-redo-log-block的结构图" tabindex="-1"><a class="header-anchor" href="#_3-redo-log-block的结构图" aria-hidden="true">#</a> 3. redo log block的结构图</h4>
 <p>一个redo log block是由<code v-pre>日志头、日志体、日志尾</code>组成。日志头占用12字节，日志尾占用8字节，所以一个block真正能存储的数据是512-12-8=492字节。</p>
 <img src="@source/notes/senior_mysql/images/image-20220710223117420.png" alt="image-20220710223117420" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220710223135374.png" alt="image-20220710223135374"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220710223135374.png" alt="image-20220710223135374" loading="lazy"></p>
 <p>真正的redo日志都是存储到占用<code v-pre>496</code>字节大小的<code v-pre>log block body</code>中，图中的<code v-pre>log block header</code>和<code v-pre>log block trailer</code>存储的是一些管理信息。我们来看看这些所谓<code v-pre>管理信息</code>都有什么。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220711144546439.png" alt="image-20220711144546439"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711144546439.png" alt="image-20220711144546439" loading="lazy"></p>
 <img src="@source/notes/senior_mysql/images/image-20220711144608223.png" alt="image-20220711144608223" style="float:left;" />
 <h3 id="_1-8-redo-log-file" tabindex="-1"><a class="header-anchor" href="#_1-8-redo-log-file" aria-hidden="true">#</a> 1.8 redo log file</h3>
 <h4 id="_1-相关参数设置" tabindex="-1"><a class="header-anchor" href="#_1-相关参数设置" aria-hidden="true">#</a> 1. 相关参数设置</h4>
@@ -164,37 +164,37 @@ Query OK, 0 rows affected(46 sec)
 </li>
 <li>
 <p><code v-pre>innodb_log_files_in_group</code>：指明redo log file的个数，命名方式如：ib_logfile0，iblogfile1... iblogfilen。默认2个，最大100个。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show variables like 'innodb_log_files_in_group';
-+---------------------------+-------+
-| Variable_name             | Value |
-+---------------------------+-------+
-| innodb_log_files_in_group | 2     |
-+---------------------------+-------+
-#ib_logfile0
-#ib_logfile1
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'innodb_log_files_in_group'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------------------+-------+</span>
+<span class="token operator">|</span> Variable_name             <span class="token operator">|</span> <span class="token keyword">Value</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------+-------+</span>
+<span class="token operator">|</span> innodb_log_files_in_group <span class="token operator">|</span> <span class="token number">2</span>     <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------+-------+</span>
+<span class="token comment">#ib_logfile0</span>
+<span class="token comment">#ib_logfile1</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
 <li>
 <p><code v-pre>innodb_flush_log_at_trx_commit</code>：控制 redo log 刷新到磁盘的策略，默认为1。</p>
 </li>
 <li>
 <p><code v-pre>innodb_log_file_size</code>：单个 redo log 文件设置大小，默认值为 <code v-pre>48M</code> 。最大值为512G，注意最大值 指的是整个 redo log 系列文件之和，即（innodb_log_files_in_group * innodb_log_file_size ）不能大 于最大值512G。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show variables like 'innodb_log_file_size';
-+----------------------+----------+
-| Variable_name        | Value    |
-+----------------------+----------+
-| innodb_log_file_size | 50331648 |
-+----------------------+----------+
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'innodb_log_file_size'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------------------+----------+</span>
+<span class="token operator">|</span> Variable_name        <span class="token operator">|</span> <span class="token keyword">Value</span>    <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------------+----------+</span>
+<span class="token operator">|</span> innodb_log_file_size <span class="token operator">|</span> <span class="token number">50331648</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------------+----------+</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
 </ul>
 <p>根据业务修改其大小，以便容纳较大的事务。编辑my.cnf文件并重启数据库生效，如下所示</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>[root@localhost ~]# vim /etc/my.cnf
-innodb_log_file_size=200M
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token punctuation">[</span>root<span class="token variable">@localhost</span> <span class="token operator">~</span><span class="token punctuation">]</span><span class="token comment"># vim /etc/my.cnf</span>
+innodb_log_file_size<span class="token operator">=</span><span class="token number">200</span>M
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><blockquote>
 <p>在数据库实例更新比较频繁的情况下，可以适当加大 redo log 数组和大小。但也不推荐 redo log 设置过大，在MySQL崩溃时会重新执行REDO日志中的记录。</p>
 </blockquote>
 <h4 id="_2-日志文件组" tabindex="-1"><a class="header-anchor" href="#_2-日志文件组" aria-hidden="true">#</a> 2. 日志文件组</h4>
 <img src="@source/notes/senior_mysql/images/image-20220711152137012.png" alt="image-20220711152137012" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220711152242300.png" alt="image-20220711152242300"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711152242300.png" alt="image-20220711152242300" loading="lazy"></p>
 <p>总共的redo日志文件大小其实就是： <code v-pre>innodb_log_file_size × innodb_log_files_in_group</code> 。</p>
 <p>采用循环使用的方式向redo日志文件组里写数据的话，会导致后写入的redo日志覆盖掉前边写的redo日志？当然！所以InnoDB的设计者提出了checkpoint的概念。</p>
 <h4 id="_3-checkpoint" tabindex="-1"><a class="header-anchor" href="#_3-checkpoint" aria-hidden="true">#</a> 3. checkpoint</h4>
@@ -235,12 +235,12 @@ innodb_log_file_size=200M
 <li>在<code v-pre> InnoDB1.1版本之前</code> （不包括1.1版本），只有一个rollback segment，因此支持同时在线的事务限制为 <code v-pre>1024</code> 。虽然对绝大多数的应用来说都已经够用。</li>
 <li>从1.1版本开始InnoDB支持最大 <code v-pre>128个rollback segment</code> ，故其支持同时在线的事务限制提高到 了 <code v-pre>128*1024</code> 。</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show variables like 'innodb_undo_logs';
-+------------------+-------+
-| Variable_name    | Value |
-+------------------+-------+
-| innodb_undo_logs | 128   |
-+------------------+-------+
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'innodb_undo_logs'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------------------+-------+</span>
+<span class="token operator">|</span> Variable_name    <span class="token operator">|</span> <span class="token keyword">Value</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------+-------+</span>
+<span class="token operator">|</span> innodb_undo_logs <span class="token operator">|</span> <span class="token number">128</span>   <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------+-------+</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220711154936382.png" alt="image-20220711154936382" style="float:left;" />
 <img src="@source/notes/senior_mysql/images/image-20220711155044078.png" alt="image-20220711155044078" style="float:left;" />
 <h4 id="_2-回滚段与事务" tabindex="-1"><a class="header-anchor" href="#_2-回滚段与事务" aria-hidden="true">#</a> 2. 回滚段与事务</h4>
@@ -256,13 +256,13 @@ innodb_log_file_size=200M
 </li>
 <li>
 <p>回滚段存在于undo表空间中，在数据库中可以存在多个undo表空间，但同一时刻只能使用一个 undo表空间。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show variables like 'innodb_undo_tablespaces';
-+-------------------------+-------+
-| Variable_name           | Value |
-+-------------------------+-------+
-| innodb_undo_tablespaces | 2     |
-+-------------------------+-------+
-# undo log的数量，最少为2. undo log的truncate操作有purge协调线程发起。在truncate某个undo log表空间的过程中，保证有一个可用的undo log可用。
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'innodb_undo_tablespaces'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+-------+</span>
+<span class="token operator">|</span> Variable_name           <span class="token operator">|</span> <span class="token keyword">Value</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+-------+</span>
+<span class="token operator">|</span> innodb_undo_tablespaces <span class="token operator">|</span> <span class="token number">2</span>     <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+-------+</span>
+<span class="token comment"># undo log的数量，最少为2. undo log的truncate操作有purge协调线程发起。在truncate某个undo log表空间的过程中，保证有一个可用的undo log可用。</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></li>
 <li>
 <p>当事务提交时，InnoDB存储引擎会做以下两件事情：</p>
@@ -297,25 +297,25 @@ innodb_log_file_size=200M
 <p>假设有两个数值，分别为A=1和B=2，然后将A修改为3，B修改为4</p>
 <img src="@source/notes/senior_mysql/images/image-20220711162414928.png" alt="image-20220711162414928" style="float:left;" />
 <p><strong>只有Buffer Pool的流程：</strong></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220711162505008.png" alt="image-20220711162505008"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711162505008.png" alt="image-20220711162505008" loading="lazy"></p>
 <p><strong>有了Redo Log和Undo Log之后：</strong></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220711162642305.png" alt="image-20220711162642305"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711162642305.png" alt="image-20220711162642305" loading="lazy"></p>
 <p>在更新Buffer Pool中的数据之前，我们需要先将该数据事务开始之前的状态写入Undo Log中。假设更新到一半出错了，我们就可以通过Undo Log来回滚到事务开始前。</p>
 <h4 id="_2-详细生成过程" tabindex="-1"><a class="header-anchor" href="#_2-详细生成过程" aria-hidden="true">#</a> 2. 详细生成过程</h4>
 <img src="@source/notes/senior_mysql/images/image-20220711162919157.png" alt="image-20220711162919157" style="float:left;" />
 <p><strong>当我们执行INSERT时：</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>begin;
-INSERT INTO user (name) VALUES (&quot;tom&quot;);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">begin</span><span class="token punctuation">;</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> <span class="token keyword">user</span> <span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">"tom"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>插入的数据都会生成一条insert undo log，并且数据的回滚指针会指向它。undo log会记录undo log的序号、插入主键的列和值...，那么在进行rollback的时候，通过主键直接把对应的数据删除即可。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220711163725129.png" alt="image-20220711163725129"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711163725129.png" alt="image-20220711163725129" loading="lazy"></p>
 <p><strong>当我们执行UPDATE时：</strong></p>
 <p>对应更新的操作会产生update undo log，并且会分更新主键和不更新主键的，假设现在执行：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>UPDATE user SET name=&quot;Sun&quot; WHERE id=1;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220711164138414.png" alt="image-20220711164138414"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">UPDATE</span> <span class="token keyword">user</span> <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">"Sun"</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220711164138414.png" alt="image-20220711164138414" loading="lazy"></p>
 <p>这时会把老的记录写入新的undo log，让回滚指针指向新的undo log，它的undo no是1，并且新的undo log会指向老的undo log（undo no=0）。</p>
 <p>假设现在执行：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>UPDATE user SET id=2 WHERE id=1;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220711164421494.png" alt="image-20220711164421494"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">UPDATE</span> <span class="token keyword">user</span> <span class="token keyword">SET</span> id<span class="token operator">=</span><span class="token number">2</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220711164421494.png" alt="image-20220711164421494" loading="lazy"></p>
 <p>对于更新主键的操作，会先把原来的数据deletemark标识打开，这时并没有真正的删除数据，真正的删除会交给清理线程去判断，然后在后面插入一条新的数据，新的数据也会产生undo log，并且undo log的序号会递增。</p>
 <p>可以发现每次对数据的变更都会产生一个undo log，当一条记录被变更多次时，那么就会产生多条undo log，undo log记录的是变更前的日志，并且每个undo log的序号是递增的，那么当要回滚的时候，按照序号<code v-pre>依次向前推</code>，就可以找到我们的原始数据了。</p>
 <h4 id="_3-undo-log是如何回滚的" tabindex="-1"><a class="header-anchor" href="#_3-undo-log是如何回滚的" aria-hidden="true">#</a> 3. undo log是如何回滚的</h4>
@@ -342,7 +342,7 @@ INSERT INTO user (name) VALUES (&quot;tom&quot;);
 <p>purge线程两个主要作用是：<code v-pre>清理undo页</code>和<code v-pre>清理page里面带有Delete_Bit标识的数据行</code>。在InnoDB中，事务中的Delete操作实际上并不是真正的删除掉数据行，而是一种Delete Mark操作，在记录上标识Delete_Bit，而不删除记录。是一种“假删除”，只是做了个标记，真正的删除工作需要后台purge线程去完成。</p>
 </blockquote>
 <h3 id="_2-6-小结" tabindex="-1"><a class="header-anchor" href="#_2-6-小结" aria-hidden="true">#</a> 2.6 小结</h3>
-<p><img src="@source/notes/senior_mysql/images/image-20220711165612956.png" alt="image-20220711165612956"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711165612956.png" alt="image-20220711165612956" loading="lazy"></p>
 <p>undo log是逻辑日志，对事务回滚时，只是将数据库逻辑地恢复到原来的样子。</p>
 <p>redo log是物理日志，记录的是数据页的物理变化，undo log不是redo log的逆过程。</p>
 </div></template>

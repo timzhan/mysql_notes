@@ -15,7 +15,7 @@ find / -name mysql
 ##### **1.1数据库文件的存放路径** 
 
 MySQL数据库文件的存放路径:/var/lib/mysql/
-```mysql
+```sql
 mysql> show variables like 'datadir';
 +---------------+-----------------+
 | Variable_name | Value           |
@@ -38,7 +38,7 @@ mysql> show variables like 'datadir';
 ##### **2.1表在文件系统中的表示** 
 2.1 查看默认数据库
 查看一下在我的计算机上当前有哪些数据库:
-```mysql 
+```sql 
 mysql> SHOW DATABASES;
 ```
 可以看到有4个数据库是属于MySQL自带的系统数据库。
@@ -56,7 +56,7 @@ innodb_sys 开头的表，用于表示内部系统表。
   
 - sys
   MySQL 系统自带的数据库，这个数据库主要是通过 视图 的形式把 information_schema 和 performance_schema 结合起来，帮助系统管理员和开发人员监控 MySQL 的技术性能。
-```mysql
+```sql
 mysql> USE information_schema;
 Database changed
 mysql> SHOW TABLES LIKE 'innodb_sys%';
@@ -96,7 +96,7 @@ ll
 表名.frm
 ```
 在dbs数据库下创建一个名为 test 的表:
-```mysql
+```sql
 mysql> USE dbs;
 Database changed
 mysql> CREATE TABLE test (
@@ -149,14 +149,14 @@ innodb_file_per_table=0 # 0：代表使用系统表空间； 1：代表使用独
 
 在MyISAM中的索引全部都是`二级索引`，该存储引擎的`数据和索引是分开存放`的。所以在文件系统中也是使用不同的文件来存储数据文件和索引文件，同时表数据都存放在对应的数据库子目录下。
 
-```mysql
+```sql
 test.frm 存储表结构 #MySQL8.0 改为了 b.xxx.sdi
 test.MYD 存储数据 (MYData) 
 test.MYI 存储索引 (MYIndex
 ```
 举例:创建一个 MyISAM 表，使用 ENGINE 选项显式指定引擎。因为 InnoDB 是默认引擎。
 
-```mysql
+```sql
 CREATE TABLE `student_myisam` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT NULL,

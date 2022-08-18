@@ -46,7 +46,7 @@
 </tbody>
 </table>
 <h2 id="_2-视图概述" tabindex="-1"><a class="header-anchor" href="#_2-视图概述" aria-hidden="true">#</a> 2. 视图概述</h2>
-<p><img src="@source/notes/base_mysql/images/1555430281798.png" alt="1555430281798"></p>
+<p><img src="@source/notes/base_mysql/images/1555430281798.png" alt="1555430281798" loading="lazy"></p>
 <h3 id="_2-1-为什么使用视图" tabindex="-1"><a class="header-anchor" href="#_2-1-为什么使用视图" aria-hidden="true">#</a> 2.1 为什么使用视图？</h3>
 <p>视图一方面可以帮我们使用表的一部分而不是所有的表，另一方面也可以针对不同的用户制定不同的查询视图。比如，针对一个公司的销售人员，我们只想给他看部分数据，而某些特殊的数据，比如采购的价格，则不会提供给他。再比如，人员薪酬是个敏感的字段，那么只给某个级别以上的人员开放，其他人的查询视图中则不提供这个字段。</p>
 <p>刚才讲的只是视图的一个使用场景，实际上视图还有很多作用。最后，我们总结视图的优点。</p>
@@ -76,136 +76,136 @@
 <ul>
 <li><strong>在</strong> <strong>CREATE VIEW</strong> <strong>语句中嵌入子查询</strong></li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE [OR REPLACE] 
-[ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}] 
-VIEW 视图名称 [(字段列表)]
-AS 查询语句
-[WITH [CASCADED|LOCAL] CHECK OPTION]
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token punctuation">[</span><span class="token operator">OR</span> <span class="token keyword">REPLACE</span><span class="token punctuation">]</span> 
+<span class="token punctuation">[</span><span class="token keyword">ALGORITHM</span> <span class="token operator">=</span> {<span class="token keyword">UNDEFINED</span> <span class="token operator">|</span> <span class="token keyword">MERGE</span> <span class="token operator">|</span> <span class="token keyword">TEMPTABLE</span>}<span class="token punctuation">]</span> 
+<span class="token keyword">VIEW</span> 视图名称 <span class="token punctuation">[</span><span class="token punctuation">(</span>字段列表<span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token keyword">AS</span> 查询语句
+<span class="token punctuation">[</span><span class="token keyword">WITH</span> <span class="token punctuation">[</span><span class="token keyword">CASCADED</span><span class="token operator">|</span><span class="token keyword">LOCAL</span><span class="token punctuation">]</span> <span class="token keyword">CHECK</span> <span class="token keyword">OPTION</span><span class="token punctuation">]</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>精简版</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE VIEW 视图名称 
-AS 查询语句
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">VIEW</span> 视图名称 
+<span class="token keyword">AS</span> 查询语句
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-1-创建单表视图" tabindex="-1"><a class="header-anchor" href="#_3-1-创建单表视图" aria-hidden="true">#</a> 3.1 创建单表视图</h3>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE VIEW empvu80
-AS 
-SELECT  employee_id, last_name, salary
-FROM    employees
-WHERE   department_id = 80;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">VIEW</span> empvu80
+<span class="token keyword">AS</span> 
+<span class="token keyword">SELECT</span>  employee_id<span class="token punctuation">,</span> last_name<span class="token punctuation">,</span> salary
+<span class="token keyword">FROM</span>    employees
+<span class="token keyword">WHERE</span>   department_id <span class="token operator">=</span> <span class="token number">80</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>查询视图：</p>
 <div class="language-text ext-text line-numbers-mode"><pre v-pre class="language-text"><code>SELECT *
 FROM	salvu80;
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/base_mysql/images/1555430882363.png" alt="1555430882363" style="zoom:80%;" />
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE VIEW emp_year_salary (ename,year_salary)
-AS 
-SELECT ename,salary*12*(1+IFNULL(commission_pct,0))
-FROM t_employee;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">VIEW</span> emp_year_salary <span class="token punctuation">(</span>ename<span class="token punctuation">,</span>year_salary<span class="token punctuation">)</span>
+<span class="token keyword">AS</span> 
+<span class="token keyword">SELECT</span> ename<span class="token punctuation">,</span>salary<span class="token operator">*</span><span class="token number">12</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">+</span>IFNULL<span class="token punctuation">(</span>commission_pct<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> t_employee<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE VIEW salvu50
-AS 
-SELECT  employee_id ID_NUMBER, last_name NAME,salary*12 ANN_SALARY
-FROM    employees
-WHERE   department_id = 50;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">VIEW</span> salvu50
+<span class="token keyword">AS</span> 
+<span class="token keyword">SELECT</span>  employee_id ID_NUMBER<span class="token punctuation">,</span> last_name NAME<span class="token punctuation">,</span>salary<span class="token operator">*</span><span class="token number">12</span> ANN_SALARY
+<span class="token keyword">FROM</span>    employees
+<span class="token keyword">WHERE</span>   department_id <span class="token operator">=</span> <span class="token number">50</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>说明1：实际上就是我们在 SQL 查询语句的基础上封装了视图 VIEW，这样就会基于 SQL 语句的结果集形成一张虚拟表。</p>
 <p>说明2：在创建视图时，没有在视图名后面指定字段列表，则视图中字段列表默认和SELECT语句中的字段列表一致。如果SELECT语句中给字段取了别名，那么视图中的字段名和别名相同。</p>
 <h3 id="_3-2-创建多表联合视图" tabindex="-1"><a class="header-anchor" href="#_3-2-创建多表联合视图" aria-hidden="true">#</a> 3.2 创建多表联合视图</h3>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE VIEW empview 
-AS 
-SELECT employee_id emp_id,last_name NAME,department_name
-FROM employees e,departments d
-WHERE e.department_id = d.department_id;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE VIEW emp_dept
-AS 
-SELECT ename,dname
-FROM t_employee LEFT JOIN t_department
-ON t_employee.did = t_department.did;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE VIEW	dept_sum_vu
-(name, minsal, maxsal, avgsal)
-AS 
-SELECT d.department_name, MIN(e.salary), MAX(e.salary),AVG(e.salary)
-FROM employees e, departments d
-WHERE e.department_id = d.department_id 
-GROUP BY  d.department_name;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">VIEW</span> empview 
+<span class="token keyword">AS</span> 
+<span class="token keyword">SELECT</span> employee_id emp_id<span class="token punctuation">,</span>last_name NAME<span class="token punctuation">,</span>department_name
+<span class="token keyword">FROM</span> employees e<span class="token punctuation">,</span>departments d
+<span class="token keyword">WHERE</span> e<span class="token punctuation">.</span>department_id <span class="token operator">=</span> d<span class="token punctuation">.</span>department_id<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">VIEW</span> emp_dept
+<span class="token keyword">AS</span> 
+<span class="token keyword">SELECT</span> ename<span class="token punctuation">,</span>dname
+<span class="token keyword">FROM</span> t_employee <span class="token keyword">LEFT</span> <span class="token keyword">JOIN</span> t_department
+<span class="token keyword">ON</span> t_employee<span class="token punctuation">.</span>did <span class="token operator">=</span> t_department<span class="token punctuation">.</span>did<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">VIEW</span>	dept_sum_vu
+<span class="token punctuation">(</span>name<span class="token punctuation">,</span> minsal<span class="token punctuation">,</span> maxsal<span class="token punctuation">,</span> avgsal<span class="token punctuation">)</span>
+<span class="token keyword">AS</span> 
+<span class="token keyword">SELECT</span> d<span class="token punctuation">.</span>department_name<span class="token punctuation">,</span> <span class="token function">MIN</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>salary<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">MAX</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>salary<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">AVG</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>salary<span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> employees e<span class="token punctuation">,</span> departments d
+<span class="token keyword">WHERE</span> e<span class="token punctuation">.</span>department_id <span class="token operator">=</span> d<span class="token punctuation">.</span>department_id 
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span>  d<span class="token punctuation">.</span>department_name<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li><strong>利用视图对数据进行格式化</strong></li>
 </ul>
 <p>我们经常需要输出某个格式的内容，比如我们想输出员工姓名和对应的部门名，对应格式为 emp_name(department_name)，就可以使用视图来完成数据格式化的操作：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE VIEW emp_depart
-AS
-SELECT CONCAT(last_name,'(',department_name,')') AS emp_dept
-FROM employees e JOIN departments d
-WHERE e.department_id = d.department_id
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">VIEW</span> emp_depart
+<span class="token keyword">AS</span>
+<span class="token keyword">SELECT</span> CONCAT<span class="token punctuation">(</span>last_name<span class="token punctuation">,</span><span class="token string">'('</span><span class="token punctuation">,</span>department_name<span class="token punctuation">,</span><span class="token string">')'</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> emp_dept
+<span class="token keyword">FROM</span> employees e <span class="token keyword">JOIN</span> departments d
+<span class="token keyword">WHERE</span> e<span class="token punctuation">.</span>department_id <span class="token operator">=</span> d<span class="token punctuation">.</span>department_id
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-3-基于视图创建视图" tabindex="-1"><a class="header-anchor" href="#_3-3-基于视图创建视图" aria-hidden="true">#</a> 3.3 基于视图创建视图</h3>
 <p>当我们创建好一张视图之后，还可以在它的基础上继续创建视图。</p>
 <p>举例：联合“emp_dept”视图和“emp_year_salary”视图查询员工姓名、部门名称、年薪信息创建 “emp_dept_ysalary”视图。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE VIEW emp_dept_ysalary
-AS 
-SELECT emp_dept.ename,dname,year_salary
-FROM emp_dept INNER JOIN emp_year_salary
-ON emp_dept.ename = emp_year_salary.ename;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">VIEW</span> emp_dept_ysalary
+<span class="token keyword">AS</span> 
+<span class="token keyword">SELECT</span> emp_dept<span class="token punctuation">.</span>ename<span class="token punctuation">,</span>dname<span class="token punctuation">,</span>year_salary
+<span class="token keyword">FROM</span> emp_dept <span class="token keyword">INNER</span> <span class="token keyword">JOIN</span> emp_year_salary
+<span class="token keyword">ON</span> emp_dept<span class="token punctuation">.</span>ename <span class="token operator">=</span> emp_year_salary<span class="token punctuation">.</span>ename<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_4-查看视图" tabindex="-1"><a class="header-anchor" href="#_4-查看视图" aria-hidden="true">#</a> 4. 查看视图</h2>
 <p>语法1：查看数据库的表对象、视图对象</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW TABLES;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">TABLES</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>语法2：查看视图的结构</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DESC / DESCRIBE 视图名称;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DESC</span> <span class="token operator">/</span> <span class="token keyword">DESCRIBE</span> 视图名称<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>语法3：查看视图的属性信息</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># 查看视图信息（显示数据表的存储引擎、版本、数据行数和数据大小等）
-SHOW TABLE STATUS LIKE '视图名称'\G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># 查看视图信息（显示数据表的存储引擎、版本、数据行数和数据大小等）</span>
+<span class="token keyword">SHOW</span> <span class="token keyword">TABLE</span> <span class="token keyword">STATUS</span> <span class="token operator">LIKE</span> <span class="token string">'视图名称'</span>\G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>执行结果显示，注释Comment为VIEW，说明该表为视图，其他的信息为NULL，说明这是一个虚表。</p>
 <p>语法4：查看视图的详细定义信息</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW CREATE VIEW 视图名称;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">CREATE</span> <span class="token keyword">VIEW</span> 视图名称<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="_5-更新视图的数据" tabindex="-1"><a class="header-anchor" href="#_5-更新视图的数据" aria-hidden="true">#</a> 5. 更新视图的数据</h2>
 <h3 id="_5-1-一般情况" tabindex="-1"><a class="header-anchor" href="#_5-1-一般情况" aria-hidden="true">#</a> 5.1 一般情况</h3>
 <p>MySQL支持使用INSERT、UPDATE和DELETE语句对视图中的数据进行插入、更新和删除操作。当视图中的数据发生变化时，数据表中的数据也会发生变化，反之亦然。</p>
 <p>举例：UPDATE操作</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT ename,tel FROM emp_tel WHERE ename = '孙洪亮';
-+---------+-------------+
-| ename   | tel         |
-+---------+-------------+
-| 孙洪亮 	| 13789098765 |
-+---------+-------------+
-1 row in set (0.01 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> ename<span class="token punctuation">,</span>tel <span class="token keyword">FROM</span> emp_tel <span class="token keyword">WHERE</span> ename <span class="token operator">=</span> <span class="token string">'孙洪亮'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------+-------------+</span>
+<span class="token operator">|</span> ename   <span class="token operator">|</span> tel         <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------+-------------+</span>
+<span class="token operator">|</span> 孙洪亮 	<span class="token operator">|</span> <span class="token number">13789098765</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------+-------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; UPDATE emp_tel SET tel = '13789091234' WHERE ename = '孙洪亮';
-Query OK, 1 row affected (0.01 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
+mysql<span class="token operator">></span> <span class="token keyword">UPDATE</span> emp_tel <span class="token keyword">SET</span> tel <span class="token operator">=</span> <span class="token string">'13789091234'</span> <span class="token keyword">WHERE</span> ename <span class="token operator">=</span> <span class="token string">'孙洪亮'</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token keyword">row</span> affected <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
+<span class="token keyword">Rows</span> <span class="token keyword">matched</span>: <span class="token number">1</span>  Changed: <span class="token number">1</span>  <span class="token keyword">Warnings</span>: <span class="token number">0</span>
 
-mysql&gt; SELECT ename,tel FROM emp_tel WHERE ename = '孙洪亮';
-+---------+-------------+
-| ename	  | tel         |
-+---------+-------------+
-| 	孙洪亮 | 13789091234 |
-+---------+-------------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> ename<span class="token punctuation">,</span>tel <span class="token keyword">FROM</span> emp_tel <span class="token keyword">WHERE</span> ename <span class="token operator">=</span> <span class="token string">'孙洪亮'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------+-------------+</span>
+<span class="token operator">|</span> ename	  <span class="token operator">|</span> tel         <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------+-------------+</span>
+<span class="token operator">|</span> 	孙洪亮 <span class="token operator">|</span> <span class="token number">13789091234</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------+-------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; SELECT ename,tel FROM t_employee WHERE ename = '孙洪亮';
-+---------+-------------+
-| ename   | tel         |
-+---------+-------------+
-| 孙洪亮 	| 13789091234 |
-+---------+-------------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> ename<span class="token punctuation">,</span>tel <span class="token keyword">FROM</span> t_employee <span class="token keyword">WHERE</span> ename <span class="token operator">=</span> <span class="token string">'孙洪亮'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------+-------------+</span>
+<span class="token operator">|</span> ename   <span class="token operator">|</span> tel         <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------+-------------+</span>
+<span class="token operator">|</span> 孙洪亮 	<span class="token operator">|</span> <span class="token number">13789091234</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------+-------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例：DELETE操作</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT ename,tel FROM emp_tel WHERE ename = '孙洪亮';
-+---------+-------------+
-| ename  	| tel           |
-+---------+-------------+
-| 孙洪亮 	| 13789091234 |
-+---------+-------------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> ename<span class="token punctuation">,</span>tel <span class="token keyword">FROM</span> emp_tel <span class="token keyword">WHERE</span> ename <span class="token operator">=</span> <span class="token string">'孙洪亮'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------+-------------+</span>
+<span class="token operator">|</span> ename  	<span class="token operator">|</span> tel           <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------+-------------+</span>
+<span class="token operator">|</span> 孙洪亮 	<span class="token operator">|</span> <span class="token number">13789091234</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------+-------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; DELETE FROM emp_tel  WHERE ename = '孙洪亮';
-Query OK, 1 row affected (0.01 sec)
+mysql<span class="token operator">></span> <span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> emp_tel  <span class="token keyword">WHERE</span> ename <span class="token operator">=</span> <span class="token string">'孙洪亮'</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token keyword">row</span> affected <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; SELECT ename,tel FROM emp_tel WHERE ename = '孙洪亮';
-Empty set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> ename<span class="token punctuation">,</span>tel <span class="token keyword">FROM</span> emp_tel <span class="token keyword">WHERE</span> ename <span class="token operator">=</span> <span class="token string">'孙洪亮'</span><span class="token punctuation">;</span>
+Empty <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; SELECT ename,tel FROM t_employee WHERE ename = '孙洪亮';
-Empty set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> ename<span class="token punctuation">,</span>tel <span class="token keyword">FROM</span> t_employee <span class="token keyword">WHERE</span> ename <span class="token operator">=</span> <span class="token string">'孙洪亮'</span><span class="token punctuation">;</span>
+Empty <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_5-2-不可更新的视图" tabindex="-1"><a class="header-anchor" href="#_5-2-不可更新的视图" aria-hidden="true">#</a> 5.2 不可更新的视图</h3>
 <p>要使视图可更新，视图中的行和底层基本表中的行之间必须存在<code v-pre>一对一</code>的关系。另外当视图定义出现如下情况时，视图不支持更新操作：</p>
@@ -220,18 +220,18 @@ Empty set (0.00 sec)
 <li>常量视图。</li>
 </ul>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; CREATE OR REPLACE VIEW emp_dept
-    -&gt; (ename,salary,birthday,tel,email,hiredate,dname)
-    -&gt; AS SELECT ename,salary,birthday,tel,email,hiredate,dname
-    -&gt; FROM t_employee INNER JOIN t_department
-    -&gt; ON t_employee.did = t_department.did ;
-Query OK, 0 rows affected (0.01 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">CREATE</span> <span class="token operator">OR</span> <span class="token keyword">REPLACE</span> <span class="token keyword">VIEW</span> emp_dept
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">(</span>ename<span class="token punctuation">,</span>salary<span class="token punctuation">,</span>birthday<span class="token punctuation">,</span>tel<span class="token punctuation">,</span>email<span class="token punctuation">,</span>hiredate<span class="token punctuation">,</span>dname<span class="token punctuation">)</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">AS</span> <span class="token keyword">SELECT</span> ename<span class="token punctuation">,</span>salary<span class="token punctuation">,</span>birthday<span class="token punctuation">,</span>tel<span class="token punctuation">,</span>email<span class="token punctuation">,</span>hiredate<span class="token punctuation">,</span>dname
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">FROM</span> t_employee <span class="token keyword">INNER</span> <span class="token keyword">JOIN</span> t_department
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">ON</span> t_employee<span class="token punctuation">.</span>did <span class="token operator">=</span> t_department<span class="token punctuation">.</span>did <span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
 
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; INSERT INTO emp_dept(ename,salary,birthday,tel,email,hiredate,dname)
-    -&gt; VALUES('张三',15000,'1995-01-08','18201587896',
-    -&gt; 'zs@atguigu.com','2022-02-14','新部门');
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> emp_dept<span class="token punctuation">(</span>ename<span class="token punctuation">,</span>salary<span class="token punctuation">,</span>birthday<span class="token punctuation">,</span>tel<span class="token punctuation">,</span>email<span class="token punctuation">,</span>hiredate<span class="token punctuation">,</span>dname<span class="token punctuation">)</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'张三'</span><span class="token punctuation">,</span><span class="token number">15000</span><span class="token punctuation">,</span><span class="token string">'1995-01-08'</span><span class="token punctuation">,</span><span class="token string">'18201587896'</span><span class="token punctuation">,</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token string">'zs@atguigu.com'</span><span class="token punctuation">,</span><span class="token string">'2022-02-14'</span><span class="token punctuation">,</span><span class="token string">'新部门'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     
-#ERROR 1393 (HY000): Can not modify more than one base table through a join view 'atguigu_chapter9.emp_dept'
+<span class="token comment">#ERROR 1393 (HY000): Can not modify more than one base table through a join view 'atguigu_chapter9.emp_dept'</span>
 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>从上面的SQL执行结果可以看出，在定义视图的SELECT语句中使用了JOIN联合查询，视图将不支持更新操作。</p>
 <blockquote>
@@ -240,19 +240,19 @@ Query OK, 0 rows affected (0.01 sec)
 <h2 id="_6-修改、删除视图" tabindex="-1"><a class="header-anchor" href="#_6-修改、删除视图" aria-hidden="true">#</a> 6. 修改、删除视图</h2>
 <h3 id="_6-1-修改视图" tabindex="-1"><a class="header-anchor" href="#_6-1-修改视图" aria-hidden="true">#</a> 6.1 修改视图</h3>
 <p>方式1：使用CREATE <strong>OR REPLACE</strong> VIEW 子句<strong>修改视图</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE OR REPLACE VIEW empvu80
-(id_number, name, sal, department_id)
-AS 
-SELECT  employee_id, first_name || ' ' || last_name, salary, department_id
-FROM employees
-WHERE department_id = 80;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token operator">OR</span> <span class="token keyword">REPLACE</span> <span class="token keyword">VIEW</span> empvu80
+<span class="token punctuation">(</span>id_number<span class="token punctuation">,</span> name<span class="token punctuation">,</span> sal<span class="token punctuation">,</span> department_id<span class="token punctuation">)</span>
+<span class="token keyword">AS</span> 
+<span class="token keyword">SELECT</span>  employee_id<span class="token punctuation">,</span> first_name <span class="token operator">||</span> <span class="token string">' '</span> <span class="token operator">||</span> last_name<span class="token punctuation">,</span> salary<span class="token punctuation">,</span> department_id
+<span class="token keyword">FROM</span> employees
+<span class="token keyword">WHERE</span> department_id <span class="token operator">=</span> <span class="token number">80</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><blockquote>
 <p>说明：CREATE VIEW 子句中各列的别名应和子查询中各列相对应。</p>
 </blockquote>
 <p>方式2：ALTER VIEW</p>
 <p>修改视图的语法是：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER VIEW 视图名称 
-AS
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">VIEW</span> 视图名称 
+<span class="token keyword">AS</span>
 查询语句
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_6-2-删除视图" tabindex="-1"><a class="header-anchor" href="#_6-2-删除视图" aria-hidden="true">#</a> 6.2 删除视图</h3>
 <ul>
@@ -261,12 +261,12 @@ AS
 </li>
 <li>
 <p>删除视图的语法是：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP VIEW IF EXISTS 视图名称;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP VIEW IF EXISTS 视图名称1,视图名称2,视图名称3,...;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> <span class="token keyword">VIEW</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> 视图名称<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> <span class="token keyword">VIEW</span> <span class="token keyword">IF</span> <span class="token keyword">EXISTS</span> 视图名称<span class="token number">1</span><span class="token punctuation">,</span>视图名称<span class="token number">2</span><span class="token punctuation">,</span>视图名称<span class="token number">3</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></li>
 <li>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP VIEW empvu80;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> <span class="token keyword">VIEW</span> empvu80<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></li>
 <li>
 <p>说明：基于视图a、b创建了新的视图c，如果将视图a或者视图b删除，会导致视图c的查询失败。这样的视图c需要手动删除或修改，否则影响使用。</p>
@@ -280,7 +280,7 @@ AS
 <p>视图跟实际数据表不一样，它存储的是查询语句。所以，在使用的时候，我们要通过定义视图的查询语句来获取结果集。而视图本身不存储数据，不占用数据存储的资源，减少了数据冗余。</p>
 <p><strong>3. 数据安全</strong></p>
 <p>MySQL将用户对数据的<code v-pre>访问限制</code>在某些数据的结果集上，而这些数据的结果集可以使用视图来实现。用户不必直接查询或操作数据表。这也可以理解为视图具有<code v-pre>隔离性</code>。视图相当于在用户和实际的数据表之间加了一层虚拟表。</p>
-<p><img src="@source/notes/base_mysql/images/image-20211010211744459.png" alt="image-20211010211744459"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211010211744459.png" alt="image-20211010211744459" loading="lazy"></p>
 <p>同时，MySQL可以根据权限将用户对数据的访问限制在某些视图上，<strong>用户不需要查询数据表，可以直接通过视图获取数据表中的信息</strong>。这在一定程度上保障了数据表中数据的安全性。</p>
 <p><strong>4. 适应灵活多变的需求</strong>
 当业务系统的需求发生变化后，如果需要改动数据表的结构，则工作量相对较大，可以使用视图来减少改动的工作量。这种方式在实际工作中使用得比较多。</p>

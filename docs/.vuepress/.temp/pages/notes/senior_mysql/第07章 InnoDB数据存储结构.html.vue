@@ -3,24 +3,24 @@
 <img src="@source/notes/senior_mysql/images/image-20220617175755324.png" alt="image-20220617175755324" style="float:left;" />
 <h3 id="_1-1-磁盘与内存交互基本单位-页" tabindex="-1"><a class="header-anchor" href="#_1-1-磁盘与内存交互基本单位-页" aria-hidden="true">#</a> 1.1 磁盘与内存交互基本单位：页</h3>
 <img src="@source/notes/senior_mysql/images/image-20220617193033971.png" alt="image-20220617193033971" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220617193939742.png" alt="image-20220617193939742"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617193939742.png" alt="image-20220617193939742" loading="lazy"></p>
 <h3 id="_1-2-页结构概述" tabindex="-1"><a class="header-anchor" href="#_1-2-页结构概述" aria-hidden="true">#</a> 1.2 页结构概述</h3>
 <img src="@source/notes/senior_mysql/images/image-20220617193218557.png" alt="image-20220617193218557" style="float:left;" />
 <h3 id="_1-3-页的大小" tabindex="-1"><a class="header-anchor" href="#_1-3-页的大小" aria-hidden="true">#</a> 1.3 页的大小</h3>
 <p>不同的数据库管理系统（简称DBMS）的页大小不同。比如在 MySQL 的 InnoDB 存储引擎中，默认页的大小是 <code v-pre>16KB</code>，我们可以通过下面的命令来进行查看：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show variables like '%innodb_page_size%'
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'%innodb_page_size%'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>SQL Server 中页的大小为 <code v-pre>8KB</code>，而在 Oracle 中我们用术语 &quot;<code v-pre>块</code>&quot; （Block）来表示 &quot;页&quot;，Oracle 支持的快大小为2KB, 4KB, 8KB, 16KB, 32KB 和 64KB。</p>
 <h3 id="_1-4-页的上层结构" tabindex="-1"><a class="header-anchor" href="#_1-4-页的上层结构" aria-hidden="true">#</a> 1.4 页的上层结构</h3>
 <p>另外在数据库中，还存在着区（Extent）、段（Segment）和表空间（Tablespace）的概念。行、页、区、段、表空间的关系如下图所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220617194256988.png" alt="image-20220617194256988"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617194256988.png" alt="image-20220617194256988" loading="lazy"></p>
 <img src="@source/notes/senior_mysql/images/image-20220617194529699.png" alt="image-20220617194529699" style="float:left;" />
 <h2 id="_2-页的内部结构" tabindex="-1"><a class="header-anchor" href="#_2-页的内部结构" aria-hidden="true">#</a> 2. 页的内部结构</h2>
 <p>页如果按类型划分的话，常见的有 <code v-pre>数据页（保存B+树节点）、系统表、Undo 页 和 事物数据页</code> 等。数据页是我们最常使用的页。</p>
 <p>数据页的 <code v-pre>16KB</code> 大小的存储空间被划分为七个部分，分别是文件头（File Header）、页头（Page Header）、最大最小记录（Infimum + supremum）、用户记录（User Records）、空闲空间（Free Space）、页目录（Page Directory）和文件尾（File Tailer）。</p>
 <p>页结构的示意图如下所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220617195012446.png" alt="image-20220617195012446"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617195012446.png" alt="image-20220617195012446" loading="lazy"></p>
 <p>如下表所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220617195148164.png" alt="image-20220617195148164"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617195148164.png" alt="image-20220617195148164" loading="lazy"></p>
 <p>我们可以把这7个结构分为3个部分。</p>
 <h3 id="第一部分-file-header-文件头部-和-file-trailer-文件尾部" tabindex="-1"><a class="header-anchor" href="#第一部分-file-header-文件头部-和-file-trailer-文件尾部" aria-hidden="true">#</a> 第一部分：File Header (文件头部) 和 File Trailer (文件尾部)</h3>
 <p>见文件InnoDB数据库存储结构.mmap</p>
@@ -34,7 +34,7 @@
 <li>叶子节点，B+ 树最底层的节点，节点的高度为0，存储行记录。</li>
 <li>非叶子节点，节点的高度大于0，存储索引键和页面指针，并不存储行记录本身。</li>
 </ol>
-<p><img src="@source/notes/senior_mysql/images/image-20220620221112635.png" alt="image-20220620221112635"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220620221112635.png" alt="image-20220620221112635" loading="lazy"></p>
 <p>当我们从页结构来理解 B+ 树的结构的时候，可以帮我们理解一些通过索引进行检索的原理：</p>
 <img src="@source/notes/senior_mysql/images/image-20220620221242561.png" alt="image-20220620221242561" style="float:left;" />
 <img src="@source/notes/senior_mysql/images/image-20220620221442954.png" alt="image-20220620221442954" style="float:left;" />
@@ -69,7 +69,7 @@
 <p><strong>真实表空间对应的文件大小</strong></p>
 <p>我们到数据目录里看，会发现一个新建的表对应的 .ibd 文件只占用了 96K，才6个页面大小 (MySQL5.7中)，这是因为一开始表空间占用的空间很小，因为表里边都没有数据。不过别忘了这些 .ibd 文件是自扩展的，随着表中数据的增多，表空间对应的文件也逐渐增大。</p>
 <p><strong>查看 InnoDB 的表空间类型：</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show variables like 'innodb_file_per_table'
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'innodb_file_per_table'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>你能看到 innodb_file_per_table=ON, 这就意味着每张表都会单词保存一个 .ibd 文件。</p>
 <h3 id="_5-2-系统表空间" tabindex="-1"><a class="header-anchor" href="#_5-2-系统表空间" aria-hidden="true">#</a> 5.2 系统表空间</h3>
 <p>系统表空间的结构和独立表空间基本类似，只不过由于整个MySQL进程只有一个系统表空间，在系统表空间中会额外记录一些有关整个系统信息的页面，这部分是独立表空间中没有的。</p>
@@ -83,8 +83,8 @@
 <img src="@source/notes/senior_mysql/images/image-20220621151215274.png" alt="image-20220621151215274" style="float:left;" />
 <img src="@source/notes/senior_mysql/images/image-20220621151238157.png" alt="image-20220621151238157" style="float:left;" />
 <p>注意：用户不能直接访问 InnoDB 的这些内部系统表，除非你直接去解析系统表空间对应文件系统上的文件。不过考虑到查看这些表的内容可能有助于大家分析问题，所以在系统数据库 <code v-pre>information_schema</code> 中提供了一些以 <code v-pre>innodb_sys</code> 开头的表:</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>USE information_schema;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW TABLES LIKE 'innodb_sys%';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">USE</span> information_schema<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">TABLES</span> <span class="token operator">LIKE</span> <span class="token string">'innodb_sys%'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>在 <code v-pre>information_scheme</code> 数据库中的这些以 <code v-pre>INNODB_SYS</code> 开头的表并不是真正的内部系统表 (内部系统表就是我们上边以 <code v-pre>SYS</code> 开头的那些表)，而是在存储引擎启动时读取这些以 <code v-pre>SYS</code> 开头的系统表，然后填充到这些以 <code v-pre>INNODB_SYS</code> 开头的表中。以 <code v-pre>INNODB_SYS</code> 开头的表和以 <code v-pre>SYS</code> 开头的表中的字段并不完全一样，但仅供大家参考已经足矣。</p>
 <h2 id="附录-数据页加载的三种方式" tabindex="-1"><a class="header-anchor" href="#附录-数据页加载的三种方式" aria-hidden="true">#</a> 附录：数据页加载的三种方式</h2>
 <p>InnoDB从磁盘中读取数据 <code v-pre>最小单位</code> 是数据页。而你想得到的 id = xxx 的数据，就是这个数据页众多行中的一行。</p>
@@ -92,9 +92,9 @@
 <p>如果缓冲池没有该页数据，那么缓冲池有以下三种读取数据的方式，每种方式的读取速率是不同的：</p>
 <p><strong>1. 内存读取</strong></p>
 <p>如果该数据存在于内存中，基本上执行时间在 1ms 左右，效率还是很高的。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220621135638283.png" alt="image-20220621135638283"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220621135638283.png" alt="image-20220621135638283" loading="lazy"></p>
 <p><strong>2. 随机读取</strong></p>
 <img src="@source/notes/senior_mysql/images/image-20220621135719847.png" alt="image-20220621135719847" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220621135737422.png" alt="image-20220621135737422"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220621135737422.png" alt="image-20220621135737422" loading="lazy"></p>
 <p><strong>3. 顺序读取</strong></p>
 <img src="@source/notes/senior_mysql/images/image-20220621135909197.png" alt="image-20220621135909197" style="float:left;" /></div></template>

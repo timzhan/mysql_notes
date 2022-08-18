@@ -6,23 +6,23 @@
 <p>MVCC在MySQL InnoDB中的实现主要是为了提高数据库并发性能，用更好的方式去处理 <code v-pre>读-写冲突</code> ，做到 即使有读写冲突时，也能做到 <code v-pre>不加锁</code> ， <code v-pre>非阻塞并发读</code> ，而这个读指的就是 <code v-pre>快照读</code> , 而非 <code v-pre>当前读</code> 。当前 读实际上是一种加锁的操作，是悲观锁的实现。而MVCC本质是采用乐观锁思想的一种方式。</p>
 <h3 id="_2-1-快照读" tabindex="-1"><a class="header-anchor" href="#_2-1-快照读" aria-hidden="true">#</a> 2.1 快照读</h3>
 <p>快照读又叫一致性读，读取的是快照数据。<strong>不加锁的简单的 SELECT 都属于快照读</strong>，即不加锁的非阻塞 读；比如这样：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM player WHERE ...
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> player <span class="token keyword">WHERE</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>之所以出现快照读的情况，是基于提高并发性能的考虑，快照读的实现是基于MVCC，它在很多情况下， 避免了加锁操作，降低了开销。</p>
 <p>既然是基于多版本，那么快照读可能读到的并不一定是数据的最新版本，而有可能是之前的历史版本。</p>
 <p>快照读的前提是隔离级别不是串行级别，串行级别下的快照读会退化成当前读。</p>
 <h3 id="_2-2-当前读" tabindex="-1"><a class="header-anchor" href="#_2-2-当前读" aria-hidden="true">#</a> 2.2 当前读</h3>
 <p>当前读读取的是记录的最新版本（最新数据，而不是历史版本的数据），读取时还要保证其他并发事务 不能修改当前记录，会对读取的记录进行加锁。加锁的 SELECT，或者对数据进行增删改都会进行当前 读。比如：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM student LOCK IN SHARE MODE; # 共享锁
-SELECT * FROM student FOR UPDATE; # 排他锁
-INSERT INTO student values ... # 排他锁
-DELETE FROM student WHERE ... # 排他锁
-UPDATE student SET ... # 排他锁
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> student <span class="token keyword">LOCK</span> <span class="token operator">IN</span> <span class="token keyword">SHARE</span> <span class="token keyword">MODE</span><span class="token punctuation">;</span> <span class="token comment"># 共享锁</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> student <span class="token keyword">FOR</span> <span class="token keyword">UPDATE</span><span class="token punctuation">;</span> <span class="token comment"># 排他锁</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> student <span class="token keyword">values</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment"># 排他锁</span>
+<span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> student <span class="token keyword">WHERE</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment"># 排他锁</span>
+<span class="token keyword">UPDATE</span> student <span class="token keyword">SET</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment"># 排他锁</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_3-复习" tabindex="-1"><a class="header-anchor" href="#_3-复习" aria-hidden="true">#</a> 3. 复习</h2>
 <h3 id="_3-1-再谈隔离级别" tabindex="-1"><a class="header-anchor" href="#_3-1-再谈隔离级别" aria-hidden="true">#</a> 3.1 再谈隔离级别</h3>
 <p>我们知道事务有 4 个隔离级别，可能存在三种并发问题：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714140441064.png" alt="image-20220714140441064"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714140441064.png" alt="image-20220714140441064" loading="lazy"></p>
 <img src="@source/notes/senior_mysql/images/image-20220714140510426.png" alt="image-20220714140510426" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220714140541555.png" alt="image-20220714140541555"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714140541555.png" alt="image-20220714140541555" loading="lazy"></p>
 <h3 id="_3-2-隐藏字段、undo-log版本链" tabindex="-1"><a class="header-anchor" href="#_3-2-隐藏字段、undo-log版本链" aria-hidden="true">#</a> 3.2 隐藏字段、Undo Log版本链</h3>
 <p>回顾一下undo日志的版本链，对于使用 InnoDB 存储引擎的表来说，它的聚簇索引记录中都包含两个必要的隐藏列。</p>
 <ul>
@@ -31,15 +31,15 @@ UPDATE student SET ... # 排他锁
 </ul>
 <img src="@source/notes/senior_mysql/images/image-20220714140716427.png" alt="image-20220714140716427" style="float:left;" />
 <p>假设插入该记录的<code v-pre>事务id</code>为<code v-pre>8</code>，那么此刻该条记录的示意图如下所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714140801595.png" alt="image-20220714140801595"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714140801595.png" alt="image-20220714140801595" loading="lazy"></p>
 <blockquote>
 <p>insert undo只在事务回滚时起作用，当事务提交后，该类型的undo日志就没用了，它占用的Undo Log Segment也会被系统回收（也就是该undo日志占用的Undo页面链表要么被重用，要么被释放）。</p>
 </blockquote>
 <p>假设之后两个事务id分别为 <code v-pre>10</code> 、 <code v-pre>20</code> 的事务对这条记录进行<code v-pre> UPDATE</code> 操作，操作流程如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714140846658.png" alt="image-20220714140846658"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714140846658.png" alt="image-20220714140846658" loading="lazy"></p>
 <img src="@source/notes/senior_mysql/images/image-20220714140908661.png" alt="image-20220714140908661" style="float:left;" />
 <p>每次对记录进行改动，都会记录一条undo日志，每条undo日志也都有一个 <code v-pre>roll_pointer</code> 属性 （ <code v-pre>INSERT</code> 操作对应的undo日志没有该属性，因为该记录并没有更早的版本），可以将这些 <code v-pre>undo日志</code> 都连起来，串成一个链表：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714141012874.png" alt="image-20220714141012874"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714141012874.png" alt="image-20220714141012874" loading="lazy"></p>
 <p>对该记录每次更新后，都会将旧值放到一条 <code v-pre>undo日志</code> 中，就算是该记录的一个旧版本，随着更新次数 的增多，所有的版本都会被 <code v-pre>roll_pointer</code> 属性连接成一个链表，我们把这个链表称之为 <code v-pre>版本链</code> ，版 本链的头节点就是当前记录最新的值。</p>
 <p>每个版本中还包含生成该版本时对应的<code v-pre>事务id</code>。</p>
 <h2 id="_4-mvcc实现原理之readview" tabindex="-1"><a class="header-anchor" href="#_4-mvcc实现原理之readview" aria-hidden="true">#</a> 4. MVCC实现原理之ReadView</h2>
@@ -97,107 +97,107 @@ UPDATE student SET ... # 排他锁
 <img src="@source/notes/senior_mysql/images/image-20220715130639408.png" alt="image-20220715130639408" style="float:left;" />
 <p>在隔离级别为读已提交（Read Committed）时，一个事务中的每一次 SELECT 查询都会重新获取一次 Read View。</p>
 <p>如表所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715130843147.png" alt="image-20220715130843147"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715130843147.png" alt="image-20220715130843147" loading="lazy"></p>
 <blockquote>
 <p>注意，此时同样的查询语句都会重新获取一次 Read View，这时如果 Read View 不同，就可能产生不可重复读或者幻读的情况。</p>
 </blockquote>
 <p>当隔离级别为可重复读的时候，就避免了不可重复读，这是因为一个事务只在第一次 SELECT 的时候会获取一次 Read View，而后面所有的 SELECT 都会复用这个 Read View，如下表所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715130916437.png" alt="image-20220715130916437"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715130916437.png" alt="image-20220715130916437" loading="lazy"></p>
 <h2 id="_5-举例说明" tabindex="-1"><a class="header-anchor" href="#_5-举例说明" aria-hidden="true">#</a> 5. 举例说明</h2>
 <img src="@source/notes/senior_mysql/images/image-20220715131200077.png" alt="image-20220715131200077" style="float:left;" />
 <h3 id="_5-1-read-committed隔离级别下" tabindex="-1"><a class="header-anchor" href="#_5-1-read-committed隔离级别下" aria-hidden="true">#</a> 5.1 READ COMMITTED隔离级别下</h3>
 <p><strong>READ COMMITTED ：每次读取数据前都生成一个ReadView。</strong></p>
 <p>现在有两个 <code v-pre>事务id</code> 分别为 <code v-pre>10</code> 、 <code v-pre>20</code> 的事务在执行:</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># Transaction 10
-BEGIN;
-UPDATE student SET name=&quot;李四&quot; WHERE id=1;
-UPDATE student SET name=&quot;王五&quot; WHERE id=1;
-# Transaction 20
-BEGIN;
-# 更新了一些别的表的记录
-...
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># Transaction 10</span>
+<span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token keyword">UPDATE</span> student <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">"李四"</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">UPDATE</span> student <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">"王五"</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token comment"># Transaction 20</span>
+<span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token comment"># 更新了一些别的表的记录</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><blockquote>
 <p>说明：事务执行过程中，只有在第一次真正修改记录时（比如使用INSERT、DELETE、UPDATE语句），才会被分配一个单独的事务id，这个事务id是递增的。所以我们才在事务2中更新一些别的表的记录，目的是让它分配事务id。</p>
 </blockquote>
 <p>此刻，表student 中 id 为 1 的记录得到的版本链表如下所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715133640655.png" alt="image-20220715133640655"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715133640655.png" alt="image-20220715133640655" loading="lazy"></p>
 <p>假设现在有一个使用 <code v-pre>READ COMMITTED</code> 隔离级别的事务开始执行：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># 使用READ COMMITTED隔离级别的事务
-BEGIN;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># 使用READ COMMITTED隔离级别的事务</span>
+<span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
 
-# SELECT1：Transaction 10、20未提交
-SELECT * FROM student WHERE id = 1; # 得到的列name的值为'张三'
+<span class="token comment"># SELECT1：Transaction 10、20未提交</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> student <span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment"># 得到的列name的值为'张三'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220715134540737.png" alt="image-20220715134540737" style="float:left;" />
 <p>之后，我们把 <code v-pre>事务id</code> 为 <code v-pre>10</code> 的事务提交一下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># Transaction 10
-BEGIN;
-UPDATE student SET name=&quot;李四&quot; WHERE id=1;
-UPDATE student SET name=&quot;王五&quot; WHERE id=1;
-COMMIT;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># Transaction 10</span>
+<span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token keyword">UPDATE</span> student <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">"李四"</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">UPDATE</span> student <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">"王五"</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">COMMIT</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>然后再到 <code v-pre>事务id</code> 为 <code v-pre>20</code> 的事务中更新一下表 <code v-pre>student</code> 中 <code v-pre>id</code> 为 <code v-pre>1</code> 的记录：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># Transaction 20
-BEGIN;
-# 更新了一些别的表的记录
-...
-UPDATE student SET name=&quot;钱七&quot; WHERE id=1;
-UPDATE student SET name=&quot;宋八&quot; WHERE id=1;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># Transaction 20</span>
+<span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token comment"># 更新了一些别的表的记录</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">UPDATE</span> student <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">"钱七"</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">UPDATE</span> student <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">"宋八"</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>此刻，表student中 <code v-pre>id</code> 为 <code v-pre>1</code> 的记录的版本链就长这样：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715134839081.png" alt="image-20220715134839081"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715134839081.png" alt="image-20220715134839081" loading="lazy"></p>
 <p>然后再到刚才使用 <code v-pre>READ COMMITTED</code> 隔离级别的事务中继续查找这个 id 为 1 的记录，如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># 使用READ COMMITTED隔离级别的事务
-BEGIN;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># 使用READ COMMITTED隔离级别的事务</span>
+<span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
 
-# SELECT1：Transaction 10、20均未提交
-SELECT * FROM student WHERE id = 1; # 得到的列name的值为'张三'
+<span class="token comment"># SELECT1：Transaction 10、20均未提交</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> student <span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment"># 得到的列name的值为'张三'</span>
 
-# SELECT2：Transaction 10提交，Transaction 20未提交
-SELECT * FROM student WHERE id = 1; # 得到的列name的值为'王五'
+<span class="token comment"># SELECT2：Transaction 10提交，Transaction 20未提交</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> student <span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment"># 得到的列name的值为'王五'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220715135017000.png" alt="image-20220715135017000" style="float:left;" />
 <img src="@source/notes/senior_mysql/images/image-20220715135143939.png" alt="image-20220715135143939" style="float:left;" />
 <h3 id="_5-2-repeatable-read隔离级别下" tabindex="-1"><a class="header-anchor" href="#_5-2-repeatable-read隔离级别下" aria-hidden="true">#</a> 5.2 REPEATABLE READ隔离级别下</h3>
 <p>使用 <code v-pre>REPEATABLE READ</code> 隔离级别的事务来说，只会在第一次执行查询语句时生成一个 <code v-pre>ReadView</code> ，之后的查询就不会重复生成了。</p>
 <p>比如，系统里有两个 <code v-pre>事务id</code> 分别为 <code v-pre>10</code> 、 <code v-pre>20</code> 的事务在执行：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># Transaction 10
-BEGIN;
-UPDATE student SET name=&quot;李四&quot; WHERE id=1;
-UPDATE student SET name=&quot;王五&quot; WHERE id=1;
-# Transaction 20
-BEGIN;
-# 更新了一些别的表的记录
-...
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># Transaction 10</span>
+<span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token keyword">UPDATE</span> student <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">"李四"</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">UPDATE</span> student <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">"王五"</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token comment"># Transaction 20</span>
+<span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token comment"># 更新了一些别的表的记录</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>此刻，表student 中 id 为 1 的记录得到的版本链表如下所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715140006061.png" alt="image-20220715140006061"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715140006061.png" alt="image-20220715140006061" loading="lazy"></p>
 <p>假设现在有一个使用 <code v-pre>REPEATABLE READ</code> 隔离级别的事务开始执行：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># 使用REPEATABLE READ隔离级别的事务
-BEGIN;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># 使用REPEATABLE READ隔离级别的事务</span>
+<span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
 
-# SELECT1：Transaction 10、20未提交
-SELECT * FROM student WHERE id = 1; # 得到的列name的值为'张三'
+<span class="token comment"># SELECT1：Transaction 10、20未提交</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> student <span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment"># 得到的列name的值为'张三'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220715140155744.png" alt="image-20220715140155744" style="float:left;" />
 <p>之后，我们把 <code v-pre>事务id</code> 为 <code v-pre>10</code> 的事务提交一下，就像这样：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># Transaction 10
-BEGIN;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># Transaction 10</span>
+<span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
 
-UPDATE student SET name=&quot;李四&quot; WHERE id=1;
-UPDATE student SET name=&quot;王五&quot; WHERE id=1;
+<span class="token keyword">UPDATE</span> student <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">"李四"</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">UPDATE</span> student <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">"王五"</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
 
-COMMIT;
+<span class="token keyword">COMMIT</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>然后再到 <code v-pre>事务id</code> 为 <code v-pre>20</code> 的事务中更新一下表 <code v-pre>student</code> 中 <code v-pre>id</code> 为 <code v-pre>1</code> 的记录：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># Transaction 20
-BEGIN;
-# 更新了一些别的表的记录
-...
-UPDATE student SET name=&quot;钱七&quot; WHERE id=1;
-UPDATE student SET name=&quot;宋八&quot; WHERE id=1;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># Transaction 20</span>
+<span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token comment"># 更新了一些别的表的记录</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">UPDATE</span> student <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">"钱七"</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">UPDATE</span> student <span class="token keyword">SET</span> name<span class="token operator">=</span><span class="token string">"宋八"</span> <span class="token keyword">WHERE</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>此刻，表student 中 <code v-pre>id</code> 为 <code v-pre>1</code> 的记录的版本链长这样：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715140354217.png" alt="image-20220715140354217"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715140354217.png" alt="image-20220715140354217" loading="lazy"></p>
 <p>然后再到刚才使用 <code v-pre>REPEATABLE READ</code> 隔离级别的事务中继续查找这个 <code v-pre>id</code> 为 <code v-pre>1</code> 的记录，如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># 使用REPEATABLE READ隔离级别的事务
-BEGIN;
-# SELECT1：Transaction 10、20均未提交
-SELECT * FROM student WHERE id = 1; # 得到的列name的值为'张三'
-# SELECT2：Transaction 10提交，Transaction 20未提交
-SELECT * FROM student WHERE id = 1; # 得到的列name的值仍为'张三'
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># 使用REPEATABLE READ隔离级别的事务</span>
+<span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+<span class="token comment"># SELECT1：Transaction 10、20均未提交</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> student <span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment"># 得到的列name的值为'张三'</span>
+<span class="token comment"># SELECT2：Transaction 10提交，Transaction 20未提交</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> student <span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment"># 得到的列name的值仍为'张三'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220715140555172.png" alt="image-20220715140555172" style="float:left;" />
 <img src="@source/notes/senior_mysql/images/image-20220715140620328.png" alt="image-20220715140620328" style="float:left;" />
 <p>这次<code v-pre>SELECT</code>查询得到的结果是重复的，记录的列<code v-pre>c</code>值都是<code v-pre>张三</code>，这就是<code v-pre>可重复读</code>的含义。如果我们之后再把<code v-pre>事务id</code>为<code v-pre>20</code>的记录提交了，然后再到刚才使用<code v-pre>REPEATABLE READ</code>隔离级别的事务中继续查找这个<code v-pre>id</code>为<code v-pre>1</code>的记录，得到的结果还是<code v-pre>张三</code>，具体执行过程大家可以自己分析一下。</p>
@@ -207,20 +207,20 @@ SELECT * FROM student WHERE id = 1; # 得到的列name的值仍为'张三'
 <img src="@source/notes/senior_mysql/images/image-20220715141002035.png" alt="image-20220715141002035" style="zoom:80%;" />
 <p>假设现在有事务 A 和事务 B 并发执行，<code v-pre>事务 A</code> 的事务 id 为 <code v-pre>20</code> ， <code v-pre>事务 B</code> 的事务 id 为 <code v-pre>30</code> 。</p>
 <p>步骤1：事务 A 开始第一次查询数据，查询的 SQL 语句如下。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>select * from student where id &gt;= 1;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student <span class="token keyword">where</span> id <span class="token operator">>=</span> <span class="token number">1</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>在开始查询之前，MySQL 会为事务 A 产生一个 ReadView，此时 ReadView 的内容如下： <code v-pre>trx_ids= [20,30] ， up_limit_id=20 ， low_limit_id=31 ， creator_trx_id=20</code> 。</p>
 <p>由于此时表 student 中只有一条数据，且符合 where id&gt;=1 条件，因此会查询出来。然后根据 ReadView 机制，发现该行数据的trx_id=10，小于事务 A 的 ReadView 里 up_limit_id，这表示这条数据是事务 A 开启之前，其他事务就已经提交了的数据，因此事务 A 可以读取到。</p>
 <p>结论：事务 A 的第一次查询，能读取到一条数据，id=1。</p>
 <p>步骤2：接着事务 B(trx_id=30)，往表 student 中新插入两条数据，并提交事务。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into student(id,name) values(2,'李四');
-insert into student(id,name) values(3,'王五');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> student<span class="token punctuation">(</span>id<span class="token punctuation">,</span>name<span class="token punctuation">)</span> <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'李四'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> student<span class="token punctuation">(</span>id<span class="token punctuation">,</span>name<span class="token punctuation">)</span> <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'王五'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>此时表student 中就有三条数据了，对应的 undo 如下图所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715141208667.png" alt="image-20220715141208667"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715141208667.png" alt="image-20220715141208667" loading="lazy"></p>
 <p>步骤3：接着事务 A 开启第二次查询，根据可重复读隔离级别的规则，此时事务 A 并不会再重新生成 ReadView。此时表 student 中的 3 条数据都满足 where id&gt;=1 的条件，因此会先查出来。然后根据 ReadView 机制，判断每条数据是不是都可以被事务 A 看到。</p>
 <p>1）首先 id=1 的这条数据，前面已经说过了，可以被事务 A 看到。</p>
 <p>2）然后是 id=2 的数据，它的 trx_id=30，此时事务 A 发现，这个值处于 up_limit_id 和 low_limit_id 之 间，因此还需要再判断 30 是否处于 trx_ids 数组内。由于事务 A 的 trx_ids=[20,30]，因此在数组内，这表 示 id=2 的这条数据是与事务 A 在同一时刻启动的其他事务提交的，所以这条数据不能让事务 A 看到。</p>
 <p>3）同理，id=3 的这条数据，trx_id 也为 30，因此也不能被事务 A 看见。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715141243993.png" alt="image-20220715141243993"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715141243993.png" alt="image-20220715141243993" loading="lazy"></p>
 <p>结论：最终事务 A 的第二次查询，只能查询出 id=1 的这条数据。这和事务 A 的第一次查询的结果是一样 的，因此没有出现幻读现象，所以说在 MySQL 的可重复读隔离级别下，不存在幻读问题。</p>
 <h2 id="_6-总结" tabindex="-1"><a class="header-anchor" href="#_6-总结" aria-hidden="true">#</a> 6. 总结</h2>
 <p>这里介绍了 MVCC 在 <code v-pre>READ COMMITTD</code> 、 <code v-pre>REPEATABLE READ</code> 这两种隔离级别的事务在执行快照读操作时 访问记录的版本链的过程。这样使不同事务的 <code v-pre>读-写</code> 、 <code v-pre>写-读</code> 操作并发执行，从而提升系统性能。</p>

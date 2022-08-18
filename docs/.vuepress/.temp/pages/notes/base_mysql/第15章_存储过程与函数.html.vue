@@ -26,16 +26,16 @@
 <h2 id="_2-创建存储过程" tabindex="-1"><a class="header-anchor" href="#_2-创建存储过程" aria-hidden="true">#</a> 2. 创建存储过程</h2>
 <h3 id="_2-1-语法分析" tabindex="-1"><a class="header-anchor" href="#_2-1-语法分析" aria-hidden="true">#</a> 2.1 语法分析</h3>
 <p>语法：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE PROCEDURE 存储过程名(IN|OUT|INOUT 参数名 参数类型,...)
-[characteristics ...]
-BEGIN
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> 存储过程名<span class="token punctuation">(</span><span class="token operator">IN</span><span class="token operator">|</span><span class="token keyword">OUT</span><span class="token operator">|</span><span class="token keyword">INOUT</span> 参数名 参数类型<span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span>characteristics <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span>
+<span class="token keyword">BEGIN</span>
 	存储过程体
 
-END
+<span class="token keyword">END</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>类似于Java中的方法：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>修饰符 返回类型 方法名(参数类型 参数名,...){
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>修饰符 返回类型 方法名<span class="token punctuation">(</span>参数类型 参数名<span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>{
 
-	方法体;
+	方法体<span class="token punctuation">;</span>
 }
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>说明：</p>
 <p>1、参数前面的符号的意思</p>
@@ -54,11 +54,11 @@ END
 </ul>
 <p>2、形参类型可以是 MySQL数据库中的任意类型。</p>
 <p>3、<code v-pre>characteristics</code> 表示创建存储过程时指定的对存储过程的约束条件，其取值信息如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>LANGUAGE SQL
-| [NOT] DETERMINISTIC
-| { CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
-| SQL SECURITY { DEFINER | INVOKER }
-| COMMENT 'string'
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">LANGUAGE</span> <span class="token keyword">SQL</span>
+<span class="token operator">|</span> <span class="token punctuation">[</span><span class="token operator">NOT</span><span class="token punctuation">]</span> <span class="token keyword">DETERMINISTIC</span>
+<span class="token operator">|</span> { <span class="token keyword">CONTAINS</span> <span class="token keyword">SQL</span> <span class="token operator">|</span> <span class="token keyword">NO</span> <span class="token keyword">SQL</span> <span class="token operator">|</span> <span class="token keyword">READS</span> <span class="token keyword">SQL</span> <span class="token keyword">DATA</span> <span class="token operator">|</span> <span class="token keyword">MODIFIES</span> <span class="token keyword">SQL</span> <span class="token keyword">DATA</span> }
+<span class="token operator">|</span> <span class="token keyword">SQL</span> SECURITY { <span class="token keyword">DEFINER</span> <span class="token operator">|</span> <span class="token keyword">INVOKER</span> }
+<span class="token operator">|</span> <span class="token keyword">COMMENT</span> <span class="token string">'string'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li><code v-pre>LANGUAGE SQL</code>：说明存储过程执行体是由SQL语句组成的，当前系统支持的语言为SQL。</li>
 <li><code v-pre>[NOT] DETERMINISTIC</code>：指明存储过程执行的结果是否确定。DETERMINISTIC表示结果是确定的。每次执行存储过程时，相同的输入会得到相同的输出。NOT DETERMINISTIC表示结果是不确定的，相同的输入可能得到不同的输出。如果没有指定任意一个值，默认为NOT DETERMINISTIC。</li>
@@ -82,142 +82,142 @@ END
 </ul>
 <p>4、存储过程体中可以有多条 SQL 语句，如果仅仅一条SQL 语句，则可以省略 BEGIN 和 END</p>
 <p>编写存储过程并不是一件简单的事情，可能存储过程中需要复杂的 SQL 语句。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>1. BEGIN…END：BEGIN…END 中间包含了多个语句，每个语句都以（;）号为结束符。
-2. DECLARE：DECLARE 用来声明变量，使用的位置在于 BEGIN…END 语句中间，而且需要在其他语句使用之前进行变量的声明。
-3. SET：赋值语句，用于对变量进行赋值。
-4. SELECT… INTO：把从数据表中查询的结果存放到变量中，也就是为变量赋值。
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token number">1.</span> <span class="token keyword">BEGIN</span>…<span class="token keyword">END</span>：<span class="token keyword">BEGIN</span>…<span class="token keyword">END</span> 中间包含了多个语句，每个语句都以（<span class="token punctuation">;</span>）号为结束符。
+<span class="token number">2.</span> <span class="token keyword">DECLARE</span>：<span class="token keyword">DECLARE</span> 用来声明变量，使用的位置在于 <span class="token keyword">BEGIN</span>…<span class="token keyword">END</span> 语句中间，而且需要在其他语句使用之前进行变量的声明。
+<span class="token number">3.</span> <span class="token keyword">SET</span>：赋值语句，用于对变量进行赋值。
+<span class="token number">4.</span> <span class="token keyword">SELECT</span>… <span class="token keyword">INTO</span>：把从数据表中查询的结果存放到变量中，也就是为变量赋值。
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>5、需要设置新的结束标记</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER 新的结束标记
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> 新的结束标记
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>因为MySQL默认的语句结束符号为分号‘;’。为了避免与存储过程中SQL语句结束符相冲突，需要使用DELIMITER改变存储过程的结束符。</p>
 <p>比如：“DELIMITER //”语句的作用是将MySQL的结束符设置为//，并以“END //”结束存储过程。存储过程定义完毕之后再使用“DELIMITER ;”恢复默认结束符。DELIMITER也可以指定其他符号作为结束符。</p>
 <p>当使用DELIMITER命令时，应该避免使用反斜杠（‘\’）字符，因为反斜线是MySQL的转义字符。</p>
 <p>示例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER $
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> $
 
-CREATE PROCEDURE 存储过程名(IN|OUT|INOUT 参数名  参数类型,...)
-[characteristics ...]
-BEGIN
-	sql语句1;
-	sql语句2;
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> 存储过程名<span class="token punctuation">(</span><span class="token operator">IN</span><span class="token operator">|</span><span class="token keyword">OUT</span><span class="token operator">|</span><span class="token keyword">INOUT</span> 参数名  参数类型<span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span>characteristics <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span>
+<span class="token keyword">BEGIN</span>
+	<span class="token keyword">sql</span>语句<span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">sql</span>语句<span class="token number">2</span><span class="token punctuation">;</span>
 
-END $
+<span class="token keyword">END</span> $
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_2-2-代码举例" tabindex="-1"><a class="header-anchor" href="#_2-2-代码举例" aria-hidden="true">#</a> 2.2 代码举例</h3>
 <p>举例1：创建存储过程select_all_data()，查看 emps 表的所有数据</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER $
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> $
 
-CREATE PROCEDURE select_all_data()
-BEGIN
-	SELECT * FROM emps;
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> select_all_data<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">BEGIN</span>
+	<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> emps<span class="token punctuation">;</span>
 	
-END $
+<span class="token keyword">END</span> $
 
-DELIMITER ;
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例2：创建存储过程avg_employee_salary()，返回所有员工的平均工资</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER //
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
 
-CREATE PROCEDURE avg_employee_salary ()
-BEGIN
-	SELECT AVG(salary) AS avg_salary FROM emps;
-END //
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> avg_employee_salary <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">BEGIN</span>
+	<span class="token keyword">SELECT</span> <span class="token function">AVG</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span> <span class="token keyword">AS</span> avg_salary <span class="token keyword">FROM</span> emps<span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
 
-DELIMITER ;
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例3：创建存储过程show_max_salary()，用来查看“emps”表的最高薪资值。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE PROCEDURE show_max_salary()
-	LANGUAGE SQL
-	NOT DETERMINISTIC
-	CONTAINS SQL
-	SQL SECURITY DEFINER
-	COMMENT '查看最高薪资'
-	BEGIN
-		SELECT MAX(salary) FROM emps;
-	END //
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> show_max_salary<span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">LANGUAGE</span> <span class="token keyword">SQL</span>
+	<span class="token operator">NOT</span> <span class="token keyword">DETERMINISTIC</span>
+	<span class="token keyword">CONTAINS</span> <span class="token keyword">SQL</span>
+	<span class="token keyword">SQL</span> SECURITY <span class="token keyword">DEFINER</span>
+	<span class="token keyword">COMMENT</span> <span class="token string">'查看最高薪资'</span>
+	<span class="token keyword">BEGIN</span>
+		<span class="token keyword">SELECT</span> <span class="token function">MAX</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span> <span class="token keyword">FROM</span> emps<span class="token punctuation">;</span>
+	<span class="token keyword">END</span> <span class="token comment">//</span>
 
-DELIMITER ;
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例4：创建存储过程show_min_salary()，查看“emps”表的最低薪资值。并将最低薪资通过OUT参数“ms”输出</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER //
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
 
-CREATE PROCEDURE show_min_salary(OUT ms DOUBLE)
-	BEGIN
-		SELECT MIN(salary) INTO ms FROM emps;
-	END //
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> show_min_salary<span class="token punctuation">(</span><span class="token keyword">OUT</span> ms <span class="token keyword">DOUBLE</span><span class="token punctuation">)</span>
+	<span class="token keyword">BEGIN</span>
+		<span class="token keyword">SELECT</span> <span class="token function">MIN</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span> <span class="token keyword">INTO</span> ms <span class="token keyword">FROM</span> emps<span class="token punctuation">;</span>
+	<span class="token keyword">END</span> <span class="token comment">//</span>
 
-DELIMITER ;
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例5：创建存储过程show_someone_salary()，查看“emps”表的某个员工的薪资，并用IN参数empname输入员工姓名。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER //
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
 
-CREATE PROCEDURE show_someone_salary(IN empname VARCHAR(20))
-	BEGIN
-		SELECT salary FROM emps WHERE ename = empname;
-	END //
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> show_someone_salary<span class="token punctuation">(</span><span class="token operator">IN</span> empname <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token keyword">BEGIN</span>
+		<span class="token keyword">SELECT</span> salary <span class="token keyword">FROM</span> emps <span class="token keyword">WHERE</span> ename <span class="token operator">=</span> empname<span class="token punctuation">;</span>
+	<span class="token keyword">END</span> <span class="token comment">//</span>
 
-DELIMITER ;
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例6：创建存储过程show_someone_salary2()，查看“emps”表的某个员工的薪资，并用IN参数empname输入员工姓名，用OUT参数empsalary输出员工薪资。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER //
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
 
-CREATE PROCEDURE show_someone_salary2(IN empname VARCHAR(20),OUT empsalary DOUBLE)
-	BEGIN
-		SELECT salary INTO empsalary FROM emps WHERE ename = empname;
-	END //
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> show_someone_salary2<span class="token punctuation">(</span><span class="token operator">IN</span> empname <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">OUT</span> empsalary <span class="token keyword">DOUBLE</span><span class="token punctuation">)</span>
+	<span class="token keyword">BEGIN</span>
+		<span class="token keyword">SELECT</span> salary <span class="token keyword">INTO</span> empsalary <span class="token keyword">FROM</span> emps <span class="token keyword">WHERE</span> ename <span class="token operator">=</span> empname<span class="token punctuation">;</span>
+	<span class="token keyword">END</span> <span class="token comment">//</span>
 
-DELIMITER ;
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例7：创建存储过程show_mgr_name()，查询某个员工领导的姓名，并用INOUT参数“empname”输入员工姓名，输出领导的姓名。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER //
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
 
-CREATE PROCEDURE show_mgr_name(INOUT empname VARCHAR(20))
-	BEGIN
-		SELECT ename INTO empname FROM emps
-		WHERE eid = (SELECT MID FROM emps WHERE ename=empname);
-	END //
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> show_mgr_name<span class="token punctuation">(</span><span class="token keyword">INOUT</span> empname <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token keyword">BEGIN</span>
+		<span class="token keyword">SELECT</span> ename <span class="token keyword">INTO</span> empname <span class="token keyword">FROM</span> emps
+		<span class="token keyword">WHERE</span> eid <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> MID <span class="token keyword">FROM</span> emps <span class="token keyword">WHERE</span> ename<span class="token operator">=</span>empname<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">END</span> <span class="token comment">//</span>
 
-DELIMITER ;
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_3-调用存储过程" tabindex="-1"><a class="header-anchor" href="#_3-调用存储过程" aria-hidden="true">#</a> 3. 调用存储过程</h2>
 <h3 id="_3-1-调用格式" tabindex="-1"><a class="header-anchor" href="#_3-1-调用格式" aria-hidden="true">#</a> 3.1 调用格式</h3>
 <p>存储过程有多种调用方法。存储过程必须使用CALL语句调用，并且存储过程和数据库相关，如果要执行其他数据库中的存储过程，需要指定数据库名称，例如CALL dbname.procname。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CALL 存储过程名(实参列表)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CALL</span> 存储过程名<span class="token punctuation">(</span>实参列表<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><strong>格式：</strong></p>
 <p>1、调用in模式的参数：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CALL sp1('值');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CALL</span> sp1<span class="token punctuation">(</span><span class="token string">'值'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>2、调用out模式的参数：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET @name;
-CALL sp1(@name);
-SELECT @name;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> <span class="token variable">@name</span><span class="token punctuation">;</span>
+<span class="token keyword">CALL</span> sp1<span class="token punctuation">(</span><span class="token variable">@name</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">SELECT</span> <span class="token variable">@name</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>3、调用inout模式的参数：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET @name=值;
-CALL sp1(@name);
-SELECT @name;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> <span class="token variable">@name</span><span class="token operator">=</span>值<span class="token punctuation">;</span>
+<span class="token keyword">CALL</span> sp1<span class="token punctuation">(</span><span class="token variable">@name</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">SELECT</span> <span class="token variable">@name</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-2-代码举例" tabindex="-1"><a class="header-anchor" href="#_3-2-代码举例" aria-hidden="true">#</a> 3.2 代码举例</h3>
 <p><strong>举例1：</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER //
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
 
-CREATE PROCEDURE CountProc(IN sid INT,OUT num INT)
-BEGIN
-	SELECT COUNT(*) INTO num FROM fruits 
-	WHERE s_id = sid;
-END //
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> CountProc<span class="token punctuation">(</span><span class="token operator">IN</span> sid <span class="token keyword">INT</span><span class="token punctuation">,</span><span class="token keyword">OUT</span> num <span class="token keyword">INT</span><span class="token punctuation">)</span>
+<span class="token keyword">BEGIN</span>
+	<span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">INTO</span> num <span class="token keyword">FROM</span> fruits 
+	<span class="token keyword">WHERE</span> s_id <span class="token operator">=</span> sid<span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
 
-DELIMITER ;
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>调用存储过程：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; CALL CountProc (101, @num);
-Query OK, 1 row affected (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">CALL</span> CountProc <span class="token punctuation">(</span><span class="token number">101</span><span class="token punctuation">,</span> <span class="token variable">@num</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token keyword">row</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>查看返回结果：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT @num;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token variable">@num</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>该存储过程返回了指定 s_id=101 的水果商提供的水果种类，返回值存储在num变量中，使用SELECT查看，返回结果为3。</p>
 <p>**举例2：**创建存储过程，实现累加运算，计算 1+2+…+n 等于多少。具体的代码如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER //
-CREATE PROCEDURE `add_num`(IN n INT)
-BEGIN
-       DECLARE i INT;
-       DECLARE sum INT;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">PROCEDURE</span> <span class="token identifier"><span class="token punctuation">`</span>add_num<span class="token punctuation">`</span></span><span class="token punctuation">(</span><span class="token operator">IN</span> n <span class="token keyword">INT</span><span class="token punctuation">)</span>
+<span class="token keyword">BEGIN</span>
+       <span class="token keyword">DECLARE</span> i <span class="token keyword">INT</span><span class="token punctuation">;</span>
+       <span class="token keyword">DECLARE</span> sum <span class="token keyword">INT</span><span class="token punctuation">;</span>
        
-       SET i = 1;
-       SET sum = 0;
-       WHILE i &lt;= n DO
-              SET sum = sum + i;
-              SET i = i +1;
-       END WHILE;
-       SELECT sum;
-END //
-DELIMITER ;
+       <span class="token keyword">SET</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+       <span class="token keyword">SET</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+       <span class="token keyword">WHILE</span> i <span class="token operator">&lt;=</span> n <span class="token keyword">DO</span>
+              <span class="token keyword">SET</span> sum <span class="token operator">=</span> sum <span class="token operator">+</span> i<span class="token punctuation">;</span>
+              <span class="token keyword">SET</span> i <span class="token operator">=</span> i <span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+       <span class="token keyword">END</span> <span class="token keyword">WHILE</span><span class="token punctuation">;</span>
+       <span class="token keyword">SELECT</span> sum<span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>如果你用的是 Navicat 工具，那么在编写存储过程的时候，Navicat 会自动设置 DELIMITER 为其他符号，我们不需要再进行 DELIMITER 的操作。</p>
 <p>直接使用 <code v-pre>CALL add_num(50);</code>即可。这里我传入的参数为 50，也就是统计 1+2+…+50 的积累之和。</p>
 <h3 id="_3-3-如何调试" tabindex="-1"><a class="header-anchor" href="#_3-3-如何调试" aria-hidden="true">#</a> 3.3 如何调试</h3>
@@ -227,13 +227,13 @@ DELIMITER ;
 <h3 id="_4-1-语法分析" tabindex="-1"><a class="header-anchor" href="#_4-1-语法分析" aria-hidden="true">#</a> 4.1 语法分析</h3>
 <p>学过的函数：LENGTH、SUBSTR、CONCAT等</p>
 <p>语法格式：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE FUNCTION 函数名(参数名 参数类型,...) 
-RETURNS 返回值类型
-[characteristics ...]
-BEGIN
-	函数体   #函数体中肯定有 RETURN 语句
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">FUNCTION</span> 函数名<span class="token punctuation">(</span>参数名 参数类型<span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> 
+<span class="token keyword">RETURNS</span> 返回值类型
+<span class="token punctuation">[</span>characteristics <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span>
+<span class="token keyword">BEGIN</span>
+	函数体   <span class="token comment">#函数体中肯定有 RETURN 语句</span>
 
-END
+<span class="token keyword">END</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>说明：</p>
 <p>1、参数列表：指定参数为IN、OUT或INOUT只对PROCEDURE是合法的，FUNCTION中总是默认为IN参数。</p>
 <p>2、RETURNS type 语句表示函数返回数据的类型；</p>
@@ -242,59 +242,59 @@ END
 <p>4、函数体也可以用BEGIN…END来表示SQL代码的开始和结束。如果函数体只有一条语句，也可以省略BEGIN…END。</p>
 <h3 id="_4-2-调用存储函数" tabindex="-1"><a class="header-anchor" href="#_4-2-调用存储函数" aria-hidden="true">#</a> 4.2 调用存储函数</h3>
 <p>在MySQL中，存储函数的使用方法与MySQL内部函数的使用方法是一样的。换言之，用户自己定义的存储函数与MySQL内部函数是一个性质的。区别在于，存储函数是<code v-pre>用户自己定义</code>的，而内部函数是MySQL的<code v-pre>开发者定义</code>的。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT 函数名(实参列表)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> 函数名<span class="token punctuation">(</span>实参列表<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_4-3-代码举例" tabindex="-1"><a class="header-anchor" href="#_4-3-代码举例" aria-hidden="true">#</a> 4.3 代码举例</h3>
 <p><strong>举例1：</strong></p>
 <p>创建存储函数，名称为email_by_name()，参数定义为空，该函数查询Abel的email，并返回，数据类型为字符串型。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER //
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
 
-CREATE FUNCTION email_by_name()
-RETURNS VARCHAR(25)
-DETERMINISTIC
-CONTAINS SQL
-BEGIN
-	RETURN (SELECT email FROM employees WHERE last_name = 'Abel');
-END //
+<span class="token keyword">CREATE</span> <span class="token keyword">FUNCTION</span> email_by_name<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">RETURNS</span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span>
+<span class="token keyword">DETERMINISTIC</span>
+<span class="token keyword">CONTAINS</span> <span class="token keyword">SQL</span>
+<span class="token keyword">BEGIN</span>
+	<span class="token keyword">RETURN</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> email <span class="token keyword">FROM</span> employees <span class="token keyword">WHERE</span> last_name <span class="token operator">=</span> <span class="token string">'Abel'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
 
-DELIMITER ;
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>调用：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT email_by_name();
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> email_by_name<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><strong>举例2：</strong></p>
 <p>创建存储函数，名称为email_by_id()，参数传入emp_id，该函数查询emp_id的email，并返回，数据类型为字符串型。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER //
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
 
-CREATE FUNCTION email_by_id(emp_id INT)
-RETURNS VARCHAR(25)
-DETERMINISTIC
-CONTAINS SQL
-BEGIN
-	RETURN (SELECT email FROM employees WHERE employee_id = emp_id);
-END //
+<span class="token keyword">CREATE</span> <span class="token keyword">FUNCTION</span> email_by_id<span class="token punctuation">(</span>emp_id <span class="token keyword">INT</span><span class="token punctuation">)</span>
+<span class="token keyword">RETURNS</span> <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span>
+<span class="token keyword">DETERMINISTIC</span>
+<span class="token keyword">CONTAINS</span> <span class="token keyword">SQL</span>
+<span class="token keyword">BEGIN</span>
+	<span class="token keyword">RETURN</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> email <span class="token keyword">FROM</span> employees <span class="token keyword">WHERE</span> employee_id <span class="token operator">=</span> emp_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">END</span> <span class="token comment">//</span>
 
-DELIMITER ;
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>调用：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET @emp_id = 102;
-SELECT email_by_id(102);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> <span class="token variable">@emp_id</span> <span class="token operator">=</span> <span class="token number">102</span><span class="token punctuation">;</span>
+<span class="token keyword">SELECT</span> email_by_id<span class="token punctuation">(</span><span class="token number">102</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>举例3：</strong></p>
 <p>创建存储函数count_by_id()，参数传入dept_id，该函数查询dept_id部门的员工人数，并返回，数据类型为整型。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELIMITER //
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELIMITER</span> <span class="token comment">//</span>
 
-CREATE FUNCTION count_by_id(dept_id INT)
-RETURNS INT
-	LANGUAGE SQL
-	NOT DETERMINISTIC
-	READS SQL DATA
-	SQL SECURITY DEFINER
-	COMMENT '查询部门平均工资'
-BEGIN
-	RETURN (SELECT COUNT(*) FROM employees WHERE department_id = dept_id);
+<span class="token keyword">CREATE</span> <span class="token keyword">FUNCTION</span> count_by_id<span class="token punctuation">(</span>dept_id <span class="token keyword">INT</span><span class="token punctuation">)</span>
+<span class="token keyword">RETURNS</span> <span class="token keyword">INT</span>
+	<span class="token keyword">LANGUAGE</span> <span class="token keyword">SQL</span>
+	<span class="token operator">NOT</span> <span class="token keyword">DETERMINISTIC</span>
+	<span class="token keyword">READS</span> <span class="token keyword">SQL</span> <span class="token keyword">DATA</span>
+	<span class="token keyword">SQL</span> SECURITY <span class="token keyword">DEFINER</span>
+	<span class="token keyword">COMMENT</span> <span class="token string">'查询部门平均工资'</span>
+<span class="token keyword">BEGIN</span>
+	<span class="token keyword">RETURN</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">FROM</span> employees <span class="token keyword">WHERE</span> department_id <span class="token operator">=</span> dept_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
 	
-END //
+<span class="token keyword">END</span> <span class="token comment">//</span>
 
-DELIMITER ;
+<span class="token keyword">DELIMITER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>调用：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET @dept_id = 50;
-SELECT count_by_id(@dept_id);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> <span class="token variable">@dept_id</span> <span class="token operator">=</span> <span class="token number">50</span><span class="token punctuation">;</span>
+<span class="token keyword">SELECT</span> count_by_id<span class="token punctuation">(</span><span class="token variable">@dept_id</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>注意：</strong></p>
 <p>若在创建存储函数中报错“<code v-pre>you might want to use the less safe log_bin_trust_function_creators variable</code>”，有两种处理方法：</p>
 <ul>
@@ -305,7 +305,7 @@ SELECT count_by_id(@dept_id);
 <p>方式2：</p>
 </li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SET GLOBAL log_bin_trust_function_creators = 1;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SET</span> <span class="token keyword">GLOBAL</span> log_bin_trust_function_creators <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_4-4-对比存储函数和存储过程" tabindex="-1"><a class="header-anchor" href="#_4-4-对比存储函数和存储过程" aria-hidden="true">#</a> 4.4 对比存储函数和存储过程</h3>
 <table>
 <thead>
@@ -341,44 +341,44 @@ SELECT count_by_id(@dept_id);
 <p>MySQL存储了存储过程和函数的状态信息，用户可以使用SHOW STATUS语句或SHOW CREATE语句来查看，也可直接从系统的information_schema数据库中查询。这里介绍3种方法。</p>
 <p><strong>1. 使用SHOW CREATE语句查看存储过程和函数的创建信息</strong></p>
 <p>基本语法结构如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW CREATE {PROCEDURE | FUNCTION} 存储过程名或函数名
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">CREATE</span> {<span class="token keyword">PROCEDURE</span> <span class="token operator">|</span> <span class="token keyword">FUNCTION</span>} 存储过程名或函数名
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW CREATE FUNCTION test_db.CountProc \G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">CREATE</span> <span class="token keyword">FUNCTION</span> test_db<span class="token punctuation">.</span>CountProc \G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><strong>2. 使用SHOW STATUS语句查看存储过程和函数的状态信息</strong></p>
 <p>基本语法结构如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW {PROCEDURE | FUNCTION} STATUS [LIKE 'pattern']
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> {<span class="token keyword">PROCEDURE</span> <span class="token operator">|</span> <span class="token keyword">FUNCTION</span>} <span class="token keyword">STATUS</span> <span class="token punctuation">[</span><span class="token operator">LIKE</span> <span class="token string">'pattern'</span><span class="token punctuation">]</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>这个语句返回子程序的特征，如数据库、名字、类型、创建者及创建和修改日期。</p>
 <p>[LIKE 'pattern']：匹配存储过程或函数的名称，可以省略。当省略不写时，会列出MySQL数据库中存在的所有存储过程或函数的信息。
 举例：SHOW STATUS语句示例，代码如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SHOW PROCEDURE STATUS LIKE 'SELECT%' \G 
-*************************** 1. row ***************************
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SHOW</span> <span class="token keyword">PROCEDURE</span> <span class="token keyword">STATUS</span> <span class="token operator">LIKE</span> <span class="token string">'SELECT%'</span> \G 
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">1.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
                   Db: test_db
                 Name: SelectAllData
-                Type: PROCEDURE
-             Definer: root@localhost
-            Modified: 2021-10-16 15:55:07
-             Created: 2021-10-16 15:55:07
-       Security_type: DEFINER
-             Comment: 
+                <span class="token keyword">Type</span>: <span class="token keyword">PROCEDURE</span>
+             <span class="token keyword">Definer</span>: root<span class="token variable">@localhost</span>
+            Modified: <span class="token number">2021</span><span class="token operator">-</span><span class="token number">10</span><span class="token operator">-</span><span class="token number">16</span> <span class="token number">15</span>:<span class="token number">55</span>:<span class="token number">07</span>
+             Created: <span class="token number">2021</span><span class="token operator">-</span><span class="token number">10</span><span class="token operator">-</span><span class="token number">16</span> <span class="token number">15</span>:<span class="token number">55</span>:<span class="token number">07</span>
+       Security_type: <span class="token keyword">DEFINER</span>
+             <span class="token keyword">Comment</span>: 
 character_set_client: utf8mb4
 collation_connection: utf8mb4_general_ci
-  Database Collation: utf8mb4_general_ci
-1 row in set (0.00 sec)
+  <span class="token keyword">Database</span> Collation: utf8mb4_general_ci
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>3. 从information_schema.Routines表中查看存储过程和函数的信息</strong></p>
 <p>MySQL中存储过程和函数的信息存储在information_schema数据库下的Routines表中。可以通过查询该表的记录来查询存储过程和函数的信息。其基本语法形式如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM information_schema.Routines
-WHERE ROUTINE_NAME='存储过程或函数的名' [AND ROUTINE_TYPE = {'PROCEDURE|FUNCTION'}];
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> information_schema<span class="token punctuation">.</span>Routines
+<span class="token keyword">WHERE</span> ROUTINE_NAME<span class="token operator">=</span><span class="token string">'存储过程或函数的名'</span> <span class="token punctuation">[</span><span class="token operator">AND</span> ROUTINE_TYPE <span class="token operator">=</span> {<span class="token string">'PROCEDURE|FUNCTION'</span>}<span class="token punctuation">]</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>说明：如果在MySQL数据库中存在存储过程和函数名称相同的情况，最好指定ROUTINE_TYPE查询条件来指明查询的是存储过程还是函数。</p>
 <p>举例：从Routines表中查询名称为CountProc的存储函数的信息，代码如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM information_schema.Routines
-WHERE ROUTINE_NAME='count_by_id'　AND　ROUTINE_TYPE = 'FUNCTION' \G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> information_schema<span class="token punctuation">.</span>Routines
+<span class="token keyword">WHERE</span> ROUTINE_NAME<span class="token operator">=</span><span class="token string">'count_by_id'</span>　<span class="token operator">AND</span>　ROUTINE_TYPE <span class="token operator">=</span> <span class="token string">'FUNCTION'</span> \G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_5-2-修改" tabindex="-1"><a class="header-anchor" href="#_5-2-修改" aria-hidden="true">#</a> 5.2 修改</h3>
 <p>修改存储过程或函数，不影响存储过程或函数功能，只是修改相关特性。使用ALTER语句实现。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER {PROCEDURE | FUNCTION} 存储过程或函数的名 [characteristic ...]
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> {<span class="token keyword">PROCEDURE</span> <span class="token operator">|</span> <span class="token keyword">FUNCTION</span>} 存储过程或函数的名 <span class="token punctuation">[</span>characteristic <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>其中，characteristic指定存储过程或函数的特性，其取值信息与创建存储过程、函数时的取值信息略有不同。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>{ CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA }
-| SQL SECURITY { DEFINER | INVOKER }
-| COMMENT 'string'
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>{ <span class="token keyword">CONTAINS</span> <span class="token keyword">SQL</span> <span class="token operator">|</span> <span class="token keyword">NO</span> <span class="token keyword">SQL</span> <span class="token operator">|</span> <span class="token keyword">READS</span> <span class="token keyword">SQL</span> <span class="token keyword">DATA</span> <span class="token operator">|</span> <span class="token keyword">MODIFIES</span> <span class="token keyword">SQL</span> <span class="token keyword">DATA</span> }
+<span class="token operator">|</span> <span class="token keyword">SQL</span> SECURITY { <span class="token keyword">DEFINER</span> <span class="token operator">|</span> <span class="token keyword">INVOKER</span> }
+<span class="token operator">|</span> <span class="token keyword">COMMENT</span> <span class="token string">'string'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li><code v-pre>CONTAINS SQL</code>，表示子程序包含SQL语句，但不包含读或写数据的语句。</li>
 <li><code v-pre>NO SQL</code>，表示子程序中不包含SQL语句。</li>
@@ -397,27 +397,27 @@ WHERE ROUTINE_NAME='count_by_id'　AND　ROUTINE_TYPE = 'FUNCTION' \G
 </blockquote>
 <p><strong>举例1：</strong></p>
 <p>修改存储过程CountProc的定义。将读写权限改为MODIFIES SQL DATA，并指明调用者可以执行，代码如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER　PROCEDURE　CountProc
-MODIFIES SQL DATA
-SQL SECURITY INVOKER ;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span>　<span class="token keyword">PROCEDURE</span>　CountProc
+<span class="token keyword">MODIFIES</span> <span class="token keyword">SQL</span> <span class="token keyword">DATA</span>
+<span class="token keyword">SQL</span> SECURITY <span class="token keyword">INVOKER</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>查询修改后的信息：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT specific_name,sql_data_access,security_type
-FROM information_schema.`ROUTINES`
-WHERE routine_name = 'CountProc' AND routine_type = 'PROCEDURE';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> specific_name<span class="token punctuation">,</span>sql_data_access<span class="token punctuation">,</span>security_type
+<span class="token keyword">FROM</span> information_schema<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>ROUTINES<span class="token punctuation">`</span></span>
+<span class="token keyword">WHERE</span> routine_name <span class="token operator">=</span> <span class="token string">'CountProc'</span> <span class="token operator">AND</span> routine_type <span class="token operator">=</span> <span class="token string">'PROCEDURE'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>结果显示，存储过程修改成功。从查询的结果可以看出，访问数据的权限（SQL_DATA_ ACCESS）已经变成MODIFIES SQL DATA，安全类型（SECURITY_TYPE）已经变成INVOKER。</p>
 <p><strong>举例2：</strong></p>
 <p>修改存储函数CountProc的定义。将读写权限改为READS SQL DATA，并加上注释信息“FIND NAME”，代码如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER　FUNCTION　CountProc
-READS SQL DATA
-COMMENT 'FIND NAME' ;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span>　<span class="token keyword">FUNCTION</span>　CountProc
+<span class="token keyword">READS</span> <span class="token keyword">SQL</span> <span class="token keyword">DATA</span>
+<span class="token keyword">COMMENT</span> <span class="token string">'FIND NAME'</span> <span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>存储函数修改成功。从查询的结果可以看出，访问数据的权限（SQL_DATA_ACCESS）已经变成READS SQL DATA，函数注释（ROUTINE_COMMENT）已经变成FIND NAME。</p>
 <h3 id="_5-3-删除" tabindex="-1"><a class="header-anchor" href="#_5-3-删除" aria-hidden="true">#</a> 5.3 删除</h3>
 <p>删除存储过程和函数，可以使用DROP语句，其语法结构如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP {PROCEDURE | FUNCTION} [IF EXISTS] 存储过程或函数的名
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> {<span class="token keyword">PROCEDURE</span> <span class="token operator">|</span> <span class="token keyword">FUNCTION</span>} <span class="token punctuation">[</span><span class="token keyword">IF</span> <span class="token keyword">EXISTS</span><span class="token punctuation">]</span> 存储过程或函数的名
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>IF EXISTS：如果程序或函数不存储，它可以防止发生错误，产生一个用SHOW WARNINGS查看的警告。</p>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP PROCEDURE CountProc;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP FUNCTION CountProc;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> <span class="token keyword">PROCEDURE</span> CountProc<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> <span class="token keyword">FUNCTION</span> CountProc<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="_6-关于存储过程使用的争议" tabindex="-1"><a class="header-anchor" href="#_6-关于存储过程使用的争议" aria-hidden="true">#</a> 6. 关于存储过程使用的争议</h2>
 <p>尽管存储过程有诸多优点，但是对于存储过程的使用，<strong>一直都存在着很多争议</strong>，比如有些公司对于大型项目要求使用存储过程，而有些公司在手册中明确禁止使用存储过程，为什么这些公司对存储过程的使用需求差别这么大呢？</p>
 <h3 id="_6-1-优点" tabindex="-1"><a class="header-anchor" href="#_6-1-优点" aria-hidden="true">#</a> 6.1 优点</h3>

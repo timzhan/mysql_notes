@@ -2,10 +2,46 @@ import {
   isArray,
   isFunction,
   isString
-} from "./chunk-AVTOPKID.js";
-import "./chunk-FEFTYQ2P.js";
+} from "./chunk-YTU7QOK3.js";
+import {
+  init_define_BACK_TO_TOP_LOCALES,
+  init_define_CODE_COPY_LOCALES,
+  init_define_CODE_COPY_OPTIONS,
+  init_define_CODE_DEMO_OPTIONS,
+  init_define_EXTERNAL_LINK_ICON_LOCALES,
+  init_define_MERMAID_OPTIONS,
+  init_define_PHOTO_SWIPE_LOCALES,
+  init_define_PHOTO_SWIPE_OPTIONS,
+  init_define_PLAYGROUND_OPTIONS,
+  init_define_READING_TIME_LOCALES,
+  init_define_REVEAL_CONFIG
+} from "./chunk-3IJSH5BN.js";
+
+// dep:@vuepress_shared
+init_define_BACK_TO_TOP_LOCALES();
+init_define_CODE_COPY_LOCALES();
+init_define_CODE_COPY_OPTIONS();
+init_define_CODE_DEMO_OPTIONS();
+init_define_MERMAID_OPTIONS();
+init_define_PHOTO_SWIPE_LOCALES();
+init_define_PHOTO_SWIPE_OPTIONS();
+init_define_PLAYGROUND_OPTIONS();
+init_define_READING_TIME_LOCALES();
+init_define_REVEAL_CONFIG();
+init_define_EXTERNAL_LINK_ICON_LOCALES();
 
 // node_modules/@vuepress/shared/dist/index.js
+init_define_BACK_TO_TOP_LOCALES();
+init_define_CODE_COPY_LOCALES();
+init_define_CODE_COPY_OPTIONS();
+init_define_CODE_DEMO_OPTIONS();
+init_define_MERMAID_OPTIONS();
+init_define_PHOTO_SWIPE_LOCALES();
+init_define_PHOTO_SWIPE_OPTIONS();
+init_define_PLAYGROUND_OPTIONS();
+init_define_READING_TIME_LOCALES();
+init_define_REVEAL_CONFIG();
+init_define_EXTERNAL_LINK_ICON_LOCALES();
 var resolveHeadIdentifier = ([
   tag,
   attrs,

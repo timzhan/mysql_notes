@@ -1,14 +1,1 @@
-export const data = JSON.parse("{\"key\":\"v-1473bf53\",\"path\":\"/demo/\",\"title\":\"Hello demo\",\"lang\":\"en-US\",\"frontmatter\":{},\"excerpt\":\"\",\"headers\":[],\"git\":{\"updatedTime\":null,\"contributors\":[]},\"filePathRelative\":\"demo/README.md\"}")
-
-if (import.meta.webpackHot) {
-  import.meta.webpackHot.accept()
-  if (__VUE_HMR_RUNTIME__.updatePageData) {
-    __VUE_HMR_RUNTIME__.updatePageData(data)
-  }
-}
-
-if (import.meta.hot) {
-  import.meta.hot.accept(({ data }) => {
-    __VUE_HMR_RUNTIME__.updatePageData(data)
-  })
-}
+export const data = JSON.parse("{\"key\":\"v-1473bf53\",\"path\":\"/demo/\",\"title\":\"Hello demo\",\"lang\":\"en-US\",\"frontmatter\":{},\"excerpt\":\"\",\"headers\":[],\"git\":{\"createdTime\":1660807105000,\"updatedTime\":1660807105000,\"contributors\":[{\"name\":\"涂威\",\"email\":\"tuwei@lonch.com.cn\",\"commits\":1}]},\"readingTime\":{\"minutes\":0.07,\"words\":20},\"filePathRelative\":\"demo/README.md\",\"localizedDate\":\"August 18, 2022\"}")

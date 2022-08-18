@@ -2,7 +2,7 @@
 <h4 id="_1-用户管理" tabindex="-1"><a class="header-anchor" href="#_1-用户管理" aria-hidden="true">#</a> <strong>1.用户管理</strong></h4>
 <h5 id="_1-1登录mysql服务器" tabindex="-1"><a class="header-anchor" href="#_1-1登录mysql服务器" aria-hidden="true">#</a> <strong>1.1登录MySQL服务器</strong></h5>
 <p>启动MySQL服务后，可以通过mysql命令来登录MySQL服务器，命令如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql –h hostname|hostIP –P port –u username –p DatabaseName –e &quot;SQL语句&quot;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql –h hostname<span class="token operator">|</span>hostIP –P port –u username –p DatabaseName –e <span class="token string">"SQL语句"</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li><code v-pre>-h参数</code>后面接主机名或者主机IP，hostname为主机，hostIP为主机IP。</li>
 <li><code v-pre>-P参数</code>后面接MySQL服务的端口，通过该参数连接到指定的端口。MySQL服务的默认端口是3306，不使用该参数时自动连接到3306端口，port为连接的端口号。</li>
@@ -11,38 +11,38 @@
 <li><code v-pre>DatabaseName参数</code>指明登录到哪一个数据库中。如果没有该参数，就会直接登录到MySQL数据库中，然后可以使用USE命令来选择数据库。</li>
 <li><code v-pre>-e参数</code>后面可以直接加SQL语句。登录MySQL服务器以后即可执行这个SQL语句，然后退出MySQL服务器。</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql -uroot -p -hlocalhost -P3306 mysql -e &quot;select host,user from user&quot;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql <span class="token operator">-</span>uroot <span class="token operator">-</span>p <span class="token operator">-</span>hlocalhost <span class="token operator">-</span>P3306 mysql <span class="token operator">-</span>e <span class="token string">"select host,user from user"</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h5 id="_1-2创建用户" tabindex="-1"><a class="header-anchor" href="#_1-2创建用户" aria-hidden="true">#</a> <strong>1.2创建用户</strong></h5>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE USER 用户名 [IDENTIFIED BY '密码'][,用户名 [IDENTIFIED BY '密码']];
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">USER</span> 用户名 <span class="token punctuation">[</span>IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'密码'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">,</span>用户名 <span class="token punctuation">[</span>IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'密码'</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE USER zhang3 IDENTIFIED BY '123123'; # 默认host是 %
-CREATE USER 'kangshifu'@'localhost' IDENTIFIED BY '123456';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">USER</span> zhang3 IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'123123'</span><span class="token punctuation">;</span> <span class="token comment"># 默认host是 %</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">USER</span> <span class="token string">'kangshifu'</span><span class="token variable">@'localhost'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'123456'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h5 id="_1-3修改用户" tabindex="-1"><a class="header-anchor" href="#_1-3修改用户" aria-hidden="true">#</a> <strong>1.3修改用户</strong></h5>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>UPDATE mysql.user SET USER='li4' WHERE USER='wang5'; 
-FLUSH PRIVILEGES;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">UPDATE</span> mysql<span class="token punctuation">.</span><span class="token keyword">user</span> <span class="token keyword">SET</span> <span class="token keyword">USER</span><span class="token operator">=</span><span class="token string">'li4'</span> <span class="token keyword">WHERE</span> <span class="token keyword">USER</span><span class="token operator">=</span><span class="token string">'wang5'</span><span class="token punctuation">;</span> 
+FLUSH <span class="token keyword">PRIVILEGES</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h5 id="_1-4删除用户" tabindex="-1"><a class="header-anchor" href="#_1-4删除用户" aria-hidden="true">#</a> <strong>1.4删除用户</strong></h5>
 <p><strong>方式1：使用DROP方式删除（推荐）</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP USER user[,user]…;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> <span class="token keyword">USER</span> <span class="token keyword">user</span><span class="token punctuation">[</span><span class="token punctuation">,</span><span class="token keyword">user</span><span class="token punctuation">]</span>…<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP USER li4 ; # 默认删除host为%的用户
-DROP USER 'kangshifu'@'localhost';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> <span class="token keyword">USER</span> li4 <span class="token punctuation">;</span> <span class="token comment"># 默认删除host为%的用户</span>
+<span class="token keyword">DROP</span> <span class="token keyword">USER</span> <span class="token string">'kangshifu'</span><span class="token variable">@'localhost'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>方式2：使用DELETE方式删除（不推荐，有残留信息）</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELETE FROM mysql.user WHERE Host=’hostname’ AND User=’username’;
-FLUSH PRIVILEGES;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> mysql<span class="token punctuation">.</span><span class="token keyword">user</span> <span class="token keyword">WHERE</span> Host<span class="token operator">=</span>’hostname’ <span class="token operator">AND</span> <span class="token keyword">User</span><span class="token operator">=</span>’username’<span class="token punctuation">;</span>
+FLUSH <span class="token keyword">PRIVILEGES</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h5 id="_1-5设置当前用户密码" tabindex="-1"><a class="header-anchor" href="#_1-5设置当前用户密码" aria-hidden="true">#</a> <strong>1.5设置当前用户密码</strong></h5>
 <p><strong>1.使用ALTER USER命令来修改当前用户密码</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER USER USER() IDENTIFIED BY 'new_password';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">USER</span> <span class="token keyword">USER</span><span class="token punctuation">(</span><span class="token punctuation">)</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'new_password'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><strong>2.使用SET语句来修改当前用户密码</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET PASSWORD='new_password';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> PASSWORD<span class="token operator">=</span><span class="token string">'new_password'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h5 id="_1-6修改其它用户密码" tabindex="-1"><a class="header-anchor" href="#_1-6修改其它用户密码" aria-hidden="true">#</a> <strong>1.6修改其它用户密码</strong></h5>
 <p><strong>1.使用ALTER语句来修改普通用户的密码</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER USER user [IDENTIFIED BY '新密码'] 
-[,user[IDENTIFIED BY '新密码']]…;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">USER</span> <span class="token keyword">user</span> <span class="token punctuation">[</span>IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'新密码'</span><span class="token punctuation">]</span> 
+<span class="token punctuation">[</span><span class="token punctuation">,</span><span class="token keyword">user</span><span class="token punctuation">[</span>IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'新密码'</span><span class="token punctuation">]</span><span class="token punctuation">]</span>…<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>2.使用SET命令来修改普通用户的密码</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET PASSWORD FOR 'username'@'hostname'='new_password';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> PASSWORD <span class="token keyword">FOR</span> <span class="token string">'username'</span><span class="token variable">@'hostname'</span><span class="token operator">=</span><span class="token string">'new_password'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="_2-权限管理" tabindex="-1"><a class="header-anchor" href="#_2-权限管理" aria-hidden="true">#</a> <strong>2.权限管理</strong></h4>
 <h5 id="_2-1权限列表" tabindex="-1"><a class="header-anchor" href="#_2-1权限列表" aria-hidden="true">#</a> <strong>2.1权限列表</strong></h5>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show privileges;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> <span class="token keyword">privileges</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li><code v-pre>CREATE和DROP权限</code>，可以创建新的数据库和表，或删除（移掉）已有的数据库和表。如果将MySQL数据库中的DROP权限授予某用户，用户就可以删除MySQL访问权限保存的数据库。</li>
 <li><code v-pre>SELECT、INSERT、UPDATE和DELETE权限</code>允许在一个数据库现有的表上实施操作。</li>
@@ -62,16 +62,16 @@ FLUSH PRIVILEGES;
 <h5 id="_2-3授予权限" tabindex="-1"><a class="header-anchor" href="#_2-3授予权限" aria-hidden="true">#</a> <strong>2.3授予权限</strong></h5>
 <p>给用户授权的方式有 2 种，分别是通过把 角色赋予用户给用户授权 和 直接给用户授权 。用户是数据库的 使用者，我们可以通过给用户授予访问数据库中资源的权限，来控制使用者对数据库的访问，消除安全 隐患。
 授权命令:</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>GRANT 权限1,权限2,…权限n ON 数据库名称.表名称 TO 用户名@用户地址 [IDENTIFIED BY ‘密码口令’];
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">GRANT</span> 权限<span class="token number">1</span><span class="token punctuation">,</span>权限<span class="token number">2</span><span class="token punctuation">,</span>…权限n <span class="token keyword">ON</span> 数据库名称<span class="token punctuation">.</span>表名称 <span class="token keyword">TO</span> 用户名@用户地址 <span class="token punctuation">[</span>IDENTIFIED <span class="token keyword">BY</span> ‘密码口令’<span class="token punctuation">]</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>该权限如果发现没有该用户，则会直接新建一个用户。</li>
 <li>给li4用户用本地命令行方式，授予atguigudb这个库下的所有表的插删改查的权限。</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>GRANT SELECT,INSERT,DELETE,UPDATE ON atguigudb.* TO li4@localhost;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">GRANT</span> <span class="token keyword">SELECT</span><span class="token punctuation">,</span><span class="token keyword">INSERT</span><span class="token punctuation">,</span><span class="token keyword">DELETE</span><span class="token punctuation">,</span><span class="token keyword">UPDATE</span> <span class="token keyword">ON</span> atguigudb<span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> li4<span class="token variable">@localhost</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>授予通过网络方式登录的joe用户 ，对所有库所有表的全部权限，密码设为123。注意这里唯独不包括grant的权限</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>GRANT ALL PRIVILEGES ON *.* TO joe@'%' IDENTIFIED BY '123';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">GRANT</span> <span class="token keyword">ALL</span> <span class="token keyword">PRIVILEGES</span> <span class="token keyword">ON</span> <span class="token operator">*</span><span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> joe<span class="token variable">@'%'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'123'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><blockquote>
 <p>我们在开发应用的时候，经常会遇到一种需求，就是要根据用户的不同，对数据进行横向和纵向的分组。</p>
 <ul>
@@ -83,67 +83,67 @@ FLUSH PRIVILEGES;
 <ul>
 <li>查看当前用户权限</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW GRANTS; 
-# 或 
-SHOW GRANTS FOR CURRENT_USER; 
-# 或 
-SHOW GRANTS FOR CURRENT_USER();
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> GRANTS<span class="token punctuation">;</span> 
+<span class="token comment"># 或 </span>
+<span class="token keyword">SHOW</span> GRANTS <span class="token keyword">FOR</span> <span class="token keyword">CURRENT_USER</span><span class="token punctuation">;</span> 
+<span class="token comment"># 或 </span>
+<span class="token keyword">SHOW</span> GRANTS <span class="token keyword">FOR</span> <span class="token keyword">CURRENT_USER</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>查看某用户的全局权限</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW GRANTS FOR 'user'@'主机地址';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> GRANTS <span class="token keyword">FOR</span> <span class="token string">'user'</span><span class="token variable">@'主机地址'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h5 id="_2-5收回权限" tabindex="-1"><a class="header-anchor" href="#_2-5收回权限" aria-hidden="true">#</a> <strong>2.5收回权限</strong></h5>
 <p>收回权限就是取消已经赋予用户的某些权限。 收回用户不必要的权限可以在一定程度上保证系统的安全 性。MySQL中使用 REVOKE语句 取消用户的某些权限。使用REVOKE收回权限之后，用户账户的记录将从 db、host、tables_priv和columns_priv表中删除，但是用户账户记录仍然在user表中保存(删除user表中 的账户记录使用DROP USER语句)。
 <strong>注意：在将用户账户从user表删除之前，应该收回相应用户的所有权限。</strong></p>
 <ul>
 <li>收回权限命令</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>REVOKE 权限1,权限2,…权限n ON 数据库名称.表名称 FROM 用户名@用户地址;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">REVOKE</span> 权限<span class="token number">1</span><span class="token punctuation">,</span>权限<span class="token number">2</span><span class="token punctuation">,</span>…权限n <span class="token keyword">ON</span> 数据库名称<span class="token punctuation">.</span>表名称 <span class="token keyword">FROM</span> 用户名@用户地址<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>举例</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#收回全库全表的所有权限 
-REVOKE ALL PRIVILEGES ON *.* FROM joe@'%'; 
-#收回mysql库下的所有表的插删改查权限 
-REVOKE SELECT,INSERT,UPDATE,DELETE ON mysql.* FROM joe@localhost;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#收回全库全表的所有权限 </span>
+<span class="token keyword">REVOKE</span> <span class="token keyword">ALL</span> <span class="token keyword">PRIVILEGES</span> <span class="token keyword">ON</span> <span class="token operator">*</span><span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">FROM</span> joe<span class="token variable">@'%'</span><span class="token punctuation">;</span> 
+<span class="token comment">#收回mysql库下的所有表的插删改查权限 </span>
+<span class="token keyword">REVOKE</span> <span class="token keyword">SELECT</span><span class="token punctuation">,</span><span class="token keyword">INSERT</span><span class="token punctuation">,</span><span class="token keyword">UPDATE</span><span class="token punctuation">,</span><span class="token keyword">DELETE</span> <span class="token keyword">ON</span> mysql<span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">FROM</span> joe<span class="token variable">@localhost</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>注意：<code v-pre>须用户重新登录后才能生效</code></li>
 </ul>
 <h4 id="_3-角色管理" tabindex="-1"><a class="header-anchor" href="#_3-角色管理" aria-hidden="true">#</a> <strong>3.角色管理</strong></h4>
 <h5 id="_3-1创建角色" tabindex="-1"><a class="header-anchor" href="#_3-1创建角色" aria-hidden="true">#</a> <strong>3.1创建角色</strong></h5>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE ROLE 'role_name'[@'host_name'] [,'role_name'[@'host_name']]...
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> ROLE <span class="token string">'role_name'</span><span class="token punctuation">[</span><span class="token variable">@'host_name'</span><span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token punctuation">,</span><span class="token string">'role_name'</span><span class="token punctuation">[</span><span class="token variable">@'host_name'</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>角色名称的命名规则和用户名类似。如果<code v-pre>host_name省略，默认为%</code>，<code v-pre>role_name不可省略</code>，不可为空。</p>
 <h5 id="_3-2给角色赋予权限" tabindex="-1"><a class="header-anchor" href="#_3-2给角色赋予权限" aria-hidden="true">#</a> <strong>3.2给角色赋予权限</strong></h5>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>GRANT privileges ON table_name TO 'role_name'[@'host_name'];
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">GRANT</span> <span class="token keyword">privileges</span> <span class="token keyword">ON</span> table_name <span class="token keyword">TO</span> <span class="token string">'role_name'</span><span class="token punctuation">[</span><span class="token variable">@'host_name'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>上述语句中privileges代表权限的名称，多个权限以逗号隔开。可使用SHOW语句查询权限名称</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW PRIVILEGES\G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">PRIVILEGES</span>\G
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h5 id="_3-3查看角色的权限" tabindex="-1"><a class="header-anchor" href="#_3-3查看角色的权限" aria-hidden="true">#</a> <strong>3.3查看角色的权限</strong></h5>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW GRANTS FOR 'role_name';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> GRANTS <span class="token keyword">FOR</span> <span class="token string">'role_name'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>只要你创建了一个角色，系统就会自动给你一个“<code v-pre>USAGE</code>”权限，意思是<code v-pre>连接登录数据库的权限</code>。</p>
 <h5 id="_3-4回收角色的权限" tabindex="-1"><a class="header-anchor" href="#_3-4回收角色的权限" aria-hidden="true">#</a> <strong>3.4回收角色的权限</strong></h5>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>REVOKE privileges ON tablename FROM 'rolename';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">REVOKE</span> <span class="token keyword">privileges</span> <span class="token keyword">ON</span> tablename <span class="token keyword">FROM</span> <span class="token string">'rolename'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h5 id="_3-5删除角色" tabindex="-1"><a class="header-anchor" href="#_3-5删除角色" aria-hidden="true">#</a> <strong>3.5删除角色</strong></h5>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DROP ROLE role [,role2]...
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DROP</span> ROLE role <span class="token punctuation">[</span><span class="token punctuation">,</span>role2<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>注意，<code v-pre>如果你删除了角色，那么用户也就失去了通过这个角色所获得的所有权限</code>。</p>
 <h5 id="_3-6给用户赋予角色" tabindex="-1"><a class="header-anchor" href="#_3-6给用户赋予角色" aria-hidden="true">#</a> <strong>3.6给用户赋予角色</strong></h5>
 <p>角色创建并授权后，要赋给用户并处于<code v-pre>激活状态</code>才能发挥作用。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>GRANT role [,role2,...] TO user [,user2,...];
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">GRANT</span> role <span class="token punctuation">[</span><span class="token punctuation">,</span>role2<span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span> <span class="token keyword">TO</span> <span class="token keyword">user</span> <span class="token punctuation">[</span><span class="token punctuation">,</span>user2<span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>查询当前已激活的角色</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT CURRENT_ROLE();
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> CURRENT_ROLE<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h5 id="_3-7激活角色" tabindex="-1"><a class="header-anchor" href="#_3-7激活角色" aria-hidden="true">#</a> <strong>3.7激活角色</strong></h5>
 <p><strong>方式1：使用set default role 命令激活角色</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET DEFAULT ROLE ALL TO 'kangshifu'@'localhost';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> <span class="token keyword">DEFAULT</span> ROLE <span class="token keyword">ALL</span> <span class="token keyword">TO</span> <span class="token string">'kangshifu'</span><span class="token variable">@'localhost'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><strong>方式2：将activate_all_roles_on_login设置为ON</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET GLOBAL activate_all_roles_on_login=ON;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> <span class="token keyword">GLOBAL</span> activate_all_roles_on_login<span class="token operator">=</span><span class="token keyword">ON</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>这条 SQL 语句的意思是，对<code v-pre>所有角色永久激活</code>。</p>
 <h5 id="_3-8撤销用户的角色" tabindex="-1"><a class="header-anchor" href="#_3-8撤销用户的角色" aria-hidden="true">#</a> <strong>3.8撤销用户的角色</strong></h5>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>REVOKE role FROM user;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">REVOKE</span> role <span class="token keyword">FROM</span> <span class="token keyword">user</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h5 id="_3-9设置强制角色-mandatory-role" tabindex="-1"><a class="header-anchor" href="#_3-9设置强制角色-mandatory-role" aria-hidden="true">#</a> <strong>3.9设置强制角色(mandatory role)</strong></h5>
 <p>方式1：服务启动前设置</p>
 <div class="language-ini ext-ini line-numbers-mode"><pre v-pre class="language-ini"><code><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqld</span><span class="token punctuation">]</span></span> 
 <span class="token key attr-name">mandatory_roles</span><span class="token punctuation">=</span><span class="token value attr-value">'<span class="token inner-value">role1,role2@localhost,r3@%.atguigu.com</span>'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>方式2：运行时设置</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET PERSIST mandatory_roles = 'role1,role2@localhost,r3@%.example.com'; #系统重启后仍然有效
-SET GLOBAL mandatory_roles = 'role1,role2@localhost,r3@%.example.com'; #系统重启后失效
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> PERSIST mandatory_roles <span class="token operator">=</span> <span class="token string">'role1,role2@localhost,r3@%.example.com'</span><span class="token punctuation">;</span> <span class="token comment">#系统重启后仍然有效</span>
+<span class="token keyword">SET</span> <span class="token keyword">GLOBAL</span> mandatory_roles <span class="token operator">=</span> <span class="token string">'role1,role2@localhost,r3@%.example.com'</span><span class="token punctuation">;</span> <span class="token comment">#系统重启后失效</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="" tabindex="-1"><a class="header-anchor" href="#" aria-hidden="true">#</a> </h3>
 </div></template>

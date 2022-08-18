@@ -1,6 +1,6 @@
 <template><div><h1 id="第00章-写在前面" tabindex="-1"><a class="header-anchor" href="#第00章-写在前面" aria-hidden="true">#</a> 第00章_写在前面</h1>
 <p>讲师：尚硅谷-宋红康（江湖人称：康师傅）</p>
-<p>官网：<a href="http://www.atguigu.com/" target="_blank" rel="noopener noreferrer">http://www.atguigu.com<ExternalLinkIcon/></a>http://www.atguigu.com/)</p>
+<p>官网：<a href="http://www.atguigu.com/" target="_blank" rel="noopener noreferrer">http://www.atguigu.com<ExternalLinkIcon/></a><a href="http://www.atguigu.com/" target="_blank" rel="noopener noreferrer">http://www.atguigu.com/<ExternalLinkIcon/></a>)</p>
 <hr>
 <h2 id="一、mysql数据库基础篇大纲" tabindex="-1"><a class="header-anchor" href="#一、mysql数据库基础篇大纲" aria-hidden="true">#</a> 一、MySQL数据库基础篇大纲</h2>
 <p><strong>MySQL数据库基础篇分为5个篇章：</strong></p>

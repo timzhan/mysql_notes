@@ -5,7 +5,7 @@
 <h2 id="_1-函数的理解" tabindex="-1"><a class="header-anchor" href="#_1-函数的理解" aria-hidden="true">#</a> 1. 函数的理解</h2>
 <h3 id="_1-1-什么是函数" tabindex="-1"><a class="header-anchor" href="#_1-1-什么是函数" aria-hidden="true">#</a> 1.1 什么是函数</h3>
 <p>函数在计算机语言的使用中贯穿始终，函数的作用是什么呢？它可以把我们经常使用的代码封装起来，需要的时候直接调用即可。这样既<code v-pre>提高了代码效率</code>，又<code v-pre>提高了可维护性</code>。在 SQL 中我们也可以使用函数对检索出来的数据进行函数操作。使用这些函数，可以极大地<code v-pre>提高用户对数据库的管理效率</code>。</p>
-<p><img src="@source/notes/base_mysql/images/1554979529525.png" alt="1554979529525"></p>
+<p><img src="@source/notes/base_mysql/images/1554979529525.png" alt="1554979529525" loading="lazy"></p>
 <p>从函数定义的角度出发，我们可以将函数分成<code v-pre>内置函数</code>和<code v-pre>自定义函数</code>。在 SQL 语言中，同样也包括了内置函数和自定义函数。内置函数是系统内置的通用函数，而自定义函数是我们根据自己的需要编写的，本章及下一章讲解的是 SQL 的内置函数。</p>
 <h3 id="_1-2-不同dbms函数的差异" tabindex="-1"><a class="header-anchor" href="#_1-2-不同dbms函数的差异" aria-hidden="true">#</a> 1.2 不同DBMS函数的差异</h3>
 <p>我们在使用 SQL 语言的时候，不是直接和这门语言打交道，而是通过它使用不同的数据库软件，即 DBMS。<strong>DBMS 之间的差异性很大，远大于同一个语言不同版本之间的差异。<strong>实际上，只有很少的函数是被 DBMS 同时支持的。比如，大多数 DBMS 使用（||）或者（+）来做拼接符，而在 MySQL 中的字符串拼接函数为concat()。大部分 DBMS 会有自己特定的函数，这就意味着</strong>采用 SQL 函数的代码可移植性是很差的</strong>，因此在使用函数的时候需要特别注意。</p>
@@ -13,7 +13,7 @@
 <p>MySQL提供了丰富的内置函数，这些函数使得数据的维护与管理更加方便，能够更好地提供数据的分析与统计功能，在一定程度上提高了开发人员进行数据分析与统计的效率。</p>
 <p>MySQL提供的内置函数从<code v-pre>实现的功能角度</code>可以分为数值函数、字符串函数、日期和时间函数、流程控制函数、加密与解密函数、获取MySQL信息函数、聚合函数等。这里，我将这些丰富的内置函数再分为两类：<code v-pre>单行函数</code>、<code v-pre>聚合函数（或分组函数）</code>。</p>
 <p><strong>两种SQL函数</strong></p>
-<p><img src="@source/notes/base_mysql/images/1555433204337.png" alt="1555433204337"></p>
+<p><img src="@source/notes/base_mysql/images/1555433204337.png" alt="1555433204337" loading="lazy"></p>
 <p><strong>单行函数</strong></p>
 <ul>
 <li>操作数据对象</li>
@@ -92,16 +92,16 @@
 </tbody>
 </table>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT ABS(-123),ABS(32),SIGN(-23),SIGN(43),PI(),CEIL(32.32),CEILING(-43.23),FLOOR(32.32),
-FLOOR(-43.23),MOD(12,5)
-FROM DUAL;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211025162304844.png" alt="image-20211025162304844"></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT RAND(),RAND(),RAND(10),RAND(10),RAND(-1),RAND(-1)
-FROM DUAL;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211025162538958.png" alt="image-20211025162538958"></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT ROUND(12.33),ROUND(12.343,2),ROUND(12.324,-1),TRUNCATE(12.66,1),TRUNCATE(12.66,-1)
-FROM DUAL;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211025162730421.png" alt="image-20211025162730421"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> ABS<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">123</span><span class="token punctuation">)</span><span class="token punctuation">,</span>ABS<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>SIGN<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">,</span>SIGN<span class="token punctuation">(</span><span class="token number">43</span><span class="token punctuation">)</span><span class="token punctuation">,</span>PI<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>CEIL<span class="token punctuation">(</span><span class="token number">32.32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>CEILING<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">43.23</span><span class="token punctuation">)</span><span class="token punctuation">,</span>FLOOR<span class="token punctuation">(</span><span class="token number">32.32</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+FLOOR<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">43.23</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">MOD</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211025162304844.png" alt="image-20211025162304844" loading="lazy"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> RAND<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>RAND<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>RAND<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>RAND<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>RAND<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>RAND<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211025162538958.png" alt="image-20211025162538958" loading="lazy"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token number">12.33</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token number">12.343</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">ROUND</span><span class="token punctuation">(</span><span class="token number">12.324</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">TRUNCATE</span><span class="token punctuation">(</span><span class="token number">12.66</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">TRUNCATE</span><span class="token punctuation">(</span><span class="token number">12.66</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211025162730421.png" alt="image-20211025162730421" loading="lazy"></p>
 <h3 id="_2-2-角度与弧度互换函数" tabindex="-1"><a class="header-anchor" href="#_2-2-角度与弧度互换函数" aria-hidden="true">#</a> 2.2 角度与弧度互换函数</h3>
 <table>
 <thead>
@@ -121,8 +121,8 @@ FROM DUAL;
 </tr>
 </tbody>
 </table>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT RADIANS(30),RADIANS(60),RADIANS(90),DEGREES(2*PI()),DEGREES(RADIANS(90))
-FROM DUAL;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> RADIANS<span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">,</span>RADIANS<span class="token punctuation">(</span><span class="token number">60</span><span class="token punctuation">)</span><span class="token punctuation">,</span>RADIANS<span class="token punctuation">(</span><span class="token number">90</span><span class="token punctuation">)</span><span class="token punctuation">,</span>DEGREES<span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>PI<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>DEGREES<span class="token punctuation">(</span>RADIANS<span class="token punctuation">(</span><span class="token number">90</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_2-3-三角函数" tabindex="-1"><a class="header-anchor" href="#_2-3-三角函数" aria-hidden="true">#</a> 2.3 三角函数</h3>
 <table>
 <thead>
@@ -170,9 +170,9 @@ FROM DUAL;
 <p>ATAN2(M,N)函数返回两个参数的反正切值。
 与ATAN(X)函数相比，ATAN2(M,N)需要两个参数，例如有两个点point(x1,y1)和point(x2,y2)，使用ATAN(X)函数计算反正切值为ATAN((y2-y1)/(x2-x1))，使用ATAN2(M,N)计算反正切值则为ATAN2(y2-y1,x2-x1)。由使用方式可以看出，当x2-x1等于0时，ATAN(X)函数会报错，而ATAN2(M,N)函数则仍然可以计算。</p>
 <p>ATAN2(M,N)函数的使用示例如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT SIN(RADIANS(30)),DEGREES(ASIN(1)),TAN(RADIANS(45)),DEGREES(ATAN(1)),DEGREES(ATAN2(1,1))
-FROM DUAL;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211025163846974.png" alt="image-20211025163846974"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> SIN<span class="token punctuation">(</span>RADIANS<span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>DEGREES<span class="token punctuation">(</span>ASIN<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>TAN<span class="token punctuation">(</span>RADIANS<span class="token punctuation">(</span><span class="token number">45</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>DEGREES<span class="token punctuation">(</span>ATAN<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>DEGREES<span class="token punctuation">(</span>ATAN2<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211025163846974.png" alt="image-20211025163846974" loading="lazy"></p>
 <h3 id="_2-4-指数与对数" tabindex="-1"><a class="header-anchor" href="#_2-4-指数与对数" aria-hidden="true">#</a> 2.4 指数与对数</h3>
 <table>
 <thead>
@@ -204,14 +204,14 @@ FROM DUAL;
 </tr>
 </tbody>
 </table>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT POW(2,5),POWER(2,4),EXP(2),LN(10),LOG10(10),LOG2(4)
-    -&gt; FROM DUAL;
-+----------+------------+------------------+-------------------+-----------+---------+
-| POW(2,5) | POWER(2,4) | EXP(2)           | LN(10)            | LOG10(10) | LOG2(4) |
-+----------+------------+------------------+-------------------+-----------+---------+
-|       32 |         16 | 7.38905609893065 | 2.302585092994046 |         1 |       2 |
-+----------+------------+------------------+-------------------+-----------+---------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> POW<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>POWER<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>EXP<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>LN<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>LOG10<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>LOG2<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------+------------+------------------+-------------------+-----------+---------+</span>
+<span class="token operator">|</span> POW<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token operator">|</span> POWER<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">|</span> EXP<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>           <span class="token operator">|</span> LN<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>            <span class="token operator">|</span> LOG10<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">|</span> LOG2<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------+------------+------------------+-------------------+-----------+---------+</span>
+<span class="token operator">|</span>       <span class="token number">32</span> <span class="token operator">|</span>         <span class="token number">16</span> <span class="token operator">|</span> <span class="token number">7.38905609893065</span> <span class="token operator">|</span> <span class="token number">2.302585092994046</span> <span class="token operator">|</span>         <span class="token number">1</span> <span class="token operator">|</span>       <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------+------------+------------------+-------------------+-----------+---------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_2-5-进制间的转换" tabindex="-1"><a class="header-anchor" href="#_2-5-进制间的转换" aria-hidden="true">#</a> 2.5 进制间的转换</h3>
 <table>
 <thead>
@@ -239,14 +239,14 @@ FROM DUAL;
 </tr>
 </tbody>
 </table>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT BIN(10),HEX(10),OCT(10),CONV(10,2,8)
-    -&gt; FROM DUAL;
-+---------+---------+---------+--------------+
-| BIN(10) | HEX(10) | OCT(10) | CONV(10,2,8) |
-+---------+---------+---------+--------------+
-| 1010    | A       | 12      | 2            |
-+---------+---------+---------+--------------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> BIN<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>HEX<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>OCT<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>CONV<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">)</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------+---------+---------+--------------+</span>
+<span class="token operator">|</span> BIN<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">|</span> HEX<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">|</span> OCT<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">|</span> CONV<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------+---------+---------+--------------+</span>
+<span class="token operator">|</span> <span class="token number">1010</span>    <span class="token operator">|</span> A       <span class="token operator">|</span> <span class="token number">12</span>      <span class="token operator">|</span> <span class="token number">2</span>            <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------+---------+---------+--------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_3-字符串函数" tabindex="-1"><a class="header-anchor" href="#_3-字符串函数" aria-hidden="true">#</a> 3. 字符串函数</h2>
 <table>
 <thead>
@@ -378,21 +378,21 @@ FROM DUAL;
 <p>注意：MySQL中，字符串的位置是从1开始的。</p>
 </blockquote>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT FIELD('mm','hello','msm','amma'),FIND_IN_SET('mm','hello,mm,amma')
-    -&gt; FROM DUAL;
-+----------------------------------+-----------------------------------+
-| FIELD('mm','hello','msm','amma') | FIND_IN_SET('mm','hello,mm,amma') |
-+----------------------------------+-----------------------------------+
-|                                0 |                                 2 |
-+----------------------------------+-----------------------------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT NULLIF('mysql','mysql'),NULLIF('mysql', '');
-+-------------------------+---------------------+
-| NULLIF('mysql','mysql') | NULLIF('mysql', '') |
-+-------------------------+---------------------+
-| NULL                    | mysql               |
-+-------------------------+---------------------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> FIELD<span class="token punctuation">(</span><span class="token string">'mm'</span><span class="token punctuation">,</span><span class="token string">'hello'</span><span class="token punctuation">,</span><span class="token string">'msm'</span><span class="token punctuation">,</span><span class="token string">'amma'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>FIND_IN_SET<span class="token punctuation">(</span><span class="token string">'mm'</span><span class="token punctuation">,</span><span class="token string">'hello,mm,amma'</span><span class="token punctuation">)</span>
+    <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------------------------------+-----------------------------------+</span>
+<span class="token operator">|</span> FIELD<span class="token punctuation">(</span><span class="token string">'mm'</span><span class="token punctuation">,</span><span class="token string">'hello'</span><span class="token punctuation">,</span><span class="token string">'msm'</span><span class="token punctuation">,</span><span class="token string">'amma'</span><span class="token punctuation">)</span> <span class="token operator">|</span> FIND_IN_SET<span class="token punctuation">(</span><span class="token string">'mm'</span><span class="token punctuation">,</span><span class="token string">'hello,mm,amma'</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------------------------+-----------------------------------+</span>
+<span class="token operator">|</span>                                <span class="token number">0</span> <span class="token operator">|</span>                                 <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------------------------+-----------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token keyword">NULLIF</span><span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">,</span><span class="token string">'mysql'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">NULLIF</span><span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+---------------------+</span>
+<span class="token operator">|</span> <span class="token keyword">NULLIF</span><span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">,</span><span class="token string">'mysql'</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token keyword">NULLIF</span><span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+---------------------+</span>
+<span class="token operator">|</span> <span class="token boolean">NULL</span>                    <span class="token operator">|</span> mysql               <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+---------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_4-日期和时间函数" tabindex="-1"><a class="header-anchor" href="#_4-日期和时间函数" aria-hidden="true">#</a> 4. 日期和时间函数</h2>
 <h3 id="_4-1-获取日期、时间" tabindex="-1"><a class="header-anchor" href="#_4-1-获取日期、时间" aria-hidden="true">#</a> 4.1 获取日期、时间</h3>
 <table>
@@ -426,9 +426,9 @@ FROM DUAL;
 </tbody>
 </table>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT CURDATE(),CURTIME(),NOW(),SYSDATE()+0,UTC_DATE(),UTC_DATE()+0,UTC_TIME(),UTC_TIME()+0
-FROM DUAL;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211025193742633.png" alt="image-20211025193742633"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> CURDATE<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>CURTIME<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>SYSDATE<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">0</span><span class="token punctuation">,</span>UTC_DATE<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>UTC_DATE<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">0</span><span class="token punctuation">,</span>UTC_TIME<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>UTC_TIME<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">0</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211025193742633.png" alt="image-20211025193742633" loading="lazy"></p>
 <h3 id="_4-2-日期与时间戳的转换" tabindex="-1"><a class="header-anchor" href="#_4-2-日期与时间戳的转换" aria-hidden="true">#</a> 4.2 日期与时间戳的转换</h3>
 <table>
 <thead>
@@ -453,44 +453,44 @@ FROM DUAL;
 </tbody>
 </table>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT UNIX_TIMESTAMP(now());
-+-----------------------+
-| UNIX_TIMESTAMP(now()) |
-+-----------------------+
-|            1576380910 |
-+-----------------------+
-1 row in set (0.01 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> UNIX_TIMESTAMP<span class="token punctuation">(</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----------------------+</span>
+<span class="token operator">|</span> UNIX_TIMESTAMP<span class="token punctuation">(</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------------------+</span>
+<span class="token operator">|</span>            <span class="token number">1576380910</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; SELECT UNIX_TIMESTAMP(CURDATE());
-+---------------------------+
-| UNIX_TIMESTAMP(CURDATE()) |
-+---------------------------+
-|                1576339200 |
-+---------------------------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> UNIX_TIMESTAMP<span class="token punctuation">(</span>CURDATE<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------------------+</span>
+<span class="token operator">|</span> UNIX_TIMESTAMP<span class="token punctuation">(</span>CURDATE<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------+</span>
+<span class="token operator">|</span>                <span class="token number">1576339200</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; SELECT UNIX_TIMESTAMP(CURTIME());
-+---------------------------+
-| UNIX_TIMESTAMP(CURTIME()) |
-+---------------------------+
-|                1576380969 |
-+---------------------------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> UNIX_TIMESTAMP<span class="token punctuation">(</span>CURTIME<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------------------+</span>
+<span class="token operator">|</span> UNIX_TIMESTAMP<span class="token punctuation">(</span>CURTIME<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------+</span>
+<span class="token operator">|</span>                <span class="token number">1576380969</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; SELECT UNIX_TIMESTAMP('2011-11-11 11:11:11')
-+---------------------------------------+
-| UNIX_TIMESTAMP('2011-11-11 11:11:11') |
-+---------------------------------------+
-|                            1320981071 |
-+---------------------------------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT FROM_UNIXTIME(1576380910);
-+---------------------------+
-| FROM_UNIXTIME(1576380910) |
-+---------------------------+
-| 2019-12-15 11:35:10       |
-+---------------------------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> UNIX_TIMESTAMP<span class="token punctuation">(</span><span class="token string">'2011-11-11 11:11:11'</span><span class="token punctuation">)</span>
+<span class="token operator">+</span><span class="token comment">---------------------------------------+</span>
+<span class="token operator">|</span> UNIX_TIMESTAMP<span class="token punctuation">(</span><span class="token string">'2011-11-11 11:11:11'</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------------------+</span>
+<span class="token operator">|</span>                            <span class="token number">1320981071</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> FROM_UNIXTIME<span class="token punctuation">(</span><span class="token number">1576380910</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------------------+</span>
+<span class="token operator">|</span> FROM_UNIXTIME<span class="token punctuation">(</span><span class="token number">1576380910</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------+</span>
+<span class="token operator">|</span> <span class="token number">2019</span><span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">15</span> <span class="token number">11</span>:<span class="token number">35</span>:<span class="token number">10</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_4-3-获取月份、星期、星期数、天数等函数" tabindex="-1"><a class="header-anchor" href="#_4-3-获取月份、星期、星期数、天数等函数" aria-hidden="true">#</a> 4.3 获取月份、星期、星期数、天数等函数</h3>
 <table>
 <thead>
@@ -543,15 +543,15 @@ mysql&gt; SELECT UNIX_TIMESTAMP('2011-11-11 11:11:11')
 </tbody>
 </table>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT YEAR(CURDATE()),MONTH(CURDATE()),DAY(CURDATE()),
-HOUR(CURTIME()),MINUTE(NOW()),SECOND(SYSDATE())
-FROM DUAL;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211025213504115.png" alt="image-20211025213504115"></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT MONTHNAME('2021-10-26'),DAYNAME('2021-10-26'),WEEKDAY('2021-10-26'),
-QUARTER(CURDATE()),WEEK(CURDATE()),DAYOFYEAR(NOW()),
-DAYOFMONTH(NOW()),DAYOFWEEK(NOW())
-FROM DUAL;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211025214818623.png" alt="image-20211025214818623"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token keyword">YEAR</span><span class="token punctuation">(</span>CURDATE<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">MONTH</span><span class="token punctuation">(</span>CURDATE<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">DAY</span><span class="token punctuation">(</span>CURDATE<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token keyword">HOUR</span><span class="token punctuation">(</span>CURTIME<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">MINUTE</span><span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">SECOND</span><span class="token punctuation">(</span>SYSDATE<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211025213504115.png" alt="image-20211025213504115" loading="lazy"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> MONTHNAME<span class="token punctuation">(</span><span class="token string">'2021-10-26'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>DAYNAME<span class="token punctuation">(</span><span class="token string">'2021-10-26'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>WEEKDAY<span class="token punctuation">(</span><span class="token string">'2021-10-26'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+QUARTER<span class="token punctuation">(</span>CURDATE<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>WEEK<span class="token punctuation">(</span>CURDATE<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>DAYOFYEAR<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+DAYOFMONTH<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>DAYOFWEEK<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211025214818623.png" alt="image-20211025214818623" loading="lazy"></p>
 <h3 id="_4-4-日期的操作函数" tabindex="-1"><a class="header-anchor" href="#_4-4-日期的操作函数" aria-hidden="true">#</a> 4.4 日期的操作函数</h3>
 <table>
 <thead>
@@ -568,11 +568,11 @@ FROM DUAL;
 </tbody>
 </table>
 <p>EXTRACT(type FROM date)函数中type的取值与含义：</p>
-<p><img src="@source/notes/base_mysql/images/image-20211012142639469.png" alt="image-20211012142639469"></p>
-<p><img src="@source/notes/base_mysql/images/image-20211012142746444.png" alt="image-20211012142746444"></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT EXTRACT(MINUTE FROM NOW()),EXTRACT( WEEK FROM NOW()),
-EXTRACT( QUARTER FROM NOW()),EXTRACT( MINUTE_SECOND FROM NOW())
-FROM DUAL;
+<p><img src="@source/notes/base_mysql/images/image-20211012142639469.png" alt="image-20211012142639469" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211012142746444.png" alt="image-20211012142746444" loading="lazy"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> EXTRACT<span class="token punctuation">(</span><span class="token keyword">MINUTE</span> <span class="token keyword">FROM</span> <span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>EXTRACT<span class="token punctuation">(</span> WEEK <span class="token keyword">FROM</span> <span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+EXTRACT<span class="token punctuation">(</span> QUARTER <span class="token keyword">FROM</span> <span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>EXTRACT<span class="token punctuation">(</span> MINUTE_SECOND <span class="token keyword">FROM</span> <span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_4-5-时间和秒钟转换的函数" tabindex="-1"><a class="header-anchor" href="#_4-5-时间和秒钟转换的函数" aria-hidden="true">#</a> 4.5 时间和秒钟转换的函数</h3>
 <table>
 <thead>
@@ -593,20 +593,20 @@ FROM DUAL;
 </tbody>
 </table>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT TIME_TO_SEC(NOW());
-+--------------------+
-| TIME_TO_SEC(NOW()) |
-+--------------------+
-|               78774 |
-+--------------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT SEC_TO_TIME(78774);
-+--------------------+
-| SEC_TO_TIME(78774) |
-+--------------------+
-| 21:52:54            |
-+--------------------+
-1 row in set (0.12 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> TIME_TO_SEC<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------------------+</span>
+<span class="token operator">|</span> TIME_TO_SEC<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------+</span>
+<span class="token operator">|</span>               <span class="token number">78774</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> SEC_TO_TIME<span class="token punctuation">(</span><span class="token number">78774</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------------------+</span>
+<span class="token operator">|</span> SEC_TO_TIME<span class="token punctuation">(</span><span class="token number">78774</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------+</span>
+<span class="token operator">|</span> <span class="token number">21</span>:<span class="token number">52</span>:<span class="token number">54</span>            <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.12</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_4-6-计算日期和时间的函数" tabindex="-1"><a class="header-anchor" href="#_4-6-计算日期和时间的函数" aria-hidden="true">#</a> 4.6 计算日期和时间的函数</h3>
 <p><strong>第1组：</strong></p>
 <table>
@@ -628,18 +628,18 @@ FROM DUAL;
 </tbody>
 </table>
 <p>上述函数中type的取值：</p>
-<p><img src="@source/notes/base_mysql/images/image-20211012143203355.png" alt="image-20211012143203355"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211012143203355.png" alt="image-20211012143203355" loading="lazy"></p>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT DATE_ADD(NOW(), INTERVAL 1 DAY) AS col1,DATE_ADD('2021-10-21 23:32:12',INTERVAL 1 SECOND) AS col2,
-ADDDATE('2021-10-21 23:32:12',INTERVAL 1 SECOND) AS col3,
-DATE_ADD('2021-10-21 23:32:12',INTERVAL '1_1' MINUTE_SECOND) AS col4,
-DATE_ADD(NOW(), INTERVAL -1 YEAR) AS col5, #可以是负数
-DATE_ADD(NOW(), INTERVAL '1_1' YEAR_MONTH) AS col6 #需要单引号
-FROM DUAL;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT DATE_SUB('2021-01-21',INTERVAL 31 DAY) AS col1,
-SUBDATE('2021-01-21',INTERVAL 31 DAY) AS col2,
-DATE_SUB('2021-01-21 02:01:01',INTERVAL '1 1' DAY_HOUR) AS col3
-FROM DUAL;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> DATE_ADD<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">INTERVAL</span> <span class="token number">1</span> <span class="token keyword">DAY</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> col1<span class="token punctuation">,</span>DATE_ADD<span class="token punctuation">(</span><span class="token string">'2021-10-21 23:32:12'</span><span class="token punctuation">,</span><span class="token keyword">INTERVAL</span> <span class="token number">1</span> <span class="token keyword">SECOND</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> col2<span class="token punctuation">,</span>
+ADDDATE<span class="token punctuation">(</span><span class="token string">'2021-10-21 23:32:12'</span><span class="token punctuation">,</span><span class="token keyword">INTERVAL</span> <span class="token number">1</span> <span class="token keyword">SECOND</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> col3<span class="token punctuation">,</span>
+DATE_ADD<span class="token punctuation">(</span><span class="token string">'2021-10-21 23:32:12'</span><span class="token punctuation">,</span><span class="token keyword">INTERVAL</span> <span class="token string">'1_1'</span> MINUTE_SECOND<span class="token punctuation">)</span> <span class="token keyword">AS</span> col4<span class="token punctuation">,</span>
+DATE_ADD<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">INTERVAL</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token keyword">YEAR</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> col5<span class="token punctuation">,</span> <span class="token comment">#可以是负数</span>
+DATE_ADD<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">INTERVAL</span> <span class="token string">'1_1'</span> YEAR_MONTH<span class="token punctuation">)</span> <span class="token keyword">AS</span> col6 <span class="token comment">#需要单引号</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> DATE_SUB<span class="token punctuation">(</span><span class="token string">'2021-01-21'</span><span class="token punctuation">,</span><span class="token keyword">INTERVAL</span> <span class="token number">31</span> <span class="token keyword">DAY</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> col1<span class="token punctuation">,</span>
+SUBDATE<span class="token punctuation">(</span><span class="token string">'2021-01-21'</span><span class="token punctuation">,</span><span class="token keyword">INTERVAL</span> <span class="token number">31</span> <span class="token keyword">DAY</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> col2<span class="token punctuation">,</span>
+DATE_SUB<span class="token punctuation">(</span><span class="token string">'2021-01-21 02:01:01'</span><span class="token punctuation">,</span><span class="token keyword">INTERVAL</span> <span class="token string">'1 1'</span> DAY_HOUR<span class="token punctuation">)</span> <span class="token keyword">AS</span> col3
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>第2组：</strong></p>
 <table>
 <thead>
@@ -692,85 +692,85 @@ FROM DUAL;
 </tbody>
 </table>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT ADDTIME(NOW(),20),SUBTIME(NOW(),30),SUBTIME(NOW(),'1:1:3'),DATEDIFF(NOW(),'2021-10-01'),
-TIMEDIFF(NOW(),'2021-10-25 22:10:10'),FROM_DAYS(366),TO_DAYS('0000-12-25'),
-LAST_DAY(NOW()),MAKEDATE(YEAR(NOW()),12),MAKETIME(10,21,23),PERIOD_ADD(20200101010101,10)
-FROM DUAL;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT ADDTIME(NOW(), 50);
-+---------------------+
-| ADDTIME(NOW(), 50)  |
-+---------------------+
-| 2019-12-15 22:17:47 |
-+---------------------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> ADDTIME<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>SUBTIME<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">,</span>SUBTIME<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'1:1:3'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>DATEDIFF<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'2021-10-01'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+TIMEDIFF<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'2021-10-25 22:10:10'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>FROM_DAYS<span class="token punctuation">(</span><span class="token number">366</span><span class="token punctuation">)</span><span class="token punctuation">,</span>TO_DAYS<span class="token punctuation">(</span><span class="token string">'0000-12-25'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+LAST_DAY<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>MAKEDATE<span class="token punctuation">(</span><span class="token keyword">YEAR</span><span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">,</span>MAKETIME<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">21</span><span class="token punctuation">,</span><span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">,</span>PERIOD_ADD<span class="token punctuation">(</span><span class="token number">20200101010101</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> ADDTIME<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------------+</span>
+<span class="token operator">|</span> ADDTIME<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span>  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------+</span>
+<span class="token operator">|</span> <span class="token number">2019</span><span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">15</span> <span class="token number">22</span>:<span class="token number">17</span>:<span class="token number">47</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; SELECT ADDTIME(NOW(), '1:1:1');
-+-------------------------+
-| ADDTIME(NOW(), '1:1:1') |
-+-------------------------+
-| 2019-12-15 23:18:46     |
-+-------------------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT SUBTIME(NOW(), '1:1:1');
-+-------------------------+
-| SUBTIME(NOW(), '1:1:1') |
-+-------------------------+
-| 2019-12-15 21:23:50     |
-+-------------------------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> ADDTIME<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'1:1:1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+</span>
+<span class="token operator">|</span> ADDTIME<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'1:1:1'</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+</span>
+<span class="token operator">|</span> <span class="token number">2019</span><span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">15</span> <span class="token number">23</span>:<span class="token number">18</span>:<span class="token number">46</span>     <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> SUBTIME<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'1:1:1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+</span>
+<span class="token operator">|</span> SUBTIME<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'1:1:1'</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+</span>
+<span class="token operator">|</span> <span class="token number">2019</span><span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">15</span> <span class="token number">21</span>:<span class="token number">23</span>:<span class="token number">50</span>     <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; SELECT SUBTIME(NOW(), '-1:-1:-1'); 
-+----------------------------+
-| SUBTIME(NOW(), '-1:-1:-1') |
-+----------------------------+
-| 2019-12-15 22:25:11        |
-+----------------------------+
-1 row in set, 1 warning (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT FROM_DAYS(366);
-+----------------+
-| FROM_DAYS(366) |
-+----------------+
-| 0001-01-01     |
-+----------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT MAKEDATE(2020,1);
-+------------------+
-| MAKEDATE(2020,1) |
-+------------------+
-| 2020-01-01       |
-+------------------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> SUBTIME<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'-1:-1:-1'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token operator">+</span><span class="token comment">----------------------------+</span>
+<span class="token operator">|</span> SUBTIME<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'-1:-1:-1'</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------------------+</span>
+<span class="token operator">|</span> <span class="token number">2019</span><span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">15</span> <span class="token number">22</span>:<span class="token number">25</span>:<span class="token number">11</span>        <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span><span class="token punctuation">,</span> <span class="token number">1</span> warning <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> FROM_DAYS<span class="token punctuation">(</span><span class="token number">366</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------------+</span>
+<span class="token operator">|</span> FROM_DAYS<span class="token punctuation">(</span><span class="token number">366</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------+</span>
+<span class="token operator">|</span> <span class="token number">0001</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">01</span>     <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> MAKEDATE<span class="token punctuation">(</span><span class="token number">2020</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------------------+</span>
+<span class="token operator">|</span> MAKEDATE<span class="token punctuation">(</span><span class="token number">2020</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------+</span>
+<span class="token operator">|</span> <span class="token number">2020</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">01</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; SELECT MAKEDATE(2020,32);
-+-------------------+
-| MAKEDATE(2020,32) |
-+-------------------+
-| 2020-02-01        |
-+-------------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT MAKETIME(1,1,1);
-+-----------------+
-| MAKETIME(1,1,1) |
-+-----------------+
-| 01:01:01        |
-+-----------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT PERIOD_ADD(20200101010101,1);
-+------------------------------+
-| PERIOD_ADD(20200101010101,1) |
-+------------------------------+
-|               20200101010102 |
-+------------------------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT TO_DAYS(NOW());
-+----------------+
-| TO_DAYS(NOW()) |
-+----------------+
-|          737773 |
-+----------------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> MAKEDATE<span class="token punctuation">(</span><span class="token number">2020</span><span class="token punctuation">,</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------------------+</span>
+<span class="token operator">|</span> MAKEDATE<span class="token punctuation">(</span><span class="token number">2020</span><span class="token punctuation">,</span><span class="token number">32</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------+</span>
+<span class="token operator">|</span> <span class="token number">2020</span><span class="token operator">-</span><span class="token number">02</span><span class="token operator">-</span><span class="token number">01</span>        <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> MAKETIME<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----------------+</span>
+<span class="token operator">|</span> MAKETIME<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------------+</span>
+<span class="token operator">|</span> <span class="token number">01</span>:<span class="token number">01</span>:<span class="token number">01</span>        <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> PERIOD_ADD<span class="token punctuation">(</span><span class="token number">20200101010101</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------------------------------+</span>
+<span class="token operator">|</span> PERIOD_ADD<span class="token punctuation">(</span><span class="token number">20200101010101</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------------------+</span>
+<span class="token operator">|</span>               <span class="token number">20200101010102</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> TO_DAYS<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------------+</span>
+<span class="token operator">|</span> TO_DAYS<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------+</span>
+<span class="token operator">|</span>          <span class="token number">737773</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例：查询 7 天内的新增用户数有多少？</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT COUNT(*) as num FROM new_user WHERE TO_DAYS(NOW())-TO_DAYS(regist_time)&lt;=7
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">as</span> num <span class="token keyword">FROM</span> new_user <span class="token keyword">WHERE</span> TO_DAYS<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">-</span>TO_DAYS<span class="token punctuation">(</span>regist_time<span class="token punctuation">)</span><span class="token operator">&lt;=</span><span class="token number">7</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_4-7-日期的格式化与解析" tabindex="-1"><a class="header-anchor" href="#_4-7-日期的格式化与解析" aria-hidden="true">#</a> 4.7 日期的格式化与解析</h3>
 <table>
 <thead>
@@ -896,40 +896,40 @@ mysql&gt; SELECT MAKEDATE(2020,32);
 </tbody>
 </table>
 <p>GET_FORMAT函数中date_type和format_type参数取值如下：</p>
-<p><img src="@source/notes/base_mysql/images/image-20211012145231321.png" alt="image-20211012145231321"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211012145231321.png" alt="image-20211012145231321" loading="lazy"></p>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT DATE_FORMAT(NOW(), '%H:%i:%s');
-+--------------------------------+
-| DATE_FORMAT(NOW(), '%H:%i:%s') |
-+--------------------------------+
-| 22:57:34                        |
-+--------------------------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT STR_TO_DATE('09/01/2009','%m/%d/%Y')
-FROM DUAL;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> DATE_FORMAT<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'%H:%i:%s'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------------------------------+</span>
+<span class="token operator">|</span> DATE_FORMAT<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'%H:%i:%s'</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------------------+</span>
+<span class="token operator">|</span> <span class="token number">22</span>:<span class="token number">57</span>:<span class="token number">34</span>                        <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> STR_TO_DATE<span class="token punctuation">(</span><span class="token string">'09/01/2009'</span><span class="token punctuation">,</span><span class="token string">'%m/%d/%Y'</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
 
-SELECT STR_TO_DATE('20140422154706','%Y%m%d%H%i%s')
-FROM DUAL;
+<span class="token keyword">SELECT</span> STR_TO_DATE<span class="token punctuation">(</span><span class="token string">'20140422154706'</span><span class="token punctuation">,</span><span class="token string">'%Y%m%d%H%i%s'</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
 
-SELECT STR_TO_DATE('2014-04-22 15:47:06','%Y-%m-%d %H:%i:%s')
-FROM DUAL;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT GET_FORMAT(DATE, 'USA');
-+-------------------------+
-| GET_FORMAT(DATE, 'USA') |
-+-------------------------+
-| %m.%d.%Y                |
-+-------------------------+
-1 row in set (0.00 sec)
+<span class="token keyword">SELECT</span> STR_TO_DATE<span class="token punctuation">(</span><span class="token string">'2014-04-22 15:47:06'</span><span class="token punctuation">,</span><span class="token string">'%Y-%m-%d %H:%i:%s'</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> GET_FORMAT<span class="token punctuation">(</span><span class="token keyword">DATE</span><span class="token punctuation">,</span> <span class="token string">'USA'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+</span>
+<span class="token operator">|</span> GET_FORMAT<span class="token punctuation">(</span><span class="token keyword">DATE</span><span class="token punctuation">,</span> <span class="token string">'USA'</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+</span>
+<span class="token operator">|</span> <span class="token operator">%</span>m<span class="token punctuation">.</span><span class="token operator">%</span>d<span class="token punctuation">.</span><span class="token operator">%</span>Y                <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-SELECT DATE_FORMAT(NOW(),GET_FORMAT(DATE,'USA')),
-FROM DUAL;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT STR_TO_DATE('2020-01-01 00:00:00','%Y-%m-%d'); 
-+-----------------------------------------------+
-| STR_TO_DATE('2020-01-01 00:00:00','%Y-%m-%d') |
-+-----------------------------------------------+
-| 2020-01-01                                    |
-+-----------------------------------------------+
-1 row in set, 1 warning (0.00 sec)
+<span class="token keyword">SELECT</span> DATE_FORMAT<span class="token punctuation">(</span><span class="token function">NOW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>GET_FORMAT<span class="token punctuation">(</span><span class="token keyword">DATE</span><span class="token punctuation">,</span><span class="token string">'USA'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token keyword">FROM</span> DUAL<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> STR_TO_DATE<span class="token punctuation">(</span><span class="token string">'2020-01-01 00:00:00'</span><span class="token punctuation">,</span><span class="token string">'%Y-%m-%d'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token operator">+</span><span class="token comment">-----------------------------------------------+</span>
+<span class="token operator">|</span> STR_TO_DATE<span class="token punctuation">(</span><span class="token string">'2020-01-01 00:00:00'</span><span class="token punctuation">,</span><span class="token string">'%Y-%m-%d'</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------------------------------------------+</span>
+<span class="token operator">|</span> <span class="token number">2020</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">01</span>                                    <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------------------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span><span class="token punctuation">,</span> <span class="token number">1</span> warning <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_5-流程控制函数" tabindex="-1"><a class="header-anchor" href="#_5-流程控制函数" aria-hidden="true">#</a> 5. 流程控制函数</h2>
 <p>流程处理函数可以根据不同的条件，执行不同的处理流程，可以在SQL语句中实现不同的条件选择。MySQL中的流程处理函数主要包括IF()、IFNULL()和CASE()函数。</p>
 <table>
@@ -958,72 +958,72 @@ FROM DUAL;
 </tr>
 </tbody>
 </table>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT IF(1 &gt; 0,'正确','错误')    
--&gt;正确
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT IFNULL(null,'Hello Word')
--&gt;Hello Word
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT CASE 
-　　WHEN 1 &gt; 0
-　　THEN '1 &gt; 0'
-　　WHEN 2 &gt; 0
-　　THEN '2 &gt; 0'
-　　ELSE '3 &gt; 0'
-　　END
--&gt;1 &gt; 0
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT CASE 1 
-　　WHEN 1 THEN '我是1'
-　　WHEN 2 THEN '我是2'
-ELSE '你是谁'
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT employee_id,salary, CASE WHEN salary&gt;=15000 THEN '高薪' 
-				  WHEN salary&gt;=10000 THEN '潜力股'  
-				  WHEN salary&gt;=8000 THEN '屌丝' 
-				  ELSE '草根' END  &quot;描述&quot;
-FROM employees; 
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT oid,`status`, CASE `status` WHEN 1 THEN '未付款' 
-								   WHEN 2 THEN '已付款' 
-								   WHEN 3 THEN '已发货'  
-								   WHEN 4 THEN '确认收货'  
-								   ELSE '无效订单' END 
-FROM t_order;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT CASE WHEN 1 &gt; 0 THEN 'yes' WHEN 1 &lt;= 0 THEN 'no' ELSE 'unknown' END;
-+---------------------------------------------------------------------+
-| CASE WHEN 1 &gt; 0 THEN 'yes' WHEN 1 &lt;= 0 THEN 'no' ELSE 'unknown' END |
-+---------------------------------------------------------------------+
-| yes                                                                  |
-+---------------------------------------------------------------------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token keyword">IF</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">,</span><span class="token string">'正确'</span><span class="token punctuation">,</span><span class="token string">'错误'</span><span class="token punctuation">)</span>    
+<span class="token operator">-</span><span class="token operator">></span>正确
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> IFNULL<span class="token punctuation">(</span><span class="token boolean">null</span><span class="token punctuation">,</span><span class="token string">'Hello Word'</span><span class="token punctuation">)</span>
+<span class="token operator">-</span><span class="token operator">></span>Hello Word
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token keyword">CASE</span> 
+　　<span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token operator">></span> <span class="token number">0</span>
+　　<span class="token keyword">THEN</span> <span class="token string">'1 > 0'</span>
+　　<span class="token keyword">WHEN</span> <span class="token number">2</span> <span class="token operator">></span> <span class="token number">0</span>
+　　<span class="token keyword">THEN</span> <span class="token string">'2 > 0'</span>
+　　<span class="token keyword">ELSE</span> <span class="token string">'3 > 0'</span>
+　　<span class="token keyword">END</span>
+<span class="token operator">-</span><span class="token operator">></span><span class="token number">1</span> <span class="token operator">></span> <span class="token number">0</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token keyword">CASE</span> <span class="token number">1</span> 
+　　<span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token keyword">THEN</span> <span class="token string">'我是1'</span>
+　　<span class="token keyword">WHEN</span> <span class="token number">2</span> <span class="token keyword">THEN</span> <span class="token string">'我是2'</span>
+<span class="token keyword">ELSE</span> <span class="token string">'你是谁'</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span>salary<span class="token punctuation">,</span> <span class="token keyword">CASE</span> <span class="token keyword">WHEN</span> salary<span class="token operator">>=</span><span class="token number">15000</span> <span class="token keyword">THEN</span> <span class="token string">'高薪'</span> 
+				  <span class="token keyword">WHEN</span> salary<span class="token operator">>=</span><span class="token number">10000</span> <span class="token keyword">THEN</span> <span class="token string">'潜力股'</span>  
+				  <span class="token keyword">WHEN</span> salary<span class="token operator">>=</span><span class="token number">8000</span> <span class="token keyword">THEN</span> <span class="token string">'屌丝'</span> 
+				  <span class="token keyword">ELSE</span> <span class="token string">'草根'</span> <span class="token keyword">END</span>  <span class="token string">"描述"</span>
+<span class="token keyword">FROM</span> employees<span class="token punctuation">;</span> 
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> oid<span class="token punctuation">,</span><span class="token identifier"><span class="token punctuation">`</span>status<span class="token punctuation">`</span></span><span class="token punctuation">,</span> <span class="token keyword">CASE</span> <span class="token identifier"><span class="token punctuation">`</span>status<span class="token punctuation">`</span></span> <span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token keyword">THEN</span> <span class="token string">'未付款'</span> 
+								   <span class="token keyword">WHEN</span> <span class="token number">2</span> <span class="token keyword">THEN</span> <span class="token string">'已付款'</span> 
+								   <span class="token keyword">WHEN</span> <span class="token number">3</span> <span class="token keyword">THEN</span> <span class="token string">'已发货'</span>  
+								   <span class="token keyword">WHEN</span> <span class="token number">4</span> <span class="token keyword">THEN</span> <span class="token string">'确认收货'</span>  
+								   <span class="token keyword">ELSE</span> <span class="token string">'无效订单'</span> <span class="token keyword">END</span> 
+<span class="token keyword">FROM</span> t_order<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token keyword">CASE</span> <span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token operator">></span> <span class="token number">0</span> <span class="token keyword">THEN</span> <span class="token string">'yes'</span> <span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token operator">&lt;=</span> <span class="token number">0</span> <span class="token keyword">THEN</span> <span class="token string">'no'</span> <span class="token keyword">ELSE</span> <span class="token string">'unknown'</span> <span class="token keyword">END</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------------------------------------------------------------+</span>
+<span class="token operator">|</span> <span class="token keyword">CASE</span> <span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token operator">></span> <span class="token number">0</span> <span class="token keyword">THEN</span> <span class="token string">'yes'</span> <span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token operator">&lt;=</span> <span class="token number">0</span> <span class="token keyword">THEN</span> <span class="token string">'no'</span> <span class="token keyword">ELSE</span> <span class="token string">'unknown'</span> <span class="token keyword">END</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------------------------------------------------+</span>
+<span class="token operator">|</span> yes                                                                  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------------------------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; SELECT CASE WHEN 1 &lt; 0 THEN 'yes' WHEN 1 = 0 THEN 'no' ELSE 'unknown' END;  
-+--------------------------------------------------------------------+
-| CASE WHEN 1 &lt; 0 THEN 'yes' WHEN 1 = 0 THEN 'no' ELSE 'unknown' END |
-+--------------------------------------------------------------------+
-| unknown                                                             |
-+--------------------------------------------------------------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT CASE 1 WHEN 0 THEN 0 WHEN 1 THEN 1 ELSE -1 END;
-+------------------------------------------------+
-| CASE 1 WHEN 0 THEN 0 WHEN 1 THEN 1 ELSE -1 END |
-+------------------------------------------------+
-|                                               1 |
-+------------------------------------------------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token keyword">CASE</span> <span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token keyword">THEN</span> <span class="token string">'yes'</span> <span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token operator">=</span> <span class="token number">0</span> <span class="token keyword">THEN</span> <span class="token string">'no'</span> <span class="token keyword">ELSE</span> <span class="token string">'unknown'</span> <span class="token keyword">END</span><span class="token punctuation">;</span>  
+<span class="token operator">+</span><span class="token comment">--------------------------------------------------------------------+</span>
+<span class="token operator">|</span> <span class="token keyword">CASE</span> <span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token keyword">THEN</span> <span class="token string">'yes'</span> <span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token operator">=</span> <span class="token number">0</span> <span class="token keyword">THEN</span> <span class="token string">'no'</span> <span class="token keyword">ELSE</span> <span class="token string">'unknown'</span> <span class="token keyword">END</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------------------------------------------------------+</span>
+<span class="token operator">|</span> unknown                                                             <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------------------------------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token keyword">CASE</span> <span class="token number">1</span> <span class="token keyword">WHEN</span> <span class="token number">0</span> <span class="token keyword">THEN</span> <span class="token number">0</span> <span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token keyword">THEN</span> <span class="token number">1</span> <span class="token keyword">ELSE</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token keyword">END</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------------------------------------------------+</span>
+<span class="token operator">|</span> <span class="token keyword">CASE</span> <span class="token number">1</span> <span class="token keyword">WHEN</span> <span class="token number">0</span> <span class="token keyword">THEN</span> <span class="token number">0</span> <span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token keyword">THEN</span> <span class="token number">1</span> <span class="token keyword">ELSE</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token keyword">END</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------------------------------------+</span>
+<span class="token operator">|</span>                                               <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; SELECT CASE -1 WHEN 0 THEN 0 WHEN 1 THEN 1 ELSE -1 END;
-+-------------------------------------------------+
-| CASE -1 WHEN 0 THEN 0 WHEN 1 THEN 1 ELSE -1 END |
-+-------------------------------------------------+
-|                                               -1 |
-+-------------------------------------------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT employee_id,12 * salary * (1 + IFNULL(commission_pct,0))
-FROM employees;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT last_name, job_id, salary,
-       CASE job_id WHEN 'IT_PROG'  THEN  1.10*salary
-                   WHEN 'ST_CLERK' THEN  1.15*salary
-                   WHEN 'SA_REP'   THEN  1.20*salary
-       			   ELSE      salary END     &quot;REVISED_SALARY&quot;
-FROM   employees;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554980865631.png" alt="1554980865631"></p>
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token keyword">CASE</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token keyword">WHEN</span> <span class="token number">0</span> <span class="token keyword">THEN</span> <span class="token number">0</span> <span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token keyword">THEN</span> <span class="token number">1</span> <span class="token keyword">ELSE</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token keyword">END</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------------------------------------------------+</span>
+<span class="token operator">|</span> <span class="token keyword">CASE</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token keyword">WHEN</span> <span class="token number">0</span> <span class="token keyword">THEN</span> <span class="token number">0</span> <span class="token keyword">WHEN</span> <span class="token number">1</span> <span class="token keyword">THEN</span> <span class="token number">1</span> <span class="token keyword">ELSE</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token keyword">END</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------------------------------+</span>
+<span class="token operator">|</span>                                               <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span><span class="token number">12</span> <span class="token operator">*</span> salary <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> IFNULL<span class="token punctuation">(</span>commission_pct<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> employees<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span> job_id<span class="token punctuation">,</span> salary<span class="token punctuation">,</span>
+       <span class="token keyword">CASE</span> job_id <span class="token keyword">WHEN</span> <span class="token string">'IT_PROG'</span>  <span class="token keyword">THEN</span>  <span class="token number">1.10</span><span class="token operator">*</span>salary
+                   <span class="token keyword">WHEN</span> <span class="token string">'ST_CLERK'</span> <span class="token keyword">THEN</span>  <span class="token number">1.15</span><span class="token operator">*</span>salary
+                   <span class="token keyword">WHEN</span> <span class="token string">'SA_REP'</span>   <span class="token keyword">THEN</span>  <span class="token number">1.20</span><span class="token operator">*</span>salary
+       			   <span class="token keyword">ELSE</span>      salary <span class="token keyword">END</span>     <span class="token string">"REVISED_SALARY"</span>
+<span class="token keyword">FROM</span>   employees<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554980865631.png" alt="1554980865631" loading="lazy"></p>
 <p><strong>练习：查询部门号为 10,20, 30 的员工信息, 若部门号为 10, 则打印其工资的 1.1 倍, 20 号部门, 则打印其工资的 1.2 倍, 30 号部门打印其工资的 1.3 倍数。</strong></p>
 <h2 id="_6-加密与解密函数" tabindex="-1"><a class="header-anchor" href="#_6-加密与解密函数" aria-hidden="true">#</a> 6. 加密与解密函数</h2>
 <p>加密与解密函数主要用于对数据库中的数据进行加密和解密处理，以防止数据被他人窃取。这些函数在保证数据库安全时非常有用。</p>
@@ -1059,31 +1059,31 @@ FROM   employees;
 </table>
 <p>可以看到，ENCODE(value,password_seed)函数与DECODE(value,password_seed)函数互为反函数。</p>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT PASSWORD('mysql'), PASSWORD(NULL);
-+-------------------------------------------+----------------+
-| PASSWORD('mysql')                         | PASSWORD(NULL) |
-+-------------------------------------------+----------------+
-| *E74858DB86EBA20BC33D0AECAE8A8108C56B17FA |                |
-+-------------------------------------------+----------------+
-1 row in set, 1 warning (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT md5('123')
--&gt;202cb962ac59075b964b07152d234b70
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT SHA('Tom123')
--&gt;c7c506980abc31cc390a2438c90861d0f1216d50
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT ENCODE('mysql', 'mysql');
-+--------------------------+
-| ENCODE('mysql', 'mysql') |
-+--------------------------+
-| íg　¼　ìÉ                  |
-+--------------------------+
-1 row in set, 1 warning (0.01 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT DECODE(ENCODE('mysql','mysql'),'mysql');
-+-----------------------------------------+
-| DECODE(ENCODE('mysql','mysql'),'mysql') |
-+-----------------------------------------+
-| mysql                                   |
-+-----------------------------------------+
-1 row in set, 2 warnings (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> PASSWORD<span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> PASSWORD<span class="token punctuation">(</span><span class="token boolean">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------------------------------------------+----------------+</span>
+<span class="token operator">|</span> PASSWORD<span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">)</span>                         <span class="token operator">|</span> PASSWORD<span class="token punctuation">(</span><span class="token boolean">NULL</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------------------------+----------------+</span>
+<span class="token operator">|</span> <span class="token operator">*</span>E74858DB86EBA20BC33D0AECAE8A8108C56B17FA <span class="token operator">|</span>                <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------------------------+----------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span><span class="token punctuation">,</span> <span class="token number">1</span> warning <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> md5<span class="token punctuation">(</span><span class="token string">'123'</span><span class="token punctuation">)</span>
+<span class="token operator">-</span><span class="token operator">></span><span class="token number">202</span>cb962ac59075b964b07152d234b70
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> SHA<span class="token punctuation">(</span><span class="token string">'Tom123'</span><span class="token punctuation">)</span>
+<span class="token operator">-</span><span class="token operator">></span>c7c506980abc31cc390a2438c90861d0f1216d50
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> ENCODE<span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">,</span> <span class="token string">'mysql'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------------------------+</span>
+<span class="token operator">|</span> ENCODE<span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">,</span> <span class="token string">'mysql'</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------------+</span>
+<span class="token operator">|</span> íg　¼　ìÉ                  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span><span class="token punctuation">,</span> <span class="token number">1</span> warning <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> DECODE<span class="token punctuation">(</span>ENCODE<span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">,</span><span class="token string">'mysql'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'mysql'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----------------------------------------+</span>
+<span class="token operator">|</span> DECODE<span class="token punctuation">(</span>ENCODE<span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">,</span><span class="token string">'mysql'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'mysql'</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------------------------------------+</span>
+<span class="token operator">|</span> mysql                                   <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span><span class="token punctuation">,</span> <span class="token number">2</span> <span class="token keyword">warnings</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_7-mysql信息函数" tabindex="-1"><a class="header-anchor" href="#_7-mysql信息函数" aria-hidden="true">#</a> 7. MySQL信息函数</h2>
 <p>MySQL中内置了一些可以查询MySQL信息的函数，这些函数主要用于帮助数据库开发或运维人员更好地对数据库进行维护工作。</p>
 <table>
@@ -1121,42 +1121,42 @@ FROM   employees;
 </tbody>
 </table>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT DATABASE();
-+------------+
-| DATABASE() |
-+------------+
-| test       |
-+------------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token keyword">DATABASE</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------------+</span>
+<span class="token operator">|</span> <span class="token keyword">DATABASE</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------+</span>
+<span class="token operator">|</span> test       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; SELECT DATABASE();
-+------------+
-| DATABASE() |
-+------------+
-| test       |
-+------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT USER(), CURRENT_USER(), SYSTEM_USER(),SESSION_USER();
-+----------------+----------------+----------------+----------------+
-| USER()         | CURRENT_USER() | SYSTEM_USER()  | SESSION_USER() |
-+----------------+----------------+----------------+----------------+
-| root@localhost | root@localhost | root@localhost | root@localhost |
-+----------------+----------------+----------------+----------------+
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token keyword">DATABASE</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------------+</span>
+<span class="token operator">|</span> <span class="token keyword">DATABASE</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------+</span>
+<span class="token operator">|</span> test       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token keyword">USER</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">CURRENT_USER</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">SYSTEM_USER</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">SESSION_USER</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------------+----------------+----------------+----------------+</span>
+<span class="token operator">|</span> <span class="token keyword">USER</span><span class="token punctuation">(</span><span class="token punctuation">)</span>         <span class="token operator">|</span> <span class="token keyword">CURRENT_USER</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token keyword">SYSTEM_USER</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token operator">|</span> <span class="token keyword">SESSION_USER</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------+----------------+----------------+----------------+</span>
+<span class="token operator">|</span> root<span class="token variable">@localhost</span> <span class="token operator">|</span> root<span class="token variable">@localhost</span> <span class="token operator">|</span> root<span class="token variable">@localhost</span> <span class="token operator">|</span> root<span class="token variable">@localhost</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------+----------------+----------------+----------------+</span>
 
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT CHARSET('ABC');
-+----------------+
-| CHARSET('ABC') |
-+----------------+
-| utf8mb4        |
-+----------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT COLLATION('ABC');
-+--------------------+
-| COLLATION('ABC')   |
-+--------------------+
-| utf8mb4_general_ci |
-+--------------------+
-1 row in set (0.00 sec)
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token keyword">CHARSET</span><span class="token punctuation">(</span><span class="token string">'ABC'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------------+</span>
+<span class="token operator">|</span> <span class="token keyword">CHARSET</span><span class="token punctuation">(</span><span class="token string">'ABC'</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------+</span>
+<span class="token operator">|</span> utf8mb4        <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> COLLATION<span class="token punctuation">(</span><span class="token string">'ABC'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------------------+</span>
+<span class="token operator">|</span> COLLATION<span class="token punctuation">(</span><span class="token string">'ABC'</span><span class="token punctuation">)</span>   <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------+</span>
+<span class="token operator">|</span> utf8mb4_general_ci <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_8-其他函数" tabindex="-1"><a class="header-anchor" href="#_8-其他函数" aria-hidden="true">#</a> 8. 其他函数</h2>
 <p>MySQL中有些函数无法对其进行具体的分类，但是这些函数在MySQL的开发和运维过程中也是不容忽视的。</p>
 <table>
@@ -1194,57 +1194,57 @@ mysql&gt; SELECT DATABASE();
 </tbody>
 </table>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># 如果n的值小于或者等于0，则只保留整数部分
-mysql&gt; SELECT FORMAT(123.123, 2), FORMAT(123.523, 0), FORMAT(123.123, -2); 
-+--------------------+--------------------+---------------------+
-| FORMAT(123.123, 2) | FORMAT(123.523, 0) | FORMAT(123.123, -2) |
-+--------------------+--------------------+---------------------+
-| 123.12             | 124                | 123                 |
-+--------------------+--------------------+---------------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT CONV(16, 10, 2), CONV(8888,10,16), CONV(NULL, 10, 2);
-+-----------------+------------------+-------------------+
-| CONV(16, 10, 2) | CONV(8888,10,16) | CONV(NULL, 10, 2) |
-+-----------------+------------------+-------------------+
-| 10000           | 22B8             | NULL              |
-+-----------------+------------------+-------------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT INET_ATON('192.168.1.100');
-+----------------------------+
-| INET_ATON('192.168.1.100') |
-+----------------------------+
-|                 3232235876 |
-+----------------------------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># 如果n的值小于或者等于0，则只保留整数部分</span>
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token function">FORMAT</span><span class="token punctuation">(</span><span class="token number">123.123</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">FORMAT</span><span class="token punctuation">(</span><span class="token number">123.523</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">FORMAT</span><span class="token punctuation">(</span><span class="token number">123.123</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token operator">+</span><span class="token comment">--------------------+--------------------+---------------------+</span>
+<span class="token operator">|</span> <span class="token function">FORMAT</span><span class="token punctuation">(</span><span class="token number">123.123</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token function">FORMAT</span><span class="token punctuation">(</span><span class="token number">123.523</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token function">FORMAT</span><span class="token punctuation">(</span><span class="token number">123.123</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------+--------------------+---------------------+</span>
+<span class="token operator">|</span> <span class="token number">123.12</span>             <span class="token operator">|</span> <span class="token number">124</span>                <span class="token operator">|</span> <span class="token number">123</span>                 <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------+--------------------+---------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> CONV<span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> CONV<span class="token punctuation">(</span><span class="token number">8888</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">,</span> CONV<span class="token punctuation">(</span><span class="token boolean">NULL</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----------------+------------------+-------------------+</span>
+<span class="token operator">|</span> CONV<span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">|</span> CONV<span class="token punctuation">(</span><span class="token number">8888</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">|</span> CONV<span class="token punctuation">(</span><span class="token boolean">NULL</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------------+------------------+-------------------+</span>
+<span class="token operator">|</span> <span class="token number">10000</span>           <span class="token operator">|</span> <span class="token number">22</span>B8             <span class="token operator">|</span> <span class="token boolean">NULL</span>              <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------------+------------------+-------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> INET_ATON<span class="token punctuation">(</span><span class="token string">'192.168.1.100'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------------------------+</span>
+<span class="token operator">|</span> INET_ATON<span class="token punctuation">(</span><span class="token string">'192.168.1.100'</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------------------+</span>
+<span class="token operator">|</span>                 <span class="token number">3232235876</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-# 以“192.168.1.100”为例，计算方式为192乘以256的3次方，加上168乘以256的2次方，加上1乘以256，再加上100。
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT INET_NTOA(3232235876);
-+-----------------------+
-| INET_NTOA(3232235876) |
-+-----------------------+
-| 192.168.1.100         |
-+-----------------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT BENCHMARK(1, MD5('mysql'));
-+----------------------------+
-| BENCHMARK(1, MD5('mysql')) |
-+----------------------------+
-|                          0 |
-+----------------------------+
-1 row in set (0.00 sec)
+<span class="token comment"># 以“192.168.1.100”为例，计算方式为192乘以256的3次方，加上168乘以256的2次方，加上1乘以256，再加上100。</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> INET_NTOA<span class="token punctuation">(</span><span class="token number">3232235876</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----------------------+</span>
+<span class="token operator">|</span> INET_NTOA<span class="token punctuation">(</span><span class="token number">3232235876</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------------------+</span>
+<span class="token operator">|</span> <span class="token number">192.168</span><span class="token number">.1</span><span class="token number">.100</span>         <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> BENCHMARK<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> MD5<span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------------------------+</span>
+<span class="token operator">|</span> BENCHMARK<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> MD5<span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------------------+</span>
+<span class="token operator">|</span>                          <span class="token number">0</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; SELECT BENCHMARK(1000000, MD5('mysql')); 
-+----------------------------------+
-| BENCHMARK(1000000, MD5('mysql')) |
-+----------------------------------+
-|                                0 |
-+----------------------------------+
-1 row in set (0.20 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT CHARSET('mysql'), CHARSET(CONVERT('mysql' USING 'utf8'));
-+------------------+----------------------------------------+
-| CHARSET('mysql') | CHARSET(CONVERT('mysql' USING 'utf8')) |
-+------------------+----------------------------------------+
-| utf8mb4          | utf8                                   |
-+------------------+----------------------------------------+
-1 row in set, 1 warning (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> BENCHMARK<span class="token punctuation">(</span><span class="token number">1000000</span><span class="token punctuation">,</span> MD5<span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token operator">+</span><span class="token comment">----------------------------------+</span>
+<span class="token operator">|</span> BENCHMARK<span class="token punctuation">(</span><span class="token number">1000000</span><span class="token punctuation">,</span> MD5<span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------------------------+</span>
+<span class="token operator">|</span>                                <span class="token number">0</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.20</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token keyword">CHARSET</span><span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">CHARSET</span><span class="token punctuation">(</span><span class="token keyword">CONVERT</span><span class="token punctuation">(</span><span class="token string">'mysql'</span> <span class="token keyword">USING</span> <span class="token string">'utf8'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------------------+----------------------------------------+</span>
+<span class="token operator">|</span> <span class="token keyword">CHARSET</span><span class="token punctuation">(</span><span class="token string">'mysql'</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token keyword">CHARSET</span><span class="token punctuation">(</span><span class="token keyword">CONVERT</span><span class="token punctuation">(</span><span class="token string">'mysql'</span> <span class="token keyword">USING</span> <span class="token string">'utf8'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------+----------------------------------------+</span>
+<span class="token operator">|</span> utf8mb4          <span class="token operator">|</span> utf8                                   <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------+----------------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span><span class="token punctuation">,</span> <span class="token number">1</span> warning <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div></template>

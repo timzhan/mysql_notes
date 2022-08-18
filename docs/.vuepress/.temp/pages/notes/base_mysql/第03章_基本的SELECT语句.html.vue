@@ -88,9 +88,9 @@
 </ul>
 <h3 id="_2-3-注-释" tabindex="-1"><a class="header-anchor" href="#_2-3-注-释" aria-hidden="true">#</a> 2.3 注 释</h3>
 <p>可以使用如下格式的注释结构</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>单行注释：#注释文字(MySQL特有的方式)
-单行注释：-- 注释文字(--后面必须包含一个空格。)
-多行注释：/* 注释文字  */
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>单行注释：<span class="token comment">#注释文字(MySQL特有的方式)</span>
+单行注释：<span class="token comment">-- 注释文字(--后面必须包含一个空格。)</span>
+多行注释：<span class="token comment">/* 注释文字  */</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_2-4-命名规则-暂时了解" tabindex="-1"><a class="header-anchor" href="#_2-4-命名规则-暂时了解" aria-hidden="true">#</a> 2.4 命名规则（暂时了解）</h3>
 <ul>
 <li>数据库、表名不得超过30个字符，变量名限制为29个</li>
@@ -101,59 +101,59 @@
 <li>保持字段名和类型的一致性，在命名字段并为其指定数据类型的时候一定要保证一致性。假如数据类型在一个表里是整数，那在另一个表里可就别变成字符型了</li>
 </ul>
 <p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#以下两句是一样的，不区分大小写
-show databases;
-SHOW DATABASES;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#以下两句是一样的，不区分大小写</span>
+<span class="token keyword">show</span> <span class="token keyword">databases</span><span class="token punctuation">;</span>
+<span class="token keyword">SHOW</span> <span class="token keyword">DATABASES</span><span class="token punctuation">;</span>
 
-#创建表格
-#create table student info(...); #表名错误，因为表名有空格
-create table student_info(...); 
+<span class="token comment">#创建表格</span>
+<span class="token comment">#create table student info(...); #表名错误，因为表名有空格</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> student_info<span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
 
-#其中order使用``飘号，因为order和系统关键字或系统函数名等预定义标识符重名了
-CREATE TABLE `order`(
-    id INT,
-    lname VARCHAR(20)
-);
+<span class="token comment">#其中order使用``飘号，因为order和系统关键字或系统函数名等预定义标识符重名了</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>order<span class="token punctuation">`</span></span><span class="token punctuation">(</span>
+    id <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    lname <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-select id as &quot;编号&quot;, `name` as &quot;姓名&quot; from t_stu; #起别名时，as都可以省略
-select id as 编号, `name` as 姓名 from t_stu; #如果字段别名中没有空格，那么可以省略&quot;&quot;
-select id as 编 号, `name` as 姓 名 from t_stu; #错误，如果字段别名中有空格，那么不能省略&quot;&quot;
+<span class="token keyword">select</span> id <span class="token keyword">as</span> <span class="token string">"编号"</span><span class="token punctuation">,</span> <span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">as</span> <span class="token string">"姓名"</span> <span class="token keyword">from</span> t_stu<span class="token punctuation">;</span> <span class="token comment">#起别名时，as都可以省略</span>
+<span class="token keyword">select</span> id <span class="token keyword">as</span> 编号<span class="token punctuation">,</span> <span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">as</span> 姓名 <span class="token keyword">from</span> t_stu<span class="token punctuation">;</span> <span class="token comment">#如果字段别名中没有空格，那么可以省略""</span>
+<span class="token keyword">select</span> id <span class="token keyword">as</span> 编 号<span class="token punctuation">,</span> <span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">as</span> 姓 名 <span class="token keyword">from</span> t_stu<span class="token punctuation">;</span> <span class="token comment">#错误，如果字段别名中有空格，那么不能省略""</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_2-5-数据导入指令" tabindex="-1"><a class="header-anchor" href="#_2-5-数据导入指令" aria-hidden="true">#</a> 2.5 数据导入指令</h3>
 <p>在命令行客户端登录mysql，使用source指令导入</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; source d:\mysqldb.sql
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; desc employees;
-+----------------+-------------+------+-----+---------+-------+
-| Field          | Type        | Null | Key | Default | Extra |
-+----------------+-------------+------+-----+---------+-------+
-| employee_id    | int(6)      | NO   | PRI | 0       |       |
-| first_name     | varchar(20) | YES  |     | NULL    |       |
-| last_name      | varchar(25) | NO   |     | NULL    |       |
-| email          | varchar(25) | NO   | UNI | NULL    |       |
-| phone_number   | varchar(20) | YES  |     | NULL    |       |
-| hire_date      | date        | NO   |     | NULL    |       |
-| job_id         | varchar(10) | NO   | MUL | NULL    |       |
-| salary         | double(8,2) | YES  |     | NULL    |       |
-| commission_pct | double(2,2) | YES  |     | NULL    |       |
-| manager_id     | int(6)      | YES  | MUL | NULL    |       |
-| department_id  | int(4)      | YES  | MUL | NULL    |       |
-+----------------+-------------+------+-----+---------+-------+
-11 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> source d:\mysqldb<span class="token punctuation">.</span><span class="token keyword">sql</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">desc</span> employees<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> Field          <span class="token operator">|</span> <span class="token keyword">Type</span>        <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> employee_id    <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>      <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> PRI <span class="token operator">|</span> <span class="token number">0</span>       <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> first_name     <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> last_name      <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> email          <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> UNI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> phone_number   <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> hire_date      <span class="token operator">|</span> <span class="token keyword">date</span>        <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> job_id         <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> MUL <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> salary         <span class="token operator">|</span> <span class="token keyword">double</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> commission_pct <span class="token operator">|</span> <span class="token keyword">double</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> manager_id     <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>      <span class="token operator">|</span> YES  <span class="token operator">|</span> MUL <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> department_id  <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>      <span class="token operator">|</span> YES  <span class="token operator">|</span> MUL <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------+-------------+------+-----+---------+-------+</span>
+<span class="token number">11</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_3-基本的select语句" tabindex="-1"><a class="header-anchor" href="#_3-基本的select语句" aria-hidden="true">#</a> 3. 基本的SELECT语句</h2>
 <h3 id="_3-0-select" tabindex="-1"><a class="header-anchor" href="#_3-0-select" aria-hidden="true">#</a> 3.0 SELECT...</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT 1; #没有任何子句
-SELECT 9/2; #没有任何子句
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">#没有任何子句</span>
+<span class="token keyword">SELECT</span> <span class="token number">9</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span> <span class="token comment">#没有任何子句</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-1-select-from" tabindex="-1"><a class="header-anchor" href="#_3-1-select-from" aria-hidden="true">#</a> 3.1 SELECT ... FROM</h3>
 <ul>
 <li>语法：</li>
 </ul>
-<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span>   标识选择哪些列
-<span class="token keyword">FROM</span>     标识从哪个表中选择
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span>  标识选择哪些列
+<span class="token keyword">FROM</span>    标识从哪个表中选择
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>选择全部列：</li>
 </ul>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span>
 <span class="token keyword">FROM</span>   departments<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554950890895.png" alt="1554950890895"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554950890895.png" alt="1554950890895" loading="lazy"></p>
 <blockquote>
 <p>一般情况下，除非需要使用表中所有的字段数据，最好不要使用通配符‘*’。使用通配符虽然可以节省输入查询语句的时间，但是获取不需要的列数据通常会降低查询和所使用的应用程序的效率。通配符的优势是，当不知道所需要的列的名称时，可以通过它获取它们。</p>
 <p>在生产环境下，不推荐你直接使用<code v-pre>SELECT *</code>进行查询。</p>
@@ -163,7 +163,7 @@ SELECT 9/2; #没有任何子句
 </ul>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> department_id<span class="token punctuation">,</span> location_id
 <span class="token keyword">FROM</span>   departments<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554950947969.png" alt="1554950947969"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554950947969.png" alt="1554950947969" loading="lazy"></p>
 <blockquote>
 <p>MySQL中的SQL语句是不区分大小写的，因此SELECT和select的作用是相同的，但是，许多开发人员习惯将关键字大写、数据列和表名小写，读者也应该养成一个良好的编程习惯，这样写出来的代码更容易阅读和维护。</p>
 </blockquote>
@@ -186,30 +186,30 @@ SELECT 9/2; #没有任何子句
 </li>
 <li>
 <p>举例</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT last_name AS name, commission_pct comm
-FROM   employees;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554951616598.png" alt="1554951616598"></p>
-<p><img src="@source/notes/base_mysql/images/1554951622467.png" alt="1554951622467"></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT last_name &quot;Name&quot;, salary*12 &quot;Annual Salary&quot;
-FROM   employees;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> last_name <span class="token keyword">AS</span> name<span class="token punctuation">,</span> commission_pct comm
+<span class="token keyword">FROM</span>   employees<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554951616598.png" alt="1554951616598" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554951622467.png" alt="1554951622467" loading="lazy"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> last_name <span class="token string">"Name"</span><span class="token punctuation">,</span> salary<span class="token operator">*</span><span class="token number">12</span> <span class="token string">"Annual Salary"</span>
+<span class="token keyword">FROM</span>   employees<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div></li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/1554951648377.png" alt="1554951648377"></p>
-<p><img src="@source/notes/base_mysql/images/1554951655368.png" alt="1554951655368"></p>
+<p><img src="@source/notes/base_mysql/images/1554951648377.png" alt="1554951648377" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554951655368.png" alt="1554951655368" loading="lazy"></p>
 <h3 id="_3-3-去除重复行" tabindex="-1"><a class="header-anchor" href="#_3-3-去除重复行" aria-hidden="true">#</a> 3.3 去除重复行</h3>
 <p>默认情况下，查询会返回全部行，包括重复行。</p>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> department_id
 <span class="token keyword">FROM</span>   employees<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554951711115.png" alt="1554951711115"></p>
-<p><img src="@source/notes/base_mysql/images/1554951715923.png" alt="1554951715923"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554951711115.png" alt="1554951711115" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554951715923.png" alt="1554951715923" loading="lazy"></p>
 <p><strong>在SELECT语句中使用关键字DISTINCT去除重复行</strong></p>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span> department_id
 <span class="token keyword">FROM</span>   employees<span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554951796570.png" alt="1554951796570"></p>
-<p><img src="@source/notes/base_mysql/images/1554951801044.png" alt="1554951801044"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554951796570.png" alt="1554951796570" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554951801044.png" alt="1554951801044" loading="lazy"></p>
 <p>针对于：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT DISTINCT department_id,salary 
-FROM employees;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token keyword">DISTINCT</span> department_id<span class="token punctuation">,</span>salary 
+<span class="token keyword">FROM</span> employees<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>这里有两点需要注意：</p>
 <ol>
 <li>DISTINCT 需要放到所有列名的前面，如果写成<code v-pre>SELECT salary, DISTINCT department_id FROM employees</code>会报错。</li>
@@ -227,30 +227,30 @@ FROM employees;
 <ul>
 <li>错误的</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM ORDER;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDER' at line 1
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> <span class="token keyword">ORDER</span><span class="token punctuation">;</span>
+ERROR <span class="token number">1064</span> <span class="token punctuation">(</span><span class="token number">42000</span><span class="token punctuation">)</span>: You have an error <span class="token operator">in</span> your <span class="token keyword">SQL</span> syntax<span class="token punctuation">;</span> <span class="token keyword">check</span> the manual that corresponds <span class="token keyword">to</span> your MySQL server version <span class="token keyword">for</span> the <span class="token keyword">right</span> syntax <span class="token keyword">to</span> <span class="token keyword">use</span> near <span class="token string">'ORDER'</span> at line <span class="token number">1</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>正确的</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM `ORDER`;
-+----------+------------+
-| order_id | order_name |
-+----------+------------+
-|        1 | shkstart   |
-|        2 | tomcat     |
-|        3 | dubbo      |
-+----------+------------+
-3 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> <span class="token identifier"><span class="token punctuation">`</span>ORDER<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------+------------+</span>
+<span class="token operator">|</span> order_id <span class="token operator">|</span> order_name <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------+------------+</span>
+<span class="token operator">|</span>        <span class="token number">1</span> <span class="token operator">|</span> shkstart   <span class="token operator">|</span>
+<span class="token operator">|</span>        <span class="token number">2</span> <span class="token operator">|</span> tomcat     <span class="token operator">|</span>
+<span class="token operator">|</span>        <span class="token number">3</span> <span class="token operator">|</span> dubbo      <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------+------------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; SELECT * FROM `order`;
-+----------+------------+
-| order_id | order_name |
-+----------+------------+
-|        1 | shkstart   |
-|        2 | tomcat     |
-|        3 | dubbo      |
-+----------+------------+
-3 rows in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> <span class="token identifier"><span class="token punctuation">`</span>order<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------+------------+</span>
+<span class="token operator">|</span> order_id <span class="token operator">|</span> order_name <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------+------------+</span>
+<span class="token operator">|</span>        <span class="token number">1</span> <span class="token operator">|</span> shkstart   <span class="token operator">|</span>
+<span class="token operator">|</span>        <span class="token number">2</span> <span class="token operator">|</span> tomcat     <span class="token operator">|</span>
+<span class="token operator">|</span>        <span class="token number">3</span> <span class="token operator">|</span> dubbo      <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------+------------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>结论</li>
 </ul>
@@ -260,29 +260,29 @@ mysql&gt; SELECT * FROM `order`;
 <p>你可能会问为什么我们还要对常数进行查询呢？</p>
 <p>SQL 中的 SELECT 语法的确提供了这个功能，一般来说我们只从一个表中查询数据，通常不需要增加一个固定的常数列，但如果我们想整合不同的数据源，用常数列作为这个表的标记，就需要查询常数。</p>
 <p>比如说，我们想对 employees 数据表中的员工姓名进行查询，同时增加一列字段<code v-pre>corporation</code>，这个字段固定值为“尚硅谷”，可以这样写：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT '尚硅谷' as corporation, last_name FROM employees;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token string">'尚硅谷'</span> <span class="token keyword">as</span> corporation<span class="token punctuation">,</span> last_name <span class="token keyword">FROM</span> employees<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="_4-显示表结构" tabindex="-1"><a class="header-anchor" href="#_4-显示表结构" aria-hidden="true">#</a> 4. 显示表结构</h2>
 <p>使用DESCRIBE 或 DESC 命令，表示表结构。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DESCRIBE employees;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DESCRIBE</span> employees<span class="token punctuation">;</span>
 或
-DESC employees;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; desc employees;
-+----------------+-------------+------+-----+---------+-------+
-| Field          | Type        | Null | Key | Default | Extra |
-+----------------+-------------+------+-----+---------+-------+
-| employee_id    | int(6)      | NO   | PRI | 0       |       |
-| first_name     | varchar(20) | YES  |     | NULL    |       |
-| last_name      | varchar(25) | NO   |     | NULL    |       |
-| email          | varchar(25) | NO   | UNI | NULL    |       |
-| phone_number   | varchar(20) | YES  |     | NULL    |       |
-| hire_date      | date        | NO   |     | NULL    |       |
-| job_id         | varchar(10) | NO   | MUL | NULL    |       |
-| salary         | double(8,2) | YES  |     | NULL    |       |
-| commission_pct | double(2,2) | YES  |     | NULL    |       |
-| manager_id     | int(6)      | YES  | MUL | NULL    |       |
-| department_id  | int(4)      | YES  | MUL | NULL    |       |
-+----------------+-------------+------+-----+---------+-------+
-11 rows in set (0.00 sec)
+<span class="token keyword">DESC</span> employees<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">desc</span> employees<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> Field          <span class="token operator">|</span> <span class="token keyword">Type</span>        <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> employee_id    <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>      <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> PRI <span class="token operator">|</span> <span class="token number">0</span>       <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> first_name     <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> last_name      <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> email          <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> UNI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> phone_number   <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> hire_date      <span class="token operator">|</span> <span class="token keyword">date</span>        <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> job_id         <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> MUL <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> salary         <span class="token operator">|</span> <span class="token keyword">double</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> commission_pct <span class="token operator">|</span> <span class="token keyword">double</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> manager_id     <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>      <span class="token operator">|</span> YES  <span class="token operator">|</span> MUL <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> department_id  <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>      <span class="token operator">|</span> YES  <span class="token operator">|</span> MUL <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------+-------------+------+-----+---------+-------+</span>
+<span class="token number">11</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>其中，各个字段的含义分别解释如下：</p>
 <ul>
 <li>Field：表示字段名称。</li>
@@ -296,13 +296,13 @@ DESC employees;
 <ul>
 <li>背景：</li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/1554952199742.png" alt="1554952199742"></p>
+<p><img src="@source/notes/base_mysql/images/1554952199742.png" alt="1554952199742" loading="lazy"></p>
 <ul>
 <li>
 <p>语法：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT 字段1,字段2
-FROM 表名
-WHERE 过滤条件
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> 字段<span class="token number">1</span><span class="token punctuation">,</span>字段<span class="token number">2</span>
+<span class="token keyword">FROM</span> 表名
+<span class="token keyword">WHERE</span> 过滤条件
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>使用WHERE 子句，将不满足条件的行过滤掉</li>
 <li><strong>WHERE子句紧随 FROM子句</strong></li>
@@ -315,5 +315,5 @@ WHERE 过滤条件
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> employee_id<span class="token punctuation">,</span> last_name<span class="token punctuation">,</span> job_id<span class="token punctuation">,</span> department_id
 <span class="token keyword">FROM</span>   employees
 <span class="token keyword">WHERE</span>  department_id <span class="token operator">=</span> <span class="token number">90</span> <span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554952277028.png" alt="1554952277028"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554952277028.png" alt="1554952277028" loading="lazy"></p>
 </div></template>

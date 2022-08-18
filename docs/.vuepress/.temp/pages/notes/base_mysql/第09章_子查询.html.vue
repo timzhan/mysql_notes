@@ -8,34 +8,34 @@
 <h3 id="_1-1-实际问题" tabindex="-1"><a class="header-anchor" href="#_1-1-实际问题" aria-hidden="true">#</a> 1.1 实际问题</h3>
 <img src="@source/notes/base_mysql/images/1554991034688.png" alt="1554991034688" style="zoom:80%;" />
 <p>现有解决方式：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#方式一：
-SELECT salary
-FROM employees
-WHERE last_name = 'Abel';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#方式一：</span>
+<span class="token keyword">SELECT</span> salary
+<span class="token keyword">FROM</span> employees
+<span class="token keyword">WHERE</span> last_name <span class="token operator">=</span> <span class="token string">'Abel'</span><span class="token punctuation">;</span>
 
-SELECT last_name,salary
-FROM employees
-WHERE salary &gt; 11000;
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>salary
+<span class="token keyword">FROM</span> employees
+<span class="token keyword">WHERE</span> salary <span class="token operator">></span> <span class="token number">11000</span><span class="token punctuation">;</span>
 
-#方式二：自连接
-SELECT e2.last_name,e2.salary
-FROM employees e1,employees e2
-WHERE e1.last_name = 'Abel'
-AND e1.`salary` &lt; e2.`salary`
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#方式三：子查询
-SELECT last_name,salary
-FROM employees
-WHERE salary &gt; (
-		SELECT salary
-		FROM employees
-		WHERE last_name = 'Abel'
-		);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554991316599.png" alt="1554991316599"></p>
+<span class="token comment">#方式二：自连接</span>
+<span class="token keyword">SELECT</span> e2<span class="token punctuation">.</span>last_name<span class="token punctuation">,</span>e2<span class="token punctuation">.</span>salary
+<span class="token keyword">FROM</span> employees e1<span class="token punctuation">,</span>employees e2
+<span class="token keyword">WHERE</span> e1<span class="token punctuation">.</span>last_name <span class="token operator">=</span> <span class="token string">'Abel'</span>
+<span class="token operator">AND</span> e1<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>salary<span class="token punctuation">`</span></span> <span class="token operator">&lt;</span> e2<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>salary<span class="token punctuation">`</span></span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#方式三：子查询</span>
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>salary
+<span class="token keyword">FROM</span> employees
+<span class="token keyword">WHERE</span> salary <span class="token operator">></span> <span class="token punctuation">(</span>
+		<span class="token keyword">SELECT</span> salary
+		<span class="token keyword">FROM</span> employees
+		<span class="token keyword">WHERE</span> last_name <span class="token operator">=</span> <span class="token string">'Abel'</span>
+		<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554991316599.png" alt="1554991316599" loading="lazy"></p>
 <h3 id="_1-2-子查询的基本使用" tabindex="-1"><a class="header-anchor" href="#_1-2-子查询的基本使用" aria-hidden="true">#</a> 1.2 子查询的基本使用</h3>
 <ul>
 <li>子查询的基本语法结构：</li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/1554991054388.png" alt="1554991054388"></p>
+<p><img src="@source/notes/base_mysql/images/1554991054388.png" alt="1554991054388" loading="lazy"></p>
 <ul>
 <li>子查询（内查询）在主查询之前一次执行完成。</li>
 <li>子查询的结果被主查询（外查询）使用 。</li>
@@ -53,13 +53,13 @@ WHERE salary &gt; (
 <ul>
 <li>
 <p>单行子查询</p>
-<p><img src="@source/notes/base_mysql/images/1554991538719.png" alt="1554991538719"></p>
+<p><img src="@source/notes/base_mysql/images/1554991538719.png" alt="1554991538719" loading="lazy"></p>
 </li>
 <li>
 <p>多行子查询</p>
 </li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/1554991555669.png" alt="1554991555669"></p>
+<p><img src="@source/notes/base_mysql/images/1554991555669.png" alt="1554991555669" loading="lazy"></p>
 <p><strong>分类方式2：</strong></p>
 <p>我们按内查询是否被执行多次，将子查询划分为<code v-pre>相关(或关联)子查询</code>和<code v-pre>不相关(或非关联)子查询</code>。</p>
 <p>子查询从数据表中查询了数据结果，如果这个数据结果只执行一次，然后这个数据结果作为主查询的条件进行执行，那么这样的子查询叫做不相关子查询。</p>
@@ -102,8 +102,8 @@ WHERE salary &gt; (
 </table>
 <h3 id="_2-2-代码示例" tabindex="-1"><a class="header-anchor" href="#_2-2-代码示例" aria-hidden="true">#</a> 2.2 代码示例</h3>
 <p><strong>题目：查询工资大于149号员工工资的员工的信息</strong></p>
-<p><img src="@source/notes/base_mysql/images/image-20210914232952626.png" alt="image-20210914232952626"></p>
-<p><img src="@source/notes/base_mysql/images/image-20210914232935062.png" alt="image-20210914232935062"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210914232952626.png" alt="image-20210914232952626" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210914232935062.png" alt="image-20210914232935062" loading="lazy"></p>
 <p><strong>题目：返回job_id与141号员工相同，salary比143号员工多的员工姓名，job_id和工资</strong></p>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span> job_id<span class="token punctuation">,</span> salary
 <span class="token keyword">FROM</span>   employees
@@ -115,14 +115,14 @@ WHERE salary &gt; (
                 <span class="token punctuation">(</span><span class="token keyword">SELECT</span> salary
                  <span class="token keyword">FROM</span>   employees
                  <span class="token keyword">WHERE</span>  employee_id <span class="token operator">=</span> <span class="token number">143</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554991892770.png" alt="1554991892770"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554991892770.png" alt="1554991892770" loading="lazy"></p>
 <p><strong>题目：返回公司工资最少的员工的last_name,job_id和salary</strong></p>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span> job_id<span class="token punctuation">,</span> salary
 <span class="token keyword">FROM</span>   employees
 <span class="token keyword">WHERE</span>  salary <span class="token operator">=</span> 
                 <span class="token punctuation">(</span><span class="token keyword">SELECT</span> <span class="token function">MIN</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span>
                  <span class="token keyword">FROM</span>   employees<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554991935186.png" alt="1554991935186"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554991935186.png" alt="1554991935186" loading="lazy"></p>
 <p><strong>题目：查询与141号或174号员工的manager_id和department_id相同的其他员工的employee_id，manager_id，department_id</strong></p>
 <p>实现方式1：不成对比较</p>
 <div class="language-text ext-text line-numbers-mode"><pre v-pre class="language-text"><code>SELECT  employee_id, manager_id, department_id
@@ -174,7 +174,7 @@ FROM   employees;
                 <span class="token punctuation">(</span><span class="token keyword">SELECT</span> job_id
                  <span class="token keyword">FROM</span>   employees
                  <span class="token keyword">WHERE</span>  last_name <span class="token operator">=</span> <span class="token string">'Haas'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554992067381.png" alt="1554992067381"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554992067381.png" alt="1554992067381" loading="lazy"></p>
 <blockquote>
 <p><strong>子查询不返回任何行</strong></p>
 </blockquote>
@@ -185,7 +185,7 @@ FROM   employees;
                 <span class="token punctuation">(</span><span class="token keyword">SELECT</span>   <span class="token function">MIN</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span>
                  <span class="token keyword">FROM</span>     employees
                  <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> department_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554992135819.png" alt="1554992135819"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554992135819.png" alt="1554992135819" loading="lazy"></p>
 <blockquote>
 <p><strong>多行子查询使用单行比较符</strong></p>
 </blockquote>
@@ -227,42 +227,42 @@ FROM   employees;
 </blockquote>
 <h3 id="_3-2-代码示例" tabindex="-1"><a class="header-anchor" href="#_3-2-代码示例" aria-hidden="true">#</a> 3.2 代码示例</h3>
 <p><strong>题目：返回其它job_id中比job_id为‘IT_PROG’部门任一工资低的员工的员工号、姓名、job_id 以及salary</strong></p>
-<p><img src="@source/notes/base_mysql/images/1554992658876.png" alt="1554992658876"></p>
-<p><img src="@source/notes/base_mysql/images/1554992664594.png" alt="1554992664594"></p>
-<p><img src="@source/notes/base_mysql/images/1554992668429.png" alt="1554992668429"></p>
+<p><img src="@source/notes/base_mysql/images/1554992658876.png" alt="1554992658876" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554992664594.png" alt="1554992664594" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554992668429.png" alt="1554992668429" loading="lazy"></p>
 <p><strong>题目：返回其它job_id中比job_id为‘IT_PROG’部门所有工资都低的员工的员工号、姓名、job_id以及salary</strong></p>
-<p><img src="@source/notes/base_mysql/images/1554992753654.png" alt="1554992753654"></p>
-<p><img src="@source/notes/base_mysql/images/1554992759467.png" alt="1554992759467"></p>
+<p><img src="@source/notes/base_mysql/images/1554992753654.png" alt="1554992753654" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/1554992759467.png" alt="1554992759467" loading="lazy"></p>
 <p><strong>题目：查询平均工资最低的部门id</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#方式1：
-SELECT department_id
-FROM employees
-GROUP BY department_id
-HAVING AVG(salary) = (
-			SELECT MIN(avg_sal)
-			FROM (
-				SELECT AVG(salary) avg_sal
-				FROM employees
-				GROUP BY department_id
-				) dept_avg_sal
-			)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#方式2：
-SELECT department_id
-FROM employees
-GROUP BY department_id
-HAVING AVG(salary) &lt;= ALL (
-				SELECT AVG(salary) avg_sal
-				FROM employees
-				GROUP BY department_id
-)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#方式1：</span>
+<span class="token keyword">SELECT</span> department_id
+<span class="token keyword">FROM</span> employees
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> department_id
+<span class="token keyword">HAVING</span> <span class="token function">AVG</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">(</span>
+			<span class="token keyword">SELECT</span> <span class="token function">MIN</span><span class="token punctuation">(</span>avg_sal<span class="token punctuation">)</span>
+			<span class="token keyword">FROM</span> <span class="token punctuation">(</span>
+				<span class="token keyword">SELECT</span> <span class="token function">AVG</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span> avg_sal
+				<span class="token keyword">FROM</span> employees
+				<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> department_id
+				<span class="token punctuation">)</span> dept_avg_sal
+			<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#方式2：</span>
+<span class="token keyword">SELECT</span> department_id
+<span class="token keyword">FROM</span> employees
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> department_id
+<span class="token keyword">HAVING</span> <span class="token function">AVG</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token keyword">ALL</span> <span class="token punctuation">(</span>
+				<span class="token keyword">SELECT</span> <span class="token function">AVG</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span> avg_sal
+				<span class="token keyword">FROM</span> employees
+				<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> department_id
+<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-3-空值问题" tabindex="-1"><a class="header-anchor" href="#_3-3-空值问题" aria-hidden="true">#</a> 3.3 空值问题</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT last_name
-FROM employees
-WHERE employee_id NOT IN (
-			SELECT manager_id
-			FROM employees
-			);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211027195906773.png" alt="image-20211027195906773"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> last_name
+<span class="token keyword">FROM</span> employees
+<span class="token keyword">WHERE</span> employee_id <span class="token operator">NOT</span> <span class="token operator">IN</span> <span class="token punctuation">(</span>
+			<span class="token keyword">SELECT</span> manager_id
+			<span class="token keyword">FROM</span> employees
+			<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/image-20211027195906773.png" alt="image-20211027195906773" loading="lazy"></p>
 <h2 id="_4-相关子查询" tabindex="-1"><a class="header-anchor" href="#_4-相关子查询" aria-hidden="true">#</a> 4. 相关子查询</h2>
 <h3 id="_4-1-相关子查询执行流程" tabindex="-1"><a class="header-anchor" href="#_4-1-相关子查询执行流程" aria-hidden="true">#</a> 4.1 相关子查询执行流程</h3>
 <p>如果子查询的执行依赖于外部查询，通常情况下都是因为子查询中的表用到了外部的表，并进行了条件关联，因此每执行一次外部查询，子查询都要重新计算一次，这样的子查询就称之为<code v-pre>关联子查询</code>。</p>
@@ -273,7 +273,7 @@ WHERE employee_id NOT IN (
 <h3 id="_4-2-代码示例" tabindex="-1"><a class="header-anchor" href="#_4-2-代码示例" aria-hidden="true">#</a> 4.2 代码示例</h3>
 <p><strong>题目：查询员工中工资大于本部门平均工资的员工的last_name,salary和其department_id</strong></p>
 <p><strong>方式一：相关子查询</strong></p>
-<p><img src="@source/notes/base_mysql/images/1554992986225.png" alt="1554992986225"></p>
+<p><img src="@source/notes/base_mysql/images/1554992986225.png" alt="1554992986225" loading="lazy"></p>
 <p><strong>方式二：在 FROM 中使用子查询</strong></p>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>salary<span class="token punctuation">,</span>e1<span class="token punctuation">.</span>department_id
 <span class="token keyword">FROM</span> employees e1<span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token keyword">SELECT</span> department_id<span class="token punctuation">,</span><span class="token function">AVG</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span> dept_avg_sal <span class="token keyword">FROM</span> employees <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> department_id<span class="token punctuation">)</span> e2
@@ -341,7 +341,7 @@ WHERE  2 &lt;= (SELECT COUNT(*)
 <span class="token keyword">WHERE</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> <span class="token string">'X'</span>
                   <span class="token keyword">FROM</span>   employees
                   <span class="token keyword">WHERE</span>  department_id <span class="token operator">=</span> d<span class="token punctuation">.</span>department_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554993169269.png" alt="1554993169269"></p>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/base_mysql/images/1554993169269.png" alt="1554993169269" loading="lazy"></p>
 <h3 id="_4-4-相关更新" tabindex="-1"><a class="header-anchor" href="#_4-4-相关更新" aria-hidden="true">#</a> 4.4 相关更新</h3>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">UPDATE</span> table1 alias1
 <span class="token keyword">SET</span>    <span class="token keyword">column</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> expression
@@ -349,15 +349,15 @@ WHERE  2 &lt;= (SELECT COUNT(*)
                  <span class="token keyword">WHERE</span>  alias1<span class="token punctuation">.</span><span class="token keyword">column</span> <span class="token operator">=</span> alias2<span class="token punctuation">.</span><span class="token keyword">column</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>使用相关子查询依据一个表中的数据更新另一个表的数据。</p>
 <p><strong>题目：在employees中增加一个department_name字段，数据为员工对应的部门名称</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># 1）
-ALTER TABLE employees
-ADD(department_name VARCHAR2(14));
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># 1）</span>
+<span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> employees
+<span class="token keyword">ADD</span><span class="token punctuation">(</span>department_name VARCHAR2<span class="token punctuation">(</span><span class="token number">14</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-# 2）
-UPDATE employees e
-SET department_name =  (SELECT department_name 
-	                       FROM   departments d
-	                       WHERE  e.department_id = d.department_id);
+<span class="token comment"># 2）</span>
+<span class="token keyword">UPDATE</span> employees e
+<span class="token keyword">SET</span> department_name <span class="token operator">=</span>  <span class="token punctuation">(</span><span class="token keyword">SELECT</span> department_name 
+	                       <span class="token keyword">FROM</span>   departments d
+	                       <span class="token keyword">WHERE</span>  e<span class="token punctuation">.</span>department_id <span class="token operator">=</span> d<span class="token punctuation">.</span>department_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_4-4-相关删除" tabindex="-1"><a class="header-anchor" href="#_4-4-相关删除" aria-hidden="true">#</a> 4.4 相关删除</h3>
 <div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code> <span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> table1 alias1
@@ -374,19 +374,19 @@ SET department_name =  (SELECT department_name
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_5-抛一个思考题" tabindex="-1"><a class="header-anchor" href="#_5-抛一个思考题" aria-hidden="true">#</a> 5. 抛一个思考题</h2>
 <p>**问题：**谁的工资比Abel的高？</p>
 <p><strong>解答：</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#方式1：自连接
-SELECT e2.last_name,e2.salary
-FROM employees e1,employees e2
-WHERE e1.last_name = 'Abel'
-AND e1.`salary` &lt; e2.`salary`
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#方式2：子查询
-SELECT last_name,salary
-FROM employees
-WHERE salary &gt; (
-		SELECT salary
-		FROM employees
-		WHERE last_name = 'Abel'
-		);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#方式1：自连接</span>
+<span class="token keyword">SELECT</span> e2<span class="token punctuation">.</span>last_name<span class="token punctuation">,</span>e2<span class="token punctuation">.</span>salary
+<span class="token keyword">FROM</span> employees e1<span class="token punctuation">,</span>employees e2
+<span class="token keyword">WHERE</span> e1<span class="token punctuation">.</span>last_name <span class="token operator">=</span> <span class="token string">'Abel'</span>
+<span class="token operator">AND</span> e1<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>salary<span class="token punctuation">`</span></span> <span class="token operator">&lt;</span> e2<span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>salary<span class="token punctuation">`</span></span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#方式2：子查询</span>
+<span class="token keyword">SELECT</span> last_name<span class="token punctuation">,</span>salary
+<span class="token keyword">FROM</span> employees
+<span class="token keyword">WHERE</span> salary <span class="token operator">></span> <span class="token punctuation">(</span>
+		<span class="token keyword">SELECT</span> salary
+		<span class="token keyword">FROM</span> employees
+		<span class="token keyword">WHERE</span> last_name <span class="token operator">=</span> <span class="token string">'Abel'</span>
+		<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>**问题：**以上两种方式有好坏之分吗？</p>
 <p>**解答：**自连接方式好！</p>
 <p>题目中可以使用子查询，也可以使用自连接。一般情况建议你使用自连接，因为在许多 DBMS 的处理过程中，对于自连接的处理速度要比子查询快得多。</p>

@@ -2,14 +2,14 @@
 <h2 id="_1-主从复制概述" tabindex="-1"><a class="header-anchor" href="#_1-主从复制概述" aria-hidden="true">#</a> 1. 主从复制概述</h2>
 <h3 id="_1-1-如何提升数据库并发能力" tabindex="-1"><a class="header-anchor" href="#_1-1-如何提升数据库并发能力" aria-hidden="true">#</a> 1.1 如何提升数据库并发能力</h3>
 <p>在实际工作中，我们常常将<code v-pre>Redis</code>作为缓存与<code v-pre>MySQL</code>配合来使用，当有请求的时候，首先会从缓存中进行查找，如果存在就直接取出。如果不存在再访问数据库，这样就<code v-pre>提升了读取的效率</code>，也减少了对后端数据库的<code v-pre>访问压力</code>。Redis的缓存架构是<code v-pre>高并发架构</code>中非常重要的一环。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715202237535.png" alt="image-20220715202237535"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715202237535.png" alt="image-20220715202237535" loading="lazy"></p>
 <p>此外，一般应用对数据库而言都是“ <code v-pre>读多写少</code> ”，也就说对数据库读取数据的压力比较大，有一个思路就是采用数据库集群的方案，做 <code v-pre>主从架构</code> 、进行 <code v-pre>读写分离</code> ，这样同样可以提升数据库的并发处理能力。但并不是所有的应用都需要对数据库进行主从架构的设置，毕竟设置架构本身是有成本的。</p>
 <p>如果我们的目的在于提升数据库高并发访问的效率，那么首先考虑的是如何 <code v-pre>优化SQL和索引</code> ，这种方式 简单有效；其次才是采用 <code v-pre>缓存的策略</code> ，比如使用 Redis将热点数据保存在内存数据库中，提升读取的效率；最后才是对数据库采用 <code v-pre>主从架构</code> ，进行读写分离。</p>
 <p>按照上面的方式进行优化，使用和维护的成本是由低到高的。</p>
 <h3 id="_1-2-主从复制的作用" tabindex="-1"><a class="header-anchor" href="#_1-2-主从复制的作用" aria-hidden="true">#</a> 1.2 主从复制的作用</h3>
 <p>主从同步设计不仅可以提高数据库的吞吐量，还有以下 3 个方面的作用。</p>
 <p>**第1个作用：读写分离。**我们可以通过主从复制的方式来<code v-pre>同步数据</code>，然后通过读写分离提高数据库并发处理能力。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715212521601.png" alt="image-20220715212521601"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715212521601.png" alt="image-20220715212521601" loading="lazy"></p>
 <p>其中一个是Master主库，负责写入数据，我们称之为：写库。</p>
 <p>其他都是Slave从库，负责读取数据，我们称之为：读库。</p>
 <p>当主库进行更新的时候，会自动将数据复制到从库中，而我们在客户端读取数据的时候，会从从库进行读取。</p>
@@ -22,11 +22,11 @@
 <h3 id="_2-1-原理剖析" tabindex="-1"><a class="header-anchor" href="#_2-1-原理剖析" aria-hidden="true">#</a> 2.1 原理剖析</h3>
 <p><strong>三个线程</strong></p>
 <p>实际上主从同步的原理就是基于 binlog 进行数据同步的。在主从复制过程中，会基于 <code v-pre>3 个线程</code> 来操 作，一个主库线程，两个从库线程。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715215944767.png" alt="image-20220715215944767"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715215944767.png" alt="image-20220715215944767" loading="lazy"></p>
 <p><code v-pre>二进制日志转储线程</code> （Binlog dump thread）是一个主库线程。当从库线程连接的时候， 主库可以将二进 制日志发送给从库，当主库读取事件（Event）的时候，会在 Binlog 上 <code v-pre>加锁</code> ，读取完成之后，再将锁释放掉。</p>
 <p><code v-pre>从库 I/O 线程</code> 会连接到主库，向主库发送请求更新 Binlog。这时从库的 I/O 线程就可以读取到主库的二进制日志转储线程发送的 Binlog 更新部分，并且拷贝到本地的中继日志 （Relay log）。</p>
 <p><code v-pre>从库 SQL 线程</code> 会读取从库中的中继日志，并且执行日志中的事件，将从库中的数据与主库保持同步。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715220037213.png" alt="image-20220715220037213"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715220037213.png" alt="image-20220715220037213" loading="lazy"></p>
 <blockquote>
 <p>注意：</p>
 <p>不是所有版本的MySQL都默认开启服务器的二进制日志。在进行主从同步的时候，我们需要先检查服务器是否已经开启了二进制日志。</p>
@@ -46,17 +46,17 @@
 </ul>
 <h2 id="_3-一主一从架构搭建" tabindex="-1"><a class="header-anchor" href="#_3-一主一从架构搭建" aria-hidden="true">#</a> 3. 一主一从架构搭建</h2>
 <p>一台 <code v-pre>主机</code> 用于处理所有 <code v-pre>写请求</code> ，一台 <code v-pre>从机</code> 负责所有 <code v-pre>读请求</code> ，架构图如下:</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715220852836.png" alt="image-20220715220852836"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715220852836.png" alt="image-20220715220852836" loading="lazy"></p>
 <h3 id="_3-1-准备工作" tabindex="-1"><a class="header-anchor" href="#_3-1-准备工作" aria-hidden="true">#</a> 3.1 准备工作</h3>
 <p>1、准备 2台 CentOS 虚拟机 （具体设置内容在P192）</p>
 <p>2、每台虚拟机上需要安装好MySQL (可以是MySQL8.0 )</p>
 <p>说明：前面我们讲过如何克隆一台CentOS。大家可以在一台CentOS上安装好MySQL，进而通过克隆的方式复制出1台包含MySQL的虚拟机。</p>
 <p>注意：克隆的方式需要修改新克隆出来主机的：① <code v-pre>MAC地址</code> ② <code v-pre>hostname</code> ③<code v-pre> IP 地址</code> ④ <code v-pre>UUID</code> 。</p>
 <p>此外，克隆的方式生成的虚拟机（包含MySQL Server），则克隆的虚拟机MySQL Server的UUID相同，必须修改，否则在有些场景会报错。比如： <code v-pre>show slave status\G</code> ，报如下的错误：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>Last_IO_Error: Fatal error: The slave I/O thread stops because master and slave have
-equal MySQL server UUIDs; these UUIDs must be different for replication to work.
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>Last_IO_Error: Fatal error: The slave I<span class="token operator">/</span>O thread stops because master <span class="token operator">and</span> slave have
+equal MySQL server UUIDs<span class="token punctuation">;</span> these UUIDs must be different <span class="token keyword">for</span> <span class="token keyword">replication</span> <span class="token keyword">to</span> <span class="token keyword">work</span><span class="token punctuation">.</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>修改MySQL Server 的UUID方式：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>vim /var/lib/mysql/auto.cnf
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>vim <span class="token operator">/</span>var<span class="token operator">/</span>lib<span class="token operator">/</span>mysql<span class="token operator">/</span>auto<span class="token punctuation">.</span>cnf
 
 systemctl restart mysqld
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-2-主机配置文件" tabindex="-1"><a class="header-anchor" href="#_3-2-主机配置文件" aria-hidden="true">#</a> 3.2 主机配置文件</h3>
@@ -158,13 +158,13 @@ systemctl restart mysqld
 <ul>
 <li>
 <p>必选</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#[必须]从服务器唯一ID
-server-id=2
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#[必须]从服务器唯一ID</span>
+server<span class="token operator">-</span>id<span class="token operator">=</span><span class="token number">2</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div></li>
 <li>
 <p>可选</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#[可选]启用中继日志
-relay-log=mysql-relay
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#[可选]启用中继日志</span>
+relay<span class="token operator">-</span>log<span class="token operator">=</span>mysql<span class="token operator">-</span>relay
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div></li>
 </ul>
 <p>重启后台mysql服务，使配置生效。</p>
@@ -174,25 +174,25 @@ service iptables stop #CentOS 6
 systemctl stop firewalld.service #CentOS 7</p>
 </blockquote>
 <h3 id="_3-4-主机-建立账户并授权" tabindex="-1"><a class="header-anchor" href="#_3-4-主机-建立账户并授权" aria-hidden="true">#</a> 3.4 主机：建立账户并授权</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#在主机MySQL里执行授权主从复制的命令
-GRANT REPLICATION SLAVE ON *.* TO 'slave1'@'从机器数据库IP' IDENTIFIED BY 'abc123'; #5.5,5.7
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#在主机MySQL里执行授权主从复制的命令</span>
+<span class="token keyword">GRANT</span> <span class="token keyword">REPLICATION</span> SLAVE <span class="token keyword">ON</span> <span class="token operator">*</span><span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> <span class="token string">'slave1'</span><span class="token variable">@'从机器数据库IP'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'abc123'</span><span class="token punctuation">;</span> <span class="token comment">#5.5,5.7</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>注意：如果使用的是MySQL8，需要如下的方式建立账户，并授权slave:</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE USER 'slave1'@'%' IDENTIFIED BY '123456';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">USER</span> <span class="token string">'slave1'</span><span class="token variable">@'%'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'123456'</span><span class="token punctuation">;</span>
 
-GRANT REPLICATION SLAVE ON *.* TO 'slave1'@'%';
+<span class="token keyword">GRANT</span> <span class="token keyword">REPLICATION</span> SLAVE <span class="token keyword">ON</span> <span class="token operator">*</span><span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> <span class="token string">'slave1'</span><span class="token variable">@'%'</span><span class="token punctuation">;</span>
 
-#此语句必须执行。否则见下面。
-ALTER USER 'slave1'@'%' IDENTIFIED WITH mysql_native_password BY '123456';
+<span class="token comment">#此语句必须执行。否则见下面。</span>
+<span class="token keyword">ALTER</span> <span class="token keyword">USER</span> <span class="token string">'slave1'</span><span class="token variable">@'%'</span> IDENTIFIED <span class="token keyword">WITH</span> mysql_native_password <span class="token keyword">BY</span> <span class="token string">'123456'</span><span class="token punctuation">;</span>
 
-flush privileges;
+flush <span class="token keyword">privileges</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><blockquote>
 <p>注意：在从机执行show slave status\G时报错：</p>
 <p>Last_IO_Error: error connecting to master 'slave1@192.168.1.150:3306' - retry-time: 60 retries: 1 message:</p>
 <p>Authentication plugin 'caching_sha2_password' reported error: Authentication requires secure connection.</p>
 </blockquote>
 <p>查询Master的状态，并记录下File和Position的值。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show master status;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220718140722740.png" alt="image-20220718140722740"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> master <span class="token keyword">status</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220718140722740.png" alt="image-20220718140722740" loading="lazy"></p>
 <ul>
 <li>记录下File和Position的值</li>
 </ul>
@@ -201,28 +201,28 @@ flush privileges;
 </blockquote>
 <h3 id="_3-5-从机-配置需要复制的主机" tabindex="-1"><a class="header-anchor" href="#_3-5-从机-配置需要复制的主机" aria-hidden="true">#</a> 3.5 从机：配置需要复制的主机</h3>
 <p>**步骤1：**从机上复制主机的命令</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CHANGE MASTER TO
-MASTER_HOST='主机的IP地址',
-MASTER_USER='主机用户名',
-MASTER_PASSWORD='主机用户名的密码',
-MASTER_LOG_FILE='mysql-bin.具体数字',
-MASTER_LOG_POS=具体值;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>CHANGE MASTER <span class="token keyword">TO</span>
+MASTER_HOST<span class="token operator">=</span><span class="token string">'主机的IP地址'</span><span class="token punctuation">,</span>
+MASTER_USER<span class="token operator">=</span><span class="token string">'主机用户名'</span><span class="token punctuation">,</span>
+MASTER_PASSWORD<span class="token operator">=</span><span class="token string">'主机用户名的密码'</span><span class="token punctuation">,</span>
+MASTER_LOG_FILE<span class="token operator">=</span><span class="token string">'mysql-bin.具体数字'</span><span class="token punctuation">,</span>
+MASTER_LOG_POS<span class="token operator">=</span>具体值<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CHANGE MASTER TO
-MASTER_HOST='192.168.1.150',MASTER_USER='slave1',MASTER_PASSWORD='123456',MASTER_LOG_F
-ILE='atguigu-bin.000007',MASTER_LOG_POS=154;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220718140946747.png" alt="image-20220718140946747"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>CHANGE MASTER <span class="token keyword">TO</span>
+MASTER_HOST<span class="token operator">=</span><span class="token string">'192.168.1.150'</span><span class="token punctuation">,</span>MASTER_USER<span class="token operator">=</span><span class="token string">'slave1'</span><span class="token punctuation">,</span>MASTER_PASSWORD<span class="token operator">=</span><span class="token string">'123456'</span><span class="token punctuation">,</span>MASTER_LOG_F
+ILE<span class="token operator">=</span><span class="token string">'atguigu-bin.000007'</span><span class="token punctuation">,</span>MASTER_LOG_POS<span class="token operator">=</span><span class="token number">154</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220718140946747.png" alt="image-20220718140946747" loading="lazy"></p>
 <p><strong>步骤2：</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#启动slave同步
-START SLAVE;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220718141825228.png" alt="image-20220718141825228"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#启动slave同步</span>
+<span class="token keyword">START</span> SLAVE<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220718141825228.png" alt="image-20220718141825228" loading="lazy"></p>
 <p>如果报错：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220718141841862.png" alt="image-20220718141841862"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220718141841862.png" alt="image-20220718141841862" loading="lazy"></p>
 <p>可以执行如下操作，删除之前的relay_log信息。然后重新执行 CHANGE MASTER TO ...语句即可。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; reset slave; #删除SLAVE数据库的relaylog日志文件，并重新启用新的relaylog文件
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> reset slave<span class="token punctuation">;</span> <span class="token comment">#删除SLAVE数据库的relaylog日志文件，并重新启用新的relaylog文件</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>接着，查看同步状态：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW SLAVE STATUS\G;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220718141951374.png" alt="image-20220718141951374"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> SLAVE <span class="token keyword">STATUS</span>\G<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220718141951374.png" alt="image-20220718141951374" loading="lazy"></p>
 <blockquote>
 <p>上面两个参数都是Yes，则说明主从配置成功！</p>
 </blockquote>
@@ -236,34 +236,34 @@ START SLAVE;
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220718142045114.png" alt="image-20220718142045114" style="zoom:80%;" />
 <h3 id="_3-6-测试" tabindex="-1"><a class="header-anchor" href="#_3-6-测试" aria-hidden="true">#</a> 3.6 测试</h3>
 <p>主机新建库、新建表、insert记录，从机复制：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE DATABASE atguigu_master_slave;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> atguigu_master_slave<span class="token punctuation">;</span>
 
-CREATE TABLE mytbl(id INT,NAME VARCHAR(16));
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> mytbl<span class="token punctuation">(</span>id <span class="token keyword">INT</span><span class="token punctuation">,</span>NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO mytbl VALUES(1, 'zhang3');
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> mytbl <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'zhang3'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-INSERT INTO mytbl VALUES(2,@@hostname);
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> mytbl <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span>@<span class="token variable">@hostname</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-7-停止主从同步" tabindex="-1"><a class="header-anchor" href="#_3-7-停止主从同步" aria-hidden="true">#</a> 3.7 停止主从同步</h3>
 <ul>
 <li>
 <p>停止主从同步命令：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>stop slave;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>stop slave<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></li>
 <li>
 <p>如何重新配置主从</p>
 <p>如果停止从服务器复制功能，再使用需要重新配置主从。否则会报错如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220718142549168.png" alt="image-20220718142549168"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220718142549168.png" alt="image-20220718142549168" loading="lazy"></p>
 </li>
 </ul>
 <p>重新配置主从，需要在从机上执行：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>stop slave;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>stop slave<span class="token punctuation">;</span>
 
-reset master; #删除Master中所有的binglog文件，并将日志索引文件清空，重新开始所有新的日志文件(慎用)
+reset master<span class="token punctuation">;</span> <span class="token comment">#删除Master中所有的binglog文件，并将日志索引文件清空，重新开始所有新的日志文件(慎用)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-8-后续" tabindex="-1"><a class="header-anchor" href="#_3-8-后续" aria-hidden="true">#</a> 3.8 后续</h3>
 <p><strong>搭建主从复制：双主双从</strong></p>
 <p>一个主机m1用于处理所有写请求，它的从机s1和另一台主机m2还有它的从机s2负责所有读请求。当m1主机宕机后，m2主机负责写请求，m1、m2互为备机。结构图如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220718143705843.png" alt="image-20220718143705843"></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220718143716620.png" alt="image-20220718143716620"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220718143705843.png" alt="image-20220718143705843" loading="lazy"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220718143716620.png" alt="image-20220718143716620" loading="lazy"></p>
 <h2 id="_4-同步数据一致性问题" tabindex="-1"><a class="header-anchor" href="#_4-同步数据一致性问题" aria-hidden="true">#</a> 4. 同步数据一致性问题</h2>
 <p><strong>主从同步的要求：</strong></p>
 <ul>
@@ -296,21 +296,21 @@ reset master; #删除Master中所有的binglog文件，并将日志索引文件�
 </ol>
 <h3 id="_4-4-如何解决一致性问题" tabindex="-1"><a class="header-anchor" href="#_4-4-如何解决一致性问题" aria-hidden="true">#</a> 4.4 如何解决一致性问题</h3>
 <p>如果操作的数据存储在同一个数据库中，那么对数据进行更新的时候，可以对记录加写锁，这样在读取的时候就不会发生数据不一致的情况。但这时从库的作用就是 <code v-pre>备份</code> ，并没有起到 <code v-pre>读写分离</code> ，分担主库 <code v-pre>读压力</code> 的作用。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220718144341584.png" alt="image-20220718144341584"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220718144341584.png" alt="image-20220718144341584" loading="lazy"></p>
 <p>读写分离情况下，解决主从同步中数据不一致的问题， 就是解决主从之间 <code v-pre>数据复制方式</code> 的问题，如果按照数据一致性 <code v-pre>从弱到强</code> 来进行划分，有以下 3 种复制方式。</p>
 <h4 id="方法-1-异步复制" tabindex="-1"><a class="header-anchor" href="#方法-1-异步复制" aria-hidden="true">#</a> 方法 1：异步复制</h4>
 <p>异步模式就是客户端提交 COMMIT 之后不需要等从库返回任何结果，而是直接将结果返回给客户端，这样做的好处是不会影响主库写的效率，但可能会存在主库宕机，而Binlog还没有同步到从库的情况，也就是此时的主库和从库数据不一致。这时候从从库中选择一个作为新主，那么新主则可能缺少原来主服务器中已提交的事务。所以，这种复制模式下的数据一致性是最弱的。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220718144410731.png" alt="image-20220718144410731"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220718144410731.png" alt="image-20220718144410731" loading="lazy"></p>
 <h4 id="方法-2-半同步复制" tabindex="-1"><a class="header-anchor" href="#方法-2-半同步复制" aria-hidden="true">#</a> 方法 2：半同步复制</h4>
 <img src="@source/notes/senior_mysql/images/image-20220718144926758.png" alt="image-20220718144926758" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220718144958357.png" alt="image-20220718144958357"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220718144958357.png" alt="image-20220718144958357" loading="lazy"></p>
 <h4 id="方法-3-组复制" tabindex="-1"><a class="header-anchor" href="#方法-3-组复制" aria-hidden="true">#</a> 方法 3：组复制</h4>
 <p>异步复制和半同步复制都无法最终保证数据的一致性问题，半同步复制是通过判断从库响应的个数来决定是否返回给客户端，虽然数据一致性相比于异步复制有提升，但仍然无法满足对数据一致性要求高的场景，比如金融领域。MGR 很好地弥补了这两种复制模式的不足。</p>
 <p>组复制技术，简称 MGR（MySQL Group Replication）。是 MySQL 在 5.7.17 版本中推出的一种新的数据复制技术，这种复制技术是基于 Paxos 协议的状态机复制。</p>
 <p><strong>MGR 是如何工作的</strong></p>
 <p>首先我们将多个节点共同组成一个复制组，在 <code v-pre>执行读写（RW）事务</code> 的时候，需要通过一致性协议层 （Consensus 层）的同意，也就是读写事务想要进行提交，必须要经过组里“大多数人”（对应 Node 节 点）的同意，大多数指的是同意的节点数量需要大于 （N/2+1），这样才可以进行提交，而不是原发起方一个说了算。而针对 <code v-pre>只读（RO）事务</code> 则不需要经过组内同意，直接 COMMIT 即可。</p>
 <p>在一个复制组内有多个节点组成，它们各自维护了自己的数据副本，并且在一致性协议层实现了原子消 息和全局有序消息，从而保证组内数据的一致性。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220718145235499.png" alt="image-20220718145235499"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220718145235499.png" alt="image-20220718145235499" loading="lazy"></p>
 <p>MGR 将 MySQL 带入了数据强一致性的时代，是一个划时代的创新，其中一个重要的原因就是MGR 是基 于 Paxos 协议的。Paxos 算法是由 2013 年的图灵奖获得者 Leslie Lamport 于 1990 年提出的，有关这个算法的决策机制可以搜一下。事实上，Paxos 算法提出来之后就作为 <code v-pre>分布式一致性算法</code> 被广泛应用，比如 Apache 的 ZooKeeper 也是基于 Paxos 实现的。</p>
 <h2 id="_5-知识延伸" tabindex="-1"><a class="header-anchor" href="#_5-知识延伸" aria-hidden="true">#</a> 5. 知识延伸</h2>
 <p>在主从架构的配置中，如果想要采取读写分离的策略，我们可以<code v-pre> 自己编写程序</code> ，也可以通过 <code v-pre>第三方的中间件</code> 来实现。</p>
@@ -318,7 +318,7 @@ reset master; #删除Master中所有的binglog文件，并将日志索引文件�
 <li>自己编写程序的好处就在于比较自主，我们可以自己判断哪些查询在从库上来执行，针对实时性要 求高的需求，我们还可以考虑哪些查询可以在主库上执行。同时，程序直接连接数据库，减少了中间件层，相当于减少了性能损耗。</li>
 <li>采用中间件的方法有很明显的优势，<code v-pre> 功能强大</code> ， <code v-pre>使用简单</code> 。但因为在客户端和数据库之间增加了 中间件层会有一些 <code v-pre>性能损耗</code> ，同时商业中间件也是有使用成本的。我们也可以考虑采取一些优秀的开源工具。</li>
 </ul>
-<p><img src="@source/notes/senior_mysql/images/image-20220718145428456.png" alt="image-20220718145428456"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220718145428456.png" alt="image-20220718145428456" loading="lazy"></p>
 <p>① <code v-pre>Cobar</code> 属于阿里B2B事业群，始于2008年，在阿里服役3年多，接管3000+个MySQL数据库的 schema,集群日处理在线SQL请求50亿次以上。由于Cobar发起人的离职，Cobar停止维护。</p>
 <p>② <code v-pre>Mycat</code> 是开源社区在阿里cobar基础上进行二次开发，解决了cobar存在的问题，并且加入了许 多新的功能在其中。青出于蓝而胜于蓝。</p>
 <p>③ <code v-pre>OneProxy</code> 基于MySQL官方的proxy思想利用c语言进行开发的，OneProxy是一款商业 收费 的中 间件。舍弃了一些功能，专注在 性能和稳定性上 。</p>
@@ -327,10 +327,10 @@ reset master; #删除Master中所有的binglog文件，并将日志索引文件�
 <p>⑥ <code v-pre>Atlas</code> 是360团队基于mysql proxy改写，功能还需完善，高并发下不稳定。</p>
 <p>⑦ <code v-pre>MaxScale</code> 是mariadb（MySQL原作者维护的一个版本） 研发的中间件</p>
 <p>⑧ <code v-pre>MySQLRoute</code> 是MySQL官方Oracle公司发布的中间件</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220718145523643.png" alt="image-20220718145523643"></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220718145534856.png" alt="image-20220718145534856"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220718145523643.png" alt="image-20220718145523643" loading="lazy"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220718145534856.png" alt="image-20220718145534856" loading="lazy"></p>
 <p>主备切换：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220718145548526.png" alt="image-20220718145548526"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220718145548526.png" alt="image-20220718145548526" loading="lazy"></p>
 <ul>
 <li>主动切换</li>
 <li>被动切换</li>

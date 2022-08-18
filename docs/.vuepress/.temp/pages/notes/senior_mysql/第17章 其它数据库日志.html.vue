@@ -1,7 +1,7 @@
 <template><div><h1 id="第17章-其他数据库日志" tabindex="-1"><a class="header-anchor" href="#第17章-其他数据库日志" aria-hidden="true">#</a> 第17章_其他数据库日志</h1>
 <img src="@source/notes/senior_mysql/images/image-20220715141705004.png" alt="image-20220715141705004" style="float:left;" />
 <p><strong>千万不要小看日志</strong>。很多看似奇怪的问题，答案往往就藏在日志里。很多情况下，只有通过查看日志才 能发现问题的原因，真正解决问题。所以，一定要学会查看日志，养成检查日志的习惯，对提升你的数 据库应用开发能力至关重要。</p>
-<p>MySQL8.0 官网日志地址：“ https://dev.mysql.com/doc/refman/8.0/en/server-logs.html ”</p>
+<p>MySQL8.0 官网日志地址：“ <a href="https://dev.mysql.com/doc/refman/8.0/en/server-logs.html" target="_blank" rel="noopener noreferrer">https://dev.mysql.com/doc/refman/8.0/en/server-logs.html<ExternalLinkIcon/></a> ”</p>
 <h2 id="_1-mysql支持的日志" tabindex="-1"><a class="header-anchor" href="#_1-mysql支持的日志" aria-hidden="true">#</a> 1. MySQL支持的日志</h2>
 <h3 id="_1-1-日志类型" tabindex="-1"><a class="header-anchor" href="#_1-1-日志类型" aria-hidden="true">#</a> 1.1 日志类型</h3>
 <p>MySQL有不同类型的日志文件，用来存储不同类型的日志，分为 <code v-pre>二进制日志</code> 、 <code v-pre>错误日志</code> 、 <code v-pre>通用查询日志</code> 和 <code v-pre>慢查询日志</code> ，这也是常用的4种。MySQL 8又新增两种支持的日志： 中继日志 和 数据定义语句日志 。使 用这些日志文件，可以查看MySQL内部发生的事情。</p>
@@ -27,14 +27,14 @@
 <h3 id="_3-1-问题场景" tabindex="-1"><a class="header-anchor" href="#_3-1-问题场景" aria-hidden="true">#</a> 3.1 问题场景</h3>
 <img src="@source/notes/senior_mysql/images/image-20220715145650406.png" alt="image-20220715145650406" style="float:left;" />
 <h3 id="_3-2-查看当前状态" tabindex="-1"><a class="header-anchor" href="#_3-2-查看当前状态" aria-hidden="true">#</a> 3.2 查看当前状态</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SHOW VARIABLES LIKE '%general%';
-+------------------+------------------------------+
-| Variable_name    | Value                        |
-+------------------+------------------------------+
-| general_log      | OFF                          | #通用查询日志处于关闭状态
-| general_log_file | /var/lib/mysql/atguigu01.log | #通用查询日志文件的名称是atguigu01.log
-+------------------+------------------------------+
-2 rows in set (0.03 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SHOW</span> VARIABLES <span class="token operator">LIKE</span> <span class="token string">'%general%'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------------------+------------------------------+</span>
+<span class="token operator">|</span> Variable_name    <span class="token operator">|</span> <span class="token keyword">Value</span>                        <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------------------+------------------------------+</span>
+<span class="token operator">|</span> general_log      <span class="token operator">|</span> <span class="token keyword">OFF</span>                          <span class="token operator">|</span> <span class="token comment">#通用查询日志处于关闭状态</span>
+<span class="token operator">|</span> general_log_file <span class="token operator">|</span> <span class="token operator">/</span>var<span class="token operator">/</span>lib<span class="token operator">/</span>mysql<span class="token operator">/</span>atguigu01<span class="token punctuation">.</span>log <span class="token operator">|</span> <span class="token comment">#通用查询日志文件的名称是atguigu01.log</span>
+<span class="token operator">+</span><span class="token comment">------------------+------------------------------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.03</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220715155010381.png" alt="image-20220715155010381" style="float:left;" />
 <h3 id="_3-3-启动日志" tabindex="-1"><a class="header-anchor" href="#_3-3-启动日志" aria-hidden="true">#</a> 3.3 启动日志</h3>
 <p><strong>方式1：永久性方式</strong></p>
@@ -44,12 +44,12 @@
 <span class="token key attr-name">general_log_file</span><span class="token punctuation">=</span><span class="token value attr-value">[path[filename]] #日志文件所在目录路径，filename为日志文件</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>如果不指定目录和文件名，通用查询日志将默认存储在MySQL数据目录中的hostname.log文件中， hostname表示主机名。</p>
 <p><strong>方式2：临时性方式</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET GLOBAL general_log=on; # 开启通用查询日志
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET GLOBAL general_log_file=’path/filename’; # 设置日志文件保存位置
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> <span class="token keyword">GLOBAL</span> general_log<span class="token operator">=</span><span class="token keyword">on</span><span class="token punctuation">;</span> <span class="token comment"># 开启通用查询日志</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> <span class="token keyword">GLOBAL</span> general_log_file<span class="token operator">=</span>’path<span class="token operator">/</span>filename’<span class="token punctuation">;</span> <span class="token comment"># 设置日志文件保存位置</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>对应的，关闭操作SQL命令如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET GLOBAL general_log=off; # 关闭通用查询日志
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> <span class="token keyword">GLOBAL</span> general_log<span class="token operator">=</span><span class="token keyword">off</span><span class="token punctuation">;</span> <span class="token comment"># 关闭通用查询日志</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>查看设置后情况：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW VARIABLES LIKE 'general_log%';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> VARIABLES <span class="token operator">LIKE</span> <span class="token string">'general_log%'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_3-4-查看日志" tabindex="-1"><a class="header-anchor" href="#_3-4-查看日志" aria-hidden="true">#</a> 3.4 查看日志</h3>
 <p>通用查询日志是以 <code v-pre>文本文件</code> 的形式存储在文件系统中的，可以使用 <code v-pre>文本编辑器</code> 直接打开日志文件。每台 MySQL服务器的通用查询日志内容是不同的。</p>
 <ul>
@@ -58,28 +58,28 @@
 <li>在Mac OSX系统中，可以使用文本文件查看器或者vi等工具查看。</li>
 </ul>
 <p>从 <code v-pre>SHOW VARIABLES LIKE 'general_log%'</code>; 结果中可以看到通用查询日志的位置。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>/usr/sbin/mysqld, Version: 8.0.26 (MySQL Community Server - GPL). started with:
-Tcp port: 3306 Unix socket: /var/lib/mysql/mysql.sock
-Time Id Command Argument
-2022-01-04T07:44:58.052890Z 10 Query SHOW VARIABLES LIKE '%general%'
-2022-01-04T07:45:15.666672Z 10 Query SHOW VARIABLES LIKE 'general_log%'
-2022-01-04T07:45:28.970765Z 10 Query select * from student
-2022-01-04T07:47:38.706804Z 11 Connect root@localhost on using Socket
-2022-01-04T07:47:38.707435Z 11 Query select @@version_comment limit 1
-2022-01-04T07:48:21.384886Z 12 Connect root@172.16.210.1 on using TCP/IP
-2022-01-04T07:48:21.385253Z 12 Query SET NAMES utf8
-2022-01-04T07:48:21.385640Z 12 Query USE `atguigu12`
-2022-01-04T07:48:21.386179Z 12 Query SHOW FULL TABLES WHERE Table_Type !=
-'VIEW'
-2022-01-04T07:48:23.901778Z 13 Connect root@172.16.210.1 on using TCP/IP
-2022-01-04T07:48:23.902128Z 13 Query SET NAMES utf8
-2022-01-04T07:48:23.905179Z 13 Query USE `atguigu`
-2022-01-04T07:48:23.905825Z 13 Query SHOW FULL TABLES WHERE Table_Type !=
-'VIEW'
-2022-01-04T07:48:32.163833Z 14 Connect root@172.16.210.1 on using TCP/IP
-2022-01-04T07:48:32.164451Z 14 Query SET NAMES utf8
-2022-01-04T07:48:32.164840Z 14 Query USE `atguigu`
-2022-01-04T07:48:40.006687Z 14 Query select * from account
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token operator">/</span>usr<span class="token operator">/</span>sbin<span class="token operator">/</span>mysqld<span class="token punctuation">,</span> Version: <span class="token number">8.0</span><span class="token number">.26</span> <span class="token punctuation">(</span>MySQL Community Server <span class="token operator">-</span> GPL<span class="token punctuation">)</span><span class="token punctuation">.</span> started <span class="token keyword">with</span>:
+Tcp port: <span class="token number">3306</span> Unix socket: <span class="token operator">/</span>var<span class="token operator">/</span>lib<span class="token operator">/</span>mysql<span class="token operator">/</span>mysql<span class="token punctuation">.</span>sock
+<span class="token keyword">Time</span> Id Command Argument
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">44</span>:<span class="token number">58.052890</span>Z <span class="token number">10</span> Query <span class="token keyword">SHOW</span> VARIABLES <span class="token operator">LIKE</span> <span class="token string">'%general%'</span>
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">45</span>:<span class="token number">15.666672</span>Z <span class="token number">10</span> Query <span class="token keyword">SHOW</span> VARIABLES <span class="token operator">LIKE</span> <span class="token string">'general_log%'</span>
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">45</span>:<span class="token number">28.970765</span>Z <span class="token number">10</span> Query <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">47</span>:<span class="token number">38.706804</span>Z <span class="token number">11</span> <span class="token keyword">Connect</span> root<span class="token variable">@localhost</span> <span class="token keyword">on</span> <span class="token keyword">using</span> Socket
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">47</span>:<span class="token number">38.707435</span>Z <span class="token number">11</span> Query <span class="token keyword">select</span> @<span class="token variable">@version_comment</span> <span class="token keyword">limit</span> <span class="token number">1</span>
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">48</span>:<span class="token number">21.384886</span>Z <span class="token number">12</span> <span class="token keyword">Connect</span> root<span class="token variable">@172.16.210.1</span> <span class="token keyword">on</span> <span class="token keyword">using</span> TCP<span class="token operator">/</span>IP
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">48</span>:<span class="token number">21.385253</span>Z <span class="token number">12</span> Query <span class="token keyword">SET</span> NAMES utf8
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">48</span>:<span class="token number">21.385640</span>Z <span class="token number">12</span> Query <span class="token keyword">USE</span> <span class="token identifier"><span class="token punctuation">`</span>atguigu12<span class="token punctuation">`</span></span>
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">48</span>:<span class="token number">21.386179</span>Z <span class="token number">12</span> Query <span class="token keyword">SHOW</span> <span class="token keyword">FULL</span> <span class="token keyword">TABLES</span> <span class="token keyword">WHERE</span> Table_Type <span class="token operator">!=</span>
+<span class="token string">'VIEW'</span>
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">48</span>:<span class="token number">23.901778</span>Z <span class="token number">13</span> <span class="token keyword">Connect</span> root<span class="token variable">@172.16.210.1</span> <span class="token keyword">on</span> <span class="token keyword">using</span> TCP<span class="token operator">/</span>IP
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">48</span>:<span class="token number">23.902128</span>Z <span class="token number">13</span> Query <span class="token keyword">SET</span> NAMES utf8
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">48</span>:<span class="token number">23.905179</span>Z <span class="token number">13</span> Query <span class="token keyword">USE</span> <span class="token identifier"><span class="token punctuation">`</span>atguigu<span class="token punctuation">`</span></span>
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">48</span>:<span class="token number">23.905825</span>Z <span class="token number">13</span> Query <span class="token keyword">SHOW</span> <span class="token keyword">FULL</span> <span class="token keyword">TABLES</span> <span class="token keyword">WHERE</span> Table_Type <span class="token operator">!=</span>
+<span class="token string">'VIEW'</span>
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">48</span>:<span class="token number">32.163833</span>Z <span class="token number">14</span> <span class="token keyword">Connect</span> root<span class="token variable">@172.16.210.1</span> <span class="token keyword">on</span> <span class="token keyword">using</span> TCP<span class="token operator">/</span>IP
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">48</span>:<span class="token number">32.164451</span>Z <span class="token number">14</span> Query <span class="token keyword">SET</span> NAMES utf8
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">48</span>:<span class="token number">32.164840</span>Z <span class="token number">14</span> Query <span class="token keyword">USE</span> <span class="token identifier"><span class="token punctuation">`</span>atguigu<span class="token punctuation">`</span></span>
+<span class="token number">2022</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">04</span>T07:<span class="token number">48</span>:<span class="token number">40.006687</span>Z <span class="token number">14</span> Query <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> account
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>在通用查询日志里面，我们可以清楚地看到，什么时候开启了新的客户端登陆数据库，登录之后做了什么 SQL 操作，针对的是哪个数据表等信息。</p>
 <h3 id="_3-5-停止日志" tabindex="-1"><a class="header-anchor" href="#_3-5-停止日志" aria-hidden="true">#</a> 3.5 停止日志</h3>
 <p><strong>方式1：永久性方式</strong></p>
@@ -92,16 +92,16 @@ Time Id Command Argument
 <span class="token comment">#general_log=ON</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>方式2：临时性方式</strong></p>
 <p>使用SET语句停止MySQL通用查询日志功能：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET GLOBAL general_log=off;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> <span class="token keyword">GLOBAL</span> general_log<span class="token operator">=</span><span class="token keyword">off</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>查询通用日志功能：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW VARIABLES LIKE 'general_log%';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> VARIABLES <span class="token operator">LIKE</span> <span class="token string">'general_log%'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_3-6-删除-刷新日志" tabindex="-1"><a class="header-anchor" href="#_3-6-删除-刷新日志" aria-hidden="true">#</a> 3.6 删除\刷新日志</h3>
 <p>如果数据的使用非常频繁，那么通用查询日志会占用服务器非常大的磁盘空间。数据管理员可以删除很长时间之前的查询日志，以保证MySQL服务器上的硬盘空间。</p>
 <p><strong>手动删除文件</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW VARIABLES LIKE 'general_log%';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> VARIABLES <span class="token operator">LIKE</span> <span class="token string">'general_log%'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>可以看出，通用查询日志的目录默认为MySQL数据目录。在该目录下手动删除通用查询日志 atguigu01.log</p>
 <p>使用如下命令重新生成查询日志文件，具体命令如下。刷新MySQL数据目录，发现创建了新的日志文 件。前提一定要开启通用日志。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqladmin -uroot -p flush-logs
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqladmin <span class="token operator">-</span>uroot <span class="token operator">-</span>p flush<span class="token operator">-</span>logs
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>如果希望备份旧的通用查询日志，就必须先将旧的日志文件复制出来或者改名，然后执行上面的mysqladmin命令。正确流程如下：</p>
 <div class="language-liunx ext-liunx line-numbers-mode"><pre v-pre class="language-liunx"><code>cd mysql-data-directory # 输入自己的通用日志文件所在目录
 mv mysql.general.log mysql.general.log.old # 指定旧的文件名 以及 新的文件名
@@ -117,16 +117,16 @@ mysqladmin -uroot -p flush-logs
 <h3 id="_4-2-查看日志" tabindex="-1"><a class="header-anchor" href="#_4-2-查看日志" aria-hidden="true">#</a> 4.2 查看日志</h3>
 <p>MySQL错误日志是以文本文件形式存储的，可以使用文本编辑器直接查看。</p>
 <p>查询错误日志的存储路径：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SHOW VARIABLES LIKE 'log_err%';
-+----------------------------+----------------------------------------+
-| Variable_name              | Value                                  |
-+----------------------------+----------------------------------------+
-| log_error                  | /var/log/mysqld.log                    |
-| log_error_services         | log_filter_internal; log_sink_internal |
-| log_error_suppression_list |                                        |
-| log_error_verbosity        | 2                                      |
-+----------------------------+----------------------------------------+
-4 rows in set (0.01 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SHOW</span> VARIABLES <span class="token operator">LIKE</span> <span class="token string">'log_err%'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------------------------+----------------------------------------+</span>
+<span class="token operator">|</span> Variable_name              <span class="token operator">|</span> <span class="token keyword">Value</span>                                  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------------------+----------------------------------------+</span>
+<span class="token operator">|</span> log_error                  <span class="token operator">|</span> <span class="token operator">/</span>var<span class="token operator">/</span>log<span class="token operator">/</span>mysqld<span class="token punctuation">.</span>log                    <span class="token operator">|</span>
+<span class="token operator">|</span> log_error_services         <span class="token operator">|</span> log_filter_internal<span class="token punctuation">;</span> log_sink_internal <span class="token operator">|</span>
+<span class="token operator">|</span> log_error_suppression_list <span class="token operator">|</span>                                        <span class="token operator">|</span>
+<span class="token operator">|</span> log_error_verbosity        <span class="token operator">|</span> <span class="token number">2</span>                                      <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------------------------+----------------------------------------+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>执行结果中可以看到错误日志文件是mysqld.log，位于MySQL默认的数据目录下。</p>
 <img src="@source/notes/senior_mysql/images/image-20220715160657093.png" alt="image-20220715160657093" style="float:left;" />
 <h3 id="_4-3-删除-刷新日志" tabindex="-1"><a class="header-anchor" href="#_4-3-删除-刷新日志" aria-hidden="true">#</a> 4.3 删除\刷新日志</h3>
@@ -134,27 +134,27 @@ mysqladmin -uroot -p flush-logs
 <ul>
 <li>
 <p>第一步（方式1）：删除操作</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>rm -f /var/lib/mysql/mysqld.log
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>rm <span class="token operator">-</span>f <span class="token operator">/</span>var<span class="token operator">/</span>lib<span class="token operator">/</span>mysql<span class="token operator">/</span>mysqld<span class="token punctuation">.</span>log
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>在运行状态下删除错误日志文件后，MySQL并不会自动创建日志文件。</p>
 </li>
 <li>
 <p>第一步（方式2）：重命名文件</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mv /var/log/mysqld.log /var/log/mysqld.log.old
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mv <span class="token operator">/</span>var<span class="token operator">/</span>log<span class="token operator">/</span>mysqld<span class="token punctuation">.</span>log <span class="token operator">/</span>var<span class="token operator">/</span>log<span class="token operator">/</span>mysqld<span class="token punctuation">.</span>log<span class="token punctuation">.</span>old
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></li>
 <li>
 <p>第二步：重建日志</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqladmin -uroot -p flush-logs
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqladmin <span class="token operator">-</span>uroot <span class="token operator">-</span>p flush<span class="token operator">-</span>logs
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>可能会报错</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>[root@atguigu01 log]# mysqladmin -uroot -p flush-logs
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token punctuation">[</span>root<span class="token variable">@atguigu01</span> log<span class="token punctuation">]</span><span class="token comment"># mysqladmin -uroot -p flush-logs</span>
 Enter password:
-mysqladmin: refresh failed; error: 'Could not open file '/var/log/mysqld.log' for
-error logging.'
+mysqladmin: refresh failed<span class="token punctuation">;</span> error: <span class="token string">'Could not open file '</span><span class="token operator">/</span>var<span class="token operator">/</span>log<span class="token operator">/</span>mysqld<span class="token punctuation">.</span>log<span class="token string">' for
+error logging.'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>官网提示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715161132368.png" alt="image-20220715161132368"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715161132368.png" alt="image-20220715161132368" loading="lazy"></p>
 </li>
 </ul>
 <p>补充操作：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>install -omysql -gmysql -m0644 /dev/null /var/log/mysqld.log
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>install <span class="token operator">-</span>omysql <span class="token operator">-</span>gmysql <span class="token operator">-</span>m0644 <span class="token operator">/</span>dev<span class="token operator">/</span><span class="token boolean">null</span> <span class="token operator">/</span>var<span class="token operator">/</span>log<span class="token operator">/</span>mysqld<span class="token punctuation">.</span>log
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220715161216556.png" alt="image-20220715161216556" style="float:left;" />
 <h3 id="_4-4-mysql-8-0-新特性" tabindex="-1"><a class="header-anchor" href="#_4-4-mysql-8-0-新特性" aria-hidden="true">#</a> 4.4 MySQL 8.0 新特性</h3>
 <img src="@source/notes/senior_mysql/images/image-20220715161321565.png" alt="image-20220715161321565" style="float:left;" />
@@ -171,21 +171,21 @@ error logging.'
 </blockquote>
 <p>binlog主要应用场景：</p>
   <img src="@source/notes/senior_mysql/images/image-20220715161800635.png" alt="image-20220715161800635" style="zoom:100%;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220715161842703.png" alt="image-20220715161842703"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715161842703.png" alt="image-20220715161842703" loading="lazy"></p>
 <h3 id="_5-1-查看默认情况" tabindex="-1"><a class="header-anchor" href="#_5-1-查看默认情况" aria-hidden="true">#</a> 5.1 查看默认情况</h3>
 <p>查看记录二进制日志是否开启：在MySQL8中默认情况下，二进制文件是开启的。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show variables like '%log_bin%';
-+---------------------------------+----------------------------------+
-| Variable_name                   | Value                            |
-+---------------------------------+----------------------------------+
-| log_bin                         | ON                               |
-| log_bin_basename                | /var/lib/mysql/binlog            |
-| log_bin_index                   | /var/lib/mysql/binlog.index      |
-| log_bin_trust_function_creators | OFF                              |
-| log_bin_use_v1_row_events       | OFF                              |
-| sql_log_bin                     | ON                               |
-+---------------------------------+----------------------------------+
-6 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'%log_bin%'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------------------------+----------------------------------+</span>
+<span class="token operator">|</span> Variable_name                   <span class="token operator">|</span> <span class="token keyword">Value</span>                            <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------------+----------------------------------+</span>
+<span class="token operator">|</span> log_bin                         <span class="token operator">|</span> <span class="token keyword">ON</span>                               <span class="token operator">|</span>
+<span class="token operator">|</span> log_bin_basename                <span class="token operator">|</span> <span class="token operator">/</span>var<span class="token operator">/</span>lib<span class="token operator">/</span>mysql<span class="token operator">/</span>binlog            <span class="token operator">|</span>
+<span class="token operator">|</span> log_bin_index                   <span class="token operator">|</span> <span class="token operator">/</span>var<span class="token operator">/</span>lib<span class="token operator">/</span>mysql<span class="token operator">/</span>binlog<span class="token punctuation">.</span><span class="token keyword">index</span>      <span class="token operator">|</span>
+<span class="token operator">|</span> log_bin_trust_function_creators <span class="token operator">|</span> <span class="token keyword">OFF</span>                              <span class="token operator">|</span>
+<span class="token operator">|</span> log_bin_use_v1_row_events       <span class="token operator">|</span> <span class="token keyword">OFF</span>                              <span class="token operator">|</span>
+<span class="token operator">|</span> sql_log_bin                     <span class="token operator">|</span> <span class="token keyword">ON</span>                               <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------------+----------------------------------+</span>
+<span class="token number">6</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220715163520596.png" alt="image-20220715163520596" style="float:left;" />
 <h3 id="_5-2-日志参数设置" tabindex="-1"><a class="header-anchor" href="#_5-2-日志参数设置" aria-hidden="true">#</a> 5.2 日志参数设置</h3>
 <p><strong>方式1：永久性方式</strong></p>
@@ -197,177 +197,177 @@ error logging.'
 <span class="token key attr-name">max_binlog_size</span><span class="token punctuation">=</span><span class="token value attr-value">100M</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220715163811664.png" alt="image-20220715163811664" style="float:left;" />
 <p>重新启动MySQL服务，查询二进制日志的信息，执行结果：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show variables like '%log_bin%';
-+---------------------------------+----------------------------------+
-| Variable_name                   | Value                            |
-+---------------------------------+----------------------------------+
-| log_bin                         | ON                               |
-| log_bin_basename                | /var/lib/mysql/atguigu-bin       |
-| log_bin_index                   | /var/lib/mysql/atguigu-bin.index |
-| log_bin_trust_function_creators | OFF                              |
-| log_bin_use_v1_row_events       | OFF                              |
-| sql_log_bin                     | ON                               |
-+---------------------------------+----------------------------------+
-6 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'%log_bin%'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------------------------+----------------------------------+</span>
+<span class="token operator">|</span> Variable_name                   <span class="token operator">|</span> <span class="token keyword">Value</span>                            <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------------+----------------------------------+</span>
+<span class="token operator">|</span> log_bin                         <span class="token operator">|</span> <span class="token keyword">ON</span>                               <span class="token operator">|</span>
+<span class="token operator">|</span> log_bin_basename                <span class="token operator">|</span> <span class="token operator">/</span>var<span class="token operator">/</span>lib<span class="token operator">/</span>mysql<span class="token operator">/</span>atguigu<span class="token operator">-</span>bin       <span class="token operator">|</span>
+<span class="token operator">|</span> log_bin_index                   <span class="token operator">|</span> <span class="token operator">/</span>var<span class="token operator">/</span>lib<span class="token operator">/</span>mysql<span class="token operator">/</span>atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token keyword">index</span> <span class="token operator">|</span>
+<span class="token operator">|</span> log_bin_trust_function_creators <span class="token operator">|</span> <span class="token keyword">OFF</span>                              <span class="token operator">|</span>
+<span class="token operator">|</span> log_bin_use_v1_row_events       <span class="token operator">|</span> <span class="token keyword">OFF</span>                              <span class="token operator">|</span>
+<span class="token operator">|</span> sql_log_bin                     <span class="token operator">|</span> <span class="token keyword">ON</span>                               <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------------------------+----------------------------------+</span>
+<span class="token number">6</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>设置带文件夹的bin-log日志存放目录</strong></p>
 <p>如果想改变日志文件的目录和名称，可以对my.cnf或my.ini中的log_bin参数修改如下：</p>
 <div class="language-properties ext-properties line-numbers-mode"><pre v-pre class="language-properties"><code>[mysqld]
 <span class="token key attr-name">log-bin</span><span class="token punctuation">=</span><span class="token value attr-value">"/var/lib/mysql/binlog/atguigu-bin"</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>注意：新建的文件夹需要使用mysql用户，使用下面的命令即可。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>chown -R -v mysql:mysql binlog
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>chown <span class="token operator">-</span>R <span class="token operator">-</span>v mysql:mysql binlog
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220715164107352.png" alt="image-20220715164107352" style="float:left;" />
 <p><strong>方式2：临时性方式</strong></p>
 <p>如果不希望通过修改配置文件并重启的方式设置二进制日志的话，还可以使用如下指令，需要注意的是 在mysql8中只有 <code v-pre>会话级别</code> 的设置，没有了global级别的设置。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># global 级别
-mysql&gt; set global sql_log_bin=0;
-ERROR 1228 (HY000): Variable 'sql_log_bin' is a SESSION variable and can`t be used
-with SET GLOBAL
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># global 级别</span>
+mysql<span class="token operator">></span> <span class="token keyword">set</span> <span class="token keyword">global</span> sql_log_bin<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+ERROR <span class="token number">1228</span> <span class="token punctuation">(</span>HY000<span class="token punctuation">)</span>: Variable <span class="token string">'sql_log_bin'</span> <span class="token operator">is</span> a <span class="token keyword">SESSION</span> variable <span class="token operator">and</span> can<span class="token punctuation">`</span>t be used
+<span class="token keyword">with</span> <span class="token keyword">SET</span> <span class="token keyword">GLOBAL</span>
 
-# session级别
-mysql&gt; SET sql_log_bin=0;
-Query OK, 0 rows affected (0.01 秒)
+<span class="token comment"># session级别</span>
+mysql<span class="token operator">></span> <span class="token keyword">SET</span> sql_log_bin<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.01</span> 秒<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_5-3-查看日志" tabindex="-1"><a class="header-anchor" href="#_5-3-查看日志" aria-hidden="true">#</a> 5.3 查看日志</h3>
 <p>当MySQL创建二进制日志文件时，先创建一个以“filename”为名称、以“.index”为后缀的文件，再创建一 个以“filename”为名称、以“.000001”为后缀的文件。</p>
 <p>MySQL服务 <code v-pre>重新启动一次</code> ，以“.000001”为后缀的文件就会增加一个，并且后缀名按1递增。即日志文件的 个数与MySQL服务启动的次数相同；如果日志长度超过了 <code v-pre>max_binlog_size</code> 的上限（默认是1GB），就会创建一个新的日志文件。</p>
 <p>查看当前的二进制日志文件列表及大小。指令如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SHOW BINARY LOGS;
-+--------------------+-----------+-----------+
-| Log_name           | File_size | Encrypted |
-+--------------------+-----------+-----------+
-| atguigu-bin.000001 | 156       | No        |
-+--------------------+-----------+-----------+
-1 行于数据集 (0.02 秒)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SHOW</span> <span class="token keyword">BINARY</span> LOGS<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------------------+-----------+-----------+</span>
+<span class="token operator">|</span> Log_name           <span class="token operator">|</span> File_size <span class="token operator">|</span> Encrypted <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------+-----------+-----------+</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000001</span> <span class="token operator">|</span> <span class="token number">156</span>       <span class="token operator">|</span> <span class="token keyword">No</span>        <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------+-----------+-----------+</span>
+<span class="token number">1</span> 行于数据集 <span class="token punctuation">(</span><span class="token number">0.02</span> 秒<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>所有对数据库的修改都会记录在binlog中。但binlog是二进制文件，无法直接查看，想要更直观的观测它就要借助<code v-pre>mysqlbinlog</code>命令工具了。指令如下：在查看执行，先执行一条SQL语句，如下</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>update student set name='张三_back' where id=1;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">update</span> student <span class="token keyword">set</span> name<span class="token operator">=</span><span class="token string">'张三_back'</span> <span class="token keyword">where</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>开始查看binlog</p>
 <img src="@source/notes/senior_mysql/images/image-20220715164718970.png" alt="image-20220715164718970" style="float:left;" />
 <img src="@source/notes/senior_mysql/images/image-20220715164743351.png" alt="image-20220715164743351" style="float:left;" />
 <img src="@source/notes/senior_mysql/images/image-20220715164809401.png" alt="image-20220715164809401" style="float:left;" />
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqlbinlog -v &quot;/var/lib/mysql/binlog/atguigu-bin.000002&quot;
-#220105 9:16:37 server id 1 end_log_pos 324 CRC32 0x6b31978b Query thread_id=10
-exec_time=0 error_code=0
-SET TIMESTAMP=1641345397/*!*/;
-SET @@session.pseudo_thread_id=10/*!*/;
-SET @@session.foreign_key_checks=1, @@session.sql_auto_is_null=0,
-@@session.unique_checks=1, @@session.autocommit=1/*!*/;
-SET @@session.sql_mode=1168113696/*!*/;
-SET @@session.auto_increment_increment=1, @@session.auto_increment_offset=1/*!*/;
-/*!\C utf8mb3 *//*!*/;
-SET
-@@session.character_set_client=33,@@session.collation_connection=33,@@session.collatio
-n_server=255/*!*/;
-SET @@session.lc_time_names=0/*!*/;
-SET @@session.collation_database=DEFAULT/*!*/;
-/*!80011 SET @@session.default_collation_for_utf8mb4=255*//*!*/;
-BEGIN
-/*!*/;
-# at 324
-#220105 9:16:37 server id 1 end_log_pos 391 CRC32 0x74f89890 Table_map:
-`atguigu14`.`student` mapped to number 85
-# at 391
-#220105 9:16:37 server id 1 end_log_pos 470 CRC32 0xc9920491 Update_rows: table id
-85 flags: STMT_END_F
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqlbinlog <span class="token operator">-</span>v <span class="token string">"/var/lib/mysql/binlog/atguigu-bin.000002"</span>
+<span class="token comment">#220105 9:16:37 server id 1 end_log_pos 324 CRC32 0x6b31978b Query thread_id=10</span>
+exec_time<span class="token operator">=</span><span class="token number">0</span> error_code<span class="token operator">=</span><span class="token number">0</span>
+<span class="token keyword">SET</span> <span class="token keyword">TIMESTAMP</span><span class="token operator">=</span><span class="token number">1641345397</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> @<span class="token variable">@session.pseudo_thread_id</span><span class="token operator">=</span><span class="token number">10</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> @<span class="token variable">@session.foreign_key_checks</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> @<span class="token variable">@session.sql_auto_is_null</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>
+@<span class="token variable">@session.unique_checks</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> @<span class="token variable">@session.autocommit</span><span class="token operator">=</span><span class="token number">1</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> @<span class="token variable">@session.sql_mode</span><span class="token operator">=</span><span class="token number">1168113696</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> @<span class="token variable">@session.auto_increment_increment</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> @<span class="token variable">@session.auto_increment_offset</span><span class="token operator">=</span><span class="token number">1</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token comment">/*!\C utf8mb3 */</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span>
+@<span class="token variable">@session.character_set_client</span><span class="token operator">=</span><span class="token number">33</span><span class="token punctuation">,</span>@<span class="token variable">@session.collation_connection</span><span class="token operator">=</span><span class="token number">33</span><span class="token punctuation">,</span>@<span class="token variable">@session.collatio</span>
+n_server<span class="token operator">=</span><span class="token number">255</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> @<span class="token variable">@session.lc_time_names</span><span class="token operator">=</span><span class="token number">0</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> @<span class="token variable">@session.collation_database</span><span class="token operator">=</span><span class="token keyword">DEFAULT</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token comment">/*!80011 SET @@session.default_collation_for_utf8mb4=255*/</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">BEGIN</span>
+<span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token comment"># at 324</span>
+<span class="token comment">#220105 9:16:37 server id 1 end_log_pos 391 CRC32 0x74f89890 Table_map:</span>
+<span class="token identifier"><span class="token punctuation">`</span>atguigu14<span class="token punctuation">`</span></span><span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>student<span class="token punctuation">`</span></span> mapped <span class="token keyword">to</span> number <span class="token number">85</span>
+<span class="token comment"># at 391</span>
+<span class="token comment">#220105 9:16:37 server id 1 end_log_pos 470 CRC32 0xc9920491 Update_rows: table id</span>
+<span class="token number">85</span> flags: STMT_END_F
 
-BINLOG '
+BINLOG <span class="token string">'
 dfHUYRMBAAAAQwAAAIcBAAAAAFUAAAAAAAEACWF0Z3VpZ3UxNAAHc3R1ZGVudAADAw8PBDwAHgAG
 AQEAAgEhkJj4dA==
 dfHUYR8BAAAATwAAANYBAAAAAFUAAAAAAAEAAgAD//8AAQAAAAblvKDkuIkG5LiA54+tAAEAAAAL
 5byg5LiJX2JhY2sG5LiA54+tkQSSyQ==
-'/*!*/;
-### UPDATE `atguigu`.`student`
-### WHERE
-### @1=1
-### @2='张三'
-### @3='一班'
-### SET
-### @1=1
-### @2='张三_back'
-### @3='一班'
-# at 470
-#220105 9:16:37 server id 1 end_log_pos 501 CRC32 0xca01d30f Xid = 15
-COMMIT/*!*/;
+'</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token comment">### UPDATE `atguigu`.`student`</span>
+<span class="token comment">### WHERE</span>
+<span class="token comment">### @1=1</span>
+<span class="token comment">### @2='张三'</span>
+<span class="token comment">### @3='一班'</span>
+<span class="token comment">### SET</span>
+<span class="token comment">### @1=1</span>
+<span class="token comment">### @2='张三_back'</span>
+<span class="token comment">### @3='一班'</span>
+<span class="token comment"># at 470</span>
+<span class="token comment">#220105 9:16:37 server id 1 end_log_pos 501 CRC32 0xca01d30f Xid = 15</span>
+<span class="token keyword">COMMIT</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>前面的命令同时显示binlog格式的语句，使用如下命令不显示它</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqlbinlog -v --base64-output=DECODE-ROWS &quot;/var/lib/mysql/binlog/atguigu-bin.000002&quot;
-#220105 9:16:37 server id 1 end_log_pos 324 CRC32 0x6b31978b Query thread_id=10
-exec_time=0 error_code=0
-SET TIMESTAMP=1641345397/*!*/;
-SET @@session.pseudo_thread_id=10/*!*/;
-SET @@session.foreign_key_checks=1, @@session.sql_auto_is_null=0,
-@@session.unique_checks=1, @@session.autocommit=1/*!*/;
-SET @@session.sql_mode=1168113696/*!*/;
-SET @@session.auto_increment_increment=1, @@session.auto_increment_offset=1/*!*/;
-/*!\C utf8mb3 *//*!*/;
-SET
-@@session.character_set_client=33,@@session.collation_connection=33,@@session.collatio
-n_server=255/*!*/;
-SET @@session.lc_time_names=0/*!*/;
-SET @@session.collation_database=DEFAULT/*!*/;
-/*!80011 SET @@session.default_collation_for_utf8mb4=255*//*!*/;
-BEGIN
-/*!*/;
-# at 324
-#220105 9:16:37 server id 1 end_log_pos 391 CRC32 0x74f89890 Table_map:
-`atguigu14`.`student` mapped to number 85
-# at 391
-#220105 9:16:37 server id 1 end_log_pos 470 CRC32 0xc9920491 Update_rows: table id
-85 flags: STMT_END_F
-### UPDATE `atguigu14`.`student`
-### WHERE
-### @1=1
-### @2='张三'
-### @3='一班'
-### SET
-### @1=1
-### @2='张三_back'
-### @3='一班'
-# at 470
-#220105 9:16:37 server id 1 end_log_pos 501 CRC32 0xca01d30f Xid = 15
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqlbinlog <span class="token operator">-</span>v <span class="token comment">--base64-output=DECODE-ROWS "/var/lib/mysql/binlog/atguigu-bin.000002"</span>
+<span class="token comment">#220105 9:16:37 server id 1 end_log_pos 324 CRC32 0x6b31978b Query thread_id=10</span>
+exec_time<span class="token operator">=</span><span class="token number">0</span> error_code<span class="token operator">=</span><span class="token number">0</span>
+<span class="token keyword">SET</span> <span class="token keyword">TIMESTAMP</span><span class="token operator">=</span><span class="token number">1641345397</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> @<span class="token variable">@session.pseudo_thread_id</span><span class="token operator">=</span><span class="token number">10</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> @<span class="token variable">@session.foreign_key_checks</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> @<span class="token variable">@session.sql_auto_is_null</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>
+@<span class="token variable">@session.unique_checks</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> @<span class="token variable">@session.autocommit</span><span class="token operator">=</span><span class="token number">1</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> @<span class="token variable">@session.sql_mode</span><span class="token operator">=</span><span class="token number">1168113696</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> @<span class="token variable">@session.auto_increment_increment</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> @<span class="token variable">@session.auto_increment_offset</span><span class="token operator">=</span><span class="token number">1</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token comment">/*!\C utf8mb3 */</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span>
+@<span class="token variable">@session.character_set_client</span><span class="token operator">=</span><span class="token number">33</span><span class="token punctuation">,</span>@<span class="token variable">@session.collation_connection</span><span class="token operator">=</span><span class="token number">33</span><span class="token punctuation">,</span>@<span class="token variable">@session.collatio</span>
+n_server<span class="token operator">=</span><span class="token number">255</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> @<span class="token variable">@session.lc_time_names</span><span class="token operator">=</span><span class="token number">0</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">SET</span> @<span class="token variable">@session.collation_database</span><span class="token operator">=</span><span class="token keyword">DEFAULT</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token comment">/*!80011 SET @@session.default_collation_for_utf8mb4=255*/</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">BEGIN</span>
+<span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token comment"># at 324</span>
+<span class="token comment">#220105 9:16:37 server id 1 end_log_pos 391 CRC32 0x74f89890 Table_map:</span>
+<span class="token identifier"><span class="token punctuation">`</span>atguigu14<span class="token punctuation">`</span></span><span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>student<span class="token punctuation">`</span></span> mapped <span class="token keyword">to</span> number <span class="token number">85</span>
+<span class="token comment"># at 391</span>
+<span class="token comment">#220105 9:16:37 server id 1 end_log_pos 470 CRC32 0xc9920491 Update_rows: table id</span>
+<span class="token number">85</span> flags: STMT_END_F
+<span class="token comment">### UPDATE `atguigu14`.`student`</span>
+<span class="token comment">### WHERE</span>
+<span class="token comment">### @1=1</span>
+<span class="token comment">### @2='张三'</span>
+<span class="token comment">### @3='一班'</span>
+<span class="token comment">### SET</span>
+<span class="token comment">### @1=1</span>
+<span class="token comment">### @2='张三_back'</span>
+<span class="token comment">### @3='一班'</span>
+<span class="token comment"># at 470</span>
+<span class="token comment">#220105 9:16:37 server id 1 end_log_pos 501 CRC32 0xca01d30f Xid = 15</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>关于mysqlbinlog工具的使用技巧还有很多，例如只解析对某个库的操作或者某个时间段内的操作等。简单分享几个常用的语句，更多操作可以参考官方文档。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># 可查看参数帮助
-mysqlbinlog --no-defaults --help
-# 查看最后100行
-mysqlbinlog --no-defaults --base64-output=decode-rows -vv atguigu-bin.000002 |tail
--100
-# 根据position查找
-mysqlbinlog --no-defaults --base64-output=decode-rows -vv atguigu-bin.000002 |grep -A
-20 '4939002'
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># 可查看参数帮助</span>
+mysqlbinlog <span class="token comment">--no-defaults --help</span>
+<span class="token comment"># 查看最后100行</span>
+mysqlbinlog <span class="token comment">--no-defaults --base64-output=decode-rows -vv atguigu-bin.000002 |tail</span>
+<span class="token operator">-</span><span class="token number">100</span>
+<span class="token comment"># 根据position查找</span>
+mysqlbinlog <span class="token comment">--no-defaults --base64-output=decode-rows -vv atguigu-bin.000002 |grep -A</span>
+<span class="token number">20</span> <span class="token string">'4939002'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>上面这种办法读取出binlog日志的全文内容比较多，不容易分辨查看到pos点信息，下面介绍一种更为方便的查询命令：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show binlog events [IN 'log_name'] [FROM pos] [LIMIT [offset,] row_count];
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> binlog events <span class="token punctuation">[</span><span class="token operator">IN</span> <span class="token string">'log_name'</span><span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">FROM</span> pos<span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">LIMIT</span> <span class="token punctuation">[</span><span class="token keyword">offset</span><span class="token punctuation">,</span><span class="token punctuation">]</span> row_count<span class="token punctuation">]</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li><code v-pre>IN 'log_name'</code> ：指定要查询的binlog文件名（不指定就是第一个binlog文件）</li>
 <li><code v-pre>FROM pos</code> ：指定从哪个pos起始点开始查起（不指定就是从整个文件首个pos点开始算）</li>
 <li><code v-pre>LIMIT [offset]</code> ：偏移量(不指定就是0)</li>
 <li><code v-pre>row_count</code> :查询总条数（不指定就是所有行）</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show binlog events in 'atguigu-bin.000002';
-+--------------------+-----+----------------+-----------+-------------+--------------------------------------------------------+
-| Log_name           | Pos | Event_type     | Server_id | End_log_pos | Info                                                   |
-+--------------------+-----+----------------+-----------+-------------+--------------------------------------------------------+
-| atguigu-bin.000002 | 4   | Format_desc    | 1         | 125         | Server ver: 8.0.26, Binlog ver: 4                      |
-| atguigu-bin.000002 | 125 | Previous_gtids | 1         | 156         |                                                        |
-| atguigu-bin.000002 | 156 | Anonymous_Gtid | 1         | 235         | SET @@SESSION.GTID_NEXT= 'ANONYMOUS'                   |
-| atguigu-bin.000002 | 235 | Query          | 1         | 324         | BEGIN                                                  |
-| atguigu-bin.000002 | 324 | Table_map      | 1         | 391         | table_id: 85(atguigu14.student)                        |
-| atguigu-bin.000002 | 391 | Update_rows    | 1         | 470         | table_id: 85flags: STMT_END_F                          |
-| atguigu-bin.000002 | 470 | Xid            | 1         | 501         | COMMIT /*xid=15 */                                     |
-| atguigu-bin.000002 | 501 | Anonymous_Gtid | 1         | 578         | SET @@SESSION.GTID_NEXT= 'ANONYMOUS'                   |
-| atguigu-bin.000002 | 578 | Query     | 1 | 721 | use `atguigu14`; create table test(id int, title varchar(100)) /* xid=19 */ |
-| atguigu-bin.000002 | 721 | Anonymous_Gtid | 1         | 800         | SET @@SESSION.GTID_NEXT= 'ANONYMOUS'                   |
-| atguigu-bin.000002 | 800 | Query          | 1         | 880         | BEGIN                                                  |
-| atguigu-bin.000002 | 880 | Table_map      | 1         | 943         | table_id: 89(atguigu14.test)                           |
-| atguigu-bin.000002 | 943 | Write_rows     | 1         | 992         | table_id: 89 flags: STMT_END_F                         |
-| atguigu-bin.000002 | 992 | Xid            | 1         | 1023        | COMMIT /*xid=21 */                                     |
-+--------------------+-----+----------------+-----------+-------------+--------------------------------------------------------+
-14 行于数据集 (0.02 秒)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> binlog events <span class="token operator">in</span> <span class="token string">'atguigu-bin.000002'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------------------+-----+----------------+-----------+-------------+--------------------------------------------------------+</span>
+<span class="token operator">|</span> Log_name           <span class="token operator">|</span> Pos <span class="token operator">|</span> Event_type     <span class="token operator">|</span> Server_id <span class="token operator">|</span> End_log_pos <span class="token operator">|</span> Info                                                   <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------+-----+----------------+-----------+-------------+--------------------------------------------------------+</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000002</span> <span class="token operator">|</span> <span class="token number">4</span>   <span class="token operator">|</span> Format_desc    <span class="token operator">|</span> <span class="token number">1</span>         <span class="token operator">|</span> <span class="token number">125</span>         <span class="token operator">|</span> Server ver: <span class="token number">8.0</span><span class="token number">.26</span><span class="token punctuation">,</span> Binlog ver: <span class="token number">4</span>                      <span class="token operator">|</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000002</span> <span class="token operator">|</span> <span class="token number">125</span> <span class="token operator">|</span> Previous_gtids <span class="token operator">|</span> <span class="token number">1</span>         <span class="token operator">|</span> <span class="token number">156</span>         <span class="token operator">|</span>                                                        <span class="token operator">|</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000002</span> <span class="token operator">|</span> <span class="token number">156</span> <span class="token operator">|</span> Anonymous_Gtid <span class="token operator">|</span> <span class="token number">1</span>         <span class="token operator">|</span> <span class="token number">235</span>         <span class="token operator">|</span> <span class="token keyword">SET</span> @<span class="token variable">@SESSION.GTID_NEXT</span><span class="token operator">=</span> <span class="token string">'ANONYMOUS'</span>                   <span class="token operator">|</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000002</span> <span class="token operator">|</span> <span class="token number">235</span> <span class="token operator">|</span> Query          <span class="token operator">|</span> <span class="token number">1</span>         <span class="token operator">|</span> <span class="token number">324</span>         <span class="token operator">|</span> <span class="token keyword">BEGIN</span>                                                  <span class="token operator">|</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000002</span> <span class="token operator">|</span> <span class="token number">324</span> <span class="token operator">|</span> Table_map      <span class="token operator">|</span> <span class="token number">1</span>         <span class="token operator">|</span> <span class="token number">391</span>         <span class="token operator">|</span> table_id: <span class="token number">85</span><span class="token punctuation">(</span>atguigu14<span class="token punctuation">.</span>student<span class="token punctuation">)</span>                        <span class="token operator">|</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000002</span> <span class="token operator">|</span> <span class="token number">391</span> <span class="token operator">|</span> Update_rows    <span class="token operator">|</span> <span class="token number">1</span>         <span class="token operator">|</span> <span class="token number">470</span>         <span class="token operator">|</span> table_id: <span class="token number">85</span>flags: STMT_END_F                          <span class="token operator">|</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000002</span> <span class="token operator">|</span> <span class="token number">470</span> <span class="token operator">|</span> Xid            <span class="token operator">|</span> <span class="token number">1</span>         <span class="token operator">|</span> <span class="token number">501</span>         <span class="token operator">|</span> <span class="token keyword">COMMIT</span> <span class="token comment">/*xid=15 */</span>                                     <span class="token operator">|</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000002</span> <span class="token operator">|</span> <span class="token number">501</span> <span class="token operator">|</span> Anonymous_Gtid <span class="token operator">|</span> <span class="token number">1</span>         <span class="token operator">|</span> <span class="token number">578</span>         <span class="token operator">|</span> <span class="token keyword">SET</span> @<span class="token variable">@SESSION.GTID_NEXT</span><span class="token operator">=</span> <span class="token string">'ANONYMOUS'</span>                   <span class="token operator">|</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000002</span> <span class="token operator">|</span> <span class="token number">578</span> <span class="token operator">|</span> Query     <span class="token operator">|</span> <span class="token number">1</span> <span class="token operator">|</span> <span class="token number">721</span> <span class="token operator">|</span> <span class="token keyword">use</span> <span class="token identifier"><span class="token punctuation">`</span>atguigu14<span class="token punctuation">`</span></span><span class="token punctuation">;</span> <span class="token keyword">create</span> <span class="token keyword">table</span> test<span class="token punctuation">(</span>id <span class="token keyword">int</span><span class="token punctuation">,</span> title <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">/* xid=19 */</span> <span class="token operator">|</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000002</span> <span class="token operator">|</span> <span class="token number">721</span> <span class="token operator">|</span> Anonymous_Gtid <span class="token operator">|</span> <span class="token number">1</span>         <span class="token operator">|</span> <span class="token number">800</span>         <span class="token operator">|</span> <span class="token keyword">SET</span> @<span class="token variable">@SESSION.GTID_NEXT</span><span class="token operator">=</span> <span class="token string">'ANONYMOUS'</span>                   <span class="token operator">|</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000002</span> <span class="token operator">|</span> <span class="token number">800</span> <span class="token operator">|</span> Query          <span class="token operator">|</span> <span class="token number">1</span>         <span class="token operator">|</span> <span class="token number">880</span>         <span class="token operator">|</span> <span class="token keyword">BEGIN</span>                                                  <span class="token operator">|</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000002</span> <span class="token operator">|</span> <span class="token number">880</span> <span class="token operator">|</span> Table_map      <span class="token operator">|</span> <span class="token number">1</span>         <span class="token operator">|</span> <span class="token number">943</span>         <span class="token operator">|</span> table_id: <span class="token number">89</span><span class="token punctuation">(</span>atguigu14<span class="token punctuation">.</span>test<span class="token punctuation">)</span>                           <span class="token operator">|</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000002</span> <span class="token operator">|</span> <span class="token number">943</span> <span class="token operator">|</span> Write_rows     <span class="token operator">|</span> <span class="token number">1</span>         <span class="token operator">|</span> <span class="token number">992</span>         <span class="token operator">|</span> table_id: <span class="token number">89</span> flags: STMT_END_F                         <span class="token operator">|</span>
+<span class="token operator">|</span> atguigu<span class="token operator">-</span>bin<span class="token punctuation">.</span><span class="token number">000002</span> <span class="token operator">|</span> <span class="token number">992</span> <span class="token operator">|</span> Xid            <span class="token operator">|</span> <span class="token number">1</span>         <span class="token operator">|</span> <span class="token number">1023</span>        <span class="token operator">|</span> <span class="token keyword">COMMIT</span> <span class="token comment">/*xid=21 */</span>                                     <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------------------+-----+----------------+-----------+-------------+--------------------------------------------------------+</span>
+<span class="token number">14</span> 行于数据集 <span class="token punctuation">(</span><span class="token number">0.02</span> 秒<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220715165603879.png" alt="image-20220715165603879" style="float:left;" />
 <p>上面我们讲了这么多都是基于binlog的默认格式，binlog格式查看</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show variables like 'binlog_format';
-+---------------+-------+
-| Variable_name | Value |
-+---------------+-------+
-| binlog_format | ROW   |
-+---------------+-------+
-1 行于数据集 (0.02 秒)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'binlog_format'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">---------------+-------+</span>
+<span class="token operator">|</span> Variable_name <span class="token operator">|</span> <span class="token keyword">Value</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------+-------+</span>
+<span class="token operator">|</span> binlog_format <span class="token operator">|</span> <span class="token keyword">ROW</span>   <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">---------------+-------+</span>
+<span class="token number">1</span> 行于数据集 <span class="token punctuation">(</span><span class="token number">0.02</span> 秒<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>除此之外，binlog还有2种格式，分别是<code v-pre>Statement</code>和<code v-pre>Mixed</code></p>
 <ul>
 <li>
@@ -389,7 +389,7 @@ mysqlbinlog --no-defaults --base64-output=decode-rows -vv atguigu-bin.000002 |gr
 <h3 id="_5-4-使用日志恢复数据" tabindex="-1"><a class="header-anchor" href="#_5-4-使用日志恢复数据" aria-hidden="true">#</a> 5.4 使用日志恢复数据</h3>
 <p>如果MySQL服务器启用了二进制日志，在数据库出现意外丢失数据时，可以使用MySQLbinlog工具从指定的时间点开始（例如，最后一次备份）直到现在或另一个指定的时间点的日志中回复数据。</p>
 <p>mysqlbinlog恢复数据的语法如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysqlbinlog [option] filename|mysql –uuser -ppass;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysqlbinlog <span class="token punctuation">[</span><span class="token keyword">option</span><span class="token punctuation">]</span> filename<span class="token operator">|</span>mysql –uuser <span class="token operator">-</span>ppass<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>这个命令可以这样理解：使用mysqlbinlog命令来读取filename中的内容，然后使用mysql命令将这些内容恢复到数据库中。</p>
 <ul>
 <li>
@@ -411,8 +411,8 @@ mysqlbinlog --no-defaults --base64-output=decode-rows -vv atguigu-bin.000002 |gr
 <p>MySQL的二进制文件可以配置自动删除，同时MySQL也提供了安全的手动删除二进制文件的方法。 <code v-pre>PURGE MASTER LOGS</code> 只删除指定部分的二进制日志文件， <code v-pre>RESET MASTER</code> 删除所有的二进制日志文 件。具体如下：</p>
 <p><strong>1. PURGE MASTER LOGS：删除指定日志文件</strong></p>
 <p>PURGE MASTER LOGS语法如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>PURGE {MASTER | BINARY} LOGS TO ‘指定日志文件名’
-PURGE {MASTER | BINARY} LOGS BEFORE ‘指定日期’
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">PURGE</span> {MASTER <span class="token operator">|</span> <span class="token keyword">BINARY</span>} LOGS <span class="token keyword">TO</span> ‘指定日志文件名’
+<span class="token keyword">PURGE</span> {MASTER <span class="token operator">|</span> <span class="token keyword">BINARY</span>} LOGS BEFORE ‘指定日期’
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220715171712026.png" alt="image-20220715171712026" style="float:left;" />
 <img src="@source/notes/senior_mysql/images/image-20220715172015185.png" alt="image-20220715172015185" style="float:left;" />
 <p><strong>2. RESET MASTER: 删除所有二进制日志文件</strong></p>
@@ -424,7 +424,7 @@ PURGE {MASTER | BINARY} LOGS BEFORE ‘指定日期’
 <h3 id="_6-1-写入机制" tabindex="-1"><a class="header-anchor" href="#_6-1-写入机制" aria-hidden="true">#</a> 6.1 写入机制</h3>
 <p>binlog的写入时机也非常简单，事务执行过程中，先把日志写到 <code v-pre>binlog cache</code> ，事务提交的时候，再把binlog cache写到binlog文件中。因为一个事务的binlog不能被拆开，无论这个事务多大，也要确保一次性写入，所以系统会给每个线程分配一个块内存作为binlog cache。</p>
 <p>我们可以通过<code v-pre>binlog_cache_size</code>参数控制单个线程 binlog cache 大小，如果存储内容超过了这个参数，就要暂存到磁盘（Swap）。binlog日志刷盘流程如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715172958729.png" alt="image-20220715172958729"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715172958729.png" alt="image-20220715172958729" loading="lazy"></p>
 <blockquote>
 <ul>
 <li>上图的write，是指把日志写入到文件系统的page cache，并没有把数据持久化到磁盘，所以速度比较快</li>
@@ -432,9 +432,9 @@ PURGE {MASTER | BINARY} LOGS BEFORE ‘指定日期’
 </ul>
 </blockquote>
 <p>write和fsync的时机，可以由参数 <code v-pre>sync_binlog</code> 控制，默认是 <code v-pre>0</code> 。为0的时候，表示每次提交事务都只 write，由系统自行判断什么时候执行fsync。虽然性能得到提升，但是机器宕机，page cache里面的 binglog 会丢失。如下图：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715193749462.png" alt="image-20220715193749462"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715193749462.png" alt="image-20220715193749462" loading="lazy"></p>
 <p>为了安全起见，可以设置为 <code v-pre>1</code> ，表示每次提交事务都会执行fsync，就如同<strong>redo log 刷盘流程</strong>一样。 最后还有一种折中方式，可以设置为N(N&gt;1)，表示每次提交事务都write，但累积N个事务后才fsync。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715194624080.png" alt="image-20220715194624080"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715194624080.png" alt="image-20220715194624080" loading="lazy"></p>
 <p>在出现IO瓶颈的场景里，将sync_binlog设置成一个比较大的值，可以提升性能。同样的，如果机器宕机，会丢失最近N个事务的binlog日志。</p>
 <h3 id="_6-2-binlog与redolog对比" tabindex="-1"><a class="header-anchor" href="#_6-2-binlog与redolog对比" aria-hidden="true">#</a> 6.2 binlog与redolog对比</h3>
 <ul>
@@ -449,19 +449,19 @@ PURGE {MASTER | BINARY} LOGS BEFORE ‘指定日期’
 </ul>
 <h3 id="_6-3-两阶段提交" tabindex="-1"><a class="header-anchor" href="#_6-3-两阶段提交" aria-hidden="true">#</a> 6.3 两阶段提交</h3>
 <p>在执行更新语句过程，会记录redo log与binlog两块日志，以基本的事务为单位，redo log在事务执行过程中可以不断写入，而binlog只有在提交事务时才写入，所以redo log与binlog的 <code v-pre>写入时机</code> 不一样。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715194959405.png" alt="image-20220715194959405"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715194959405.png" alt="image-20220715194959405" loading="lazy"></p>
 <p><strong>redo log与binlog两份日志之间的逻辑不一致，会出现什么问题？</strong></p>
 <p>以update语句为例，假设<code v-pre>id=2</code>的记录，字段<code v-pre>c</code>值是<code v-pre>0</code>，把字段c值更新为<code v-pre>1</code>，SQL语句为update T set c = 1 where id = 2。</p>
 <p>假设执行过程中写完redo log日志后，binlog日志写期间发生了异常，会出现什么情况呢？</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715195016492.png" alt="image-20220715195016492"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715195016492.png" alt="image-20220715195016492" loading="lazy"></p>
 <p>由于binlog没写完就异常，这时候binlog里面没有对应的修改记录。因此，之后用binlog日志恢复数据时，就会少这一次更新，恢复出来的这一行c值为0，而原库因为redo log日志恢复，这一行c的值是1，最终数据不一致。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715195521986.png" alt="image-20220715195521986"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715195521986.png" alt="image-20220715195521986" loading="lazy"></p>
 <p>为了解决两份日志之间的逻辑一致问题，InnoDB存储引擎使用<strong>两阶段提交</strong>方案。原理很简单，将redo log的写入拆成了两个步骤prepare和commit，这就是<strong>两阶段提交</strong>。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715195635196.png" alt="image-20220715195635196"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715195635196.png" alt="image-20220715195635196" loading="lazy"></p>
 <p>使用两阶段提交后，写入binlog时发生异常也不会有影响，因为MySQL根据redo log日志恢复数据时，发现redo log还处于prepare阶段，并且没有对应binlog日志，就会回滚该事务。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715200248193.png" alt="image-20220715200248193"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715200248193.png" alt="image-20220715200248193" loading="lazy"></p>
 <p>另一个场景，redo log设置commit阶段发生异常，那会不会回滚事务呢？</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220715200321717.png" alt="image-20220715200321717"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220715200321717.png" alt="image-20220715200321717" loading="lazy"></p>
 <p>并不会回滚事务，它会执行上图框住的逻辑，虽然redo log是处于prepare阶段，但是能通过事务id找到对应的binlog日志，所以MySQL认为是完整的，就会提交事务恢复数据。</p>
 <h2 id="_7-中继日志-relay-log" tabindex="-1"><a class="header-anchor" href="#_7-中继日志-relay-log" aria-hidden="true">#</a> 7. 中继日志(relay log)</h2>
 <h3 id="_7-1-介绍" tabindex="-1"><a class="header-anchor" href="#_7-1-介绍" aria-hidden="true">#</a> 7.1 介绍</h3>
@@ -470,23 +470,23 @@ PURGE {MASTER | BINARY} LOGS BEFORE ‘指定日期’
 <p>文件名的格式是：<code v-pre> 从服务器名 -relay-bin.序号</code> 。中继日志还有一个索引文件：<code v-pre>从服务器名 -relaybin.index</code> ，用来定位当前正在使用的中继日志。</p>
 <h3 id="_7-2-查看中继日志" tabindex="-1"><a class="header-anchor" href="#_7-2-查看中继日志" aria-hidden="true">#</a> 7.2 查看中继日志</h3>
 <p>中继日志与二进制日志的格式相同，可以用 <code v-pre>mysqlbinlog</code> 工具进行查看。下面是中继日志的一个片段：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SET TIMESTAMP=1618558728/*!*/;
-BEGIN
-/*!*/;
-# at 950
-#210416 15:38:48 server id 1 end_log_pos 832 CRC32 0xcc16d651 Table_map:
-`atguigu`.`test` mapped to number 91
-# at 1000
-#210416 15:38:48 server id 1 end_log_pos 872 CRC32 0x07e4047c Delete_rows: table id
-91 flags: STMT_END_F -- server id 1 是主服务器，意思是主服务器删了一行数据
-BINLOG '
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SET</span> <span class="token keyword">TIMESTAMP</span><span class="token operator">=</span><span class="token number">1618558728</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token keyword">BEGIN</span>
+<span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token comment"># at 950</span>
+<span class="token comment">#210416 15:38:48 server id 1 end_log_pos 832 CRC32 0xcc16d651 Table_map:</span>
+<span class="token identifier"><span class="token punctuation">`</span>atguigu<span class="token punctuation">`</span></span><span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>test<span class="token punctuation">`</span></span> mapped <span class="token keyword">to</span> number <span class="token number">91</span>
+<span class="token comment"># at 1000</span>
+<span class="token comment">#210416 15:38:48 server id 1 end_log_pos 872 CRC32 0x07e4047c Delete_rows: table id</span>
+<span class="token number">91</span> flags: STMT_END_F <span class="token comment">-- server id 1 是主服务器，意思是主服务器删了一行数据</span>
+BINLOG <span class="token string">'
 CD95YBMBAAAAMgAAAEADAAAAAFsAAAAAAAEABGRlbW8ABHRlc3QAAQMAAQEBAFHWFsw=
 CD95YCABAAAAKAAAAGgDAAAAAFsAAAAAAAEAAgAB/wABAAAAfATkBw==
-'/*!*/;
-# at 1040
+'</span><span class="token comment">/*!*/</span><span class="token punctuation">;</span>
+<span class="token comment"># at 1040</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>这一段的意思是，主服务器（“server id 1”）对表 atguigu.test 进行了 2 步操作：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>定位到表 atguigu.test 编号是 91 的记录，日志位置是 832；
-删除编号是 91 的记录，日志位置是 872
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>定位到表 atguigu<span class="token punctuation">.</span>test 编号是 <span class="token number">91</span> 的记录，日志位置是 <span class="token number">832</span>；
+删除编号是 <span class="token number">91</span> 的记录，日志位置是 <span class="token number">872</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_7-3-恢复的典型错误" tabindex="-1"><a class="header-anchor" href="#_7-3-恢复的典型错误" aria-hidden="true">#</a> 7.3 恢复的典型错误</h3>
 <p>如果从服务器宕机，有的时候为了系统恢复，要重装操作系统，这样就可能会导致你的 <code v-pre>服务器名称</code> 与之前 <code v-pre>不同</code> 。而中继日志里是 <code v-pre>包含从服务器名</code> 的。在这种情况下，就可能导致你恢复从服务器的时候，无法 从宕机前的中继日志里读取数据，以为是日志文件损坏了，其实是名称不对了。</p>
 <p>解决的方法也很简单，把从服务器的名称改回之前的名称。</p>

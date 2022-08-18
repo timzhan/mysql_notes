@@ -1,10 +1,10 @@
 <template><div><h1 id="第06章-索引的数据结构" tabindex="-1"><a class="header-anchor" href="#第06章-索引的数据结构" aria-hidden="true">#</a> 第06章_索引的数据结构</h1>
 <h2 id="_1-为什么使用索引" tabindex="-1"><a class="header-anchor" href="#_1-为什么使用索引" aria-hidden="true">#</a> 1. 为什么使用索引</h2>
 <p>索引是存储引擎用于快速找到数据记录的一种数据结构，就好比一本教科书的目录部分，通过目录中找到对应文章的页码，便可快速定位到需要的文章。MySQL中也是一样的道理，进行数据查找时，首先查看查询条件是否命中某条索引，符合则<code v-pre>通过索引查找</code>相关数据，如果不符合则需要<code v-pre>全表扫描</code>，即需要一条一条地查找记录，直到找到与条件符合的记录。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616141351236.png" alt="image-20220616141351236"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616141351236.png" alt="image-20220616141351236" loading="lazy"></p>
 <p>如上图所示，数据库没有索引的情况下，数据<code v-pre>分布在硬盘不同的位置上面</code>，读取数据时，摆臂需要前后摆动查询数据，这样操作非常消耗时间。如果<code v-pre>数据顺序摆放</code>，那么也需要从1到6行按顺序读取，这样就相当于进行了6次IO操作，<code v-pre>依旧非常耗时</code>。如果我们不借助任何索引结构帮助我们快速定位数据的话，我们查找 Col 2 = 89 这条记录，就要逐行去查找、去比较。从Col 2 = 34 开始，进行比较，发现不是，继续下一行。我们当前的表只有不到10行数据，但如果表很大的话，有<code v-pre>上千万条数据</code>，就意味着要做<code v-pre>很多很多次硬盘I/0</code>才能找到。现在要查找 Col 2 = 89 这条记录。CPU必须先去磁盘查找这条记录，找到之后加载到内存，再对数据进行处理。这个过程最耗时间就是磁盘I/O（涉及到磁盘的旋转时间（速度较快），磁头的寻道时间(速度慢、费时)）</p>
 <p>假如给数据使用 <code v-pre>二叉树</code> 这样的数据结构进行存储，如下图所示</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616142723266.png" alt="image-20220616142723266"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616142723266.png" alt="image-20220616142723266" loading="lazy"></p>
 <p>对字段 Col 2 添加了索引，就相当于在硬盘上为 Col 2 维护了一个索引的数据结构，即这个 <code v-pre>二叉搜索树</code>。二叉搜索树的每个结点存储的是 <code v-pre>(K, V) 结构</code>，key 是 Col 2，value 是该 key 所在行的文件指针（地址）。比如：该二叉搜索树的根节点就是：<code v-pre>(34, 0x07)</code>。现在对 Col 2 添加了索引，这时再去查找 Col 2 = 89 这条记录的时候会先去查找该二叉搜索树（二叉树的遍历查找）。读 34 到内存，89 &gt; 34; 继续右侧数据，读 89 到内存，89==89；找到数据返回。找到之后就根据当前结点的 value 快速定位到要查找的记录对应的地址。我们可以发现，只需要 <code v-pre>查找两次</code> 就可以定位到记录的地址，查询速度就提高了。</p>
 <p>这就是我们为什么要建索引，目的就是为了 <code v-pre>减少磁盘I/O的次数</code>，加快查询速率。</p>
 <h2 id="_2-索引及其优缺点" tabindex="-1"><a class="header-anchor" href="#_2-索引及其优缺点" aria-hidden="true">#</a> 2. 索引及其优缺点</h2>
@@ -30,7 +30,7 @@
 <h2 id="_3-innodb中索引的推演" tabindex="-1"><a class="header-anchor" href="#_3-innodb中索引的推演" aria-hidden="true">#</a> 3. InnoDB中索引的推演</h2>
 <h3 id="_3-1-索引之前的查找" tabindex="-1"><a class="header-anchor" href="#_3-1-索引之前的查找" aria-hidden="true">#</a> 3.1 索引之前的查找</h3>
 <p>先来看一个精确匹配的例子：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT [列名列表] FROM 表名 WHERE 列名 = xxx;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token punctuation">[</span>列名列表<span class="token punctuation">]</span> <span class="token keyword">FROM</span> 表名 <span class="token keyword">WHERE</span> 列名 <span class="token operator">=</span> xxx<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="_1-在一个页中的查找" tabindex="-1"><a class="header-anchor" href="#_1-在一个页中的查找" aria-hidden="true">#</a> 1. 在一个页中的查找</h4>
 <p>假设目前表中的记录比较少，所有的记录都可以被存放到一个页中，在查找记录的时候可以根据搜索条件的不同分为两种情况：</p>
 <ul>
@@ -52,14 +52,14 @@
 <p>在没有索引的情况下，不论是根据主键列或者其他列的值进行查找，由于我们并不能快速的定位到记录所在的页，所以只能 从第一个页沿着双向链表 一直往下找，在每一个页中根据我们上面的查找方式去查 找指定的记录。因为要遍历所有的数据页，所以这种方式显然是 超级耗时 的。如果一个表有一亿条记录呢？此时 索引 应运而生。</p>
 <h3 id="_3-2-设计索引" tabindex="-1"><a class="header-anchor" href="#_3-2-设计索引" aria-hidden="true">#</a> 3.2 设计索引</h3>
 <p>建一个表：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; CREATE TABLE index_demo(
--&gt; c1 INT,
--&gt; c2 INT,
--&gt; c3 CHAR(1),
--&gt; PRIMARY KEY(c1)
--&gt; ) ROW_FORMAT = Compact;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> index_demo<span class="token punctuation">(</span>
+<span class="token operator">-</span><span class="token operator">></span> c1 <span class="token keyword">INT</span><span class="token punctuation">,</span>
+<span class="token operator">-</span><span class="token operator">></span> c2 <span class="token keyword">INT</span><span class="token punctuation">,</span>
+<span class="token operator">-</span><span class="token operator">></span> c3 <span class="token keyword">CHAR</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span>c1<span class="token punctuation">)</span>
+<span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">)</span> ROW_FORMAT <span class="token operator">=</span> Compact<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>这个新建的 <strong>index_demo</strong> 表中有2个INT类型的列，1个CHAR(1)类型的列，而且我们规定了c1列为主键， 这个表使用 <strong>Compact</strong> 行格式来实际存储记录的。这里我们简化了index_demo表的行格式示意图：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616152453203.png" alt="image-20220616152453203"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616152453203.png" alt="image-20220616152453203" loading="lazy"></p>
 <p>我们只在示意图里展示记录的这几个部分：</p>
 <ul>
 <li>record_type ：记录头信息的一项属性，表示记录的类型， 0 表示普通记录、 2 表示最小记 录、 3 表示最大记录、 1 暂时还没用过，下面讲。</li>
@@ -70,34 +70,34 @@
 <p>将记录格式示意图的其他信息项暂时去掉并把它竖起来的效果就是这样：</p>
 <img src="@source/notes/senior_mysql/images/image-20220616152727234.png" alt="image-20220616152727234" style="zoom:80%;" />
 <p>把一些记录放到页里的示意图就是：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616152651878.png" alt="image-20220616152651878"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616152651878.png" alt="image-20220616152651878" loading="lazy"></p>
 <h4 id="_1-一个简单的索引设计方案" tabindex="-1"><a class="header-anchor" href="#_1-一个简单的索引设计方案" aria-hidden="true">#</a> 1. 一个简单的索引设计方案</h4>
 <p>我们在根据某个搜索条件查找一些记录时为什么要遍历所有的数据页呢？因为各个页中的记录并没有规律，我们并不知道我们的搜索条件匹配哪些页中的记录，所以不得不依次遍历所有的数据页。所以如果我们 <strong>想快速的定位到需要查找的记录在哪些数据页</strong> 中该咋办？我们可以为快速定位记录所在的数据页而建立一个目录 ，建这个目录必须完成下边这些事：</p>
 <ul>
 <li>
 <p><strong>下一个数据页中用户记录的主键值必须大于上一个页中用户记录的主键值。</strong></p>
 <p>假设：每个数据结构最多能存放3条记录（实际上一个数据页非常大，可以存放下好多记录）。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO index_demo VALUES(1, 4, 'u'), (3, 9, 'd'), (5, 3, 'y');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> index_demo <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token string">'u'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token string">'d'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'y'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div></li>
 </ul>
 <p>​       那么这些记录以及按照主键值的大小串联成一个单向链表了，如图所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616153518456.png" alt="image-20220616153518456"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616153518456.png" alt="image-20220616153518456" loading="lazy"></p>
 <p>​      从图中可以看出来， index_demo 表中的3条记录都被插入到了编号为10的数据页中了。此时我们再来插入一条记录</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO index_demo VALUES(4, 4, 'a');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> index_demo <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>因为 <strong>页10</strong> 最多只能放3条记录，所以我们不得不再分配一个新页：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616155306705.png" alt="image-20220616155306705"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616155306705.png" alt="image-20220616155306705" loading="lazy"></p>
 <p>注意：新分配的 <strong>数据页编号可能并不是连续的</strong>。它们只是通过维护者上一个页和下一个页的编号而建立了 <strong>链表</strong> 关系。另外，<strong>页10</strong>中用户记录最大的主键值是5，而<strong>页28</strong>中有一条记录的主键值是4，因为5&gt;4，所以这就不符合下一个数据页中用户记录的主键值必须大于上一个页中用户记录的主键值的要求，所以在插入主键值为4的记录的时候需要伴随着一次 <strong>记录移动</strong>，也就是把主键值为5的记录移动到页28中，然后再把主键值为4的记录插入到页10中，这个过程的示意图如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616160216525.png" alt="image-20220616160216525"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616160216525.png" alt="image-20220616160216525" loading="lazy"></p>
 <p>这个过程表明了在对页中的记录进行增删改查操作的过程中，我们必须通过一些诸如 <strong>记录移动</strong> 的操作来始终保证这个状态一直成立：下一个数据页中用户记录的主键值必须大于上一个页中用户记录的主键值。这个过程称为 <strong>页分裂</strong>。</p>
 <ul>
 <li><strong>给所有的页建立一个目录项。</strong></li>
 </ul>
 <p>由于数据页的 <strong>编号可能是不连续</strong> 的，所以在向 index_demo 表中插入许多条记录后，可能是这样的效果：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616160619525.png" alt="image-20220616160619525"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616160619525.png" alt="image-20220616160619525" loading="lazy"></p>
 <p>我们需要给它们做个 <strong>目录</strong>，每个页对应一个目录项，每个目录项包括下边两个部分：</p>
 <p>1）页的用户记录中最小的主键值，我们用 <strong>key</strong> 来表示。</p>
 <p>2）页号，我们用 <strong>page_on</strong> 表示。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616160857381.png" alt="image-20220616160857381"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616160857381.png" alt="image-20220616160857381" loading="lazy"></p>
 <p>以 页28 为例，它对应 目录项2 ，这个目录项中包含着该页的页号 28 以及该页中用户记录的最小主 键值 5 。我们只需要把几个目录项在物理存储器上连续存储（比如：数组），就可以实现根据主键 值快速查找某条记录的功能了。比如：查找主键值为 20 的记录，具体查找过程分两步：</p>
 <ol>
 <li>先从目录项中根据 二分法 快速确定出主键值为 20 的记录在 目录项3 中（因为 12 &lt; 20 &lt; 209 ），它对应的页是 页9 。</li>
@@ -114,7 +114,7 @@
 <li>3：最大记录</li>
 </ul>
 <p>我们把前边使用到的目录项放到数据页中的样子就是这样：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616162944404.png" alt="image-20220616162944404"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616162944404.png" alt="image-20220616162944404" loading="lazy"></p>
 <p>从图中可以看出来，我们新分配了一个编号为30的页来专门存储目录项记录。这里再次强调 <strong>目录项记录</strong> 和普通的 <strong>用户记录</strong> 的不同点：</p>
 <ul>
 <li><strong>目录项记录</strong> 的 record_type 值是1，而 <strong>普通用户记录</strong> 的 record_type 值是0。</li>
@@ -128,7 +128,7 @@
 <li>再到存储用户记录的页9中根据 二分法 快速定位到主键值为 20 的用户记录。</li>
 </ol>
 <h5 id="_2-迭代2次-多个目录项纪录的页" tabindex="-1"><a class="header-anchor" href="#_2-迭代2次-多个目录项纪录的页" aria-hidden="true">#</a> ② 迭代2次：多个目录项纪录的页</h5>
-<p><img src="@source/notes/senior_mysql/images/image-20220616171135082.png" alt="image-20220616171135082"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616171135082.png" alt="image-20220616171135082" loading="lazy"></p>
 <p>从图中可以看出，我们插入了一条主键值为320的用户记录之后需要两个新的数据页：</p>
 <ul>
 <li>为存储该用户记录而新生成了 页31 。</li>
@@ -142,10 +142,10 @@
 </ol>
 <h5 id="_3-迭代3次-目录项记录页的目录页" tabindex="-1"><a class="header-anchor" href="#_3-迭代3次-目录项记录页的目录页" aria-hidden="true">#</a> ③ 迭代3次：目录项记录页的目录页</h5>
 <p>如果我们表中的数据非常多则会<code v-pre>产生很多存储目录项记录的页</code>，那我们怎么根据主键值快速定位一个存储目录项记录的页呢？那就为这些存储目录项记录的页再生成一个<code v-pre>更高级的目录</code>，就像是一个多级目录一样，<code v-pre>大目录里嵌套小目录</code>，小目录里才是实际的数据，所以现在各个页的示意图就是这样子：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616173512780.png" alt="image-20220616173512780"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616173512780.png" alt="image-20220616173512780" loading="lazy"></p>
 <p>如图，我们生成了一个存储更高级目录项的 页33 ，这个页中的两条记录分别代表页30和页32，如果用 户记录的主键值在 [1, 320) 之间，则到页30中查找更详细的目录项记录，如果主键值 不小于320 的 话，就到页32中查找更详细的目录项记录。</p>
 <p>我们可以用下边这个图来描述它：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616173717538.png" alt="image-20220616173717538"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616173717538.png" alt="image-20220616173717538" loading="lazy"></p>
 <p>这个数据结构，它的名称是 B+树 。</p>
 <h5 id="_4-b-tree" tabindex="-1"><a class="header-anchor" href="#_4-b-tree" aria-hidden="true">#</a> ④ B+Tree</h5>
 <p>一个B+树的节点其实可以分成好多层，规定最下边的那层，也就是存放我们用户记录的那层为第 0 层， 之后依次往上加。之前我们做了一个非常极端的假设：存放用户记录的页 最多存放3条记录 ，存放目录项 记录的页 最多存放4条记录 。其实真实环境中一个页存放的记录数量是非常大的，假设所有存放用户记录 的叶子节点代表的数据页可以存放 100条用户记录 ，所有存放目录项记录的内节点代表的数据页可以存 放 1000条目录项记录 ，那么：</p>
@@ -194,9 +194,9 @@
 <h4 id="_2-二级索引-辅助索引、非聚簇索引" tabindex="-1"><a class="header-anchor" href="#_2-二级索引-辅助索引、非聚簇索引" aria-hidden="true">#</a> 2. 二级索引（辅助索引、非聚簇索引）</h4>
 <p>如果我们想以别的列作为搜索条件该怎么办？肯定不能是从头到尾沿着链表依次遍历记录一遍。</p>
 <p>答案：我们可以<code v-pre>多建几颗B+树</code>，不同的B+树中的数据采用不同的排列规则。比方说我们用<code v-pre>c2</code>列的大小作为数据页、页中记录的排序规则，再建一课B+树，效果如下图所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616203852043.png" alt="image-20220616203852043"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616203852043.png" alt="image-20220616203852043" loading="lazy"></p>
 <p>这个B+树与上边介绍的聚簇索引有几处不同：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616210404733.png" alt="image-20220616210404733"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616210404733.png" alt="image-20220616210404733" loading="lazy"></p>
 <p>**概念：回表 **</p>
 <p>我们根据这个以c2列大小排序的B+树只能确定我们要查找记录的主键值，所以如果我们想根 据c2列的值查找到完整的用户记录的话，仍然需要到 聚簇索引 中再查一遍，这个过程称为 回表 。也就 是根据c2列的值查询一条完整的用户记录需要使用到 2 棵B+树！</p>
 <p><strong>问题</strong>：为什么我们还需要一次 回表 操作呢？直接把完整的用户记录放到叶子节点不OK吗？</p>
@@ -204,7 +204,7 @@
 <p>如果把完整的用户记录放到叶子结点是可以不用回表。但是<code v-pre>太占地方</code>了，相当于每建立一课B+树都需要把所有的用户记录再都拷贝一遍，这就有点太浪费存储空间了。</p>
 <p>因为这种按照<code v-pre>非主键列</code>建立的B+树需要一次回表操作才可以定位到完整的用户记录，所以这种B+树也被称为<code v-pre>二级索引</code>，或者辅助索引。由于使用的是c2列的大小作为B+树的排序规则，所以我们也称这个B+树为c2列简历的索引。</p>
 <p>非聚簇索引的存在不影响数据在聚簇索引中的组织，所以一张表可以有多个非聚簇索引。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616213109383.png" alt="image-20220616213109383"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616213109383.png" alt="image-20220616213109383" loading="lazy"></p>
 <p>小结：聚簇索引与非聚簇索引的原理不同，在使用上也有一些区别：</p>
 <ol>
 <li>聚簇索引的<code v-pre>叶子节点</code>存储的就是我们的<code v-pre>数据记录</code>, 非聚簇索引的叶子节点存储的是<code v-pre>数据位置</code>。非聚簇索引不会影响数据表的物理存储顺序。</li>
@@ -218,7 +218,7 @@
 <li>在记录的c2列相同的情况下，采用c3列进行排序</li>
 </ul>
 <p>为c2和c3建立的索引的示意图如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220616215251172.png" alt="image-20220616215251172"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220616215251172.png" alt="image-20220616215251172" loading="lazy"></p>
 <p>如图所示，我们需要注意以下几点：</p>
 <ul>
 <li>每条目录项都有c2、c3、页号这三个部分组成，各条记录先按照c2列的值进行排序，如果记录的c2列相同，则按照c3列的值进行排序</li>
@@ -240,9 +240,9 @@
 <p>这个过程特别注意的是：一个B+树索引的根节点自诞生之日起，便不会再移动。这样只要我们对某个表建议一个索引，那么它的根节点的页号便会被记录到某个地方。然后凡是 <code v-pre>InnoDB</code> 存储引擎需要用到这个索引的时候，都会从哪个固定的地方取出根节点的页号，从而来访问这个索引。</p>
 <h4 id="_2-内节点中目录项记录的唯一性" tabindex="-1"><a class="header-anchor" href="#_2-内节点中目录项记录的唯一性" aria-hidden="true">#</a> 2. 内节点中目录项记录的唯一性</h4>
 <p>我们知道B+树索引的内节点中目录项记录的内容是 <code v-pre>索引列 + 页号</code> 的搭配，但是这个搭配对于二级索引来说有点不严谨。还拿 index_demo 表为例，假设这个表中的数据是这样的：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220617151918786.png" alt="image-20220617151918786"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617151918786.png" alt="image-20220617151918786" loading="lazy"></p>
 <p>如果二级索引中目录项记录的内容只是 <code v-pre>索引列 + 页号</code> 的搭配的话，那么为 <code v-pre>c2</code> 列简历索引后的B+树应该长这样：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220617152906690.png" alt="image-20220617152906690"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617152906690.png" alt="image-20220617152906690" loading="lazy"></p>
 <p>如果我们想新插入一行记录，其中 <code v-pre>c1</code> 、<code v-pre>c2</code> 、<code v-pre>c3</code> 的值分别是: <code v-pre>9</code>、<code v-pre>1</code>、<code v-pre>c</code>, 那么在修改这个为 c2 列建立的二级索引对应的 B+ 树时便碰到了个大问题：由于 <code v-pre>页3</code> 中存储的目录项记录是由 <code v-pre>c2列 + 页号</code> 的值构成的，<code v-pre>页3</code> 中的两条目录项记录对应的 c2 列的值都是1，而我们 <code v-pre>新插入的这条记录</code> 的 c2 列的值也是 <code v-pre>1</code>，那我们这条新插入的记录到底应该放在 <code v-pre>页4</code> 中，还是应该放在 <code v-pre>页5</code> 中？答案：对不起，懵了</p>
 <p>为了让新插入记录找到自己在那个页面，我们需要<strong>保证在B+树的同一层页节点的目录项记录除页号这个字段以外是唯一的</strong>。所以对于二级索引的内节点的目录项记录的内容实际上是由三个部分构成的：</p>
 <ul>
@@ -251,7 +251,7 @@
 <li>页号</li>
 </ul>
 <p>也就是我们把<code v-pre>主键值</code>也添加到二级索引内节点中的目录项记录，这样就能保住 B+ 树每一层节点中各条目录项记录除页号这个字段外是唯一的，所以我们为c2建立二级索引后的示意图实际上应该是这样子的：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220617154135258.png" alt="image-20220617154135258"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617154135258.png" alt="image-20220617154135258" loading="lazy"></p>
 <p>这样我们再插入记录<code v-pre>(9, 1, 'c')</code> 时，由于 <code v-pre>页3</code> 中存储的目录项记录是由 <code v-pre>c2列 + 主键 + 页号</code> 的值构成的，可以先把新纪录的 <code v-pre>c2</code> 列的值和 <code v-pre>页3</code> 中各目录项记录的 <code v-pre>c2</code> 列的值作比较，如果 <code v-pre>c2</code> 列的值相同的话，可以接着比较主键值，因为B+树同一层中不同目录项记录的 <code v-pre>c2列 + 主键</code>的值肯定是不一样的，所以最后肯定能定位唯一的一条目录项记录，在本例中最后确定新纪录应该被插入到 <code v-pre>页5</code> 中。</p>
 <h4 id="_3-一个页面最少存储-2-条记录" tabindex="-1"><a class="header-anchor" href="#_3-一个页面最少存储-2-条记录" aria-hidden="true">#</a> 3. 一个页面最少存储 2 条记录</h4>
 <p>一个B+树只需要很少的层级就可以轻松存储数亿条记录，查询速度相当不错！这是因为B+树本质上就是一个大的多层级目录，每经过一个目录时都会过滤掉许多无效的子目录，直到最后访问到存储真实数据的目录。那如果一个大的目录中只存放一个子目录是个啥效果呢？那就是目录层级非常非常多，而且最后的那个存放真实数据的目录中只存放一条数据。所以 <strong>InnoDB 的一个数据页至少可以存放两条记录</strong>。</p>
@@ -279,9 +279,9 @@
 <p>MyISAM引擎使用 B+Tree 作为索引结构，叶子节点的data域存放的是 数据记录的地址 。</p>
 <h3 id="_4-1-myisam索引的原理" tabindex="-1"><a class="header-anchor" href="#_4-1-myisam索引的原理" aria-hidden="true">#</a> 4.1 MyISAM索引的原理</h3>
 <img src="@source/notes/senior_mysql/images/image-20220617160325201.png" alt="image-20220617160325201" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220617160413479.png" alt="image-20220617160413479"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617160413479.png" alt="image-20220617160413479" loading="lazy"></p>
 <img src="@source/notes/senior_mysql/images/image-20220617160533122.png" alt="image-20220617160533122" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220617160625006.png" alt="image-20220617160625006"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617160625006.png" alt="image-20220617160625006" loading="lazy"></p>
 <img src="@source/notes/senior_mysql/images/image-20220617160813548.png" alt="image-20220617160813548" style="float:left;" />
 <h3 id="_4-2-myisam-与-innodb对比" tabindex="-1"><a class="header-anchor" href="#_4-2-myisam-与-innodb对比" aria-hidden="true">#</a> 4.2 MyISAM 与 InnoDB对比</h3>
 <p><strong>MyISAM的索引方式都是“非聚簇”的，与InnoDB包含1个聚簇索引是不同的。小结两种引擎中索引的区别：</strong></p>
@@ -292,7 +292,7 @@
 <p>⑤ InnoDB要求表 必须有主键 （ MyISAM可以没有 ）。如果没有显式指定，则MySQL系统会自动选择一个 可以非空且唯一标识数据记录的列作为主键。如果不存在这种列，则MySQL自动为InnoDB表生成一个隐 含字段作为主键，这个字段长度为6个字节，类型为长整型。</p>
 <p><strong>小结：</strong></p>
 <img src="@source/notes/senior_mysql/images/image-20220617161126022.png" alt="image-20220617161126022" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220617161151125.png" alt="image-20220617161151125"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617161151125.png" alt="image-20220617161151125" loading="lazy"></p>
 <h2 id="_5-索引的代价" tabindex="-1"><a class="header-anchor" href="#_5-索引的代价" aria-hidden="true">#</a> 5. 索引的代价</h2>
 <p>索引是个好东西，可不能乱建，它在空间和时间上都会有消耗：</p>
 <ul>
@@ -317,45 +317,45 @@
 <p><strong>加快查找速度的数据结构，常见的有两类：</strong></p>
 <p>(1) 树，例如平衡二叉搜索树，查询/插入/修改/删除的平均时间复杂度都是 <code v-pre>O(log2N)</code>;</p>
 <p>(2)哈希，例如HashMap，查询/插入/修改/删除的平均时间复杂度都是 <code v-pre>O(1)</code>; (key, value)</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220617162153587.png" alt="image-20220617162153587"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617162153587.png" alt="image-20220617162153587" loading="lazy"></p>
 <img src="@source/notes/senior_mysql/images/image-20220617162548697.png" alt="image-20220617162548697" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220617162604272.png" alt="image-20220617162604272"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617162604272.png" alt="image-20220617162604272" loading="lazy"></p>
 <p>上图中哈希函数h有可能将两个不同的关键字映射到相同的位置，这叫做 碰撞 ，在数据库中一般采用 链 接法 来解决。在链接法中，将散列到同一槽位的元素放在一个链表中，如下图所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220617162703006.png" alt="image-20220617162703006"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617162703006.png" alt="image-20220617162703006" loading="lazy"></p>
 <p>实验：体会数组和hash表的查找方面的效率区别</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>// 算法复杂度为 O(n)
-@Test
-public void test1(){
-    int[] arr = new int[100000];
-    for(int i = 0;i &lt; arr.length;i++){
-        arr[i] = i + 1;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">// 算法复杂度为 O(n)</span>
+<span class="token variable">@Test</span>
+<span class="token keyword">public</span> void test1<span class="token punctuation">(</span><span class="token punctuation">)</span>{
+    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr <span class="token operator">=</span> new <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token number">100000</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">)</span>{
+        arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
     }
-    long start = System.currentTimeMillis();
-    for(int j = 1; j&lt;=100000;j++){
-        int temp = j;
-        for(int i = 0;i &lt; arr.length;i++){
-            if(temp == arr[i]){
-                break;
+    long <span class="token keyword">start</span> <span class="token operator">=</span> System<span class="token punctuation">.</span>currentTimeMillis<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">&lt;=</span><span class="token number">100000</span><span class="token punctuation">;</span>j<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">)</span>{
+        <span class="token keyword">int</span> <span class="token keyword">temp</span> <span class="token operator">=</span> j<span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">)</span>{
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">temp</span> <span class="token operator">=</span><span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>{
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
             }
         }
     }
-    long end = System.currentTimeMillis();
-    System.out.println(&quot;time： &quot; + (end - start)); //time： 823
+    long <span class="token keyword">end</span> <span class="token operator">=</span> System<span class="token punctuation">.</span>currentTimeMillis<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span><span class="token keyword">out</span><span class="token punctuation">.</span>println<span class="token punctuation">(</span><span class="token string">"time： "</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token keyword">end</span> <span class="token operator">-</span> <span class="token keyword">start</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//time： 823</span>
 }
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>// 算法复杂度为 O(1)
-@Test
-public void test2(){
-    HashSet&lt;Integer&gt; set = new HashSet&lt;&gt;(100000);
-    for(int i = 0;i &lt; 100000;i++){
-    	set.add(i + 1);
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">// 算法复杂度为 O(1)</span>
+<span class="token variable">@Test</span>
+<span class="token keyword">public</span> void test2<span class="token punctuation">(</span><span class="token punctuation">)</span>{
+    HashSet<span class="token operator">&lt;</span><span class="token keyword">Integer</span><span class="token operator">></span> <span class="token keyword">set</span> <span class="token operator">=</span> new HashSet<span class="token operator">&lt;></span><span class="token punctuation">(</span><span class="token number">100000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i <span class="token operator">&lt;</span> <span class="token number">100000</span><span class="token punctuation">;</span>i<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">)</span>{
+    	<span class="token keyword">set</span><span class="token punctuation">.</span><span class="token keyword">add</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     }
-    long start = System.currentTimeMillis();
-    for(int j = 1; j&lt;=100000;j++) {
-        int temp = j;
-        boolean contains = set.contains(temp);
+    long <span class="token keyword">start</span> <span class="token operator">=</span> System<span class="token punctuation">.</span>currentTimeMillis<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">&lt;=</span><span class="token number">100000</span><span class="token punctuation">;</span>j<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">)</span> {
+        <span class="token keyword">int</span> <span class="token keyword">temp</span> <span class="token operator">=</span> j<span class="token punctuation">;</span>
+        <span class="token keyword">boolean</span> <span class="token keyword">contains</span> <span class="token operator">=</span> <span class="token keyword">set</span><span class="token punctuation">.</span><span class="token keyword">contains</span><span class="token punctuation">(</span><span class="token keyword">temp</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     }
-    long end = System.currentTimeMillis();
-    System.out.println(&quot;time： &quot; + (end - start)); //time： 5
+    long <span class="token keyword">end</span> <span class="token operator">=</span> System<span class="token punctuation">.</span>currentTimeMillis<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span><span class="token keyword">out</span><span class="token punctuation">.</span>println<span class="token punctuation">(</span><span class="token string">"time： "</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token keyword">end</span> <span class="token operator">-</span> <span class="token keyword">start</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//time： 5</span>
 }
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>Hash结构效率高，那为什么索引结构要设计成树型呢？</strong></p>
 <img src="@source/notes/senior_mysql/images/image-20220617163202156.png" alt="image-20220617163202156" style="float:left;" />
@@ -380,10 +380,10 @@ public void test2(){
 </table>
 <p><strong>Hash索引的适用性：</strong></p>
 <img src="@source/notes/senior_mysql/images/image-20220617163619721.png" alt="image-20220617163619721" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220617163657697.png" alt="image-20220617163657697"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617163657697.png" alt="image-20220617163657697" loading="lazy"></p>
 <p>采用自适应 Hash 索引目的是方便根据 SQL 的查询条件加速定位到叶子节点，特别是当 B+ 树比较深的时 候，通过自适应 Hash 索引可以明显提高数据的检索效率。</p>
 <p>我们可以通过 innodb_adaptive_hash_index 变量来查看是否开启了自适应 Hash，比如：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show variables like '%adaptive_hash_index';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'%adaptive_hash_index'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_6-3-二叉搜索树" tabindex="-1"><a class="header-anchor" href="#_6-3-二叉搜索树" aria-hidden="true">#</a> 6.3 二叉搜索树</h3>
 <p>如果我们利用二叉树作为索引结构，那么磁盘的IO次数和索引树的高度是相关的。</p>
 <p><strong>1. 二叉搜索树的特点</strong></p>
@@ -393,21 +393,21 @@ public void test2(){
 </ul>
 <p><strong>2. 查找规则</strong></p>
 <img src="@source/notes/senior_mysql/images/image-20220617163952166.png" alt="image-20220617163952166" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220617164022728.png" alt="image-20220617164022728"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617164022728.png" alt="image-20220617164022728" loading="lazy"></p>
 <p>但是特殊情况，就是有时候二叉树的深度非常大，比如：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220617164053134.png" alt="image-20220617164053134"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617164053134.png" alt="image-20220617164053134" loading="lazy"></p>
 <p>为了提高查询效率，就需要 减少磁盘IO数 。为了减少磁盘IO的次数，就需要尽量 降低树的高度 ，需要把 原来“瘦高”的树结构变的“矮胖”，树的每层的分叉越多越好。</p>
 <h3 id="_6-4-avl树" tabindex="-1"><a class="header-anchor" href="#_6-4-avl树" aria-hidden="true">#</a> 6.4 AVL树</h3>
 <img src="@source/notes/senior_mysql/images/image-20220617165045803.png" alt="image-20220617165045803" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220617165105005.png" alt="image-20220617165105005"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617165105005.png" alt="image-20220617165105005" loading="lazy"></p>
 <p>`每访问一次节点就需要进行一次磁盘 I/O 操作，对于上面的树来说，我们需要进行 5次 I/O 操作。虽然平衡二叉树的效率高，但是树的深度也同样高，这就意味着磁盘 I/O 操作次数多，会影响整体数据查询的效率。</p>
 <p>针对同样的数据，如果我们把二叉树改成 M 叉树 （M&gt;2）呢？当 M=3 时，同样的 31 个节点可以由下面 的三叉树来进行存储：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220617165124685.png" alt="image-20220617165124685"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617165124685.png" alt="image-20220617165124685" loading="lazy"></p>
 <p>你能看到此时树的高度降低了，当数据量 N 大的时候，以及树的分叉树 M 大的时候，M叉树的高度会远小于二叉树的高度 (M &gt; 2)。所以，我们需要把 `树从“瘦高” 变 “矮胖”。</p>
 <h3 id="_6-5-b-tree" tabindex="-1"><a class="header-anchor" href="#_6-5-b-tree" aria-hidden="true">#</a> 6.5 B-Tree</h3>
 <p>B 树的英文是 Balance Tree，也就是 <code v-pre>多路平衡查找树</code>。简写为 B-Tree。它的高度远小于平衡二叉树的高度。</p>
 <p>B 树的结构如下图所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220617165937875.png" alt="image-20220617165937875"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617165937875.png" alt="image-20220617165937875" loading="lazy"></p>
 <img src="@source/notes/senior_mysql/images/image-20220617170124200.png" alt="image-20220617170124200" style="float:left;" />
 <p>一个 M 阶的 B 树（M&gt;2）有以下的特性：</p>
 <ol>
@@ -427,13 +427,13 @@ public void test2(){
 <p>你能看出来在 B 树的搜索过程中，我们比较的次数并不少，但如果把数据读取出来然后在内存中进行比 较，这个时间就是可以忽略不计的。而读取磁盘块本身需要进行 I/O 操作，消耗的时间比在内存中进行 比较所需要的时间要多，是数据查找用时的重要因素。 B 树相比于平衡二叉树来说磁盘 I/O 操作要少 ， 在数据查询中比平衡二叉树效率要高。所以 只要树的高度足够低，IO次数足够少，就可以提高查询性能 。</p>
 <img src="@source/notes/senior_mysql/images/image-20220617170454023.png" alt="image-20220617170454023" style="float:left;" />
 <p><strong>再举例1：</strong></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220617170526488.png" alt="image-20220617170526488"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617170526488.png" alt="image-20220617170526488" loading="lazy"></p>
 <h3 id="_6-6-b-tree" tabindex="-1"><a class="header-anchor" href="#_6-6-b-tree" aria-hidden="true">#</a> 6.6 B+Tree</h3>
 <img src="@source/notes/senior_mysql/images/image-20220617170628394.png" alt="image-20220617170628394" style="float:left;" />
 <ul>
 <li>MySQL官网说明：</li>
 </ul>
-<p><img src="@source/notes/senior_mysql/images/image-20220617170710329.png" alt="image-20220617170710329"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617170710329.png" alt="image-20220617170710329" loading="lazy"></p>
 <p><strong>B+ 树和 B 树的差异在于以下几点：</strong></p>
 <ol>
 <li>有 k 个孩子的节点就有 k 个关键字。也就是孩子数量 = 关键字数，而 B 树中，孩子数量 = 关键字数 +1。</li>
@@ -442,8 +442,8 @@ public void test2(){
 <li>所有关键字都在叶子节点出现，叶子节点构成一个有序链表，而且叶子节点本身按照关键字的大 小从小到大顺序链接。</li>
 </ol>
 <img src="@source/notes/senior_mysql/images/image-20220617171011102.png" alt="image-20220617171011102" style="float:left;" />
-<p><img src="@source/notes/senior_mysql/images/image-20220617171106671.png" alt="image-20220617171106671"></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220617171131747.png" alt="image-20220617171131747"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617171106671.png" alt="image-20220617171106671" loading="lazy"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617171131747.png" alt="image-20220617171131747" loading="lazy"></p>
 <img src="@source/notes/senior_mysql/images/image-20220617171331282.png" alt="image-20220617171331282" style="float:left;" />
 <img src="@source/notes/senior_mysql/images/image-20220617171434206.png" alt="image-20220617171434206" style="float:left;" />
 <blockquote>
@@ -483,5 +483,5 @@ public void test2(){
 <img src="@source/notes/senior_mysql/images/image-20220617175440527.png" alt="image-20220617175440527" style="float:left;" />
 <h3 id="附录-算法的时间复杂度" tabindex="-1"><a class="header-anchor" href="#附录-算法的时间复杂度" aria-hidden="true">#</a> 附录：算法的时间复杂度</h3>
 <p>同一问题可用不同算法解决，而一个算法的质量优劣将影响到算法乃至程序的效率。算法分析的目的在 于选择合适算法和改进算法。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220617175516191.png" alt="image-20220617175516191"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220617175516191.png" alt="image-20220617175516191" loading="lazy"></p>
 </div></template>

@@ -71,7 +71,7 @@ Redo log可以简单分为以下两个部分：
 
 redo log buffer 大小，默认 `16M` ，最大值是4096M，最小值为1M。
 
-```mysql
+```sql
 mysql> show variables like '%innodb_log_buffer_size%';
 +------------------------+----------+
 | Variable_name          | Value    |
@@ -147,14 +147,14 @@ redo log的写入并不是直接写入磁盘的，InnoDB引擎会在写redo log�
 
 比较innodb_flush_log_at_trx_commit对事务的影响。
 
-```mysql
+```sql
 CREATE TABLE test_load(
 a INT,
 b CHAR(80)
 )ENGINE=INNODB;
 ```
 
-```mysql
+```sql
 DELIMITER//
 CREATE PROCEDURE p_load(COUNT INT UNSIGNED)
 BEGIN
@@ -171,7 +171,7 @@ DELIMITER;
 
 <img src="./images/image-20220710215001482.png" alt="image-20220710215001482" style="float:left;" />
 
-```mysql
+```sql
 mysql> CALL p_load(30000);
 Query OK, 0 rows affected(1 min 23 sec)
 ```
@@ -180,22 +180,22 @@ Query OK, 0 rows affected(1 min 23 sec)
 
 修改参数innodb_flush_log_at_trx_commit，设置为0：
 
-```mysql
+```sql
 mysql> set global innodb_flush_log_at_trx_commit = 0;
 ```
 
-```mysql
+```sql
 mysql> CALL p_load(30000);
 Query OK, 0 rows affected(38 sec)
 ```
 
 修改参数innodb_flush_log_at_trx_commit，设置为2：
 
-```mysql
+```sql
 mysql> set global innodb_flush_log_at_trx_commit = 2;
 ```
 
-```mysql
+```sql
 mysql> CALL p_load(30000);
 Query OK, 0 rows affected(46 sec)
 ```
@@ -250,7 +250,7 @@ MySQL把对底层页面中的一次原子访问过程称之为一个`Mini-Transa
 
 * `innodb_log_files_in_group`：指明redo log file的个数，命名方式如：ib_logfile0，iblogfile1... iblogfilen。默认2个，最大100个。
 
-  ```mysql
+  ```sql
   mysql> show variables like 'innodb_log_files_in_group';
   +---------------------------+-------+
   | Variable_name             | Value |
@@ -265,7 +265,7 @@ MySQL把对底层页面中的一次原子访问过程称之为一个`Mini-Transa
 
 * `innodb_log_file_size`：单个 redo log 文件设置大小，默认值为 `48M` 。最大值为512G，注意最大值 指的是整个 redo log 系列文件之和，即（innodb_log_files_in_group * innodb_log_file_size ）不能大 于最大值512G。
 
-  ```mysql
+  ```sql
   mysql> show variables like 'innodb_log_file_size';
   +----------------------+----------+
   | Variable_name        | Value    |
@@ -276,7 +276,7 @@ MySQL把对底层页面中的一次原子访问过程称之为一个`Mini-Transa
 
 根据业务修改其大小，以便容纳较大的事务。编辑my.cnf文件并重启数据库生效，如下所示
 
-```mysql
+```sql
 [root@localhost ~]# vim /etc/my.cnf
 innodb_log_file_size=200M
 ```
@@ -346,7 +346,7 @@ InnoDB对undo log的管理采用段的方式，也就是 `回滚段（rollback s
 * 在` InnoDB1.1版本之前` （不包括1.1版本），只有一个rollback segment，因此支持同时在线的事务限制为 `1024` 。虽然对绝大多数的应用来说都已经够用。 
 * 从1.1版本开始InnoDB支持最大 `128个rollback segment` ，故其支持同时在线的事务限制提高到 了 `128*1024` 。
 
-```mysql
+```sql
 mysql> show variables like 'innodb_undo_logs';
 +------------------+-------+
 | Variable_name    | Value |
@@ -369,7 +369,7 @@ mysql> show variables like 'innodb_undo_logs';
 
 4. 回滚段存在于undo表空间中，在数据库中可以存在多个undo表空间，但同一时刻只能使用一个 undo表空间。
 
-   ```mysql
+   ```sql
    mysql> show variables like 'innodb_undo_tablespaces';
    +-------------------------+-------+
    | Variable_name           | Value |
@@ -430,7 +430,7 @@ mysql> show variables like 'innodb_undo_logs';
 
 **当我们执行INSERT时：**
 
-```mysql
+```sql
 begin;
 INSERT INTO user (name) VALUES ("tom");
 ```
@@ -443,7 +443,7 @@ INSERT INTO user (name) VALUES ("tom");
 
 对应更新的操作会产生update undo log，并且会分更新主键和不更新主键的，假设现在执行：
 
-```mysql
+```sql
 UPDATE user SET name="Sun" WHERE id=1;
 ```
 
@@ -453,7 +453,7 @@ UPDATE user SET name="Sun" WHERE id=1;
 
 假设现在执行：
 
-```mysql
+```sql
 UPDATE user SET id=2 WHERE id=1;
 ```
 

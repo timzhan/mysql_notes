@@ -9,9 +9,9 @@
 <h3 id="_2-2-写-写情况" tabindex="-1"><a class="header-anchor" href="#_2-2-写-写情况" aria-hidden="true">#</a> 2.2 写-写情况</h3>
 <p><code v-pre>写-写</code> 情况，即并发事务相继对相同的记录做出改动。</p>
 <p>在这种情况下会发生 <code v-pre>脏写</code> 的问题，任何一种隔离级别都不允许这种问题的发生。所以在多个未提交事务相继对一条记录做改动时，需要让它们 <code v-pre>排队执行</code> ，这个排队的过程其实是通过 <code v-pre>锁</code> 来实现的。这个所谓的锁其实是一个内存中的结构 ，在事务执行前本来是没有锁的，也就是说一开始是没有 锁结构 和记录进 行关联的，如图所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220711181120639.png" alt="image-20220711181120639"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711181120639.png" alt="image-20220711181120639" loading="lazy"></p>
 <p>当一个事务想对这条记录做改动时，首先会看看内存中有没有与这条记录关联的 <code v-pre>锁结构</code> ，当没有的时候 就会在内存中生成一个 <code v-pre>锁结构</code> 与之关联。比如，事务<code v-pre> T1</code> 要对这条记录做改动，就需要生成一个 <code v-pre>锁结构</code> 与之关联：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220711192633239.png" alt="image-20220711192633239"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711192633239.png" alt="image-20220711192633239" loading="lazy"></p>
 <p>在<code v-pre>锁结构</code>里有很多信息，为了简化理解，只把两个比较重要的属性拿了出来：</p>
 <ul>
 <li><code v-pre>trx信息</code>：代表这个锁结构是哪个事务生成的。</li>
@@ -19,9 +19,9 @@
 </ul>
 <p>在事务<code v-pre>T1</code>改动了这条记录后，就生成了一个<code v-pre>锁结构</code>与该记录关联，因为之前没有别的事务为这条记录加锁，所以<code v-pre>is_waiting</code>属性就是<code v-pre>false</code>，我们把这个场景就称值为<code v-pre>获取锁成功</code>，或者<code v-pre>加锁成功</code>，然后就可以继续执行操作了。</p>
 <p>在事务<code v-pre>T1</code>提交之前，另一个事务<code v-pre>T2</code>也想对该记录做改动，那么先看看有没有<code v-pre>锁结构</code>与这条记录关联，发现有一个<code v-pre>锁结构</code>与之关联后，然后也生成了一个锁结构与这条记录关联，不过锁结构的<code v-pre>is_waiting</code>属性值为<code v-pre>true</code>，表示当前事务需要等待，我们把这个场景就称之为<code v-pre>获取锁失败</code>，或者<code v-pre>加锁失败</code>，图示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220711193732567.png" alt="image-20220711193732567"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711193732567.png" alt="image-20220711193732567" loading="lazy"></p>
 <p>在事务T1提交之后，就会把该事务生成的<code v-pre>锁结构释放</code>掉，然后看看还有没有别的事务在等待获取锁，发现了事务T2还在等待获取锁，所以把事务T2对应的锁结构的<code v-pre>is_waiting</code>属性设置为<code v-pre>false</code>，然后把该事务对应的线程唤醒，让它继续执行，此时事务T2就算获取到锁了。效果就是这样。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220711194904328.png" alt="image-20220711194904328"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711194904328.png" alt="image-20220711194904328" loading="lazy"></p>
 <p>小结几种说法：</p>
 <ul>
 <li>
@@ -69,7 +69,7 @@
 </ul>
 <h2 id="_3-锁的不同角度分类" tabindex="-1"><a class="header-anchor" href="#_3-锁的不同角度分类" aria-hidden="true">#</a> 3. 锁的不同角度分类</h2>
 <p>锁的分类图，如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220711203519162.png" alt="image-20220711203519162"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711203519162.png" alt="image-20220711203519162" loading="lazy"></p>
 <h3 id="_3-1-从数据操作的类型划分-读锁、写锁" tabindex="-1"><a class="header-anchor" href="#_3-1-从数据操作的类型划分-读锁、写锁" aria-hidden="true">#</a> 3.1 从数据操作的类型划分：读锁、写锁</h3>
 <img src="@source/notes/senior_mysql/images/image-20220711203723941.png" alt="image-20220711203723941" style="float:left;" />
 <ul>
@@ -102,46 +102,46 @@
 <p>不过尽量避免在使用InnoDB存储引擎的表上使用 <code v-pre>LOCK TABLES</code> 这样的手动锁表语句，它们并不会提供 什么额外的保护，只是会降低并发能力而已。InnoDB的厉害之处还是实现了更细粒度的 <code v-pre>行锁</code> ，关于 InnoDB表级别的 <code v-pre>S锁</code> 和<code v-pre> X锁</code> 大家了解一下就可以了。</p>
 <p>**举例：**下面我们讲解MyISAM引擎下的表锁。</p>
 <p>步骤1：创建表并添加数据</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE mylock(
-id INT NOT NULL PRIMARY KEY auto_increment,
-NAME VARCHAR(20)
-)ENGINE myisam;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> mylock<span class="token punctuation">(</span>
+id <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token keyword">auto_increment</span><span class="token punctuation">,</span>
+NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token keyword">ENGINE</span> myisam<span class="token punctuation">;</span>
 
-# 插入一条数据
-INSERT INTO mylock(NAME) VALUES('a');
+<span class="token comment"># 插入一条数据</span>
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> mylock<span class="token punctuation">(</span>NAME<span class="token punctuation">)</span> <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-# 查询表中所有数据
-SELECT * FROM mylock;
-+----+------+
-| id | Name |
-+----+------+
-| 1  | a    |
-+----+------+
+<span class="token comment"># 查询表中所有数据</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> mylock<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+------+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> Name <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+------+</span>
+<span class="token operator">|</span> <span class="token number">1</span>  <span class="token operator">|</span> a    <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+------+</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>步骤二：查看表上加过的锁</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SHOW OPEN TABLES; # 主要关注In_use字段的值
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SHOW</span> <span class="token keyword">OPEN</span> <span class="token keyword">TABLES</span><span class="token punctuation">;</span> <span class="token comment"># 主要关注In_use字段的值</span>
 或者
-SHOW OPEN TABLES where In_use &gt; 0;
+<span class="token keyword">SHOW</span> <span class="token keyword">OPEN</span> <span class="token keyword">TABLES</span> <span class="token keyword">where</span> In_use <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220711220342251.png" alt="image-20220711220342251" style="float:left;" />
 <p>或者</p>
 <img src="@source/notes/senior_mysql/images/image-20220711220418859.png" alt="image-20220711220418859" style="float:left;" />
 <p>上面的结果表明，当前数据库中没有被锁定的表</p>
 <p>步骤3：手动增加表锁命令</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>LOCK TABLES t READ; # 存储引擎会对表t加表级别的共享锁。共享锁也叫读锁或S锁（Share的缩写）
-LOCK TABLES t WRITE; # 存储引擎会对表t加表级别的排他锁。排他锁也叫独占锁、写锁或X锁（exclusive的缩写）
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">LOCK</span> <span class="token keyword">TABLES</span> t <span class="token keyword">READ</span><span class="token punctuation">;</span> <span class="token comment"># 存储引擎会对表t加表级别的共享锁。共享锁也叫读锁或S锁（Share的缩写）</span>
+<span class="token keyword">LOCK</span> <span class="token keyword">TABLES</span> t <span class="token keyword">WRITE</span><span class="token punctuation">;</span> <span class="token comment"># 存储引擎会对表t加表级别的排他锁。排他锁也叫独占锁、写锁或X锁（exclusive的缩写）</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>比如：</p>
 <img src="@source/notes/senior_mysql/images/image-20220711220442269.png" alt="image-20220711220442269" style="float:left;" />
 <p>步骤4：释放表锁</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>UNLOCK TABLES; # 使用此命令解锁当前加锁的表
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">UNLOCK</span> <span class="token keyword">TABLES</span><span class="token punctuation">;</span> <span class="token comment"># 使用此命令解锁当前加锁的表</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>比如：</p>
 <img src="@source/notes/senior_mysql/images/image-20220711220502141.png" alt="image-20220711220502141" style="float:left;" />
 <p>步骤5：加读锁</p>
 <p>我们为mylock表加read锁（读阻塞写），观察阻塞的情况，流程如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220711220553225.png" alt="image-20220711220553225"></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220711220616537.png" alt="image-20220711220616537"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711220553225.png" alt="image-20220711220553225" loading="lazy"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711220616537.png" alt="image-20220711220616537" loading="lazy"></p>
 <p>步骤6：加写锁</p>
 <p>为mylock表加write锁，观察阻塞的情况，流程如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220711220711630.png" alt="image-20220711220711630"></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220711220730112.png" alt="image-20220711220730112"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711220711630.png" alt="image-20220711220711630" loading="lazy"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711220730112.png" alt="image-20220711220730112" loading="lazy"></p>
 <p>总结：</p>
 <p>MyISAM在执行查询语句（SELECT）前，会给涉及的所有表加读锁，在执行增删改操作前，会给涉及的表加写锁。InnoDB存储引擎是不会为这个表添加表级别的读锁和写锁的。</p>
 <p>MySQL的表级锁有两种模式：（以MyISAM表进行操作的演示）</p>
@@ -151,7 +151,7 @@ LOCK TABLES t WRITE; # 存储引擎会对表t加表级别的排他锁。排他�
 </li>
 <li>
 <p>表独占写锁（Table Write Lock）</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220711220929248.png" alt="image-20220711220929248"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220711220929248.png" alt="image-20220711220929248" loading="lazy"></p>
 </li>
 </ul>
 <h5 id="_2-意向锁-intention-lock" tabindex="-1"><a class="header-anchor" href="#_2-意向锁-intention-lock" aria-hidden="true">#</a> ② 意向锁 （intention lock）</h5>
@@ -165,70 +165,70 @@ LOCK TABLES t WRITE; # 存储引擎会对表t加表级别的排他锁。排他�
 <ul>
 <li>
 <p><strong>意向共享锁</strong>（intention shared lock, IS）：事务有意向对表中的某些行加<strong>共享锁</strong>（S锁）</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>-- 事务要获取某些行的 S 锁，必须先获得表的 IS 锁。
-SELECT column FROM table ... LOCK IN SHARE MODE;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">-- 事务要获取某些行的 S 锁，必须先获得表的 IS 锁。</span>
+<span class="token keyword">SELECT</span> <span class="token keyword">column</span> <span class="token keyword">FROM</span> <span class="token keyword">table</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">LOCK</span> <span class="token operator">IN</span> <span class="token keyword">SHARE</span> <span class="token keyword">MODE</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div></li>
 <li>
 <p><strong>意向排他锁</strong>（intention exclusive lock, IX）：事务有意向对表中的某些行加<strong>排他锁</strong>（X锁）</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>-- 事务要获取某些行的 X 锁，必须先获得表的 IX 锁。
-SELECT column FROM table ... FOR UPDATE;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">-- 事务要获取某些行的 X 锁，必须先获得表的 IX 锁。</span>
+<span class="token keyword">SELECT</span> <span class="token keyword">column</span> <span class="token keyword">FROM</span> <span class="token keyword">table</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">FOR</span> <span class="token keyword">UPDATE</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div></li>
 </ul>
 <p>即：意向锁是由存储引擎 <code v-pre>自己维护的</code> ，用户无法手动操作意向锁，在为数据行加共享 / 排他锁之前， InooDB 会先获取该数据行 <code v-pre>所在数据表的对应意向锁</code> 。</p>
 <p><strong>1. 意向锁要解决的问题</strong></p>
 <img src="@source/notes/senior_mysql/images/image-20220711222132300.png" alt="image-20220711222132300" style="float:left;" />
 <p>**举例：**创建表teacher,插入6条数据，事务的隔离级别默认为<code v-pre>Repeatable-Read</code>，如下所示。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE `teacher` (
-	`id` int NOT NULL,
-    `name` varchar(255) NOT NULL,
-    PRIMARY KEY (`id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>teacher<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+	<span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    <span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8mb4 <span class="token keyword">COLLATE</span><span class="token operator">=</span>utf8mb4_0900_ai_ci<span class="token punctuation">;</span>
 
-INSERT INTO `teacher` VALUES
-('1', 'zhangsan'),
-('2', 'lisi'),
-('3', 'wangwu'),
-('4', 'zhaoliu'),
-('5', 'songhongkang'),
-('6', 'leifengyang');
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT @@transaction_isolation;
-+-------------------------+
-| @@transaction_isolation |
-+-------------------------+
-| REPEATABLE-READ         |
-+-------------------------+
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> <span class="token identifier"><span class="token punctuation">`</span>teacher<span class="token punctuation">`</span></span> <span class="token keyword">VALUES</span>
+<span class="token punctuation">(</span><span class="token string">'1'</span><span class="token punctuation">,</span> <span class="token string">'zhangsan'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token string">'2'</span><span class="token punctuation">,</span> <span class="token string">'lisi'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token string">'3'</span><span class="token punctuation">,</span> <span class="token string">'wangwu'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token string">'4'</span><span class="token punctuation">,</span> <span class="token string">'zhaoliu'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token string">'5'</span><span class="token punctuation">,</span> <span class="token string">'songhongkang'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token string">'6'</span><span class="token punctuation">,</span> <span class="token string">'leifengyang'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> @<span class="token variable">@transaction_isolation</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+</span>
+<span class="token operator">|</span> @<span class="token variable">@transaction_isolation</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+</span>
+<span class="token operator">|</span> <span class="token keyword">REPEATABLE</span><span class="token operator">-</span><span class="token keyword">READ</span>         <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------+</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>假设事务A获取了某一行的排他锁，并未提交，语句如下所示:</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>BEGIN;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
 
-SELECT * FROM teacher WHERE id = 6 FOR UPDATE;
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> teacher <span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">6</span> <span class="token keyword">FOR</span> <span class="token keyword">UPDATE</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>事务B想要获取teacher表的表读锁，语句如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>BEGIN;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
 
-LOCK TABLES teacher READ;
+<span class="token keyword">LOCK</span> <span class="token keyword">TABLES</span> teacher <span class="token keyword">READ</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220712124209006.png" alt="image-20220712124209006" style="float:left;" />
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>BEGIN;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
 
-SELECT * FROM teacher WHERE id = 6 FOR UPDATE;
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> teacher <span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">6</span> <span class="token keyword">FOR</span> <span class="token keyword">UPDATE</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>此时teacher表存在两把锁：teacher表上的意向排他锁与id未6的数据行上的排他锁。事务B想要获取teacher表的共享锁。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>BEGIN;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
 
-LOCK TABLES teacher READ;
+<span class="token keyword">LOCK</span> <span class="token keyword">TABLES</span> teacher <span class="token keyword">READ</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>此时事务B检测事务A持有teacher表的意向排他锁，就可以得知事务A必须持有该表中某些数据行的排他锁，那么事务B对teacher表的加锁请求就会被排斥（阻塞），而无需去检测表中的每一行数据是否存在排他锁。</p>
 <p><strong>意向锁的并发性</strong></p>
 <p>意向锁不会与行级的共享 / 排他锁互斥！正因为如此，意向锁并不会影响到多个事务对不同数据行加排他锁时的并发性。（不然我们直接用普通的表锁就行了）</p>
 <p>我们扩展一下上面 teacher表的例子来概括一下意向锁的作用（一条数据从被锁定到被释放的过程中，可 能存在多种不同锁，但是这里我们只着重表现意向锁）。</p>
 <p>事务A先获得了某一行的排他锁，并未提交：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>BEGIN;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
 
-SELECT * FROM teacher WHERE id = 6 FOR UPDATE;
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> teacher <span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">6</span> <span class="token keyword">FOR</span> <span class="token keyword">UPDATE</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>事务A获取了teacher表上的意向排他锁。事务A获取了id为6的数据行上的排他锁。之后事务B想要获取teacher表上的共享锁。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>BEGIN;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
 
-LOCK TABLES teacher READ;
+<span class="token keyword">LOCK</span> <span class="token keyword">TABLES</span> teacher <span class="token keyword">READ</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>事务B检测到事务A持有teacher表的意向排他锁。事务B对teacher表的加锁请求被阻塞（排斥）。最后事务C也想获取teacher表中某一行的排他锁。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>BEGIN;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
 
-SELECT * FROM teacher WHERE id = 5 FOR UPDATE;
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> teacher <span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">5</span> <span class="token keyword">FOR</span> <span class="token keyword">UPDATE</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>事务C申请teacher表的意向排他锁。事务C检测到事务A持有teacher表的意向排他锁。因为意向锁之间并不互斥，所以事务C获取到了teacher表的意向排他锁。因为id为5的数据行上不存在任何排他锁，最终事务C成功获取到了该数据行上的排他锁。</p>
 <p><strong>从上面的案例可以得到如下结论：</strong></p>
 <ol>
@@ -239,22 +239,22 @@ SELECT * FROM teacher WHERE id = 5 FOR UPDATE;
 </ol>
 <h5 id="_3-自增锁-auto-inc锁" tabindex="-1"><a class="header-anchor" href="#_3-自增锁-auto-inc锁" aria-hidden="true">#</a> ③ 自增锁（AUTO-INC锁）</h5>
 <p>在使用MySQL过程中，我们可以为表的某个列添加 <code v-pre>AUTO_INCREMENT</code> 属性。举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE `teacher` (
-`id` int NOT NULL AUTO_INCREMENT,
-`name` varchar(255) NOT NULL,
-PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>teacher<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+<span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8mb4 <span class="token keyword">COLLATE</span><span class="token operator">=</span>utf8mb4_0900_ai_ci<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>由于这个表的id字段声明了AUTO_INCREMENT，意味着在书写插入语句时不需要为其赋值，SQL语句修改 如下所示。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO `teacher` (name) VALUES ('zhangsan'), ('lisi');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> <span class="token identifier"><span class="token punctuation">`</span>teacher<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'zhangsan'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'lisi'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>上边的插入语句并没有为id列显式赋值，所以系统会自动为它赋上递增的值，结果如下所示。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from teacher;
-+----+----------+
-| id | name     |
-+----+----------+
-| 1  | zhangsan |
-| 2  | lisi     |
-+----+----------+
-2 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> teacher<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+----------+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> name     <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+----------+</span>
+<span class="token operator">|</span> <span class="token number">1</span>  <span class="token operator">|</span> zhangsan <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">2</span>  <span class="token operator">|</span> lisi     <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+----------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>现在我们看到的上面插入数据只是一种简单的插入模式，所有插入数据的方式总共分为三类，分别是 “ <code v-pre>Simple inserts</code> ”，“ <code v-pre>Bulk inserts</code> ”和“ <code v-pre>Mixed-mode inserts </code>”。</p>
 <p><strong>1. “Simple inserts” （简单插入）</strong></p>
 <p>可以 <code v-pre>预先确定要插入的行数</code> （当语句被初始处理时）的语句。包括没有嵌套子查询的单行和多行<code v-pre>INSERT...VALUES()</code>和 <code v-pre>REPLACE</code> 语句。比如我们上面举的例子就属于该类插入，已经确定要插入的行 数。</p>
@@ -280,22 +280,22 @@ PRIMARY KEY (`id`)
 <p>读锁之间不互斥，因此你可以有多个线程同时对一张表增删查改。读写锁之间、写锁之间都是互斥的，用来保证变更表结构操作的安全性，解决了DML和DDL操作之间的一致性问题。<code v-pre>不需要显式使用</code>，在访问一个表的时候会被自动加上。</p>
 <p><strong>举例：元数据锁的使用场景模拟</strong></p>
 <p>**会话A：**从表中查询数据</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; BEGIN;
-Query OK, 0 rows affected (0.00 sec)
-mysql&gt; SELECT COUNT(1) FROM teacher;
-+----------+
-| COUNT(1) |
-+----------+
-| 2        |
-+----------+
-1 row int set (7.46 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">FROM</span> teacher<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----------+</span>
+<span class="token operator">|</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------+</span>
+<span class="token operator">|</span> <span class="token number">2</span>        <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token keyword">int</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">7.46</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>**会话B：**修改表结构，增加新列</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; BEGIN;
-Query OK, 0 rows affected (0.00 sec)
-mysql&gt; alter table teacher add age int not null;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">BEGIN</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+mysql<span class="token operator">></span> <span class="token keyword">alter</span> <span class="token keyword">table</span> teacher <span class="token keyword">add</span> age <span class="token keyword">int</span> <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>**会话C：**查看当前MySQL的进程</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show processlist;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220713142808924.png" alt="image-20220713142808924"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> processlist<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220713142808924.png" alt="image-20220713142808924" loading="lazy"></p>
 <p>通过会话C可以看出会话B被阻塞，这是由于会话A拿到了teacher表的元数据读锁，会话B想申请teacher表的元数据写锁，由于读写锁互斥，会话B需要等待会话A释放元数据锁才能执行。</p>
 <img src="@source/notes/senior_mysql/images/image-20220713143156759.png" alt="image-20220713143156759" style="float:left;" />
 <h4 id="_2-innodb中的行锁" tabindex="-1"><a class="header-anchor" href="#_2-innodb中的行锁" aria-hidden="true">#</a> 2. InnoDB中的行锁</h4>
@@ -304,30 +304,30 @@ mysql&gt; alter table teacher add age int not null;
 <p>**缺点：**对于<code v-pre>锁的开销比较大</code>，加锁会比较慢，容易出现<code v-pre>死锁</code>情况。</p>
 <p>InnoDB与MyISAM的最大不同有两点：一是支持事物（TRANSACTION）；二是采用了行级锁。</p>
 <p>首先我们创建表如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE student (
-	id INT,
-    name VARCHAR(20),
-    class VARCHAR(10),
-    PRIMARY KEY (id)
-) Engine=InnoDB CHARSET=utf8;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> student <span class="token punctuation">(</span>
+	id <span class="token keyword">INT</span><span class="token punctuation">,</span>
+    name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    class <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">Engine</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>向这个表里插入几条记录：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO student VALUES
-(1, '张三', '一班'),
-(3, '李四', '一班'),
-(8, '王五', '二班'),
-(15, '赵六', '二班'),
-(20, '钱七', '三班');
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> student <span class="token keyword">VALUES</span>
+<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'张三'</span><span class="token punctuation">,</span> <span class="token string">'一班'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'李四'</span><span class="token punctuation">,</span> <span class="token string">'一班'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token string">'王五'</span><span class="token punctuation">,</span> <span class="token string">'二班'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">,</span> <span class="token string">'赵六'</span><span class="token punctuation">,</span> <span class="token string">'二班'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token string">'钱七'</span><span class="token punctuation">,</span> <span class="token string">'三班'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-mysql&gt; SELECT * FROM student;
+mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> student<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220713161549241.png" alt="image-20220713161549241" style="float:left;" />
 <p>student表中的聚簇索引的简图如下所示。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220713163353648.png" alt="image-20220713163353648"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220713163353648.png" alt="image-20220713163353648" loading="lazy"></p>
 <p>这里把B+树的索引结构做了超级简化，只把索引中的记录给拿了出来，下面看看都有哪些常用的行锁类型。</p>
 <h5 id="_1-记录锁-record-locks" tabindex="-1"><a class="header-anchor" href="#_1-记录锁-record-locks" aria-hidden="true">#</a> ① 记录锁（Record Locks）</h5>
 <p>记录锁也就是仅仅把一条记录锁，官方的类型名称为：<code v-pre>LOCK_REC_NOT_GAP</code>。比如我们把id值为8的那条记录加一个记录锁的示意图如果所示。仅仅是锁住了id值为8的记录，对周围的数据没有影响。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220713164811567.png" alt="image-20220713164811567"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220713164811567.png" alt="image-20220713164811567" loading="lazy"></p>
 <p>举例如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220713164948405.png" alt="image-20220713164948405"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220713164948405.png" alt="image-20220713164948405" loading="lazy"></p>
 <p>记录锁是有S锁和X锁之分的，称之为 <code v-pre>S型记录锁</code> 和 <code v-pre>X型记录锁</code> 。</p>
 <ul>
 <li>当一个事务获取了一条记录的S型记录锁后，其他事务也可以继续获取该记录的S型记录锁，但不可以继续获取X型记录锁；</li>
@@ -335,7 +335,7 @@ mysql&gt; SELECT * FROM student;
 </ul>
 <h5 id="_2-间隙锁-gap-locks" tabindex="-1"><a class="header-anchor" href="#_2-间隙锁-gap-locks" aria-hidden="true">#</a> ② 间隙锁（Gap Locks）</h5>
 <p><code v-pre>MySQL</code> 在 <code v-pre>REPEATABLE READ</code> 隔离级别下是可以解决幻读问题的，解决方案有两种，可以使用 <code v-pre>MVCC</code> 方 案解决，也可以采用 <code v-pre>加锁 </code>方案解决。但是在使用加锁方案解决时有个大问题，就是事务在第一次执行读取操作时，那些幻影记录尚不存在，我们无法给这些 <code v-pre>幻影记录</code> 加上 <code v-pre>记录锁</code> 。InnoDB提出了一种称之为 <code v-pre>Gap Locks</code> 的锁，官方的类型名称为：<code v-pre> LOCK_GAP</code> ，我们可以简称为 <code v-pre>gap锁</code> 。比如，把id值为8的那条 记录加一个gap锁的示意图如下。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220713171650888.png" alt="image-20220713171650888"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220713171650888.png" alt="image-20220713171650888" loading="lazy"></p>
 <p>图中id值为8的记录加了gap锁，意味着 <code v-pre>不允许别的事务在id值为8的记录前边的间隙插入新记录</code> ，其实就是 id列的值(3, 8)这个区间的新记录是不允许立即插入的。比如，有另外一个事务再想插入一条id值为4的新 记录，它定位到该条新记录的下一条记录的id值为8，而这条记录上又有一个gap锁，所以就会阻塞插入 操作，直到拥有这个gap锁的事务提交了之后，id列的值在区间(3, 8)中的新记录才可以被插入。</p>
 <p>**gap锁的提出仅仅是为了防止插入幻影记录而提出的。**虽然有<code v-pre>共享gap锁</code>和<code v-pre>独占gap锁</code>这样的说法，但是它们起到的作用是相同的。而且如果对一条记录加了gap锁（不论是共享gap锁还是独占gap锁），并不会限制其他事务对这条记录加记录锁或者继续加gap锁。</p>
 <p><strong>举例：</strong></p>
@@ -364,20 +364,20 @@ mysql&gt; SELECT * FROM student;
 <li><code v-pre>Supremun</code>记录，表示该页面中最大的记录。</li>
 </ul>
 <p>为了实现阻止其他事务插入id值再(20,正无穷)这个区间的新纪录，我们可以给索引中的最后一条记录，也就是id值为20的那条记录所在页面的Supremun记录加上一个gap锁，如图所示。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220713174108634.png" alt="image-20220713174108634"></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from student where id &gt; 20 lock in share mode;
-Empty set (0.01 sec)
+<p><img src="@source/notes/senior_mysql/images/image-20220713174108634.png" alt="image-20220713174108634" loading="lazy"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student <span class="token keyword">where</span> id <span class="token operator">></span> <span class="token number">20</span> <span class="token keyword">lock</span> <span class="token operator">in</span> <span class="token keyword">share</span> <span class="token keyword">mode</span><span class="token punctuation">;</span>
+Empty <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>检测：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220713174551814.png" alt="image-20220713174551814"></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220713174602102.png" alt="image-20220713174602102"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220713174551814.png" alt="image-20220713174551814" loading="lazy"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220713174602102.png" alt="image-20220713174602102" loading="lazy"></p>
 <img src="@source/notes/senior_mysql/images/image-20220713175032619.png" alt="image-20220713175032619" style="float:left;" />
 <img src="@source/notes/senior_mysql/images/image-20220713192418730.png" alt="image-20220713192418730" style="float:left;" />
 <h5 id="_3-临键锁-next-key-locks" tabindex="-1"><a class="header-anchor" href="#_3-临键锁-next-key-locks" aria-hidden="true">#</a> ③ 临键锁（Next-Key Locks）</h5>
 <p>有时候我们既想 <code v-pre>锁住某条记录</code> ，又想 阻止 其他事务在该记录前边的 间隙插入新记录 ，所以InnoDB就提 出了一种称之为 Next-Key Locks 的锁，官方的类型名称为： LOCK_ORDINARY ，我们也可以简称为 next-key锁 。Next-Key Locks是在存储引擎 innodb 、事务级别在 可重复读 的情况下使用的数据库锁， innodb默认的锁就是Next-Key locks。比如，我们把id值为8的那条记录加一个next-key锁的示意图如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220713192549340.png" alt="image-20220713192549340"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220713192549340.png" alt="image-20220713192549340" loading="lazy"></p>
 <p><code v-pre>next-key锁</code>的本质就是一个<code v-pre>记录锁</code>和一个<code v-pre>gap锁</code>的合体，它既能保护该条记录，又能阻止别的事务将新记录插入被保护记录前边的<code v-pre>间隙</code>。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>begin;
-select * from student where id &lt;=8 and id &gt; 3 for update;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">begin</span><span class="token punctuation">;</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student <span class="token keyword">where</span> id <span class="token operator">&lt;=</span><span class="token number">8</span> <span class="token operator">and</span> id <span class="token operator">></span> <span class="token number">3</span> <span class="token keyword">for</span> <span class="token keyword">update</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220713203124889.png" alt="image-20220713203124889" style="float:left;" />
 <img src="@source/notes/senior_mysql/images/image-20220713203532124.png" alt="image-20220713203532124" style="float:left;" />
 <img src="@source/notes/senior_mysql/images/image-20220713203619704.png" alt="image-20220713203619704" style="float:left;" />
@@ -420,29 +420,29 @@ select * from student where id &lt;=8 and id &gt; 3 for update;
 </ul>
 <img src="@source/notes/senior_mysql/images/image-20220713214522709.png" alt="image-20220713214522709" style="float:left;" />
 <p><strong>session 1:</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; begin;
-Query OK, 0 rows affected (0.00 sec)
-mysql&gt; insert INTO student VALUES(34,&quot;周八&quot;,&quot;二班&quot;);
-Query OK, 1 row affected (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">begin</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+mysql<span class="token operator">></span> <span class="token keyword">insert</span> <span class="token keyword">INTO</span> student <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">34</span><span class="token punctuation">,</span><span class="token string">"周八"</span><span class="token punctuation">,</span><span class="token string">"二班"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token keyword">row</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>session 2:</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; begin;
-Query OK, 0 rows affected (0.00 sec)
-mysql&gt; select * from student lock in share mode; #执行完，当前事务被阻塞
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">begin</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student <span class="token keyword">lock</span> <span class="token operator">in</span> <span class="token keyword">share</span> <span class="token keyword">mode</span><span class="token punctuation">;</span> <span class="token comment">#执行完，当前事务被阻塞</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>执行下述语句，输出结果：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM performance_schema.data_lock_waits\G;
-*************************** 1. row ***************************
-						ENGINE: INNODB
-		REQUESTING_ENGINE_LOCK_ID: 140562531358232:7:4:9:140562535668584
-REQUESTING_ENGINE_TRANSACTION_ID: 422037508068888
-			REQUESTING_THREAD_ID: 64
-			REQUESTING_EVENT_ID: 6
-REQUESTING_OBJECT_INSTANCE_BEGIN: 140562535668584
-		BLOCKING_ENGINE_LOCK_ID: 140562531351768:7:4:9:140562535619104
-BLOCKING_ENGINE_TRANSACTION_ID: 15902
-			BLOCKING_THREAD_ID: 64
-			BLOCKING_EVENT_ID: 6
-BLOCKING_OBJECT_INSTANCE_BEGIN: 140562535619104
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> performance_schema<span class="token punctuation">.</span>data_lock_waits\G<span class="token punctuation">;</span>
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">1.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+						<span class="token keyword">ENGINE</span>: <span class="token keyword">INNODB</span>
+		REQUESTING_ENGINE_LOCK_ID: <span class="token number">140562531358232</span>:<span class="token number">7</span>:<span class="token number">4</span>:<span class="token number">9</span>:<span class="token number">140562535668584</span>
+REQUESTING_ENGINE_TRANSACTION_ID: <span class="token number">422037508068888</span>
+			REQUESTING_THREAD_ID: <span class="token number">64</span>
+			REQUESTING_EVENT_ID: <span class="token number">6</span>
+REQUESTING_OBJECT_INSTANCE_BEGIN: <span class="token number">140562535668584</span>
+		BLOCKING_ENGINE_LOCK_ID: <span class="token number">140562531351768</span>:<span class="token number">7</span>:<span class="token number">4</span>:<span class="token number">9</span>:<span class="token number">140562535619104</span>
+BLOCKING_ENGINE_TRANSACTION_ID: <span class="token number">15902</span>
+			BLOCKING_THREAD_ID: <span class="token number">64</span>
+			BLOCKING_EVENT_ID: <span class="token number">6</span>
+BLOCKING_OBJECT_INSTANCE_BEGIN: <span class="token number">140562535619104</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>隐式锁的逻辑过程如下：</p>
 <p>A. InnoDB的每条记录中都一个隐含的trx_id字段，这个字段存在于聚簇索引的B+Tree中。</p>
 <p>B. 在操作一条记录前，首先根据记录中的trx_id检查该事务是否是活动的事务(未提交或回滚)。如果是活动的事务，首先将 <code v-pre>隐式锁</code> 转换为 <code v-pre>显式锁</code> (就是为该事务添加一个锁)。</p>
@@ -452,18 +452,18 @@ BLOCKING_OBJECT_INSTANCE_BEGIN: 140562535619104
 <h4 id="_2-显式锁" tabindex="-1"><a class="header-anchor" href="#_2-显式锁" aria-hidden="true">#</a> 2. 显式锁</h4>
 <p>通过特定的语句进行加锁，我们一般称之为显示加锁，例如：</p>
 <p>显示加共享锁：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>select .... lock in share mode
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">lock</span> <span class="token operator">in</span> <span class="token keyword">share</span> <span class="token keyword">mode</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>显示加排它锁：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>select .... for update
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">for</span> <span class="token keyword">update</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_3-5-其它锁之-全局锁" tabindex="-1"><a class="header-anchor" href="#_3-5-其它锁之-全局锁" aria-hidden="true">#</a> 3.5 其它锁之：全局锁</h3>
 <p>全局锁就是对 <code v-pre>整个数据库实例</code> 加锁。当你需要让整个库处于 <code v-pre>只读状态</code> 的时候，可以使用这个命令，之后 其他线程的以下语句会被阻塞：数据更新语句（数据的增删改）、数据定义语句（包括建表、修改表结 构等）和更新类事务的提交语句。全局锁的典型使用 <code v-pre>场景</code> 是：做 <code v-pre>全库逻辑备份</code> 。</p>
 <p>全局锁的命令：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>Flush tables with read lock
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>Flush <span class="token keyword">tables</span> <span class="token keyword">with</span> <span class="token keyword">read</span> <span class="token keyword">lock</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_3-6-其它锁之-死锁" tabindex="-1"><a class="header-anchor" href="#_3-6-其它锁之-死锁" aria-hidden="true">#</a> 3.6 其它锁之：死锁</h3>
 <h4 id="_1-概念" tabindex="-1"><a class="header-anchor" href="#_1-概念" aria-hidden="true">#</a> 1. 概念</h4>
 <p>两个事务都持有对方需要的锁，并且在等待对方释放，并且双方都不会释放自己的锁。</p>
 <p><strong>举例1：</strong></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220713220714098.png" alt="image-20220713220714098"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220713220714098.png" alt="image-20220713220714098" loading="lazy"></p>
 <p><strong>举例2：</strong></p>
 <p>用户A给用户B转账100，再次同时，用户B也给用户A转账100。这个过程，可能导致死锁。</p>
 <img src="@source/notes/senior_mysql/images/image-20220713220936236.png" alt="image-20220713220936236" style="float:left;" />
@@ -483,9 +483,9 @@ BLOCKING_OBJECT_INSTANCE_BEGIN: 140562535619104
 <p>**方式2：**使用死锁检测处理死锁程序</p>
 <p>方式1检测死锁太过被动，innodb还提供了<code v-pre>wait-for graph算法</code>来主动进行死锁检测，每当加锁请求无法立即满足需要并进入等待时，wait-for graph算法都会被触发。</p>
 <p>这是一种较为<code v-pre>主动的死锁检测机制</code>，要求数据库保存<code v-pre>锁的信息链表</code>和<code v-pre>事物等待链表</code>两部分信息。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220713221758941.png" alt="image-20220713221758941"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220713221758941.png" alt="image-20220713221758941" loading="lazy"></p>
 <p>基于这两个信息，可以绘制wait-for graph（等待图）</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220713221830455.png" alt="image-20220713221830455"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220713221830455.png" alt="image-20220713221830455" loading="lazy"></p>
 <blockquote>
 <p>死锁检测的原理是构建一个以事务为顶点，锁为边的有向图，判断有向图是否存在环，存在既有死锁。</p>
 </blockquote>
@@ -502,8 +502,8 @@ BLOCKING_OBJECT_INSTANCE_BEGIN: 140562535619104
 <img src="@source/notes/senior_mysql/images/image-20220714131008260.png" alt="image-20220714131008260" style="float:left;" />
 <h2 id="_4-锁的内部结构" tabindex="-1"><a class="header-anchor" href="#_4-锁的内部结构" aria-hidden="true">#</a> 4. 锁的内部结构</h2>
 <p>我们前边说对一条记录加锁的本质就是在内存中创建一个<code v-pre>锁结构</code>与之关联，那么是不是一个事务对多条记录加锁，就要创建多个<code v-pre>锁结构</code>呢？比如：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># 事务T1
-SELECT * FROM user LOCK IN SHARE MODE;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># 事务T1</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> <span class="token keyword">user</span> <span class="token keyword">LOCK</span> <span class="token operator">IN</span> <span class="token keyword">SHARE</span> <span class="token keyword">MODE</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>理论上创建多个<code v-pre>锁结构</code>没问题，但是如果一个事务要获取10000条记录的锁，生成10000个锁结构也太崩溃了！所以决定在对不同记录加锁时，如果符合下边这些条件的记录会放在一个<code v-pre>锁结构</code>中。</p>
 <ul>
 <li>在同一个事务中进行加锁操作</li>
@@ -512,7 +512,7 @@ SELECT * FROM user LOCK IN SHARE MODE;
 <li>等待状态是一样的</li>
 </ul>
 <p><code v-pre>InnoDB</code> 存储引擎中的 <code v-pre>锁结构</code> 如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714132306208.png" alt="image-20220714132306208"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714132306208.png" alt="image-20220714132306208" loading="lazy"></p>
 <p>结构解析：</p>
 <p><code v-pre>1. 锁所在的事务信息 </code>：</p>
 <p>不论是 <code v-pre>表锁</code> 还是 <code v-pre>行锁</code> ，都是在事务执行过程中生成的，哪个事务生成了这个锁结构 ，这里就记录这个 事务的信息。</p>
@@ -541,7 +541,7 @@ SELECT * FROM user LOCK IN SHARE MODE;
 </ul>
 <p><code v-pre>4. type_mode</code> ：</p>
 <p>这是一个32位的数，被分成了 <code v-pre>lock_mode</code> 、 <code v-pre>lock_type</code> 和 <code v-pre>rec_lock_type</code> 三个部分，如图所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714133319666.png" alt="image-20220714133319666"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714133319666.png" alt="image-20220714133319666" loading="lazy"></p>
 <ul>
 <li>锁的模式（ <code v-pre>lock_mode</code> ），占用低4位，可选的值如下：
 <ul>
@@ -581,17 +581,17 @@ SELECT * FROM user LOCK IN SHARE MODE;
 <p>如果是 <code v-pre>行锁结构</code> 的话，在该结构末尾还放置了一堆比特位，比特位的数量是由上边提到的 <code v-pre>n_bits</code> 属性 表示的。InnoDB数据页中的每条记录在 <code v-pre>记录头信息</code> 中都包含一个 <code v-pre>heap_no</code> 属性，伪记录 <code v-pre>Infimum</code> 的 <code v-pre>heap_no</code> 值为 0 ， <code v-pre>Supremum</code> 的 <code v-pre>heap_no</code> 值为 1 ，之后每插入一条记录， <code v-pre>heap_no</code> 值就增1。 锁结 构 最后的一堆比特位就对应着一个页面中的记录，一个比特位映射一个 <code v-pre>heap_no</code> ，即一个比特位映射 到页内的一条记录。</p>
 <h2 id="_5-锁监控" tabindex="-1"><a class="header-anchor" href="#_5-锁监控" aria-hidden="true">#</a> 5. 锁监控</h2>
 <p>关于MySQL锁的监控，我们一般可以通过检查 InnoDB_row_lock 等状态变量来分析系统上的行锁的争夺情况</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show status like 'innodb_row_lock%';
-+-------------------------------+-------+
-| Variable_name                 | Value |
-+-------------------------------+-------+
-| Innodb_row_lock_current_waits | 0     |
-| Innodb_row_lock_time          | 0     |
-| Innodb_row_lock_time_avg      | 0     |
-| Innodb_row_lock_time_max      | 0     |
-| Innodb_row_lock_waits         | 0     |
-+-------------------------------+-------+
-5 rows in set (0.01 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> <span class="token keyword">status</span> <span class="token operator">like</span> <span class="token string">'innodb_row_lock%'</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------------------------------+-------+</span>
+<span class="token operator">|</span> Variable_name                 <span class="token operator">|</span> <span class="token keyword">Value</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------------+-------+</span>
+<span class="token operator">|</span> Innodb_row_lock_current_waits <span class="token operator">|</span> <span class="token number">0</span>     <span class="token operator">|</span>
+<span class="token operator">|</span> Innodb_row_lock_time          <span class="token operator">|</span> <span class="token number">0</span>     <span class="token operator">|</span>
+<span class="token operator">|</span> Innodb_row_lock_time_avg      <span class="token operator">|</span> <span class="token number">0</span>     <span class="token operator">|</span>
+<span class="token operator">|</span> Innodb_row_lock_time_max      <span class="token operator">|</span> <span class="token number">0</span>     <span class="token operator">|</span>
+<span class="token operator">|</span> Innodb_row_lock_waits         <span class="token operator">|</span> <span class="token number">0</span>     <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------------------------------+-------+</span>
+<span class="token number">5</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>对各个状态量的说明如下：</p>
 <ul>
 <li>Innodb_row_lock_current_waits：当前正在等待锁定的数量；</li>
@@ -610,93 +610,93 @@ SELECT * FROM user LOCK IN SHARE MODE;
 <p>我们模拟一个锁等待的场景，以下是从这三张表收集的信息</p>
 <p>锁等待场景，我们依然使用记录锁中的案例，当事务2进行等待时，查询情况如下：</p>
 <p>（1）查询正在被锁阻塞的sql语句。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM information_schema.INNODB_TRX\G;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> information_schema<span class="token punctuation">.</span>INNODB_TRX\G<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>重要属性代表含义已在上述中标注。</p>
 <p>（2）查询锁等待情况</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM data_lock_waits\G;
-*************************** 1. row ***************************
-							ENGINE: INNODB
-		REQUESTING_ENGINE_LOCK_ID: 139750145405624:7:4:7:139747028690608
-REQUESTING_ENGINE_TRANSACTION_ID: 13845 #被阻塞的事务ID
-			REQUESTING_THREAD_ID: 72
-			REQUESTING_EVENT_ID: 26
-REQUESTING_OBJECT_INSTANCE_BEGIN: 139747028690608
-		BLOCKING_ENGINE_LOCK_ID: 139750145406432:7:4:7:139747028813248
-BLOCKING_ENGINE_TRANSACTION_ID: 13844 #正在执行的事务ID，阻塞了13845
-			BLOCKING_THREAD_ID: 71
-			BLOCKING_EVENT_ID: 24
-BLOCKING_OBJECT_INSTANCE_BEGIN: 139747028813248
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> data_lock_waits\G<span class="token punctuation">;</span>
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">1.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+							<span class="token keyword">ENGINE</span>: <span class="token keyword">INNODB</span>
+		REQUESTING_ENGINE_LOCK_ID: <span class="token number">139750145405624</span>:<span class="token number">7</span>:<span class="token number">4</span>:<span class="token number">7</span>:<span class="token number">139747028690608</span>
+REQUESTING_ENGINE_TRANSACTION_ID: <span class="token number">13845</span> <span class="token comment">#被阻塞的事务ID</span>
+			REQUESTING_THREAD_ID: <span class="token number">72</span>
+			REQUESTING_EVENT_ID: <span class="token number">26</span>
+REQUESTING_OBJECT_INSTANCE_BEGIN: <span class="token number">139747028690608</span>
+		BLOCKING_ENGINE_LOCK_ID: <span class="token number">139750145406432</span>:<span class="token number">7</span>:<span class="token number">4</span>:<span class="token number">7</span>:<span class="token number">139747028813248</span>
+BLOCKING_ENGINE_TRANSACTION_ID: <span class="token number">13844</span> <span class="token comment">#正在执行的事务ID，阻塞了13845</span>
+			BLOCKING_THREAD_ID: <span class="token number">71</span>
+			BLOCKING_EVENT_ID: <span class="token number">24</span>
+BLOCKING_OBJECT_INSTANCE_BEGIN: <span class="token number">139747028813248</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>（3）查询锁的情况</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql &gt; SELECT * from performance_schema.data_locks\G;
-*************************** 1. row ***************************
-ENGINE: INNODB
-ENGINE_LOCK_ID: 139750145405624:1068:139747028693520
-ENGINE_TRANSACTION_ID: 13847
-THREAD_ID: 72
-EVENT_ID: 31
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql <span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">from</span> performance_schema<span class="token punctuation">.</span>data_locks\G<span class="token punctuation">;</span>
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">1.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+<span class="token keyword">ENGINE</span>: <span class="token keyword">INNODB</span>
+ENGINE_LOCK_ID: <span class="token number">139750145405624</span>:<span class="token number">1068</span>:<span class="token number">139747028693520</span>
+ENGINE_TRANSACTION_ID: <span class="token number">13847</span>
+THREAD_ID: <span class="token number">72</span>
+EVENT_ID: <span class="token number">31</span>
 OBJECT_SCHEMA: atguigu
-OBJECT_NAME: user
-PARTITION_NAME: NULL
-SUBPARTITION_NAME: NULL
-INDEX_NAME: NULL
-OBJECT_INSTANCE_BEGIN: 139747028693520
-LOCK_TYPE: TABLE
+OBJECT_NAME: <span class="token keyword">user</span>
+PARTITION_NAME: <span class="token boolean">NULL</span>
+SUBPARTITION_NAME: <span class="token boolean">NULL</span>
+INDEX_NAME: <span class="token boolean">NULL</span>
+OBJECT_INSTANCE_BEGIN: <span class="token number">139747028693520</span>
+LOCK_TYPE: <span class="token keyword">TABLE</span>
 LOCK_MODE: IX
 LOCK_STATUS: GRANTED
-LOCK_DATA: NULL
-*************************** 2. row ***************************
-ENGINE: INNODB
-ENGINE_LOCK_ID: 139750145405624:7:4:7:139747028690608
-ENGINE_TRANSACTION_ID: 13847
-THREAD_ID: 72
-EVENT_ID: 31
+LOCK_DATA: <span class="token boolean">NULL</span>
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">2.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+<span class="token keyword">ENGINE</span>: <span class="token keyword">INNODB</span>
+ENGINE_LOCK_ID: <span class="token number">139750145405624</span>:<span class="token number">7</span>:<span class="token number">4</span>:<span class="token number">7</span>:<span class="token number">139747028690608</span>
+ENGINE_TRANSACTION_ID: <span class="token number">13847</span>
+THREAD_ID: <span class="token number">72</span>
+EVENT_ID: <span class="token number">31</span>
 OBJECT_SCHEMA: atguigu
-OBJECT_NAME: user
-PARTITION_NAME: NULL
-SUBPARTITION_NAME: NULL
-INDEX_NAME: PRIMARY
-OBJECT_INSTANCE_BEGIN: 139747028690608
+OBJECT_NAME: <span class="token keyword">user</span>
+PARTITION_NAME: <span class="token boolean">NULL</span>
+SUBPARTITION_NAME: <span class="token boolean">NULL</span>
+INDEX_NAME: <span class="token keyword">PRIMARY</span>
+OBJECT_INSTANCE_BEGIN: <span class="token number">139747028690608</span>
 LOCK_TYPE: RECORD
-LOCK_MODE: X,REC_NOT_GAP
+LOCK_MODE: X<span class="token punctuation">,</span>REC_NOT_GAP
 LOCK_STATUS: WAITING
-LOCK_DATA: 1
-*************************** 3. row ***************************
-ENGINE: INNODB
-ENGINE_LOCK_ID: 139750145406432:1068:139747028816304
-ENGINE_TRANSACTION_ID: 13846
-THREAD_ID: 71
-EVENT_ID: 28
+LOCK_DATA: <span class="token number">1</span>
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">3.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+<span class="token keyword">ENGINE</span>: <span class="token keyword">INNODB</span>
+ENGINE_LOCK_ID: <span class="token number">139750145406432</span>:<span class="token number">1068</span>:<span class="token number">139747028816304</span>
+ENGINE_TRANSACTION_ID: <span class="token number">13846</span>
+THREAD_ID: <span class="token number">71</span>
+EVENT_ID: <span class="token number">28</span>
 OBJECT_SCHEMA: atguigu
-OBJECT_NAME: user
-PARTITION_NAME: NULL
-SUBPARTITION_NAME: NULL
-INDEX_NAME: NULL
-OBJECT_INSTANCE_BEGIN: 139747028816304
-LOCK_TYPE: TABLE
+OBJECT_NAME: <span class="token keyword">user</span>
+PARTITION_NAME: <span class="token boolean">NULL</span>
+SUBPARTITION_NAME: <span class="token boolean">NULL</span>
+INDEX_NAME: <span class="token boolean">NULL</span>
+OBJECT_INSTANCE_BEGIN: <span class="token number">139747028816304</span>
+LOCK_TYPE: <span class="token keyword">TABLE</span>
 LOCK_MODE: IX
 LOCK_STATUS: GRANTED
-LOCK_DATA: NULL
-*************************** 4. row ***************************
-ENGINE: INNODB
-ENGINE_LOCK_ID: 139750145406432:7:4:7:139747028813248
-ENGINE_TRANSACTION_ID: 13846
-THREAD_ID: 71
-EVENT_ID: 28
+LOCK_DATA: <span class="token boolean">NULL</span>
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">4.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+<span class="token keyword">ENGINE</span>: <span class="token keyword">INNODB</span>
+ENGINE_LOCK_ID: <span class="token number">139750145406432</span>:<span class="token number">7</span>:<span class="token number">4</span>:<span class="token number">7</span>:<span class="token number">139747028813248</span>
+ENGINE_TRANSACTION_ID: <span class="token number">13846</span>
+THREAD_ID: <span class="token number">71</span>
+EVENT_ID: <span class="token number">28</span>
 OBJECT_SCHEMA: atguigu
-OBJECT_NAME: user
-PARTITION_NAME: NULL
-SUBPARTITION_NAME: NULL
-INDEX_NAME: PRIMARY
-OBJECT_INSTANCE_BEGIN: 139747028813248
+OBJECT_NAME: <span class="token keyword">user</span>
+PARTITION_NAME: <span class="token boolean">NULL</span>
+SUBPARTITION_NAME: <span class="token boolean">NULL</span>
+INDEX_NAME: <span class="token keyword">PRIMARY</span>
+OBJECT_INSTANCE_BEGIN: <span class="token number">139747028813248</span>
 LOCK_TYPE: RECORD
-LOCK_MODE: X,REC_NOT_GAP
+LOCK_MODE: X<span class="token punctuation">,</span>REC_NOT_GAP
 LOCK_STATUS: GRANTED
-LOCK_DATA: 1
-4 rows in set (0.00 sec)
+LOCK_DATA: <span class="token number">1</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
 ERROR:
-No query specified
+<span class="token keyword">No</span> query specified
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>从锁的情况可以看出来，两个事务分别获取了IX锁，我们从意向锁章节可以知道，IX锁互相时兼容的。所 以这里不会等待，但是事务1同样持有X锁，此时事务2也要去同一行记录获取X锁，他们之间不兼容，导 致等待的情况发生。</p>
 <h2 id="_6-附录" tabindex="-1"><a class="header-anchor" href="#_6-附录" aria-hidden="true">#</a> 6. 附录</h2>
 <p><strong>间隙锁加锁规则（共11个案例）</strong></p>
@@ -711,21 +711,21 @@ No query specified
 <li>一个 bug ：唯一索引上的范围查询会访问到不满足条件的第一个值为止。</li>
 </ol>
 <p>我们以表test作为例子，建表语句和初始化语句如下：其中id为主键索引</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE `test` (
-`id` int(11) NOT NULL,
-`col1` int(11) DEFAULT NULL,
-`col2` int(11) DEFAULT NULL,
-PRIMARY KEY (`id`),
-KEY `c` (`c`)
-) ENGINE=InnoDB;
-insert into test values(0,0,0),(5,5,5),
-(10,10,10),(15,15,15),(20,20,20),(25,25,25);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>test<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+<span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>col1<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token identifier"><span class="token punctuation">`</span>col2<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token keyword">KEY</span> <span class="token identifier"><span class="token punctuation">`</span>c<span class="token punctuation">`</span></span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>c<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> test <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">,</span><span class="token number">25</span><span class="token punctuation">,</span><span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>案例一：唯一索引等值查询间隙锁</strong></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714134603698.png" alt="image-20220714134603698"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714134603698.png" alt="image-20220714134603698" loading="lazy"></p>
 <p>由于表 test 中没有 id=7 的记录</p>
 <p>根据原则 1 ，加锁单位是 next-key lock ， session A 加锁范围就是 (5,10] ； 同时根据优化 2 ，这是一个等 值查询 (id=7) ，而 id=10 不满足查询条件， next-key lock 退化成间隙锁，因此最终加锁的范围是 (5,10)</p>
 <p><strong>案例二：非唯一索引等值查询锁</strong></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714134623052-16577775838551.png" alt="image-20220714134623052"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714134623052-16577775838551.png" alt="image-20220714134623052" loading="lazy"></p>
 <p>这里 session A 要给索引 col1 上 col1=5 的这一行加上读锁。</p>
 <ol>
 <li>根据原则 1 ，加锁单位是 next-key lock ，左开右闭，5是闭上的，因此会给 (0,5] 加上 next-key lock 。</li>
@@ -738,10 +738,10 @@ insert into test values(0,0,0),(5,5,5),
 <p>如果你要用 lock in share mode来给行加读锁避免数据被更新的话，就必须得绕过覆盖索引的优化，因为覆盖索引不会访问主键索引，不会给主键索引上加锁</p>
 <p><strong>案例三：主键索引范围查询锁</strong></p>
 <p>上面两个例子是等值查询的，这个例子是关于范围查询的，也就是说下面的语句</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>select * from test where id=10 for update
-select * from tets where id&gt;=10 and id&lt;11 for update;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> test <span class="token keyword">where</span> id<span class="token operator">=</span><span class="token number">10</span> <span class="token keyword">for</span> <span class="token keyword">update</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> tets <span class="token keyword">where</span> id<span class="token operator">>=</span><span class="token number">10</span> <span class="token operator">and</span> id<span class="token operator">&lt;</span><span class="token number">11</span> <span class="token keyword">for</span> <span class="token keyword">update</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>这两条查语句肯定是等价的，但是它们的加锁规则不太一样</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714134742049.png" alt="image-20220714134742049"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714134742049.png" alt="image-20220714134742049" loading="lazy"></p>
 <ol>
 <li>开始执行的时候，要找到第一个 id=10 的行，因此本该是 next-key lock(5,10] 。 根据优化 1 ，主键 id 上的等值条件，退化成行锁，只加了 id=10 这一行的行锁。</li>
 <li>它是范围查询， 范围查找就往后继续找，找到 id=15 这一行停下来，不满足条件，因此需要加 next-key lock(10,15] 。</li>
@@ -750,32 +750,32 @@ select * from tets where id&gt;=10 and id&lt;11 for update;
 <p><strong>案例四：非唯一索引范围查询锁</strong></p>
 <p>与案例三不同的是，案例四中查询语句的 where 部分用的是字段 c ，它是普通索引</p>
 <p>这两条查语句肯定是等价的，但是它们的加锁规则不太一样</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714134822160.png" alt="image-20220714134822160"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714134822160.png" alt="image-20220714134822160" loading="lazy"></p>
 <p>在第一次用 col1=10 定位记录的时候，索引 c 上加了 (5,10] 这个 next-key lock 后，由于索引 col1 是非唯 一索引，没有优化规则，也就是说不会蜕变为行锁，因此最终 sesion A 加的锁是，索引 c 上的 (5,10] 和 (10,15] 这两个 next-keylock 。</p>
 <p>这里需要扫描到 col1=15 才停止扫描，是合理的，因为 InnoDB 要扫到 col1=15 ，才知道不需要继续往后找了。</p>
 <p><strong>案例五：唯一索引范围查询锁 bug</strong></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714134846740.png" alt="image-20220714134846740"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714134846740.png" alt="image-20220714134846740" loading="lazy"></p>
 <p>session A 是一个范围查询，按照原则 1 的话，应该是索引 id 上只加 (10,15] 这个 next-key lock ，并且因 为 id 是唯一键，所以循环判断到 id=15 这一行就应该停止了。</p>
 <p>但是实现上， InnoDB 会往前扫描到第一个不满足条件的行为止，也就是 id=20 。而且由于这是个范围扫描，因此索引 id 上的 (15,20] 这个 next-key lock 也会被锁上。照理说，这里锁住 id=20 这一行的行为，其实是没有必要的。因为扫描到 id=15 ，就可以确定不用往后再找了。</p>
 <p><strong>案例六：非唯一索引上存在 &quot; &quot; 等值 &quot; &quot; 的例子</strong></p>
 <p>这里，我给表 t 插入一条新记录：insert into t values(30,10,30);也就是说，现在表里面有两个c=10的行</p>
 <p><strong>但是它们的主键值 id 是不同的（分别是 10 和 30 ），因此这两个c=10 的记录之间，也是有间隙的。</strong></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714134923414.png" alt="image-20220714134923414"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714134923414.png" alt="image-20220714134923414" loading="lazy"></p>
 <p>这次我们用 delete 语句来验证。注意， delete 语句加锁的逻辑，其实跟 select ... for update 是类似的， 也就是我在文章开始总结的两个 “ 原则 ” 、两个 “ 优化 ” 和一个 “bug” 。</p>
 <p>这时， session A 在遍历的时候，先访问第一个 col1=10 的记录。同样地，根据原则 1 ，这里加的是 (col1=5,id=5) 到 (col1=10,id=10) 这个 next-key lock 。</p>
 <p>由于c是普通索引，所以继续向右查找，直到碰到 (col1=15,id=15) 这一行循环才结束。根据优化 2 ，这是 一个等值查询，向右查找到了不满足条件的行，所以会退化成 (col1=10,id=10) 到 (col1=15,id=15) 的间隙锁。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714134945012.png" alt="image-20220714134945012"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714134945012.png" alt="image-20220714134945012" loading="lazy"></p>
 <p>这个 delete 语句在索引 c 上的加锁范围，就是上面图中蓝色区域覆盖的部分。这个蓝色区域左右两边都 是虚线，表示开区间，即 (col1=5,id=5) 和 (col1=15,id=15) 这两行上都没有锁</p>
 <p><strong>案例七： limit 语句加锁</strong></p>
 <p>例子 6 也有一个对照案例，场景如下所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714135007118.png" alt="image-20220714135007118"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714135007118.png" alt="image-20220714135007118" loading="lazy"></p>
 <p>session A 的 delete 语句加了 limit 2 。你知道表 t 里 c=10 的记录其实只有两条，因此加不加 limit 2 ，删除的效果都是一样的。但是加锁效果却不一样</p>
 <p>这是因为，案例七里的 delete 语句明确加了 limit 2 的限制，因此在遍历到 (col1=10, id=30) 这一行之后， 满足条件的语句已经有两条，循环就结束了。因此，索引 col1 上的加锁范围就变成了从（ col1=5,id=5) 到（ col1=10,id=30) 这个前开后闭区间，如下图所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714135025045-16577778257713.png" alt="image-20220714135025045"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714135025045-16577778257713.png" alt="image-20220714135025045" loading="lazy"></p>
 <p>这个例子对我们实践的指导意义就是， 在删除数据的时候尽量加 limit 。</p>
 <p>这样不仅可以控制删除数据的条数，让操作更安全，还可以减小加锁的范围。</p>
 <p><strong>案例八：一个死锁的例子</strong></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714135047760.png" alt="image-20220714135047760"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714135047760.png" alt="image-20220714135047760" loading="lazy"></p>
 <ol>
 <li>session A 启动事务后执行查询语句加 lock in share mode ，在索引 col1 上加了 next-keylock(5,10] 和 间隙锁 (10,15) （索引向右遍历退化为间隙锁）；</li>
 <li>session B 的 update 语句也要在索引 c 上加 next-key lock(5,10] ，进入锁等待； 实际上分成了两步， 先是加 (5,10) 的间隙锁，加锁成功；然后加 col1=10 的行锁，因为sessionA上已经给这行加上了读 锁，此时申请死锁时会被阻塞</li>
@@ -783,17 +783,17 @@ select * from tets where id&gt;=10 and id&lt;11 for update;
 </ol>
 <p><strong>案例九：order by索引排序的间隙锁1</strong></p>
 <p>如下面一条语句</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>begin;
-select * from test where id&gt;9 and id&lt;12 order by id desc for update;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">begin</span><span class="token punctuation">;</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> test <span class="token keyword">where</span> id<span class="token operator">></span><span class="token number">9</span> <span class="token operator">and</span> id<span class="token operator">&lt;</span><span class="token number">12</span> <span class="token keyword">order</span> <span class="token keyword">by</span> id <span class="token keyword">desc</span> <span class="token keyword">for</span> <span class="token keyword">update</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>下图为这个表的索引id的示意图。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714135130668.png" alt="image-20220714135130668"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714135130668.png" alt="image-20220714135130668" loading="lazy"></p>
 <ol>
 <li>首先这个查询语句的语义是 order by id desc ，要拿到满足条件的所有行，优化器必须先找到 “ 第 一个 id&lt;12 的值 ” 。</li>
 <li>这个过程是通过索引树的搜索过程得到的，在引擎内部，其实是要找到 id=12 的这个值，只是最终 没找到，但找到了 (10,15) 这个间隙。（ id=15 不满足条件，所以 next-key lock 退化为了间隙锁 (10, 15) 。）</li>
 <li>然后向左遍历，在遍历过程中，就不是等值查询了，会扫描到 id=5 这一行，又因为区间是左开右 闭的，所以会加一个next-key lock (0,5] 。 也就是说，在执行过程中，通过树搜索的方式定位记录 的时候，用的是 “ 等值查询 ” 的方法。</li>
 </ol>
 <p><strong>案例十：order by索引排序的间隙锁2</strong></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714135206504.png" alt="image-20220714135206504"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714135206504.png" alt="image-20220714135206504" loading="lazy"></p>
 <ol>
 <li>
 <p>由于是 order by col1 desc ，第一个要定位的是索引 col1 上 “ 最右边的 ”col1=20 的行。这是一个非唯一索引的等值查询：</p>
@@ -811,7 +811,7 @@ select * from test where id&gt;9 and id&lt;12 order by id desc for update;
 </li>
 </ol>
 <p><strong>案例十一：update修改数据的例子-先插入后删除</strong></p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714135300189.png" alt="image-20220714135300189"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714135300189.png" alt="image-20220714135300189" loading="lazy"></p>
 <p>注意：根据 col1&gt;5 查到的第一个记录是 col1=10 ，因此不会加 (0,5] 这个 next-key lock 。</p>
 <p>session A 的加锁范围是索引 col1 上的 (5,10] 、 (10,15] 、 (15,20] 、 (20,25] 和(25,supremum] 。</p>
 <p>之后 session B 的第一个 update 语句，要把 col1=5 改成 col1=1 ，你可以理解为两步：</p>
@@ -820,7 +820,7 @@ select * from test where id&gt;9 and id&lt;12 order by id desc for update;
 <li>删除 (col1=5, id=5) 这个记录。</li>
 </ol>
 <p>通过这个操作， session A 的加锁范围变成了图 7 所示的样子:</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220714135333089.png" alt="image-20220714135333089"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220714135333089.png" alt="image-20220714135333089" loading="lazy"></p>
 <p>好，接下来 session B 要执行 update t set col1 = 5 where col1 = 1 这个语句了，一样地可以拆成两步：</p>
 <ol>
 <li>插入 (col1=5, id=5) 这个记录；</li>

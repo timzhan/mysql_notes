@@ -4,9 +4,9 @@
 <p>首先MySQL是典型的C/S架构，即<code v-pre>Clinet/Server 架构</code>，服务端程序使用的mysqld。</p>
 <p>不论客户端进程和服务器进程是采用哪种方式进行通信，最后实现的效果是：<strong>客户端进程向服务器进程发送一段文本（SQL语句），服务器进程处理后再向客户端进程发送一段文本（处理结果）</strong>。</p>
 <p>那服务器进程对客户端进程发送的请求做了什么处理，才能产生最后的处理结果呢？这里以查询请求为 例展示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220615133227202.png" alt="image-20220615133227202"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220615133227202.png" alt="image-20220615133227202" loading="lazy"></p>
 <p>下面具体展开如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220615133420251.png" alt="image-20220615133420251"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220615133420251.png" alt="image-20220615133420251" loading="lazy"></p>
 <h3 id="_1-2-connectors" tabindex="-1"><a class="header-anchor" href="#_1-2-connectors" aria-hidden="true">#</a> 1.2 Connectors</h3>
 <p>Connectors, 指的是不同语言中与SQL的交互。MySQL首先是一个网络程序，在TCP之上定义了自己的应用层协议。所以要使用MySQL，我们可以编写代码，跟MySQL Server <code v-pre>建立TCP连接</code>，之后按照其定义好的协议进行交互。或者比较方便的方法是调用SDK，比如Native C API、JDBC、PHP等各语言MySQL Connecotr,或者通过ODBC。但<strong>通过SDK来访问MySQL，本质上还是在TCP连接上通过MySQL协议跟MySQL进行交互</strong></p>
 <p><strong>接下来的MySQL Server结构可以分为如下三层：</strong></p>
@@ -44,7 +44,7 @@
 <li>这个执行计划表明应该 使用哪些索引 进行查询（全表检索还是使用索引检索），表之间的连 接顺序如何，最后会按照执行计划中的步骤调用存储引擎提供的方法来真正的执行查询，并将 查询结果返回给用户。</li>
 <li>它使用“ 选取-投影-连接 ”策略进行查询。例如：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT id,name FROM student WHERE gender = '女';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> id<span class="token punctuation">,</span>name <span class="token keyword">FROM</span> student <span class="token keyword">WHERE</span> gender <span class="token operator">=</span> <span class="token string">'女'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>这个SELECT查询先根据WHERE语句进行 选取 ，而不是将表全部查询出来以后再进行gender过 滤。 这个SELECT查询先根据id和name进行属性 投影 ，而不是将属性全部取出以后再进行过 滤，将这两个查询条件 连接 起来生成最终查询结果。</p>
 </li>
 <li>
@@ -59,12 +59,12 @@
 <h3 id="_1-5-第三层-引擎层" tabindex="-1"><a class="header-anchor" href="#_1-5-第三层-引擎层" aria-hidden="true">#</a> 1.5 第三层：引擎层</h3>
 <p>插件式存储引擎层（ Storage Engines），<strong>真正的负责了MySQL中数据的存储和提取，对物理服务器级别维护的底层数据执行操作</strong>，服务器通过API与存储引擎进行通信。不同的存储引擎具有的功能不同，这样 我们可以根据自己的实际需要进行选取。</p>
 <p>MySQL 8.0.25默认支持的存储引擎如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220615140556893.png" alt="image-20220615140556893"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220615140556893.png" alt="image-20220615140556893" loading="lazy"></p>
 <h3 id="_1-6-存储层" tabindex="-1"><a class="header-anchor" href="#_1-6-存储层" aria-hidden="true">#</a> 1.6 存储层</h3>
 <p>所有的数据，数据库、表的定义，表的每一行的内容，索引，都是存在文件系统 上，以<code v-pre>文件</code>的方式存在的，并完成与存储引擎的交互。当然有些存储引擎比如InnoDB，也支持不使用文件系统直接管理裸设备，但现代文件系统的实现使得这样做没有必要了。在文件系统之下，可以使用本地磁盘，可以使用 DAS、NAS、SAN等各种存储系统。</p>
 <h3 id="_1-7-小结" tabindex="-1"><a class="header-anchor" href="#_1-7-小结" aria-hidden="true">#</a> 1.7 小结</h3>
 <p>MySQL架构图本节开篇所示。下面为了熟悉SQL执行流程方便，我们可以简化如下：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220615140710351.png" alt="image-20220615140710351"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220615140710351.png" alt="image-20220615140710351" loading="lazy"></p>
 <p>简化为三层结构：</p>
 <ol>
 <li>连接层：客户端和服务器端建立连接，客户端发送 SQL 至服务器端；</li>
@@ -73,22 +73,22 @@
 </ol>
 <h2 id="_2-sql执行流程" tabindex="-1"><a class="header-anchor" href="#_2-sql执行流程" aria-hidden="true">#</a> 2. SQL执行流程</h2>
 <h3 id="_2-1-mysql中的sql执行流程" tabindex="-1"><a class="header-anchor" href="#_2-1-mysql中的sql执行流程" aria-hidden="true">#</a> 2.1 MySQL中的SQL执行流程</h3>
-<p><img src="@source/notes/senior_mysql/images/image-20220615141934531.png" alt="image-20220615141934531"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220615141934531.png" alt="image-20220615141934531" loading="lazy"></p>
 <p>MySQL的查询流程：</p>
 <ol>
 <li><strong>查询缓存</strong>：Server 如果在查询缓存中发现了这条 SQL 语句，就会直接将结果返回给客户端；如果没 有，就进入到解析器阶段。需要说明的是，因为查询缓存往往效率不高，所以在 MySQL8.0 之后就抛弃了这个功能。</li>
 </ol>
 <p><strong>总之，因为查询缓存往往弊大于利，查询缓存的失效非常频繁。</strong></p>
 <p>一般建议大家在静态表里使用查询缓存，什么叫<code v-pre>静态表</code>呢？就是一般我们极少更新的表。比如，一个系统配置表、字典表，这张表上的查询才适合使用查询缓存。好在MySQL也提供了这种“<code v-pre>按需使用</code>”的方式。你可以将 my.cnf 参数 query_cache_type 设置成 DEMAND，代表当 sql 语句中有 SQL_CACHE关键字时才缓存。比如：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># query_cache_type 有3个值。 0代表关闭查询缓存OFF，1代表开启ON，2代表(DEMAND)
-query_cache_type=2
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># query_cache_type 有3个值。 0代表关闭查询缓存OFF，1代表开启ON，2代表(DEMAND)</span>
+query_cache_type<span class="token operator">=</span><span class="token number">2</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>这样对于默认的SQL语句都不使用查询缓存。而对于你确定要使用查询缓存的语句，可以供SQL_CACHE显示指定，像下面这个语句一样：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT SQl_CACHE * FROM test WHERE ID=5;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> SQl_CACHE <span class="token operator">*</span> <span class="token keyword">FROM</span> test <span class="token keyword">WHERE</span> ID<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>查看当前 mysql 实例是否开启缓存机制</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># MySQL5.7中：
-show global variables like &quot;%query_cache_type%&quot;;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># MySQL5.7中：</span>
+<span class="token keyword">show</span> <span class="token keyword">global</span> variables <span class="token operator">like</span> <span class="token string">"%query_cache_type%"</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>监控查询缓存的命中率：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show status like '%Qcache%';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> <span class="token keyword">status</span> <span class="token operator">like</span> <span class="token string">'%Qcache%'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220615144537260.png" alt="image-20220615144537260" style="float:left;" />
 <p>运行结果解析：</p>
 <p><code v-pre>Qcache_free_blocks</code>: 表示查询缓存中海油多少剩余的blocks，如果该值显示较大，则说明查询缓存中的<code v-pre>内部碎片</code>过多了，可能在一定的时间进行整理。</p>
@@ -102,16 +102,16 @@ show global variables like &quot;%query_cache_type%&quot;;
 <ol start="2">
 <li><strong>解析器</strong>：在解析器中对 SQL 语句进行语法分析、语义分析。</li>
 </ol>
-<p><img src="@source/notes/senior_mysql/images/image-20220615142301226.png" alt="image-20220615142301226"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220615142301226.png" alt="image-20220615142301226" loading="lazy"></p>
 <p>如果没有命中查询缓存，就要开始真正执行语句了。首先，MySQL需要知道你要做什么，因此需要对SQL语句做解析。SQL语句的分析分为词法分析与语法分析。</p>
 <p>分析器先做“ <code v-pre>词法分析</code> ”。你输入的是由多个字符串和空格组成的一条 SQL 语句，MySQL 需要识别出里面 的字符串分别是什么，代表什么。</p>
 <p>MySQL 从你输入的&quot;select&quot;这个关键字识别出来，这是一个查询语 句。它也要把字符串“T”识别成“表名 T”，把字符串“ID”识别成“列 ID”。</p>
 <p>接着，要做“ <code v-pre>语法分析</code> ”。根据词法分析的结果，语法分析器（比如：Bison）会根据语法规则，判断你输 入的这个 SQL 语句是否 <code v-pre>满足 MySQL 语法</code> 。</p>
 <p>select department_id,job_id, avg(salary) from employees group by department_id;</p>
 <p>如果SQL语句正确，则会生成一个这样的语法树：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220615162031427.png" alt="image-20220615162031427"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220615162031427.png" alt="image-20220615162031427" loading="lazy"></p>
 <p>下图是SQL分词分析的过程步骤:</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220615163338495.png" alt="image-20220615163338495"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220615163338495.png" alt="image-20220615163338495" loading="lazy"></p>
 <p>至此解析器的工作任务也基本圆满了。</p>
 <ol start="3">
 <li>
@@ -121,12 +121,12 @@ show global variables like &quot;%query_cache_type%&quot;;
 <p>举例：如下语句是执行两个表的 join：</p>
 </li>
 </ol>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>select * from test1 join test2 using(ID)
-where test1.name='zhangwei' and test2.name='mysql高级课程';
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>方案1：可以先从表 test1 里面取出 name='zhangwei'的记录的 ID 值，再根据 ID 值关联到表 test2，再判
-断 test2 里面 name的值是否等于 'mysql高级课程'。
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> test1 <span class="token keyword">join</span> test2 <span class="token keyword">using</span><span class="token punctuation">(</span>ID<span class="token punctuation">)</span>
+<span class="token keyword">where</span> test1<span class="token punctuation">.</span>name<span class="token operator">=</span><span class="token string">'zhangwei'</span> <span class="token operator">and</span> test2<span class="token punctuation">.</span>name<span class="token operator">=</span><span class="token string">'mysql高级课程'</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>方案<span class="token number">1</span>：可以先从表 test1 里面取出 name<span class="token operator">=</span><span class="token string">'zhangwei'</span>的记录的 ID 值，再根据 ID 值关联到表 test2，再判
+断 test2 里面 name的值是否等于 <span class="token string">'mysql高级课程'</span>。
 
-方案2：可以先从表 test2 里面取出 name='mysql高级课程' 的记录的 ID 值，再根据 ID 值关联到 test1，
+方案<span class="token number">2</span>：可以先从表 test2 里面取出 name<span class="token operator">=</span><span class="token string">'mysql高级课程'</span> 的记录的 ID 值，再根据 ID 值关联到 test1，
 再判断 test1 里面 name的值是否等于 zhangwei。
 
 这两种执行方法的逻辑结果是一样的，但是执行的效率会有不同，而优化器的作用就是决定选择使用哪一个方案。优化
@@ -139,59 +139,59 @@ where test1.name='zhangwei' and test2.name='mysql高级课程';
 <li><strong>执行器</strong>：</li>
 </ol>
 <p>截止到现在，还没有真正去读写真实的表，仅仅只是产出了一个执行计划。于是就进入了执行器阶段 。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220615162613806.png" alt="image-20220615162613806"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220615162613806.png" alt="image-20220615162613806" loading="lazy"></p>
 <p>在执行之前需要判断该用户是否 <code v-pre>具备权限</code> 。如果没有，就会返回权限错误。如果具备权限，就执行 SQL 查询并返回结果。在 MySQL8.0 以下的版本，如果设置了查询缓存，这时会将查询结果进行缓存。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>select * from test where id=1;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> test <span class="token keyword">where</span> id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>比如：表 test 中，ID 字段没有索引，那么执行器的执行流程是这样的：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>调用 InnoDB 引擎接口取这个表的第一行，判断 ID 值是不是1，如果不是则跳过，如果是则将这行存在结果集中；
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>调用 <span class="token keyword">InnoDB</span> 引擎接口取这个表的第一行，判断 ID 值是不是<span class="token number">1</span>，如果不是则跳过，如果是则将这行存在结果集中；
 调用引擎接口取“下一行”，重复相同的判断逻辑，直到取到这个表的最后一行。
 执行器将上述遍历过程中所有满足条件的行组成的记录集作为结果集返回给客户端。
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>至此，这个语句就执行完成了。对于有索引的表，执行的逻辑也差不多。</p>
 <p>SQL 语句在 MySQL 中的流程是： <code v-pre>SQL语句</code>→<code v-pre>查询缓存</code>→<code v-pre>解析器</code>→<code v-pre>优化器</code>→<code v-pre>执行器</code> 。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220615164722975.png" alt="image-20220615164722975"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220615164722975.png" alt="image-20220615164722975" loading="lazy"></p>
 <h3 id="_2-2-mysql8中sql执行原理" tabindex="-1"><a class="header-anchor" href="#_2-2-mysql8中sql执行原理" aria-hidden="true">#</a> 2.2 MySQL8中SQL执行原理</h3>
 <h4 id="_1-确认profiling是否开启" tabindex="-1"><a class="header-anchor" href="#_1-确认profiling是否开启" aria-hidden="true">#</a> 1) 确认profiling是否开启</h4>
 <p>了解查询语句底层执行的过程：<code v-pre>select @profiling</code> 或者 <code v-pre>show variables like '%profiling'</code> 查看是否开启计划。开启它可以让MySQL收集在SQL</p>
 <p>执行时所使用的资源情况，命令如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select @@profiling;
-mysql&gt; show variables like 'profiling';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> @<span class="token variable">@profiling</span><span class="token punctuation">;</span>
+mysql<span class="token operator">></span> <span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'profiling'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>profiling=0 代表关闭，我们需要把 profiling 打开，即设置为 1：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; set profiling=1;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">set</span> profiling<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="_2-多次执行相同sql查询" tabindex="-1"><a class="header-anchor" href="#_2-多次执行相同sql查询" aria-hidden="true">#</a> 2) 多次执行相同SQL查询</h4>
 <p>然后我们执行一个 SQL 查询（你可以执行任何一个 SQL 查询）：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from employees;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> employees<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="_3-查看profiles" tabindex="-1"><a class="header-anchor" href="#_3-查看profiles" aria-hidden="true">#</a> 3) 查看profiles</h4>
 <p>查看当前会话所产生的所有 profiles：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show profiles; # 显示最近的几次查询
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> profiles<span class="token punctuation">;</span> <span class="token comment"># 显示最近的几次查询</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="_4-查看profile" tabindex="-1"><a class="header-anchor" href="#_4-查看profile" aria-hidden="true">#</a> 4) 查看profile</h4>
 <p>显示执行计划，查看程序的执行步骤：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show profile;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220615172149919.png" alt="image-20220615172149919"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> profile<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220615172149919.png" alt="image-20220615172149919" loading="lazy"></p>
 <p>当然你也可以查询指定的 Query ID，比如：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show profile for query 7;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> profile <span class="token keyword">for</span> query <span class="token number">7</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>查询 SQL 的执行时间结果和上面是一样的。</p>
 <p>此外，还可以查询更丰富的内容：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show profile cpu,block io for query 6;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220615172409967.png" alt="image-20220615172409967"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> profile cpu<span class="token punctuation">,</span>block io <span class="token keyword">for</span> query <span class="token number">6</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220615172409967.png" alt="image-20220615172409967" loading="lazy"></p>
 <p>继续：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show profile cpu,block io for query 7;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220615172438338.png" alt="image-20220615172438338"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> profile cpu<span class="token punctuation">,</span>block io <span class="token keyword">for</span> query <span class="token number">7</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220615172438338.png" alt="image-20220615172438338" loading="lazy"></p>
 <p>1、除了查看cpu、io阻塞等参数情况，还可以查询下列参数的利用情况。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>Syntax:
-SHOW PROFILE [type [, type] ... ]
-	[FOR QUERY n]
-	[LIMIT row_count [OFFSET offset]]
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>Syntax:
+<span class="token keyword">SHOW</span> PROFILE <span class="token punctuation">[</span><span class="token keyword">type</span> <span class="token punctuation">[</span><span class="token punctuation">,</span> <span class="token keyword">type</span><span class="token punctuation">]</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">]</span>
+	<span class="token punctuation">[</span><span class="token keyword">FOR</span> QUERY n<span class="token punctuation">]</span>
+	<span class="token punctuation">[</span><span class="token keyword">LIMIT</span> row_count <span class="token punctuation">[</span><span class="token keyword">OFFSET</span> <span class="token keyword">offset</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
 
-type: {
-	| ALL -- 显示所有参数的开销信息
-	| BLOCK IO -- 显示IO的相关开销
-	| CONTEXT SWITCHES -- 上下文切换相关开销
-	| CPU -- 显示CPU相关开销信息
-	| IPC -- 显示发送和接收相关开销信息
-	| MEMORY -- 显示内存相关开销信息
-	| PAGE FAULTS -- 显示页面错误相关开销信息
-	| SOURCE -- 显示和Source_function,Source_file,Source_line 相关的开销信息
-	| SWAPS -- 显示交换次数相关的开销信息
+<span class="token keyword">type</span>: {
+	<span class="token operator">|</span> <span class="token keyword">ALL</span> <span class="token comment">-- 显示所有参数的开销信息</span>
+	<span class="token operator">|</span> BLOCK IO <span class="token comment">-- 显示IO的相关开销</span>
+	<span class="token operator">|</span> CONTEXT SWITCHES <span class="token comment">-- 上下文切换相关开销</span>
+	<span class="token operator">|</span> CPU <span class="token comment">-- 显示CPU相关开销信息</span>
+	<span class="token operator">|</span> IPC <span class="token comment">-- 显示发送和接收相关开销信息</span>
+	<span class="token operator">|</span> MEMORY <span class="token comment">-- 显示内存相关开销信息</span>
+	<span class="token operator">|</span> PAGE FAULTS <span class="token comment">-- 显示页面错误相关开销信息</span>
+	<span class="token operator">|</span> SOURCE <span class="token comment">-- 显示和Source_function,Source_file,Source_line 相关的开销信息</span>
+	<span class="token operator">|</span> SWAPS <span class="token comment">-- 显示交换次数相关的开销信息</span>
 }
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>2、发现两次查询当前情况都一致，说明没有缓存。</p>
 <p><code v-pre>在 8.0 版本之后，MySQL 不再支持缓存的查询</code>。一旦数据表有更新，缓存都将清空，因此只有数据表是静态的时候，或者数据表很少发生变化时，使用缓存查询才有价值，否则如果数据表经常更新，反而增加了 SQL 的查询时间。</p>
@@ -199,22 +199,22 @@ type: {
 <p>上述操作在MySQL5.7中测试，发现前后两次相同的sql语句，执行的查询过程仍然是相同的。不是会使用 缓存吗？这里我们需要 显式开启查询缓存模式 。在MySQL5.7中如下设置：</p>
 <h4 id="_1-配置文件中开启查询缓存" tabindex="-1"><a class="header-anchor" href="#_1-配置文件中开启查询缓存" aria-hidden="true">#</a> 1) 配置文件中开启查询缓存</h4>
 <p>在 /etc/my.cnf 中新增一行：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>query_cache_type=1
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>query_cache_type<span class="token operator">=</span><span class="token number">1</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="_2-重启mysql服务" tabindex="-1"><a class="header-anchor" href="#_2-重启mysql服务" aria-hidden="true">#</a> 2) 重启mysql服务</h4>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>systemctl restart mysqld
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>systemctl restart mysqld
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="_3-开启查询执行计划" tabindex="-1"><a class="header-anchor" href="#_3-开启查询执行计划" aria-hidden="true">#</a> 3) 开启查询执行计划</h4>
 <p>由于重启过服务，需要重新执行如下指令，开启profiling。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; set profiling=1;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">set</span> profiling<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="_4-执行语句两次" tabindex="-1"><a class="header-anchor" href="#_4-执行语句两次" aria-hidden="true">#</a> 4) 执行语句两次：</h4>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from locations;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> locations<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="_5-查看profiles" tabindex="-1"><a class="header-anchor" href="#_5-查看profiles" aria-hidden="true">#</a> 5) 查看profiles</h4>
-<p><img src="@source/notes/senior_mysql/images/image-20220615173727345.png" alt="image-20220615173727345"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220615173727345.png" alt="image-20220615173727345" loading="lazy"></p>
 <h4 id="_6-查看profile" tabindex="-1"><a class="header-anchor" href="#_6-查看profile" aria-hidden="true">#</a> 6) 查看profile</h4>
 <p>显示执行计划，查看程序的执行步骤：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show profile for query 1;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220615173803835.png" alt="image-20220615173803835"></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show profile for query 2;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220615173822079.png" alt="image-20220615173822079"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> profile <span class="token keyword">for</span> query <span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220615173803835.png" alt="image-20220615173803835" loading="lazy"></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> profile <span class="token keyword">for</span> query <span class="token number">2</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/image-20220615173822079.png" alt="image-20220615173822079" loading="lazy"></p>
 <p>结论不言而喻。执行编号2时，比执行编号1时少了很多信息，从截图中可以看出查询语句直接从缓存中 获取数据。</p>
 <h3 id="_2-4-sql语法顺序" tabindex="-1"><a class="header-anchor" href="#_2-4-sql语法顺序" aria-hidden="true">#</a> 2.4 SQL语法顺序</h3>
 <p>随着Mysql版本的更新换代，其优化器也在不断的升级，优化器会分析不同执行顺序产生的性能消耗不同 而动态调整执行顺序。</p>
@@ -226,7 +226,7 @@ type: {
 <h4 id="_1-缓冲池-buffer-pool" tabindex="-1"><a class="header-anchor" href="#_1-缓冲池-buffer-pool" aria-hidden="true">#</a> 1) 缓冲池（Buffer Pool）</h4>
 <p>首先我们需要了解在 InnoDB 存储引擎中，缓冲池都包括了哪些。</p>
 <p>在 InnoDB 存储引擎中有一部分数据会放到内存中，缓冲池则占了这部分内存的大部分，它用来存储各种数据的缓存，如下图所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220615175309751.png" alt="image-20220615175309751"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220615175309751.png" alt="image-20220615175309751" loading="lazy"></p>
 <p>从图中，你能看到 InnoDB 缓冲池包括了数据页、索引页、插入缓冲、锁信息、自适应 Hash 和数据字典信息等。</p>
 <p><strong>缓存池的重要性：</strong></p>
 <p><strong>缓存原则：</strong></p>
@@ -241,35 +241,35 @@ type: {
 <h3 id="_3-2-缓冲池如何读取数据" tabindex="-1"><a class="header-anchor" href="#_3-2-缓冲池如何读取数据" aria-hidden="true">#</a> 3.2 缓冲池如何读取数据</h3>
 <p>缓冲池管理器会尽量将经常使用的数据保存起来，在数据库进行页面读操作的时候，首先会判断该页面 是否在缓冲池中，如果存在就直接读取，如果不存在，就会通过内存或磁盘将页面存放到缓冲池中再进行读取。</p>
 <p>缓存在数据库中的结构和作用如下图所示：</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220615193131719.png" alt="image-20220615193131719"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220615193131719.png" alt="image-20220615193131719" loading="lazy"></p>
 <p><strong>如果我们执行 SQL 语句的时候更新了缓存池中的数据，那么这些数据会马上同步到磁盘上吗？</strong></p>
 <p>实际上，当我们对数据库中的记录进行修改的时候，首先会修改缓冲池中页里面的记录信息，然后数据库会<code v-pre>以一定的频率刷新</code>到磁盘中。注意并不是每次发生更新操作，都会立即进行磁盘回写。缓冲池会采用一种叫做 <code v-pre>checkpoint 的机制</code> 将数据回写到磁盘上，这样做的好处就是提升了数据库的整体性能。</p>
 <p>比如，当<code v-pre>缓冲池不够用</code>时，需要释放掉一些不常用的页，此时就可以强行采用checkpoint的方式，将不常用的脏页回写到磁盘上，然后再从缓存池中将这些页释放掉。这里的脏页 (dirty page) 指的是缓冲池中被修改过的页，与磁盘上的数据页不一致。</p>
 <h3 id="_3-3-查看-设置缓冲池的大小" tabindex="-1"><a class="header-anchor" href="#_3-3-查看-设置缓冲池的大小" aria-hidden="true">#</a> 3.3 查看/设置缓冲池的大小</h3>
 <p>如果你使用的是 MySQL MyISAM 存储引擎，它只缓存索引，不缓存数据，对应的键缓存参数为<code v-pre>key_buffer_size</code>，你可以用它进行查看。</p>
 <p>如果你使用的是 InnoDB 存储引擎，可以通过查看 innodb_buffer_pool_size 变量来查看缓冲池的大小。命令如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show variables like 'innodb_buffer_pool_size';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'innodb_buffer_pool_size'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><img src="@source/notes/senior_mysql/images/image-20220615214847480.png" alt="image-20220615214847480" style="zoom:80%;" />
 <p>你能看到此时 InnoDB 的缓冲池大小只有 134217728/1024/1024=128MB。我们可以修改缓冲池大小，比如改为256MB，方法如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>set global innodb_buffer_pool_size = 268435456;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">set</span> <span class="token keyword">global</span> innodb_buffer_pool_size <span class="token operator">=</span> <span class="token number">268435456</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>或者：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>[server]
-innodb_buffer_pool_size = 268435456
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token punctuation">[</span>server<span class="token punctuation">]</span>
+innodb_buffer_pool_size <span class="token operator">=</span> <span class="token number">268435456</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-4-多个buffer-pool实例" tabindex="-1"><a class="header-anchor" href="#_3-4-多个buffer-pool实例" aria-hidden="true">#</a> 3.4 多个Buffer Pool实例</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>[server]
-innodb_buffer_pool_instances = 2
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token punctuation">[</span>server<span class="token punctuation">]</span>
+innodb_buffer_pool_instances <span class="token operator">=</span> <span class="token number">2</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>这样就表明我们要创建2个 <code v-pre>Buffer Pool</code> 实例。</p>
 <p>我们看下如何查看缓冲池的个数，使用命令：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show variables like 'innodb_buffer_pool_instances';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'innodb_buffer_pool_instances'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>那每个 Buffer Pool 实例实际占多少内存空间呢？其实使用这个公式算出来的：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>innodb_buffer_pool_size/innodb_buffer_pool_instances
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>innodb_buffer_pool_size<span class="token operator">/</span>innodb_buffer_pool_instances
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>也就是总共的大小除以实例的个数，结果就是每个 Buffer Pool 实例占用的大小。</p>
 <p>不过也不是说 Buffer Pool 实例创建的越多越好，分别管理各个 Buffer Pool 也是需要性能开销的，InnDB规定：当innodb_buffer_pool_size的值小于1G的时候设置多个实例是无效的，InnoDB会默认把innodb_buffer_pool_instances的值修改为1。而我们鼓励在 Buffer Pool 大于等于 1G 的时候设置多个 Buffer Pool 实例。</p>
 <h3 id="_3-5-引申问题" tabindex="-1"><a class="header-anchor" href="#_3-5-引申问题" aria-hidden="true">#</a> 3.5 引申问题</h3>
 <p>Buffer Pool是MySQL内存结构中十分核心的一个组成，你可以先把它想象成一个黑盒子。</p>
 <p>黑盒下的更新数据流程</p>
 <p>当我们查询数据的时候，会先去 Buffer Pool 中查询。如果 Buffer Pool 中不存在，存储引擎会先将数据从磁盘加载到 Buffer Pool 中，然后将数据返回给客户端；同理，当我们更新某个数据的时候，如果这个数据不存在于 Buffer Pool，同样会先数据加载进来，然后修改内存的数据。被修改的数据会在之后统一刷入磁盘。</p>
-<p><img src="@source/notes/senior_mysql/images/image-20220615222455867.png" alt="image-20220615222455867"></p>
+<p><img src="@source/notes/senior_mysql/images/image-20220615222455867.png" alt="image-20220615222455867" loading="lazy"></p>
 <p>我更新到一半突然发生错误了，想要回滚到更新之前的版本，该怎么办？连数据持久化的保证、事务回滚都做不到还谈什么崩溃恢复？</p>
 <p>答案：<strong>Redo Log</strong> &amp; <strong>Undo Log</strong></p>
 </div></template>

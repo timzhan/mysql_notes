@@ -5,20 +5,20 @@
 <h2 id="_1-mysql的卸载" tabindex="-1"><a class="header-anchor" href="#_1-mysql的卸载" aria-hidden="true">#</a> 1. MySQL的卸载</h2>
 <h3 id="步骤1-停止mysql服务" tabindex="-1"><a class="header-anchor" href="#步骤1-停止mysql服务" aria-hidden="true">#</a> 步骤1：停止MySQL服务</h3>
 <p>在卸载之前，先停止MySQL8.0的服务。按键盘上的“Ctrl + Alt + Delete”组合键，打开“任务管理器”对话框，可以在“服务”列表找到“MySQL8.0”的服务，如果现在“正在运行”状态，可以右键单击服务，选择“停止”选项停止MySQL8.0的服务，如图所示。</p>
-<p><img src="@source/notes/base_mysql/images/image-20211014153604802.png" alt="image-20211014153604802"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211014153604802.png" alt="image-20211014153604802" loading="lazy"></p>
 <h3 id="步骤2-软件的卸载" tabindex="-1"><a class="header-anchor" href="#步骤2-软件的卸载" aria-hidden="true">#</a> 步骤2：软件的卸载</h3>
 <p><strong>方式1：通过控制面板方式</strong></p>
 <p>卸载MySQL8.0的程序可以和其他桌面应用程序一样直接在“控制面板”选择“卸载程序”，并在程序列表中找到MySQL8.0服务器程序，直接双击卸载即可，如图所示。这种方式删除，数据目录下的数据不会跟着删除。</p>
-<p><img src="@source/notes/base_mysql/images/image-20211014153657668.png" alt="image-20211014153657668"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211014153657668.png" alt="image-20211014153657668" loading="lazy"></p>
 <p><strong>方式2：通过360或电脑管家等软件卸载</strong></p>
 <p>略</p>
 <p><strong>方式3：通过安装包提供的卸载功能卸载</strong></p>
 <p>你也可以通过安装向导程序进行MySQL8.0服务器程序的卸载。</p>
 <p>① 再次双击下载的mysql-installer-community-8.0.26.0.msi文件，打开安装向导。安装向导会自动检测已安装的MySQL服务器程序。</p>
 <p>② 选择要卸载的MySQL服务器程序，单击“Remove”（移除），即可进行卸载。</p>
-<p><img src="@source/notes/base_mysql/images/image-20211014153722683.png" alt="image-20211014153722683"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211014153722683.png" alt="image-20211014153722683" loading="lazy"></p>
 <p>③ 单击“Next”（下一步）按钮，确认卸载。</p>
-<p><img src="@source/notes/base_mysql/images/image-20211014153747283.png" alt="image-20211014153747283"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211014153747283.png" alt="image-20211014153747283" loading="lazy"></p>
 <p>④ 弹出是否同时移除数据目录选择窗口。如果想要同时删除MySQL服务器中的数据，则勾选“Remove the data directory”，如图所示。</p>
 <img src="@source/notes/base_mysql/images/image-20211014154112574.png" alt="image-20211014154112574" style="zoom:80%;" />
 <p>⑤ 执行卸载。单击“Execute”（执行）按钮进行卸载。</p>
@@ -54,7 +54,7 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MySQL服务删除
 <h3 id="步骤5-删除环境变量配置" tabindex="-1"><a class="header-anchor" href="#步骤5-删除环境变量配置" aria-hidden="true">#</a> 步骤5：删除环境变量配置</h3>
 <p>找到path环境变量，将其中关于mysql的环境变量删除，<strong>切记不要全部删除。</strong></p>
 <p>例如：删除  D:\develop_tools\mysql\MySQLServer8.0.26\bin;  这个部分</p>
-<p><img src="@source/notes/base_mysql/images/1575694476072.png" alt="1575694476072"></p>
+<p><img src="@source/notes/base_mysql/images/1575694476072.png" alt="1575694476072" loading="lazy"></p>
 <h2 id="_2-mysql的下载、安装、配置" tabindex="-1"><a class="header-anchor" href="#_2-mysql的下载、安装、配置" aria-hidden="true">#</a> 2. MySQL的下载、安装、配置</h2>
 <h3 id="_2-1-mysql的4大版本" tabindex="-1"><a class="header-anchor" href="#_2-1-mysql的4大版本" aria-hidden="true">#</a> 2.1 MySQL的4大版本</h3>
 <blockquote>
@@ -87,7 +87,7 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MySQL服务删除
 <p>官网：<a href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer">https://www.mysql.com<ExternalLinkIcon/></a></p>
 <p><strong>2. 打开官网，点击DOWNLOADS</strong></p>
 <p>然后，点击<code v-pre>MySQL Community(GPL) Downloads</code></p>
-<p><img src="@source/notes/base_mysql/images/image-20210817185920150.png" alt="image-20210817185920150"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210817185920150.png" alt="image-20210817185920150" loading="lazy"></p>
 <p><strong>3. 点击 MySQL Community Server</strong></p>
  <img src="@source/notes/base_mysql/images/image-20210817185955123.png" alt="image-20210817185955123" style="zoom:80%;" />
 <p><strong>4. 在General Availability(GA) Releases中选择适合的版本</strong></p>
@@ -96,7 +96,7 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MySQL服务删除
 <li>这里在Windows 系统下推荐下载<code v-pre>MSI安装程序</code>；点击<code v-pre>Go to Download Page</code>进行下载即可</li>
 </ul>
  <img src="@source/notes/base_mysql/images/image-20210727192819147.png" alt="image-20210727192819147" style="zoom:67%;" />
-<p><img src="@source/notes/base_mysql/images/image-20211014163001964.png" alt="image-20211014163001964"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211014163001964.png" alt="image-20211014163001964" loading="lazy"></p>
 <ul>
 <li>Windows下的MySQL8.0安装有两种安装程序
 <ul>
@@ -106,8 +106,8 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MySQL服务删除
 </li>
 <li>如果安装MySQL5.7版本的话，选择<code v-pre>Archives</code>，接着选择MySQL5.7的相应版本即可。这里下载最近期的MySQL5.7.34版本。</li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/image-20211014163228051.png" alt="image-20211014163228051"></p>
-<p><img src="@source/notes/base_mysql/images/image-20211014163353156.png" alt="image-20211014163353156"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211014163228051.png" alt="image-20211014163228051" loading="lazy"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211014163353156.png" alt="image-20211014163353156" loading="lazy"></p>
 <h3 id="_2-3-mysql8-0-版本的安装" tabindex="-1"><a class="header-anchor" href="#_2-3-mysql8-0-版本的安装" aria-hidden="true">#</a> 2.3 MySQL8.0 版本的安装</h3>
 <p>MySQL下载完成后，找到下载文件，双击进行安装，具体操作步骤如下。</p>
 <p>步骤1：双击下载的mysql-installer-community-8.0.26.0.msi文件，打开安装向导。</p>
@@ -178,13 +178,13 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MySQL服务删除
 <h3 id="_2-7-安装失败问题" tabindex="-1"><a class="header-anchor" href="#_2-7-安装失败问题" aria-hidden="true">#</a> 2.7 安装失败问题</h3>
 <p>MySQL的安装和配置是一件非常简单的事，但是在操作过程中也可能出现问题，特别是初学者。</p>
 <p><strong>问题1：无法打开MySQL8.0软件安装包或者安装过程中失败，如何解决？</strong></p>
-<p>在运行MySQL8.0软件安装包之前，用户需要确保系统中已经安装了.Net Framework相关软件，如果缺少此软件，将不能正常地安装MySQL8.0软件。</p>
+<p>在运行MySQL8.0软件安装包之前，<a href="http://xn--fiq5ht0bs30ae2ck1i170buqfvnl1re7em03ju8b8v4f.Net" target="_blank" rel="noopener noreferrer">用户需要确保系统中已经安装了.Net<ExternalLinkIcon/></a> Framework相关软件，如果缺少此软件，将不能正常地安装MySQL8.0软件。</p>
 <img src="@source/notes/base_mysql/images/clip_image002.gif" alt="img" style="zoom:80%;" />
-<p>解决方案：到这个地址https://www.microsoft.com/en-us/download/details.aspx?id=42642下载Microsoft .NET Framework 4.5并安装后，再去安装MySQL。</p>
+<p>解决方案：到这个地址<a href="https://www.microsoft.com/en-us/download/details.aspx?id=42642%E4%B8%8B%E8%BD%BDMicrosoft" target="_blank" rel="noopener noreferrer">https://www.microsoft.com/en-us/download/details.aspx?id=42642下载Microsoft<ExternalLinkIcon/></a> .NET Framework 4.5并安装后，再去安装MySQL。</p>
 <p>另外，还要确保Windows Installer正常安装。windows上安装mysql8.0需要操作系统提前已安装好Microsoft Visual C++ 2015-2019。</p>
 <img src="@source/notes/base_mysql/images/clip_image004.gif" alt="img" style="zoom:75%;" />
 <img src="@source/notes/base_mysql/images/clip_image006.gif" alt="img" style="zoom:75%;" />
-<p>解决方案同样是，提前到微软官网https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0，下载相应的环境。</p>
+<p>解决方案同样是，提前到微软官网<a href="https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0%EF%BC%8C%E4%B8%8B%E8%BD%BD%E7%9B%B8%E5%BA%94%E7%9A%84%E7%8E%AF%E5%A2%83%E3%80%82" target="_blank" rel="noopener noreferrer">https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0，下载相应的环境。<ExternalLinkIcon/></a></p>
 <p><strong>问题2：卸载重装MySQL失败？</strong></p>
 <p>该问题通常是因为MySQL卸载时，没有完全清除相关信息导致的。</p>
 <p>解决办法是，把以前的安装目录删除。如果之前安装并未单独指定过服务安装目录，则默认安装目录是“C:\Program Files\MySQL”，彻底删除该目录。同时删除MySQL的Data目录，如果之前安装并未单独指定过数据目录，则默认安装目录是“C:\ProgramData\MySQL”，该目录一般为隐藏目录。删除后，重新安装即可。</p>
@@ -209,12 +209,12 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MySQL服务删除
 <p>步骤2：找到MySQL80（点击鼠标右键）→ 启动或停止（点击）</p>
 </li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/image-20211014183908375.png" alt="image-20211014183908375"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211014183908375.png" alt="image-20211014183908375" loading="lazy"></p>
 <h4 id="方式2-使用命令行工具" tabindex="-1"><a class="header-anchor" href="#方式2-使用命令行工具" aria-hidden="true">#</a> 方式2：使用命令行工具</h4>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code># 启动 MySQL 服务命令：
-net start MySQL服务名
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment"># 启动 MySQL 服务命令：</span>
+net <span class="token keyword">start</span> MySQL服务名
 
-# 停止 MySQL 服务命令：
+<span class="token comment"># 停止 MySQL 服务命令：</span>
 net stop MySQL服务名
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/base_mysql/images/image-20211014184037414.png" alt="image-20211014184037414" style="zoom:80%;" />
 <p>说明：</p>
@@ -242,7 +242,7 @@ net stop MySQL服务名
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>举例：</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql -h localhost -P 3306 -u root -pabc123  # 这里我设置的root用户的密码是abc123
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql <span class="token operator">-</span>h localhost <span class="token operator">-</span>P <span class="token number">3306</span> <span class="token operator">-</span>u root <span class="token operator">-</span>pabc123  <span class="token comment"># 这里我设置的root用户的密码是abc123</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><img src="@source/notes/base_mysql/images/image-20211014185035137.png" alt="image-20211014185035137" style="zoom:80%;" />
 <p>注意：</p>
 <p>（1）-p与密码之间不能有空格，其他参数名与参数值之间可以有空格也可以没有空格。如：</p>
@@ -268,7 +268,7 @@ quit
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_4-mysql演示使用" tabindex="-1"><a class="header-anchor" href="#_4-mysql演示使用" aria-hidden="true">#</a> 4. MySQL演示使用</h2>
 <h3 id="_4-1-mysql的使用演示" tabindex="-1"><a class="header-anchor" href="#_4-1-mysql的使用演示" aria-hidden="true">#</a> 4.1 MySQL的使用演示</h3>
 <p>1、查看所有的数据库</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show databases;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> <span class="token keyword">databases</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><blockquote>
 <p>“information_schema”是 MySQL 系统自带的数据库，主要保存 MySQL 数据库服务器的系统信息，比如数据库的名称、数据表的名称、字段名称、存取权限、数据文件 所在的文件夹和系统使用的文件夹，等等</p>
 <p>“performance_schema”是 MySQL 系统自带的数据库，可以用来监控 MySQL 的各类性能指标。</p>
@@ -278,88 +278,88 @@ quit
 <p>为什么 Workbench 里面我们只能看到“demo”和“sys”这 2 个数据库呢？</p>
 <p>这是因为，Workbench 是图形化的管理工具，主要面向开发人 员，“demo”和“sys”这 2 个数据库已经够用了。如果有特殊需求，比如，需要监控 MySQL 数据库各项性能指标、直接操作 MySQL 数据库系统文件等，可以由 DBA 通过 SQL 语句，查看其它的系统数据库。</p>
 <p>2、创建自己的数据库</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create database 数据库名;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">database</span> 数据库名<span class="token punctuation">;</span>
 
-#创建atguigudb数据库，该名称不能与已经存在的数据库重名。
-create database atguigudb;
+<span class="token comment">#创建atguigudb数据库，该名称不能与已经存在的数据库重名。</span>
+<span class="token keyword">create</span> <span class="token keyword">database</span> atguigudb<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>3、使用自己的数据库</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>use 数据库名;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">use</span> 数据库名<span class="token punctuation">;</span>
 
-#使用atguigudb数据库
-use atguigudb;
+<span class="token comment">#使用atguigudb数据库</span>
+<span class="token keyword">use</span> atguigudb<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>说明：如果没有使用use语句，后面针对数据库的操作也没有加“数据名”的限定，那么会报“ERROR 1046 (3D000): No database selected”（没有选择数据库）</p>
 <p>使用完use语句之后，如果接下来的SQL都是针对一个数据库操作的，那就不用重复use了，如果要针对另一个数据库操作，那么要重新use。</p>
 <p>4、查看某个库的所有表格</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show tables;  #要求前面有use语句
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> <span class="token keyword">tables</span><span class="token punctuation">;</span>  <span class="token comment">#要求前面有use语句</span>
 
-show tables from 数据库名;
+<span class="token keyword">show</span> <span class="token keyword">tables</span> <span class="token keyword">from</span> 数据库名<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>5、创建新的表格</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table 表名称(
-	字段名  数据类型,
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> 表名称<span class="token punctuation">(</span>
+	字段名  数据类型<span class="token punctuation">,</span>
 	字段名 数据类型
-);
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>说明：如果是最后一个字段，后面就用加逗号，因为逗号的作用是分割每个字段。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#创建学生表
-create table student(
-	id int,
-    name varchar(20)  #说名字最长不超过20个字符
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#创建学生表</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> student<span class="token punctuation">(</span>
+	id <span class="token keyword">int</span><span class="token punctuation">,</span>
+    name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>  <span class="token comment">#说名字最长不超过20个字符</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>6、查看一个表的数据</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>select * from 数据库表名称;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#查看学生表的数据
-select * from student;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> 数据库表名称<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#查看学生表的数据</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>7、添加一条记录</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into 表名称 values(值列表);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> 表名称 <span class="token keyword">values</span><span class="token punctuation">(</span>值列表<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-#添加两条记录到student表中
-insert into student values(1,'张三');
-insert into student values(2,'李四');
+<span class="token comment">#添加两条记录到student表中</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'李四'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>报错：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; insert into student values(1,'张三');
-ERROR 1366 (HY000): Incorrect string value: '\xD5\xC5\xC8\xFD' for column 'name' at row 1
-mysql&gt; insert into student values(2,'李四');
-ERROR 1366 (HY000): Incorrect string value: '\xC0\xEE\xCB\xC4' for column 'name' at row 1
-mysql&gt; show create table student;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ERROR <span class="token number">1366</span> <span class="token punctuation">(</span>HY000<span class="token punctuation">)</span>: Incorrect string <span class="token keyword">value</span>: <span class="token string">'\xD5\xC5\xC8\xFD'</span> <span class="token keyword">for</span> <span class="token keyword">column</span> <span class="token string">'name'</span> at <span class="token keyword">row</span> <span class="token number">1</span>
+mysql<span class="token operator">></span> <span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'李四'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ERROR <span class="token number">1366</span> <span class="token punctuation">(</span>HY000<span class="token punctuation">)</span>: Incorrect string <span class="token keyword">value</span>: <span class="token string">'\xC0\xEE\xCB\xC4'</span> <span class="token keyword">for</span> <span class="token keyword">column</span> <span class="token string">'name'</span> at <span class="token keyword">row</span> <span class="token number">1</span>
+mysql<span class="token operator">></span> <span class="token keyword">show</span> <span class="token keyword">create</span> <span class="token keyword">table</span> student<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>字符集的问题。</p>
 <p>8、查看表的创建信息</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show create table 表名称\G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> <span class="token keyword">create</span> <span class="token keyword">table</span> 表名称\G
 
 
-#查看student表的详细创建信息
-show create table student\G
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#结果如下
-*************************** 1. row ***************************
-       Table: student
-Create Table: CREATE TABLE `student` (
-  `id` int(11) DEFAULT NULL,
-  `name` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
-1 row in set (0.00 sec)
+<span class="token comment">#查看student表的详细创建信息</span>
+<span class="token keyword">show</span> <span class="token keyword">create</span> <span class="token keyword">table</span> student\G
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#结果如下</span>
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">1.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+       <span class="token keyword">Table</span>: student
+<span class="token keyword">Create</span> <span class="token keyword">Table</span>: <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>student<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+  <span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>latin1
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>上面的结果显示student的表格的默认字符集是“latin1”不支持中文。</p>
 <p>9、查看数据库的创建信息</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show create database 数据库名\G
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> <span class="token keyword">create</span> <span class="token keyword">database</span> 数据库名\G
 
-#查看atguigudb数据库的详细创建信息
-show create database atguigudb\G
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#结果如下
-*************************** 1. row ***************************
-       Database: atguigudb
-Create Database: CREATE DATABASE `atguigudb` /*!40100 DEFAULT CHARACTER SET latin1 */
-1 row in set (0.00 sec)
+<span class="token comment">#查看atguigudb数据库的详细创建信息</span>
+<span class="token keyword">show</span> <span class="token keyword">create</span> <span class="token keyword">database</span> atguigudb\G
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#结果如下</span>
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">1.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+       <span class="token keyword">Database</span>: atguigudb
+<span class="token keyword">Create</span> <span class="token keyword">Database</span>: <span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token identifier"><span class="token punctuation">`</span>atguigudb<span class="token punctuation">`</span></span> <span class="token comment">/*!40100 DEFAULT CHARACTER SET latin1 */</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>上面的结果显示atguigudb数据库也不支持中文，字符集默认是latin1。</p>
 <p>10、删除表格</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>drop table 表名称;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#删除学生表
-drop table student;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">drop</span> <span class="token keyword">table</span> 表名称<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#删除学生表</span>
+<span class="token keyword">drop</span> <span class="token keyword">table</span> student<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>11、删除数据库</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>drop database 数据库名;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#删除atguigudb数据库
-drop database atguigudb;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">drop</span> <span class="token keyword">database</span> 数据库名<span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#删除atguigudb数据库</span>
+<span class="token keyword">drop</span> <span class="token keyword">database</span> atguigudb<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_4-2-mysql的编码设置" tabindex="-1"><a class="header-anchor" href="#_4-2-mysql的编码设置" aria-hidden="true">#</a> 4.2 MySQL的编码设置</h3>
 <h4 id="mysql5-7中" tabindex="-1"><a class="header-anchor" href="#mysql5-7中" aria-hidden="true">#</a> MySQL5.7中</h4>
 <p><strong>问题再现：命令行操作sql乱码问题</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; INSERT INTO t_stu VALUES(1,'张三','男');
-ERROR 1366 (HY000): Incorrect string value: '\xD5\xC5\xC8\xFD' for column 'sname' at row 1
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> t_stu <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">,</span><span class="token string">'男'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ERROR <span class="token number">1366</span> <span class="token punctuation">(</span>HY000<span class="token punctuation">)</span>: Incorrect string <span class="token keyword">value</span>: <span class="token string">'\xD5\xC5\xC8\xFD'</span> <span class="token keyword">for</span> <span class="token keyword">column</span> <span class="token string">'sname'</span> at <span class="token keyword">row</span> <span class="token number">1</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>问题解决</strong></p>
 <p>步骤1：查看编码命令</p>
 <div class="language-text ext-text line-numbers-mode"><pre v-pre class="language-text"><code>show variables like 'character_%';
@@ -392,10 +392,10 @@ show variables like 'collation_%';
 <h3 id="工具1-mysql-workbench" tabindex="-1"><a class="header-anchor" href="#工具1-mysql-workbench" aria-hidden="true">#</a> 工具1. MySQL Workbench</h3>
 <p>MySQL官方提供的图形化管理工具MySQL Workbench完全支持MySQL 5.0以上的版本。MySQL Workbench分为社区版和商业版，社区版完全免费，而商业版则是按年收费。</p>
 <p>MySQL Workbench 为数据库管理员、程序开发者和系统规划师提供可视化设计、模型建立、以及数据库管理功能。它包含了用于创建复杂的数据建模ER模型，正向和逆向数据库工程，也可以用于执行通常需要花费大量时间的、难以变更和管理的文档任务。</p>
-<p>下载地址：http://dev.mysql.com/downloads/workbench/。</p>
+<p>下载地址：<a href="http://dev.mysql.com/downloads/workbench/%E3%80%82" target="_blank" rel="noopener noreferrer">http://dev.mysql.com/downloads/workbench/。<ExternalLinkIcon/></a></p>
 <p>使用：</p>
 <p>首先，我们点击 Windows 左下角的“开始”按钮，如果你是 Win10 系统，可以直接看到所有程序。接着，找到“MySQL”，点开，找到“MySQL Workbench 8.0 CE”。点击打开 Workbench，如下图所示：</p>
-<p><img src="@source/notes/base_mysql/images/image-20211007153522427.png" alt="image-20211007153522427"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211007153522427.png" alt="image-20211007153522427" loading="lazy"></p>
 <p>左下角有个本地连接，点击，录入 Root 的密码，登录本地 MySQL 数据库服务器，如下图所示：</p>
 <img src="@source/notes/base_mysql/images/image-20211014195108502.png" alt="image-20211014195108502" style="zoom:80%;" />
 <img src="@source/notes/base_mysql/images/image-20211014195129219.png" alt="image-20211014195129219" style="zoom:80%;" />
@@ -415,18 +415,18 @@ show variables like 'collation_%';
 <p>好了，下面我们就用 Workbench 实际创建一个数据库，并且导入一个 Excel 数据文件， 来生成一个数据表。数据表是存储数据的载体，有了数据表以后，我们就能对数据进行操作了。</p>
 <h3 id="工具2-navicat" tabindex="-1"><a class="header-anchor" href="#工具2-navicat" aria-hidden="true">#</a> 工具2. Navicat</h3>
 <p>Navicat MySQL是一个强大的MySQL数据库服务器管理和开发工具。它可以与任何3.21或以上版本的MySQL一起工作，支持触发器、存储过程、函数、事件、视图、管理用户等，对于新手来说易学易用。其精心设计的图形用户界面（GUI）可以让用户用一种安全简便的方式来快速方便地创建、组织、访问和共享信息。Navicat支持中文，有免费版本提供。
-下载地址：http://www.navicat.com/。</p>
+下载地址：<a href="http://www.navicat.com/%E3%80%82" target="_blank" rel="noopener noreferrer">http://www.navicat.com/。<ExternalLinkIcon/></a></p>
 <img src="@source/notes/base_mysql/images/1557378069584.png" style="zoom:80%;" />
 <img src="@source/notes/base_mysql/images/image-20210913180359685.png" alt="image-20210913180359685" style="zoom:80%;" />
 <h3 id="工具3-sqlyog" tabindex="-1"><a class="header-anchor" href="#工具3-sqlyog" aria-hidden="true">#</a> 工具3. SQLyog</h3>
 <p>SQLyog 是业界著名的 Webyog 公司出品的一款简洁高效、功能强大的图形化 MySQL 数据库管理工具。这款工具是使用C++语言开发的。该工具可以方便地创建数据库、表、视图和索引等，还可以方便地进行插入、更新和删除等操作，同时可以方便地进行数据库、数据表的备份和还原。该工具不仅可以通过SQL文件进行大量文件的导入和导出，还可以导入和导出XML、HTML和CSV等多种格式的数据。
-下载地址：http://www.webyog.com/，读者也可以搜索中文版的下载地址。</p>
+下载地址：<a href="http://www.webyog.com/%EF%BC%8C%E8%AF%BB%E8%80%85%E4%B9%9F%E5%8F%AF%E4%BB%A5%E6%90%9C%E7%B4%A2%E4%B8%AD%E6%96%87%E7%89%88%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80%E3%80%82" target="_blank" rel="noopener noreferrer">http://www.webyog.com/，读者也可以搜索中文版的下载地址。<ExternalLinkIcon/></a></p>
 <img src="@source/notes/base_mysql/images/image-20211014213018979.png" alt="image-20211014213018979" style="zoom:80%;" />
 <img src="@source/notes/base_mysql/images/image-20211014213036470.png" alt="image-20211014213036470" style="zoom:80%;" />
 <h3 id="工具4-dbeaver" tabindex="-1"><a class="header-anchor" href="#工具4-dbeaver" aria-hidden="true">#</a> 工具4：dbeaver</h3>
 <p>DBeaver是一个通用的数据库管理工具和 SQL 客户端，支持所有流行的数据库：MySQL、PostgreSQL、SQLite、Oracle、DB2、SQL Server、 Sybase、MS Access、Teradata、 Firebird、Apache Hive、Phoenix、Presto等。DBeaver比大多数的SQL管理工具要轻量，而且支持中文界面。DBeaver社区版作为一个免费开源的产品，和其他类似的软件相比，在功能和易用性上都毫不逊色。</p>
 <p>唯一需要注意是 DBeaver 是用Java编程语言开发的，所以需要拥有 JDK（Java Development ToolKit）环境。如果电脑上没有JDK，在选择安装DBeaver组件时，勾选“Include Java”即可。</p>
-<p>下载地址：https://dbeaver.io/download/</p>
+<p>下载地址：<a href="https://dbeaver.io/download/" target="_blank" rel="noopener noreferrer">https://dbeaver.io/download/<ExternalLinkIcon/></a></p>
 <img src="@source/notes/base_mysql/images/image-20211014195237457.png" alt="image-20211014195237457" style="zoom:80%;" />
 <img src="@source/notes/base_mysql/images/image-20211014195251371.png" alt="image-20211014195251371" style="zoom:75%;" />
 <img src="@source/notes/base_mysql/images/image-20211014195300510.png" alt="image-20211014195300510" style="zoom:80%;" />
@@ -436,14 +436,14 @@ show variables like 'collation_%';
 <img src="@source/notes/base_mysql/images/image-20211019215249254.png" alt="image-20211019215249254" style="zoom:80%;" />
 <p>出现这个原因是MySQL8之前的版本中加密规则是mysql_native_password，而在MySQL8之后，加密规则是caching_sha2_password。解决问题方法有两种，第一种是升级图形界面工具版本，第二种是把MySQL8用户登录密码加密规则还原成mysql_native_password。</p>
 <p>第二种解决方案如下，用命令行登录MySQL数据库之后，执行如下命令修改用户密码加密规则并更新用户密码，这里修改用户名为“root@localhost”的用户密码规则为“mysql_native_password”，密码值为“123456”，如图所示。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#使用mysql数据库
-USE mysql; 
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#使用mysql数据库</span>
+<span class="token keyword">USE</span> mysql<span class="token punctuation">;</span> 
 
-#修改'root'@'localhost'用户的密码规则和密码
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'abc123'; 
+<span class="token comment">#修改'root'@'localhost'用户的密码规则和密码</span>
+<span class="token keyword">ALTER</span> <span class="token keyword">USER</span> <span class="token string">'root'</span><span class="token variable">@'localhost'</span> IDENTIFIED <span class="token keyword">WITH</span> mysql_native_password <span class="token keyword">BY</span> <span class="token string">'abc123'</span><span class="token punctuation">;</span> 
 
-#刷新权限
-FLUSH PRIVILEGES;
+<span class="token comment">#刷新权限</span>
+FLUSH <span class="token keyword">PRIVILEGES</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><img src="@source/notes/base_mysql/images/image-20211019215408965.png" alt="image-20211019215408965" style="zoom:80%;" />
 <h2 id="_6-mysql目录结构与源码" tabindex="-1"><a class="header-anchor" href="#_6-mysql目录结构与源码" aria-hidden="true">#</a> 6. MySQL目录结构与源码</h2>
 <h3 id="_6-1-主要目录结构" tabindex="-1"><a class="header-anchor" href="#_6-1-主要目录结构" aria-hidden="true">#</a> 6.1 主要目录结构</h3>
@@ -482,7 +482,7 @@ FLUSH PRIVILEGES;
 <p>接下来，把下载下来的压缩文件解压，我们就得到了 MySQL 的源代码。</p>
 <p>MySQL 是用 C++ 开发而成的，我简单介绍一下源代码的组成。</p>
 <p>mysql-8.0.22 目录下的各个子目录，包含了 MySQL 各部分组件的源代码：</p>
-<p><img src="@source/notes/base_mysql/images/image-20211007154113052.png" alt="image-20211007154113052"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211007154113052.png" alt="image-20211007154113052" loading="lazy"></p>
 <ul>
 <li>
 <p>sql 子目录是 MySQL 核心代码；</p>
@@ -498,7 +498,7 @@ FLUSH PRIVILEGES;
 </li>
 </ul>
 <p>源代码可以用记事本打开查看，如果你有 C++ 的开发环境，也可以在开发环境中打开查看。</p>
-<p><img src="@source/notes/base_mysql/images/image-20211007154213156.png" alt="image-20211007154213156"></p>
+<p><img src="@source/notes/base_mysql/images/image-20211007154213156.png" alt="image-20211007154213156" loading="lazy"></p>
 <p>如上图所示，源代码并不神秘，就是普通的 C++ 代码，跟你熟悉的一样，而且有很多注释，可以帮助你理解。阅读源代码就像在跟 MySQL 的开发人员对话一样，十分有趣。</p>
 <h2 id="_7-常见问题的解决-课外内容" tabindex="-1"><a class="header-anchor" href="#_7-常见问题的解决-课外内容" aria-hidden="true">#</a> 7. 常见问题的解决(课外内容)</h2>
 <h3 id="问题1-root用户密码忘记-重置的操作" tabindex="-1"><a class="header-anchor" href="#问题1-root用户密码忘记-重置的操作" aria-hidden="true">#</a> 问题1：root用户密码忘记，重置的操作</h3>
@@ -516,7 +516,7 @@ mysqld --defaults-file=&quot;D:\ProgramFiles\mysql\MySQLServer5.7Data\my.ini&quo
 8: 即可用修改后的新密码登陆。</p>
 <h3 id="问题2-mysql命令报-不是内部或外部命令" tabindex="-1"><a class="header-anchor" href="#问题2-mysql命令报-不是内部或外部命令" aria-hidden="true">#</a> 问题2：mysql命令报“不是内部或外部命令”</h3>
 <p>如果输入mysql命令报“不是内部或外部命令”，把mysql安装目录的bin目录配置到环境变量path中。如下：</p>
-<p><img src="@source/notes/base_mysql/images/image-20210914093150145.png" alt="image-20210914093150145"></p>
+<p><img src="@source/notes/base_mysql/images/image-20210914093150145.png" alt="image-20210914093150145" loading="lazy"></p>
 <h3 id="问题3-错误error-没有选择数据库就操作表格和数据" tabindex="-1"><a class="header-anchor" href="#问题3-错误error-没有选择数据库就操作表格和数据" aria-hidden="true">#</a> 问题3：错误ERROR ：没有选择数据库就操作表格和数据</h3>
 <table>
 <thead>
@@ -534,84 +534,84 @@ mysqld --defaults-file=&quot;D:\ProgramFiles\mysql\MySQLServer5.7Data\my.ini&quo
 </tbody>
 </table>
 <h3 id="问题4-命令行客户端的字符集问题" tabindex="-1"><a class="header-anchor" href="#问题4-命令行客户端的字符集问题" aria-hidden="true">#</a> 问题4：命令行客户端的字符集问题</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; INSERT INTO t_stu VALUES(1,'张三','男');
-ERROR 1366 (HY000): Incorrect string value: '\xD5\xC5\xC8\xFD' for column 'sname' at row 1
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> t_stu <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">,</span><span class="token string">'男'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ERROR <span class="token number">1366</span> <span class="token punctuation">(</span>HY000<span class="token punctuation">)</span>: Incorrect string <span class="token keyword">value</span>: <span class="token string">'\xD5\xC5\xC8\xFD'</span> <span class="token keyword">for</span> <span class="token keyword">column</span> <span class="token string">'sname'</span> at <span class="token keyword">row</span> <span class="token number">1</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>原因：服务器端认为你的客户端的字符集是utf-8，而实际上你的客户端的字符集是GBK。</p>
-<p><img src="@source/notes/base_mysql/images/1554912924219.png" alt="1554912924219"></p>
+<p><img src="@source/notes/base_mysql/images/1554912924219.png" alt="1554912924219" loading="lazy"></p>
 <p>查看所有字符集：<strong>SHOW VARIABLES LIKE 'character_set_%';</strong></p>
-<p><img src="@source/notes/base_mysql/images/1554912943186.png" alt="1554912943186"></p>
+<p><img src="@source/notes/base_mysql/images/1554912943186.png" alt="1554912943186" loading="lazy"></p>
 <p>解决方案，设置当前连接的客户端字符集 <strong>“SET NAMES GBK;”</strong></p>
-<p><img src="@source/notes/base_mysql/images/1554912957353.png" alt="1554912957353"></p>
+<p><img src="@source/notes/base_mysql/images/1554912957353.png" alt="1554912957353" loading="lazy"></p>
 <h3 id="问题5-修改数据库和表的字符编码" tabindex="-1"><a class="header-anchor" href="#问题5-修改数据库和表的字符编码" aria-hidden="true">#</a> 问题5：修改数据库和表的字符编码</h3>
 <p>修改编码：</p>
 <p>（1)先停止服务，（2）修改my.ini文件（3）重新启动服务</p>
 <p>说明：</p>
 <p>如果是在修改my.ini之前建的库和表，那么库和表的编码还是原来的Latin1，要么删了重建，要么使用alter语句修改编码。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; create database 0728db charset Latin1;
-Query OK, 1 row affected (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">create</span> <span class="token keyword">database</span> <span class="token number">0728</span>db <span class="token keyword">charset</span> Latin1<span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token keyword">row</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-text ext-text line-numbers-mode"><pre v-pre class="language-text"><code>mysql> use 0728db;
 Database changed
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; create table student (id int , name varchar(20)) charset Latin1;
-Query OK, 0 rows affected (0.02 sec)
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">create</span> <span class="token keyword">table</span> student <span class="token punctuation">(</span>id <span class="token keyword">int</span> <span class="token punctuation">,</span> name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">charset</span> Latin1<span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.02</span> sec<span class="token punctuation">)</span>
 
 
-mysql&gt; show create table student\G
-*************************** 1. row ***************************
-       Table: student
-Create Table: CREATE TABLE `student` (
-  `id` int(11) NOT NULL,
-  `name` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; alter table student charset utf8; #修改表字符编码为UTF8
-Query OK, 0 rows affected (0.01 sec)
-Records: 0  Duplicates: 0  Warnings: 0
+mysql<span class="token operator">></span> <span class="token keyword">show</span> <span class="token keyword">create</span> <span class="token keyword">table</span> student\G
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">1.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+       <span class="token keyword">Table</span>: student
+<span class="token keyword">Create</span> <span class="token keyword">Table</span>: <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>student<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+  <span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>latin1
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">alter</span> <span class="token keyword">table</span> student <span class="token keyword">charset</span> utf8<span class="token punctuation">;</span> <span class="token comment">#修改表字符编码为UTF8</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
+Records: <span class="token number">0</span>  Duplicates: <span class="token number">0</span>  <span class="token keyword">Warnings</span>: <span class="token number">0</span>
 
 
-mysql&gt; show create table student\G
-*************************** 1. row ***************************
-       Table: student
-Create Table: CREATE TABLE `student` (
-  `id` int(11) NOT NULL,
-  `name` varchar(20) CHARACTER SET latin1 DEFAULT NULL,  #字段仍然是latin1编码
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">show</span> <span class="token keyword">create</span> <span class="token keyword">table</span> student\G
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">1.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+       <span class="token keyword">Table</span>: student
+<span class="token keyword">Create</span> <span class="token keyword">Table</span>: <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>student<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+  <span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">CHARACTER</span> <span class="token keyword">SET</span> latin1 <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>  <span class="token comment">#字段仍然是latin1编码</span>
+  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
 
-mysql&gt; alter table student modify name varchar(20) charset utf8; #修改字段字符编码为UTF8
-Query OK, 0 rows affected (0.05 sec)
-Records: 0  Duplicates: 0  Warnings: 0
+mysql<span class="token operator">></span> <span class="token keyword">alter</span> <span class="token keyword">table</span> student <span class="token keyword">modify</span> name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">charset</span> utf8<span class="token punctuation">;</span> <span class="token comment">#修改字段字符编码为UTF8</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.05</span> sec<span class="token punctuation">)</span>
+Records: <span class="token number">0</span>  Duplicates: <span class="token number">0</span>  <span class="token keyword">Warnings</span>: <span class="token number">0</span>
 
 
-mysql&gt; show create table student\G
-*************************** 1. row ***************************
-       Table: student
-Create Table: CREATE TABLE `student` (
-  `id` int(11) NOT NULL,
-  `name` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show create database 0728db;;
-+--------+-----------------------------------------------------------------+
-|Database| Create Database                                                 |
-+------+-------------------------------------------------------------------+
-|0728db| CREATE DATABASE `0728db` /*!40100 DEFAULT CHARACTER SET latin1 */ |
-+------+-------------------------------------------------------------------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">show</span> <span class="token keyword">create</span> <span class="token keyword">table</span> student\G
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token number">1.</span> <span class="token keyword">row</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+       <span class="token keyword">Table</span>: student
+<span class="token keyword">Create</span> <span class="token keyword">Table</span>: <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>student<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+  <span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> <span class="token keyword">create</span> <span class="token keyword">database</span> <span class="token number">0728</span>db<span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+-----------------------------------------------------------------+</span>
+<span class="token operator">|</span><span class="token keyword">Database</span><span class="token operator">|</span> <span class="token keyword">Create</span> <span class="token keyword">Database</span>                                                 <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+-------------------------------------------------------------------+</span>
+<span class="token operator">|</span><span class="token number">0728</span>db<span class="token operator">|</span> <span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token identifier"><span class="token punctuation">`</span>0728db<span class="token punctuation">`</span></span> <span class="token comment">/*!40100 DEFAULT CHARACTER SET latin1 */</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+-------------------------------------------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
 
-mysql&gt; alter database 0728db charset utf8; #修改数据库的字符编码为utf8
-Query OK, 1 row affected (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">alter</span> <span class="token keyword">database</span> <span class="token number">0728</span>db <span class="token keyword">charset</span> utf8<span class="token punctuation">;</span> <span class="token comment">#修改数据库的字符编码为utf8</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token keyword">row</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
 
-mysql&gt; show create database 0728db;
-+--------+-----------------------------------------------------------------+
-|Database| Create Database                                                 |
-+--------+-----------------------------------------------------------------+
-| 0728db | CREATE DATABASE `0728db` /*!40100 DEFAULT CHARACTER SET utf8 */ |
-+--------+-----------------------------------------------------------------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">show</span> <span class="token keyword">create</span> <span class="token keyword">database</span> <span class="token number">0728</span>db<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+-----------------------------------------------------------------+</span>
+<span class="token operator">|</span><span class="token keyword">Database</span><span class="token operator">|</span> <span class="token keyword">Create</span> <span class="token keyword">Database</span>                                                 <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+-----------------------------------------------------------------+</span>
+<span class="token operator">|</span> <span class="token number">0728</span>db <span class="token operator">|</span> <span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token identifier"><span class="token punctuation">`</span>0728db<span class="token punctuation">`</span></span> <span class="token comment">/*!40100 DEFAULT CHARACTER SET utf8 */</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+-----------------------------------------------------------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div></template>

@@ -51,14 +51,14 @@
 <ul>
 <li>查看某个表已有的约束</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#information_schema数据库名（系统库）
-#table_constraints表名称（专门存储各个表的约束）
-SELECT * FROM information_schema.table_constraints 
-WHERE table_name = '表名称';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#information_schema数据库名（系统库）</span>
+<span class="token comment">#table_constraints表名称（专门存储各个表的约束）</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> information_schema<span class="token punctuation">.</span>table_constraints 
+<span class="token keyword">WHERE</span> table_name <span class="token operator">=</span> <span class="token string">'表名称'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_2-非空约束" tabindex="-1"><a class="header-anchor" href="#_2-非空约束" aria-hidden="true">#</a> 2. 非空约束</h2>
 <h3 id="_2-1-作用" tabindex="-1"><a class="header-anchor" href="#_2-1-作用" aria-hidden="true">#</a> 2.1 作用</h3>
 <p>限定某个字段/某列的值不允许为空</p>
-<p><img src="@source/notes/base_mysql/images/1555426972098.png" alt="1555426972098"></p>
+<p><img src="@source/notes/base_mysql/images/1555426972098.png" alt="1555426972098" loading="lazy"></p>
 <h3 id="_2-2-关键字" tabindex="-1"><a class="header-anchor" href="#_2-2-关键字" aria-hidden="true">#</a> 2.2 关键字</h3>
 <p>NOT NULL</p>
 <h3 id="_2-3-特点" tabindex="-1"><a class="header-anchor" href="#_2-3-特点" aria-hidden="true">#</a> 2.3 特点</h3>
@@ -78,53 +78,53 @@ WHERE table_name = '表名称';
 </ul>
 <h3 id="_2-4-添加非空约束" tabindex="-1"><a class="header-anchor" href="#_2-4-添加非空约束" aria-hidden="true">#</a> 2.4 添加非空约束</h3>
 <p>（1）建表时</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE 表名称(
-	字段名  数据类型,
-    字段名  数据类型 NOT NULL,  
-    字段名  数据类型 NOT NULL
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> 表名称<span class="token punctuation">(</span>
+	字段名  数据类型<span class="token punctuation">,</span>
+    字段名  数据类型 <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>  
+    字段名  数据类型 <span class="token operator">NOT</span> <span class="token boolean">NULL</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE emp(
-id INT(10) NOT NULL,
-NAME VARCHAR(20) NOT NULL,
-sex CHAR NULL
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE student(
-	sid int,
-    sname varchar(20) not null,
-    tel char(11) ,
-    cardid char(18) not null
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into student values(1,'张三','13710011002','110222198912032545'); #成功
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> emp<span class="token punctuation">(</span>
+id <span class="token keyword">INT</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+sex <span class="token keyword">CHAR</span> <span class="token boolean">NULL</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> student<span class="token punctuation">(</span>
+	sid <span class="token keyword">int</span><span class="token punctuation">,</span>
+    sname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">,</span>
+    tel <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token punctuation">,</span>
+    cardid <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">18</span><span class="token punctuation">)</span> <span class="token operator">not</span> <span class="token boolean">null</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">,</span><span class="token string">'13710011002'</span><span class="token punctuation">,</span><span class="token string">'110222198912032545'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">#成功</span>
 
-insert into student values(2,'李四','13710011002',null);#身份证号为空
-ERROR 1048 (23000): Column 'cardid' cannot be null
+<span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'李四'</span><span class="token punctuation">,</span><span class="token string">'13710011002'</span><span class="token punctuation">,</span><span class="token boolean">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#身份证号为空</span>
+ERROR <span class="token number">1048</span> <span class="token punctuation">(</span><span class="token number">23000</span><span class="token punctuation">)</span>: <span class="token keyword">Column</span> <span class="token string">'cardid'</span> cannot be <span class="token boolean">null</span>
 
-insert into student values(2,'李四',null,'110222198912032546');#成功，tel允许为空
+<span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'李四'</span><span class="token punctuation">,</span><span class="token boolean">null</span><span class="token punctuation">,</span><span class="token string">'110222198912032546'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#成功，tel允许为空</span>
 
-insert into student values(3,null,null,'110222198912032547');#失败
-ERROR 1048 (23000): Column 'sname' cannot be null
+<span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token boolean">null</span><span class="token punctuation">,</span><span class="token boolean">null</span><span class="token punctuation">,</span><span class="token string">'110222198912032547'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#失败</span>
+ERROR <span class="token number">1048</span> <span class="token punctuation">(</span><span class="token number">23000</span><span class="token punctuation">)</span>: <span class="token keyword">Column</span> <span class="token string">'sname'</span> cannot be <span class="token boolean">null</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>（2）建表后</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>alter table 表名称 modify 字段名 数据类型 not null;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> 表名称 <span class="token keyword">modify</span> 字段名 数据类型 <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE emp
-MODIFY sex VARCHAR(30) NOT NULL;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>alter table student modify sname varchar(20) not null;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> emp
+<span class="token keyword">MODIFY</span> sex <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> student <span class="token keyword">modify</span> sname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_2-5-删除非空约束" tabindex="-1"><a class="header-anchor" href="#_2-5-删除非空约束" aria-hidden="true">#</a> 2.5 删除非空约束</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>alter table 表名称 modify 字段名 数据类型 NULL;#去掉not null，相当于修改某个非注解字段，该字段允许为空
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> 表名称 <span class="token keyword">modify</span> 字段名 数据类型 <span class="token boolean">NULL</span><span class="token punctuation">;</span><span class="token comment">#去掉not null，相当于修改某个非注解字段，该字段允许为空</span>
 
 或 
 
-alter table 表名称 modify 字段名 数据类型;#去掉not null，相当于修改某个非注解字段，该字段允许为空
+<span class="token keyword">alter</span> <span class="token keyword">table</span> 表名称 <span class="token keyword">modify</span> 字段名 数据类型<span class="token punctuation">;</span><span class="token comment">#去掉not null，相当于修改某个非注解字段，该字段允许为空</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE emp
-MODIFY sex VARCHAR(30) NULL;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE emp
-MODIFY NAME VARCHAR(15) DEFAULT 'abc' NULL;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> emp
+<span class="token keyword">MODIFY</span> sex <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span> <span class="token boolean">NULL</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> emp
+<span class="token keyword">MODIFY</span> NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">'abc'</span> <span class="token boolean">NULL</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_3-唯一性约束" tabindex="-1"><a class="header-anchor" href="#_3-唯一性约束" aria-hidden="true">#</a> 3. 唯一性约束</h2>
 <h3 id="_3-1-作用" tabindex="-1"><a class="header-anchor" href="#_3-1-作用" aria-hidden="true">#</a> 3.1 作用</h3>
 <p>用来限制某个字段/某列的值不能重复。</p>
-<p><img src="@source/notes/base_mysql/images/1555427198811.png" alt="1555427198811"></p>
+<p><img src="@source/notes/base_mysql/images/1555427198811.png" alt="1555427198811" loading="lazy"></p>
 <h3 id="_3-2-关键字" tabindex="-1"><a class="header-anchor" href="#_3-2-关键字" aria-hidden="true">#</a> 3.2 关键字</h3>
 <p>UNIQUE</p>
 <h3 id="_3-3-特点" tabindex="-1"><a class="header-anchor" href="#_3-3-特点" aria-hidden="true">#</a> 3.3 特点</h3>
@@ -137,145 +137,145 @@ MODIFY NAME VARCHAR(15) DEFAULT 'abc' NULL;
 </ul>
 <h3 id="_3-4-添加唯一约束" tabindex="-1"><a class="header-anchor" href="#_3-4-添加唯一约束" aria-hidden="true">#</a> 3.4 添加唯一约束</h3>
 <p>（1）建表时</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table 表名称(
-	字段名  数据类型,
-    字段名  数据类型  unique,  
-    字段名  数据类型  unique key,
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> 表名称<span class="token punctuation">(</span>
+	字段名  数据类型<span class="token punctuation">,</span>
+    字段名  数据类型  <span class="token keyword">unique</span><span class="token punctuation">,</span>  
+    字段名  数据类型  <span class="token keyword">unique</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
     字段名  数据类型
-);
-create table 表名称(
-	字段名  数据类型,
-    字段名  数据类型,  
-    字段名  数据类型,
-    [constraint 约束名] unique key(字段名)
-);
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> 表名称<span class="token punctuation">(</span>
+	字段名  数据类型<span class="token punctuation">,</span>
+    字段名  数据类型<span class="token punctuation">,</span>  
+    字段名  数据类型<span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token keyword">constraint</span> 约束名<span class="token punctuation">]</span> <span class="token keyword">unique</span> <span class="token keyword">key</span><span class="token punctuation">(</span>字段名<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table student(
-	sid int,
-    sname varchar(20),
-    tel char(11) unique,
-    cardid char(18) unique key
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE t_course(
-	cid INT UNIQUE,
-	cname VARCHAR(100) UNIQUE,
-	description VARCHAR(200)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> student<span class="token punctuation">(</span>
+	sid <span class="token keyword">int</span><span class="token punctuation">,</span>
+    sname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    tel <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token keyword">unique</span><span class="token punctuation">,</span>
+    cardid <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">18</span><span class="token punctuation">)</span> <span class="token keyword">unique</span> <span class="token keyword">key</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> t_course<span class="token punctuation">(</span>
+	cid <span class="token keyword">INT</span> <span class="token keyword">UNIQUE</span><span class="token punctuation">,</span>
+	cname <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token keyword">UNIQUE</span><span class="token punctuation">,</span>
+	description <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE USER(
- id INT NOT NULL,
- NAME VARCHAR(25),
- PASSWORD VARCHAR(16),
- -- 使用表级约束语法
- CONSTRAINT uk_name_pwd UNIQUE(NAME,PASSWORD)
-);
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">USER</span><span class="token punctuation">(</span>
+ id <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+ NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+ PASSWORD <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+ <span class="token comment">-- 使用表级约束语法</span>
+ <span class="token keyword">CONSTRAINT</span> uk_name_pwd <span class="token keyword">UNIQUE</span><span class="token punctuation">(</span>NAME<span class="token punctuation">,</span>PASSWORD<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><blockquote>
 <p>表示用户名和密码组合不能重复</p>
 </blockquote>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into student values(1,'张三','13710011002','101223199012015623');
-insert into student values(2,'李四','13710011003','101223199012015624');
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from student;
-+-----+-------+-------------+--------------------+
-| sid | sname | tel         | cardid             |
-+-----+-------+-------------+--------------------+
-|   1 | 张三  | 13710011002 | 101223199012015623 |
-|   2 | 李四  | 13710011003 | 101223199012015624 |
-+-----+-------+-------------+--------------------+
-2 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into student values(3,'王五','13710011004','101223199012015624'); #身份证号重复
-ERROR 1062 (23000): Duplicate entry '101223199012015624' for key 'cardid'
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">,</span><span class="token string">'13710011002'</span><span class="token punctuation">,</span><span class="token string">'101223199012015623'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'李四'</span><span class="token punctuation">,</span><span class="token string">'13710011003'</span><span class="token punctuation">,</span><span class="token string">'101223199012015624'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+-------------+--------------------+</span>
+<span class="token operator">|</span> sid <span class="token operator">|</span> sname <span class="token operator">|</span> tel         <span class="token operator">|</span> cardid             <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+-------------+--------------------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> 张三  <span class="token operator">|</span> <span class="token number">13710011002</span> <span class="token operator">|</span> <span class="token number">101223199012015623</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">2</span> <span class="token operator">|</span> 李四  <span class="token operator">|</span> <span class="token number">13710011003</span> <span class="token operator">|</span> <span class="token number">101223199012015624</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+-------------+--------------------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'王五'</span><span class="token punctuation">,</span><span class="token string">'13710011004'</span><span class="token punctuation">,</span><span class="token string">'101223199012015624'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">#身份证号重复</span>
+ERROR <span class="token number">1062</span> <span class="token punctuation">(</span><span class="token number">23000</span><span class="token punctuation">)</span>: <span class="token keyword">Duplicate</span> entry <span class="token string">'101223199012015624'</span> <span class="token keyword">for</span> <span class="token keyword">key</span> <span class="token string">'cardid'</span>
 
-insert into student values(3,'王五','13710011003','101223199012015625'); 
-ERROR 1062 (23000): Duplicate entry '13710011003' for key 'tel'
+<span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'王五'</span><span class="token punctuation">,</span><span class="token string">'13710011003'</span><span class="token punctuation">,</span><span class="token string">'101223199012015625'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+ERROR <span class="token number">1062</span> <span class="token punctuation">(</span><span class="token number">23000</span><span class="token punctuation">)</span>: <span class="token keyword">Duplicate</span> entry <span class="token string">'13710011003'</span> <span class="token keyword">for</span> <span class="token keyword">key</span> <span class="token string">'tel'</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>（2）建表后指定唯一键约束</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#字段列表中如果是一个字段，表示该列的值唯一。如果是两个或更多个字段，那么复合唯一，即多个字段的组合是唯一的
-#方式1：
-alter table 表名称 add unique key(字段列表); 
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#方式2：
-alter table 表名称 modify 字段名 字段类型 unique;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#字段列表中如果是一个字段，表示该列的值唯一。如果是两个或更多个字段，那么复合唯一，即多个字段的组合是唯一的</span>
+<span class="token comment">#方式1：</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> 表名称 <span class="token keyword">add</span> <span class="token keyword">unique</span> <span class="token keyword">key</span><span class="token punctuation">(</span>字段列表<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#方式2：</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> 表名称 <span class="token keyword">modify</span> 字段名 字段类型 <span class="token keyword">unique</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE USER 
-ADD UNIQUE(NAME,PASSWORD);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE USER 
-ADD CONSTRAINT uk_name_pwd UNIQUE(NAME,PASSWORD);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE USER 
-MODIFY NAME VARCHAR(20) UNIQUE;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> <span class="token keyword">USER</span> 
+<span class="token keyword">ADD</span> <span class="token keyword">UNIQUE</span><span class="token punctuation">(</span>NAME<span class="token punctuation">,</span>PASSWORD<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> <span class="token keyword">USER</span> 
+<span class="token keyword">ADD</span> <span class="token keyword">CONSTRAINT</span> uk_name_pwd <span class="token keyword">UNIQUE</span><span class="token punctuation">(</span>NAME<span class="token punctuation">,</span>PASSWORD<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> <span class="token keyword">USER</span> 
+<span class="token keyword">MODIFY</span> NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">UNIQUE</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table student(
-	sid int primary key,
-    sname varchar(20),
-    tel char(11) ,
-    cardid char(18) 
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>alter table student add unique key(tel);
-alter table student add unique key(cardid);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> student<span class="token punctuation">(</span>
+	sid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
+    sname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    tel <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token punctuation">,</span>
+    cardid <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">18</span><span class="token punctuation">)</span> 
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> student <span class="token keyword">add</span> <span class="token keyword">unique</span> <span class="token keyword">key</span><span class="token punctuation">(</span>tel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> student <span class="token keyword">add</span> <span class="token keyword">unique</span> <span class="token keyword">key</span><span class="token punctuation">(</span>cardid<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-5-关于复合唯一约束" tabindex="-1"><a class="header-anchor" href="#_3-5-关于复合唯一约束" aria-hidden="true">#</a> 3.5 关于复合唯一约束</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table 表名称(
-	字段名  数据类型,
-    字段名  数据类型,  
-    字段名  数据类型,
-    unique key(字段列表) #字段列表中写的是多个字段名，多个字段名用逗号分隔，表示那么是复合唯一，即多个字段的组合是唯一的
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#学生表
-create table student(
-	sid int,	#学号
-    sname varchar(20),			#姓名
-    tel char(11) unique key,  #电话
-    cardid char(18) unique key #身份证号
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> 表名称<span class="token punctuation">(</span>
+	字段名  数据类型<span class="token punctuation">,</span>
+    字段名  数据类型<span class="token punctuation">,</span>  
+    字段名  数据类型<span class="token punctuation">,</span>
+    <span class="token keyword">unique</span> <span class="token keyword">key</span><span class="token punctuation">(</span>字段列表<span class="token punctuation">)</span> <span class="token comment">#字段列表中写的是多个字段名，多个字段名用逗号分隔，表示那么是复合唯一，即多个字段的组合是唯一的</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#学生表</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> student<span class="token punctuation">(</span>
+	sid <span class="token keyword">int</span><span class="token punctuation">,</span>	<span class="token comment">#学号</span>
+    sname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>			<span class="token comment">#姓名</span>
+    tel <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token keyword">unique</span> <span class="token keyword">key</span><span class="token punctuation">,</span>  <span class="token comment">#电话</span>
+    cardid <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">18</span><span class="token punctuation">)</span> <span class="token keyword">unique</span> <span class="token keyword">key</span> <span class="token comment">#身份证号</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-#课程表
-create table course(
-	cid int,  #课程编号
-    cname varchar(20)     #课程名称
-);
+<span class="token comment">#课程表</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> course<span class="token punctuation">(</span>
+	cid <span class="token keyword">int</span><span class="token punctuation">,</span>  <span class="token comment">#课程编号</span>
+    cname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>     <span class="token comment">#课程名称</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-#选课表
-create table student_course(
-    id int,
-	sid int,
-    cid int,
-    score int,
-    unique key(sid,cid)  #复合唯一
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into student values(1,'张三','13710011002','101223199012015623');#成功
-insert into student values(2,'李四','13710011003','101223199012015624');#成功
-insert into course values(1001,'Java'),(1002,'MySQL');#成功
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from student;
-+-----+-------+-------------+--------------------+
-| sid | sname | tel         | cardid             |
-+-----+-------+-------------+--------------------+
-|   1 | 张三  | 13710011002 | 101223199012015623 |
-|   2 | 李四  | 13710011003 | 101223199012015624 |
-+-----+-------+-------------+--------------------+
-2 rows in set (0.00 sec)
+<span class="token comment">#选课表</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> student_course<span class="token punctuation">(</span>
+    id <span class="token keyword">int</span><span class="token punctuation">,</span>
+	sid <span class="token keyword">int</span><span class="token punctuation">,</span>
+    cid <span class="token keyword">int</span><span class="token punctuation">,</span>
+    score <span class="token keyword">int</span><span class="token punctuation">,</span>
+    <span class="token keyword">unique</span> <span class="token keyword">key</span><span class="token punctuation">(</span>sid<span class="token punctuation">,</span>cid<span class="token punctuation">)</span>  <span class="token comment">#复合唯一</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">,</span><span class="token string">'13710011002'</span><span class="token punctuation">,</span><span class="token string">'101223199012015623'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#成功</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'李四'</span><span class="token punctuation">,</span><span class="token string">'13710011003'</span><span class="token punctuation">,</span><span class="token string">'101223199012015624'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#成功</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> course <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1001</span><span class="token punctuation">,</span><span class="token string">'Java'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">1002</span><span class="token punctuation">,</span><span class="token string">'MySQL'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#成功</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+-------------+--------------------+</span>
+<span class="token operator">|</span> sid <span class="token operator">|</span> sname <span class="token operator">|</span> tel         <span class="token operator">|</span> cardid             <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+-------------+--------------------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> 张三  <span class="token operator">|</span> <span class="token number">13710011002</span> <span class="token operator">|</span> <span class="token number">101223199012015623</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">2</span> <span class="token operator">|</span> 李四  <span class="token operator">|</span> <span class="token number">13710011003</span> <span class="token operator">|</span> <span class="token number">101223199012015624</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+-------------+--------------------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from course;
-+------+-------+
-| cid  | cname |
-+------+-------+
-| 1001 | Java  |
-| 1002 | MySQL |
-+------+-------+
-2 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into student_course values
-(1, 1, 1001, 89),
-(2, 1, 1002, 90),
-(3, 2, 1001, 88),
-(4, 2, 1002, 56);#成功
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from student_course;
-+----+------+------+-------+
-| id | sid  | cid  | score |
-+----+------+------+-------+
-|  1 |    1 | 1001 |    89 |
-|  2 |    1 | 1002 |    90 |
-|  3 |    2 | 1001 |    88 |
-|  4 |    2 | 1002 |    56 |
-+----+------+------+-------+
-4 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into student_course values (5, 1, 1001, 88);#失败
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> course<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+-------+</span>
+<span class="token operator">|</span> cid  <span class="token operator">|</span> cname <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+-------+</span>
+<span class="token operator">|</span> <span class="token number">1001</span> <span class="token operator">|</span> Java  <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1002</span> <span class="token operator">|</span> MySQL <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+-------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> student_course <span class="token keyword">values</span>
+<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1001</span><span class="token punctuation">,</span> <span class="token number">89</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1002</span><span class="token punctuation">,</span> <span class="token number">90</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1001</span><span class="token punctuation">,</span> <span class="token number">88</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1002</span><span class="token punctuation">,</span> <span class="token number">56</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#成功</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student_course<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+------+------+-------+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> sid  <span class="token operator">|</span> cid  <span class="token operator">|</span> score <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+------+------+-------+</span>
+<span class="token operator">|</span>  <span class="token number">1</span> <span class="token operator">|</span>    <span class="token number">1</span> <span class="token operator">|</span> <span class="token number">1001</span> <span class="token operator">|</span>    <span class="token number">89</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">2</span> <span class="token operator">|</span>    <span class="token number">1</span> <span class="token operator">|</span> <span class="token number">1002</span> <span class="token operator">|</span>    <span class="token number">90</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">3</span> <span class="token operator">|</span>    <span class="token number">2</span> <span class="token operator">|</span> <span class="token number">1001</span> <span class="token operator">|</span>    <span class="token number">88</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">4</span> <span class="token operator">|</span>    <span class="token number">2</span> <span class="token operator">|</span> <span class="token number">1002</span> <span class="token operator">|</span>    <span class="token number">56</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+------+------+-------+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> student_course <span class="token keyword">values</span> <span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1001</span><span class="token punctuation">,</span> <span class="token number">88</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#失败</span>
 
-#ERROR 1062 (23000): Duplicate entry '1-1001' for key 'sid'   违反sid-cid的复合唯一
+<span class="token comment">#ERROR 1062 (23000): Duplicate entry '1-1001' for key 'sid'   违反sid-cid的复合唯一</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_3-5-删除唯一约束" tabindex="-1"><a class="header-anchor" href="#_3-5-删除唯一约束" aria-hidden="true">#</a> 3.5 删除唯一约束</h3>
 <ul>
 <li>添加唯一性约束的列上也会自动创建唯一索引。</li>
@@ -283,9 +283,9 @@ mysql&gt; select * from course;
 <li>删除时需要指定唯一索引名，唯一索引名就和唯一约束名一样。</li>
 <li>如果创建唯一约束时未指定名称，如果是单列，就默认和列名相同；如果是组合列，那么默认和()中排在第一个的列名相同。也可以自定义唯一性约束名。</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>SELECT * FROM information_schema.table_constraints WHERE table_name = '表名'; #查看都有哪些约束
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE USER 
-DROP INDEX uk_name_pwd;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> information_schema<span class="token punctuation">.</span>table_constraints <span class="token keyword">WHERE</span> table_name <span class="token operator">=</span> <span class="token string">'表名'</span><span class="token punctuation">;</span> <span class="token comment">#查看都有哪些约束</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> <span class="token keyword">USER</span> 
+<span class="token keyword">DROP</span> <span class="token keyword">INDEX</span> uk_name_pwd<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><blockquote>
 <p>注意：可以通过 <code v-pre>show index from 表名称; </code>查看表的索引</p>
 </blockquote>
@@ -298,7 +298,7 @@ DROP INDEX uk_name_pwd;
 <ul>
 <li>主键约束相当于<strong>唯一约束+非空约束的组合</strong>，主键约束列不允许重复，也不允许出现空值。</li>
 </ul>
-<p><img src="@source/notes/base_mysql/images/1555427492244.png" alt="1555427492244"></p>
+<p><img src="@source/notes/base_mysql/images/1555427492244.png" alt="1555427492244" loading="lazy"></p>
 <ul>
 <li>
 <p>一个表最多只能有一个主键约束，建立主键约束可以在列级别创建，也可以在表级别上创建。</p>
@@ -321,180 +321,180 @@ DROP INDEX uk_name_pwd;
 </ul>
 <h3 id="_4-4-添加主键约束" tabindex="-1"><a class="header-anchor" href="#_4-4-添加主键约束" aria-hidden="true">#</a> 4.4 添加主键约束</h3>
 <p>（1）建表时指定主键约束</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table 表名称(
-	字段名  数据类型  primary key, #列级模式
-    字段名  数据类型,  
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> 表名称<span class="token punctuation">(</span>
+	字段名  数据类型  <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span> <span class="token comment">#列级模式</span>
+    字段名  数据类型<span class="token punctuation">,</span>  
     字段名  数据类型  
-);
-create table 表名称(
-	字段名  数据类型,
-    字段名  数据类型,  
-    字段名  数据类型,
-    [constraint 约束名] primary key(字段名) #表级模式
-);
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> 表名称<span class="token punctuation">(</span>
+	字段名  数据类型<span class="token punctuation">,</span>
+    字段名  数据类型<span class="token punctuation">,</span>  
+    字段名  数据类型<span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token keyword">constraint</span> 约束名<span class="token punctuation">]</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">(</span>字段名<span class="token punctuation">)</span> <span class="token comment">#表级模式</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table temp(
-	id int primary key,
-    name varchar(20)
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; desc temp;
-+-------+-------------+------+-----+---------+-------+
-| Field | Type        | Null | Key | Default | Extra |
-+-------+-------------+------+-----+---------+-------+
-| id    | int(11)     | NO   | PRI | NULL    |       |
-| name  | varchar(20) | YES  |     | NULL    |       |
-+-------+-------------+------+-----+---------+-------+
-2 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into temp values(1,'张三');#成功
-insert into temp values(2,'李四');#成功
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from temp;
-+----+------+
-| id | name |
-+----+------+
-|  1 | 张三 |
-|  2 | 李四 |
-+----+------+
-2 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into temp values(1,'张三');#失败
-ERROR 1062 (23000): Duplicate（重复） entry（键入，输入） '1' for key 'PRIMARY'
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> <span class="token keyword">temp</span><span class="token punctuation">(</span>
+	id <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
+    name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">desc</span> <span class="token keyword">temp</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> Field <span class="token operator">|</span> <span class="token keyword">Type</span>        <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> id    <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>     <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> PRI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> name  <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+-------------+------+-----+---------+-------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> <span class="token keyword">temp</span> <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#成功</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> <span class="token keyword">temp</span> <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'李四'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#成功</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">temp</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+------+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> name <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+------+</span>
+<span class="token operator">|</span>  <span class="token number">1</span> <span class="token operator">|</span> 张三 <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">2</span> <span class="token operator">|</span> 李四 <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> <span class="token keyword">temp</span> <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#失败</span>
+ERROR <span class="token number">1062</span> <span class="token punctuation">(</span><span class="token number">23000</span><span class="token punctuation">)</span>: <span class="token keyword">Duplicate</span>（重复） entry（键入，输入） <span class="token string">'1'</span> <span class="token keyword">for</span> <span class="token keyword">key</span> <span class="token string">'PRIMARY'</span>
 
 
-insert into temp values(1,'王五');#失败
-ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+<span class="token keyword">insert</span> <span class="token keyword">into</span> <span class="token keyword">temp</span> <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'王五'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#失败</span>
+ERROR <span class="token number">1062</span> <span class="token punctuation">(</span><span class="token number">23000</span><span class="token punctuation">)</span>: <span class="token keyword">Duplicate</span> entry <span class="token string">'1'</span> <span class="token keyword">for</span> <span class="token keyword">key</span> <span class="token string">'PRIMARY'</span>
 
-insert into temp values(3,'张三');#成功
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from temp;
-+----+------+
-| id | name |
-+----+------+
-|  1 | 张三 |
-|  2 | 李四 |
-|  3 | 张三 |
-+----+------+
-3 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into temp values(4,null);#成功
+<span class="token keyword">insert</span> <span class="token keyword">into</span> <span class="token keyword">temp</span> <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#成功</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">temp</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+------+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> name <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+------+</span>
+<span class="token operator">|</span>  <span class="token number">1</span> <span class="token operator">|</span> 张三 <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">2</span> <span class="token operator">|</span> 李四 <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">3</span> <span class="token operator">|</span> 张三 <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> <span class="token keyword">temp</span> <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token boolean">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#成功</span>
 
 
-insert into temp values(null,'李琦');#失败
-ERROR 1048 (23000): Column 'id' cannot be null
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from temp;
-+----+------+
-| id | name |
-+----+------+
-|  1 | 张三 |
-|  2 | 李四 |
-|  3 | 张三 |
-|  4 | NULL |
-+----+------+
-4 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#演示一个表建立两个主键约束
-create table temp(
-	id int primary key,
-    name varchar(20) primary key
-);
-ERROR 1068 (42000): Multiple（多重的） primary key defined（定义）
+<span class="token keyword">insert</span> <span class="token keyword">into</span> <span class="token keyword">temp</span> <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token boolean">null</span><span class="token punctuation">,</span><span class="token string">'李琦'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#失败</span>
+ERROR <span class="token number">1048</span> <span class="token punctuation">(</span><span class="token number">23000</span><span class="token punctuation">)</span>: <span class="token keyword">Column</span> <span class="token string">'id'</span> cannot be <span class="token boolean">null</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">temp</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+------+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> name <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+------+</span>
+<span class="token operator">|</span>  <span class="token number">1</span> <span class="token operator">|</span> 张三 <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">2</span> <span class="token operator">|</span> 李四 <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">3</span> <span class="token operator">|</span> 张三 <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">4</span> <span class="token operator">|</span> <span class="token boolean">NULL</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+------+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#演示一个表建立两个主键约束</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> <span class="token keyword">temp</span><span class="token punctuation">(</span>
+	id <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
+    name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">primary</span> <span class="token keyword">key</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ERROR <span class="token number">1068</span> <span class="token punctuation">(</span><span class="token number">42000</span><span class="token punctuation">)</span>: Multiple（多重的） <span class="token keyword">primary</span> <span class="token keyword">key</span> defined（定义）
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>再举例：</p>
 <ul>
 <li>列级约束</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE emp4(
-id INT PRIMARY KEY AUTO_INCREMENT ,
-NAME VARCHAR(20)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> emp4<span class="token punctuation">(</span>
+id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token keyword">AUTO_INCREMENT</span> <span class="token punctuation">,</span>
+NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>表级约束</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE emp5(
-id INT NOT NULL AUTO_INCREMENT,
-NAME VARCHAR(20),
-pwd VARCHAR(15),
-CONSTRAINT emp5_id_pk PRIMARY KEY(id)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> emp5<span class="token punctuation">(</span>
+id <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+pwd <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token keyword">CONSTRAINT</span> emp5_id_pk <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>（2）建表后增加主键约束</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE 表名称 ADD PRIMARY KEY(字段列表); #字段列表可以是一个字段，也可以是多个字段，如果是多个字段的话，是复合主键
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE student ADD PRIMARY KEY (sid);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE emp5 ADD PRIMARY KEY(NAME,pwd);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 表名称 <span class="token keyword">ADD</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span>字段列表<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">#字段列表可以是一个字段，也可以是多个字段，如果是多个字段的话，是复合主键</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> student <span class="token keyword">ADD</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span>sid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> emp5 <span class="token keyword">ADD</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span>NAME<span class="token punctuation">,</span>pwd<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_4-5-关于复合主键" tabindex="-1"><a class="header-anchor" href="#_4-5-关于复合主键" aria-hidden="true">#</a> 4.5 关于复合主键</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table 表名称(
-	字段名  数据类型,
-    字段名  数据类型,  
-    字段名  数据类型,
-    primary key(字段名1,字段名2)  #表示字段1和字段2的组合是唯一的，也可以有更多个字段
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#学生表
-create table student(
-	sid int primary key,  #学号
-    sname varchar(20)     #学生姓名
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> 表名称<span class="token punctuation">(</span>
+	字段名  数据类型<span class="token punctuation">,</span>
+    字段名  数据类型<span class="token punctuation">,</span>  
+    字段名  数据类型<span class="token punctuation">,</span>
+    <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">(</span>字段名<span class="token number">1</span><span class="token punctuation">,</span>字段名<span class="token number">2</span><span class="token punctuation">)</span>  <span class="token comment">#表示字段1和字段2的组合是唯一的，也可以有更多个字段</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#学生表</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> student<span class="token punctuation">(</span>
+	sid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>  <span class="token comment">#学号</span>
+    sname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>     <span class="token comment">#学生姓名</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-#课程表
-create table course(
-	cid int primary key,  #课程编号
-    cname varchar(20)     #课程名称
-);
+<span class="token comment">#课程表</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> course<span class="token punctuation">(</span>
+	cid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>  <span class="token comment">#课程编号</span>
+    cname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>     <span class="token comment">#课程名称</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-#选课表
-create table student_course(
-	sid int,
-    cid int,
-    score int,
-    primary key(sid,cid)  #复合主键
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into student values(1,'张三'),(2,'李四');
-insert into course values(1001,'Java'),(1002,'MySQL');
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from student;
-+-----+-------+
-| sid | sname |
-+-----+-------+
-|   1 | 张三  |
-|   2 | 李四  |
-+-----+-------+
-2 rows in set (0.00 sec)
+<span class="token comment">#选课表</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> student_course<span class="token punctuation">(</span>
+	sid <span class="token keyword">int</span><span class="token punctuation">,</span>
+    cid <span class="token keyword">int</span><span class="token punctuation">,</span>
+    score <span class="token keyword">int</span><span class="token punctuation">,</span>
+    <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">(</span>sid<span class="token punctuation">,</span>cid<span class="token punctuation">)</span>  <span class="token comment">#复合主键</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> student <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'李四'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> course <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1001</span><span class="token punctuation">,</span><span class="token string">'Java'</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">1002</span><span class="token punctuation">,</span><span class="token string">'MySQL'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+</span>
+<span class="token operator">|</span> sid <span class="token operator">|</span> sname <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> 张三  <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">2</span> <span class="token operator">|</span> 李四  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from course;
-+------+-------+
-| cid  | cname |
-+------+-------+
-| 1001 | Java  |
-| 1002 | MySQL |
-+------+-------+
-2 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into student_course values(1, 1001, 89),(1,1002,90),(2,1001,88),(2,1002,56);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from student_course;
-+-----+------+-------+
-| sid | cid  | score |
-+-----+------+-------+
-|   1 | 1001 |    89 |
-|   1 | 1002 |    90 |
-|   2 | 1001 |    88 |
-|   2 | 1002 |    56 |
-+-----+------+-------+
-4 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into student_course values(1, 1001, 100);
-ERROR 1062 (23000): Duplicate entry '1-1001' for key 'PRIMARY'
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; desc student_course;
-+-------+---------+------+-----+---------+-------+
-| Field | Type    | Null | Key | Default | Extra |
-+-------+---------+------+-----+---------+-------+
-| sid   | int(11) | NO   | PRI | NULL    |       |
-| cid   | int(11) | NO   | PRI | NULL    |       |
-| score | int(11) | YES  |     | NULL    |       |
-+-------+---------+------+-----+---------+-------+
-3 rows in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> course<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+-------+</span>
+<span class="token operator">|</span> cid  <span class="token operator">|</span> cname <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+-------+</span>
+<span class="token operator">|</span> <span class="token number">1001</span> <span class="token operator">|</span> Java  <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1002</span> <span class="token operator">|</span> MySQL <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+-------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> student_course <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1001</span><span class="token punctuation">,</span> <span class="token number">89</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1002</span><span class="token punctuation">,</span><span class="token number">90</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1001</span><span class="token punctuation">,</span><span class="token number">88</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1002</span><span class="token punctuation">,</span><span class="token number">56</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student_course<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+------+-------+</span>
+<span class="token operator">|</span> sid <span class="token operator">|</span> cid  <span class="token operator">|</span> score <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+------+-------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> <span class="token number">1001</span> <span class="token operator">|</span>    <span class="token number">89</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> <span class="token number">1002</span> <span class="token operator">|</span>    <span class="token number">90</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">2</span> <span class="token operator">|</span> <span class="token number">1001</span> <span class="token operator">|</span>    <span class="token number">88</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">2</span> <span class="token operator">|</span> <span class="token number">1002</span> <span class="token operator">|</span>    <span class="token number">56</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+------+-------+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> student_course <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1001</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ERROR <span class="token number">1062</span> <span class="token punctuation">(</span><span class="token number">23000</span><span class="token punctuation">)</span>: <span class="token keyword">Duplicate</span> entry <span class="token string">'1-1001'</span> <span class="token keyword">for</span> <span class="token keyword">key</span> <span class="token string">'PRIMARY'</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">desc</span> student_course<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------+---------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> Field <span class="token operator">|</span> <span class="token keyword">Type</span>    <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+---------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> sid   <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> PRI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> cid   <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> PRI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> score <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+---------+------+-----+---------+-------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>再举例</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE emp6(
-id INT NOT NULL,
-NAME VARCHAR(20),
-pwd VARCHAR(15),
-CONSTRAINT emp7_pk PRIMARY KEY(NAME,pwd)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> emp6<span class="token punctuation">(</span>
+id <span class="token keyword">INT</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+pwd <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token keyword">CONSTRAINT</span> emp7_pk <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span>NAME<span class="token punctuation">,</span>pwd<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_4-6-删除主键约束" tabindex="-1"><a class="header-anchor" href="#_4-6-删除主键约束" aria-hidden="true">#</a> 4.6 删除主键约束</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>alter table 表名称 drop primary key;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> 表名称 <span class="token keyword">drop</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE student DROP PRIMARY KEY;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE emp5 DROP PRIMARY KEY;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> student <span class="token keyword">DROP</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> emp5 <span class="token keyword">DROP</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><blockquote>
 <p>说明：删除主键约束，不需要指定主键名，因为一个表只有一个主键，删除主键约束后，非空还存在。</p>
 </blockquote>
@@ -510,144 +510,144 @@ CONSTRAINT emp7_pk PRIMARY KEY(NAME,pwd)
 <p>（4）自增约束的列的数据类型必须是整数类型</p>
 <p>（5）如果自增列指定了 0 和 null，会在当前最大值的基础上自增；如果自增列手动指定了具体值，直接赋值为具体值。</p>
 <p>错误演示：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table employee(
-	eid int auto_increment,
-    ename varchar(20)
-);
-# ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key   
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table employee(
-	eid int primary key,
-    ename varchar(20) unique key auto_increment
-);
-# ERROR 1063 (42000): Incorrect column specifier for column 'ename'  因为ename不是整数类型
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> employee<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">auto_increment</span><span class="token punctuation">,</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment"># ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key   </span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> employee<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">unique</span> <span class="token keyword">key</span> <span class="token keyword">auto_increment</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment"># ERROR 1063 (42000): Incorrect column specifier for column 'ename'  因为ename不是整数类型</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_5-4-如何指定自增约束" tabindex="-1"><a class="header-anchor" href="#_5-4-如何指定自增约束" aria-hidden="true">#</a> 5.4 如何指定自增约束</h3>
 <p><strong>（1）建表时</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table 表名称(
-	字段名  数据类型  primary key auto_increment,
-    字段名  数据类型  unique key not null,  
-    字段名  数据类型  unique key,
-    字段名  数据类型  not null default 默认值, 
-);
-create table 表名称(
-	字段名  数据类型 default 默认值 ,
-    字段名  数据类型 unique key auto_increment,  
-    字段名  数据类型 not null default 默认值,,
-    primary key(字段名)
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table employee(
-	eid int primary key auto_increment,
-    ename varchar(20)
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; desc employee;
-+-------+-------------+------+-----+---------+----------------+
-| Field | Type        | Null | Key | Default | Extra          |
-+-------+-------------+------+-----+---------+----------------+
-| eid   | int(11)     | NO   | PRI | NULL    | auto_increment |
-| ename | varchar(20) | YES  |     | NULL    |                |
-+-------+-------------+------+-----+---------+----------------+
-2 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> 表名称<span class="token punctuation">(</span>
+	字段名  数据类型  <span class="token keyword">primary</span> <span class="token keyword">key</span> <span class="token keyword">auto_increment</span><span class="token punctuation">,</span>
+    字段名  数据类型  <span class="token keyword">unique</span> <span class="token keyword">key</span> <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">,</span>  
+    字段名  数据类型  <span class="token keyword">unique</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
+    字段名  数据类型  <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">default</span> 默认值<span class="token punctuation">,</span> 
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> 表名称<span class="token punctuation">(</span>
+	字段名  数据类型 <span class="token keyword">default</span> 默认值 <span class="token punctuation">,</span>
+    字段名  数据类型 <span class="token keyword">unique</span> <span class="token keyword">key</span> <span class="token keyword">auto_increment</span><span class="token punctuation">,</span>  
+    字段名  数据类型 <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">default</span> 默认值<span class="token punctuation">,</span><span class="token punctuation">,</span>
+    <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">(</span>字段名<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> employee<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span> <span class="token keyword">auto_increment</span><span class="token punctuation">,</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">desc</span> employee<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------+-------------+------+-----+---------+----------------+</span>
+<span class="token operator">|</span> Field <span class="token operator">|</span> <span class="token keyword">Type</span>        <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra          <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+-------------+------+-----+---------+----------------+</span>
+<span class="token operator">|</span> eid   <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>     <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> PRI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span> <span class="token keyword">auto_increment</span> <span class="token operator">|</span>
+<span class="token operator">|</span> ename <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>                <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+-------------+------+-----+---------+----------------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>（2）建表后</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>alter table 表名称 modify 字段名 数据类型 auto_increment;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> 表名称 <span class="token keyword">modify</span> 字段名 数据类型 <span class="token keyword">auto_increment</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>例如：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table employee(
-	eid int primary key ,
-    ename varchar(20)
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>alter table employee modify eid int auto_increment;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; desc employee;
-+-------+-------------+------+-----+---------+----------------+
-| Field | Type        | Null | Key | Default | Extra          |
-+-------+-------------+------+-----+---------+----------------+
-| eid   | int(11)     | NO   | PRI | NULL    | auto_increment |
-| ename | varchar(20) | YES  |     | NULL    |                |
-+-------+-------------+------+-----+---------+----------------+
-2 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> employee<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span> <span class="token punctuation">,</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> employee <span class="token keyword">modify</span> eid <span class="token keyword">int</span> <span class="token keyword">auto_increment</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">desc</span> employee<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------+-------------+------+-----+---------+----------------+</span>
+<span class="token operator">|</span> Field <span class="token operator">|</span> <span class="token keyword">Type</span>        <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra          <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+-------------+------+-----+---------+----------------+</span>
+<span class="token operator">|</span> eid   <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>     <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> PRI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span> <span class="token keyword">auto_increment</span> <span class="token operator">|</span>
+<span class="token operator">|</span> ename <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>                <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+-------------+------+-----+---------+----------------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_5-5-如何删除自增约束" tabindex="-1"><a class="header-anchor" href="#_5-5-如何删除自增约束" aria-hidden="true">#</a> 5.5 如何删除自增约束</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#alter table 表名称 modify 字段名 数据类型 auto_increment;#给这个字段增加自增约束
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#alter table 表名称 modify 字段名 数据类型 auto_increment;#给这个字段增加自增约束</span>
 
-alter table 表名称 modify 字段名 数据类型; #去掉auto_increment相当于删除
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>alter table employee modify eid int;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; desc employee;
-+-------+-------------+------+-----+---------+-------+
-| Field | Type        | Null | Key | Default | Extra |
-+-------+-------------+------+-----+---------+-------+
-| eid   | int(11)     | NO   | PRI | NULL    |       |
-| ename | varchar(20) | YES  |     | NULL    |       |
-+-------+-------------+------+-----+---------+-------+
-2 rows in set (0.00 sec)
+<span class="token keyword">alter</span> <span class="token keyword">table</span> 表名称 <span class="token keyword">modify</span> 字段名 数据类型<span class="token punctuation">;</span> <span class="token comment">#去掉auto_increment相当于删除</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> employee <span class="token keyword">modify</span> eid <span class="token keyword">int</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">desc</span> employee<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> Field <span class="token operator">|</span> <span class="token keyword">Type</span>        <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> eid   <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>     <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> PRI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> ename <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-------+-------------+------+-----+---------+-------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_5-6-mysql-8-0新特性—自增变量的持久化" tabindex="-1"><a class="header-anchor" href="#_5-6-mysql-8-0新特性—自增变量的持久化" aria-hidden="true">#</a> 5.6 MySQL 8.0新特性—自增变量的持久化</h3>
 <p>在MySQL 8.0之前，自增主键AUTO_INCREMENT的值如果大于max(primary key)+1，在MySQL重启后，会重置AUTO_INCREMENT=max(primary key)+1，这种现象在某些情况下会导致业务主键冲突或者其他难以发现的问题。
 下面通过案例来对比不同的版本中自增变量是否持久化。
 在MySQL 5.7版本中，测试步骤如下：
 创建的数据表中包含自增主键的id字段，语句如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE test1(
-id INT PRIMARY KEY AUTO_INCREMENT
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> test1<span class="token punctuation">(</span>
+id <span class="token keyword">INT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token keyword">AUTO_INCREMENT</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>插入4个空值，执行如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test1
-VALUES(0),(0),(0),(0);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test1
+<span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>查询数据表test1中的数据，结果如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM test1;
-+----+
-| id |
-+----+
-|  1 |
-|  2 |
-|  3 |
-|  4 |
-+----+
-4 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test1<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+</span>
+<span class="token operator">|</span>  <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">3</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">4</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>删除id为4的记录，语句如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELETE FROM test1 WHERE id = 4;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> test1 <span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>再次插入一个空值，语句如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test1 VALUES(0);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test1 <span class="token keyword">VALUES</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>查询此时数据表test1中的数据，结果如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM test1;
-+----+
-| id |
-+----+
-|  1 |
-|  2 |
-|  3 |
-|  5 |
-+----+
-4 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test1<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+</span>
+<span class="token operator">|</span>  <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">3</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">5</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>从结果可以看出，虽然删除了id为4的记录，但是再次插入空值时，并没有重用被删除的4，而是分配了5。
 删除id为5的记录，结果如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>DELETE FROM test1 where id=5;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> test1 <span class="token keyword">where</span> id<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><strong>重启数据库</strong>，重新插入一个空值。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>INSERT INTO test1 values(0);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> test1 <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>再次查询数据表test1中的数据，结果如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM test1;
-+----+
-| id |
-+----+
-|  1 |
-|  2 |
-|  3 |
-|  4 |
-+----+
-4 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test1<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+</span>
+<span class="token operator">|</span>  <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">3</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">4</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>从结果可以看出，新插入的0值分配的是4，按照重启前的操作逻辑，此处应该分配6。出现上述结果的主要原因是自增主键没有持久化。
 在MySQL 5.7系统中，对于自增主键的分配规则，是由InnoDB数据字典内部一个<code v-pre>计数器</code>来决定的，而该计数器只在<code v-pre>内存中维护</code>，并不会持久化到磁盘中。当数据库重启时，该计数器会被初始化。</p>
 <p>在MySQL 8.0版本中，上述测试步骤最后一步的结果如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM test1;
-+----+
-| id |
-+----+
-|  1 |
-|  2 |
-|  3 |
-|  6 |
-+----+
-4 rows in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> test1<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+</span>
+<span class="token operator">|</span>  <span class="token number">1</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">2</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">3</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">6</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>从结果可以看出，自增变量已经持久化了。</p>
 <p>MySQL 8.0将自增主键的计数器持久化到<code v-pre>重做日志</code>中。每次计数器发生改变，都会将其写入重做日志中。如果数据库重启，InnoDB会根据重做日志中的信息来初始化计数器的内存值。</p>
 <h2 id="_6-foreign-key-约束" tabindex="-1"><a class="header-anchor" href="#_6-foreign-key-约束" aria-hidden="true">#</a> 6. FOREIGN KEY 约束</h2>
 <h3 id="_6-1-作用" tabindex="-1"><a class="header-anchor" href="#_6-1-作用" aria-hidden="true">#</a> 6.1 作用</h3>
 <p>限定某个表的某个字段的引用完整性。</p>
 <p>比如：员工表的员工所在部门的选择，必须在部门表能找到对应的部分。</p>
-<p><img src="@source/notes/base_mysql/images/1555428214706.png" alt="1555428214706"></p>
+<p><img src="@source/notes/base_mysql/images/1555428214706.png" alt="1555428214706" loading="lazy"></p>
 <h3 id="_6-2-关键字" tabindex="-1"><a class="header-anchor" href="#_6-2-关键字" aria-hidden="true">#</a> 6.2 关键字</h3>
 <p>FOREIGN KEY</p>
 <h3 id="_6-3-主表和从表-父表和子表" tabindex="-1"><a class="header-anchor" href="#_6-3-主表和从表-父表和子表" aria-hidden="true">#</a> 6.3 主表和从表/父表和子表</h3>
@@ -669,143 +669,143 @@ VALUES(0),(0),(0),(0);
 <p>（9）删除外键约束后，必须<code v-pre>手动</code>删除对应的索引</p>
 <h3 id="_6-5-添加外键约束" tabindex="-1"><a class="header-anchor" href="#_6-5-添加外键约束" aria-hidden="true">#</a> 6.5 添加外键约束</h3>
 <p>（1）建表时</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table 主表名称(
-	字段1  数据类型  primary key,
-    字段2  数据类型
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> 主表名称<span class="token punctuation">(</span>
+	字段<span class="token number">1</span>  数据类型  <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
+    字段<span class="token number">2</span>  数据类型
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-create table 从表名称(
-	字段1  数据类型  primary key,
-    字段2  数据类型,
-    [CONSTRAINT &lt;外键约束名称&gt;] FOREIGN KEY（从表的某个字段) references 主表名(被参考字段)
-);
-#(从表的某个字段)的数据类型必须与主表名(被参考字段)的数据类型一致，逻辑意义也一样
-#(从表的某个字段)的字段名可以与主表名(被参考字段)的字段名一样，也可以不一样
+<span class="token keyword">create</span> <span class="token keyword">table</span> 从表名称<span class="token punctuation">(</span>
+	字段<span class="token number">1</span>  数据类型  <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
+    字段<span class="token number">2</span>  数据类型<span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token keyword">CONSTRAINT</span> <span class="token operator">&lt;</span>外键约束名称<span class="token operator">></span><span class="token punctuation">]</span> <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span>（从表的某个字段<span class="token punctuation">)</span> <span class="token keyword">references</span> 主表名<span class="token punctuation">(</span>被参考字段<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">#(从表的某个字段)的数据类型必须与主表名(被参考字段)的数据类型一致，逻辑意义也一样</span>
+<span class="token comment">#(从表的某个字段)的字段名可以与主表名(被参考字段)的字段名一样，也可以不一样</span>
 
--- FOREIGN KEY: 在表级指定子表中的列
--- REFERENCES: 标示在父表中的列
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table dept( #主表
-	did int primary key,		#部门编号
-    dname varchar(50)			#部门名称
-);
+<span class="token comment">-- FOREIGN KEY: 在表级指定子表中的列</span>
+<span class="token comment">-- REFERENCES: 标示在父表中的列</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> dept<span class="token punctuation">(</span> <span class="token comment">#主表</span>
+	did <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>		<span class="token comment">#部门编号</span>
+    dname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>			<span class="token comment">#部门名称</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-create table emp(#从表
-	eid int primary key,  #员工编号
-    ename varchar(5),     #员工姓名
-    deptid int,				#员工所在的部门
-    foreign key (deptid) references dept(did)   #在从表中指定外键约束
-    #emp表的deptid和和dept表的did的数据类型一致，意义都是表示部门的编号
-);
+<span class="token keyword">create</span> <span class="token keyword">table</span> emp<span class="token punctuation">(</span><span class="token comment">#从表</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>  <span class="token comment">#员工编号</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>     <span class="token comment">#员工姓名</span>
+    deptid <span class="token keyword">int</span><span class="token punctuation">,</span>				<span class="token comment">#员工所在的部门</span>
+    <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token punctuation">(</span>deptid<span class="token punctuation">)</span> <span class="token keyword">references</span> dept<span class="token punctuation">(</span>did<span class="token punctuation">)</span>   <span class="token comment">#在从表中指定外键约束</span>
+    <span class="token comment">#emp表的deptid和和dept表的did的数据类型一致，意义都是表示部门的编号</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 说明：
-（1）主表dept必须先创建成功，然后才能创建emp表，指定外键成功。
-（2）删除表时，先删除从表emp，再删除主表dept
+（<span class="token number">1</span>）主表dept必须先创建成功，然后才能创建emp表，指定外键成功。
+（<span class="token number">2</span>）删除表时，先删除从表emp，再删除主表dept
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>（2）建表后</p>
 <p>一般情况下，表与表的关联都是提前设计好了的，因此，会在创建表的时候就把外键约束定义好。不过，如果需要修改表的设计（比如添加新的字段，增加新的关联关系），但没有预先定义外键约束，那么，就要用修改表的方式来补充定义。</p>
 <p>格式：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE 从表名 ADD [CONSTRAINT 约束名] FOREIGN KEY (从表的字段) REFERENCES 主表名(被引用字段) [on update xx][on delete xx];
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 从表名 <span class="token keyword">ADD</span> <span class="token punctuation">[</span><span class="token keyword">CONSTRAINT</span> 约束名<span class="token punctuation">]</span> <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span>从表的字段<span class="token punctuation">)</span> <span class="token keyword">REFERENCES</span> 主表名<span class="token punctuation">(</span>被引用字段<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token keyword">on</span> <span class="token keyword">update</span> xx<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token keyword">on</span> <span class="token keyword">delete</span> xx<span class="token punctuation">]</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER TABLE emp1
-ADD [CONSTRAINT emp_dept_id_fk] FOREIGN KEY(dept_id) REFERENCES dept(dept_id);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> emp1
+<span class="token keyword">ADD</span> <span class="token punctuation">[</span><span class="token keyword">CONSTRAINT</span> emp_dept_id_fk<span class="token punctuation">]</span> <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span>dept_id<span class="token punctuation">)</span> <span class="token keyword">REFERENCES</span> dept<span class="token punctuation">(</span>dept_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table dept(
-	did int primary key,		#部门编号
-    dname varchar(50)			#部门名称
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> dept<span class="token punctuation">(</span>
+	did <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>		<span class="token comment">#部门编号</span>
+    dname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>			<span class="token comment">#部门名称</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-create table emp(
-	eid int primary key,  #员工编号
-    ename varchar(5),     #员工姓名
-    deptid int				#员工所在的部门
-);
-#这两个表创建时，没有指定外键的话，那么创建顺序是随意
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>alter table emp add foreign key (deptid) references dept(did);
+<span class="token keyword">create</span> <span class="token keyword">table</span> emp<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>  <span class="token comment">#员工编号</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>     <span class="token comment">#员工姓名</span>
+    deptid <span class="token keyword">int</span>				<span class="token comment">#员工所在的部门</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">#这两个表创建时，没有指定外键的话，那么创建顺序是随意</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> emp <span class="token keyword">add</span> <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token punctuation">(</span>deptid<span class="token punctuation">)</span> <span class="token keyword">references</span> dept<span class="token punctuation">(</span>did<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h3 id="_6-6-演示问题" tabindex="-1"><a class="header-anchor" href="#_6-6-演示问题" aria-hidden="true">#</a> 6.6 演示问题</h3>
 <p>（1）失败：不是键列</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table dept(
-	did int ,		#部门编号
-    dname varchar(50)			#部门名称
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> dept<span class="token punctuation">(</span>
+	did <span class="token keyword">int</span> <span class="token punctuation">,</span>		<span class="token comment">#部门编号</span>
+    dname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>			<span class="token comment">#部门名称</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-create table emp(
-	eid int primary key,  #员工编号
-    ename varchar(5),     #员工姓名
-    deptid int,				#员工所在的部门
-    foreign key (deptid) references dept(did)
-);
-#ERROR 1215 (HY000): Cannot add foreign key constraint  原因是dept的did不是键列
+<span class="token keyword">create</span> <span class="token keyword">table</span> emp<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>  <span class="token comment">#员工编号</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>     <span class="token comment">#员工姓名</span>
+    deptid <span class="token keyword">int</span><span class="token punctuation">,</span>				<span class="token comment">#员工所在的部门</span>
+    <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token punctuation">(</span>deptid<span class="token punctuation">)</span> <span class="token keyword">references</span> dept<span class="token punctuation">(</span>did<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">#ERROR 1215 (HY000): Cannot add foreign key constraint  原因是dept的did不是键列</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>（2）失败：数据类型不一致</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table dept(
-	did int primary key,		#部门编号
-    dname varchar(50)			#部门名称
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> dept<span class="token punctuation">(</span>
+	did <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>		<span class="token comment">#部门编号</span>
+    dname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>			<span class="token comment">#部门名称</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-create table emp(
-	eid int primary key,  #员工编号
-    ename varchar(5),     #员工姓名
-    deptid char,				#员工所在的部门
-    foreign key (deptid) references dept(did)
-);
-#ERROR 1215 (HY000): Cannot add foreign key constraint  原因是从表的deptid字段和主表的did字段的数据类型不一致，并且要它俩的逻辑意义一致
+<span class="token keyword">create</span> <span class="token keyword">table</span> emp<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>  <span class="token comment">#员工编号</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>     <span class="token comment">#员工姓名</span>
+    deptid <span class="token keyword">char</span><span class="token punctuation">,</span>				<span class="token comment">#员工所在的部门</span>
+    <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token punctuation">(</span>deptid<span class="token punctuation">)</span> <span class="token keyword">references</span> dept<span class="token punctuation">(</span>did<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">#ERROR 1215 (HY000): Cannot add foreign key constraint  原因是从表的deptid字段和主表的did字段的数据类型不一致，并且要它俩的逻辑意义一致</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>（3）成功，两个表字段名一样</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table dept(
-	did int primary key,		#部门编号
-    dname varchar(50)			#部门名称
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> dept<span class="token punctuation">(</span>
+	did <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>		<span class="token comment">#部门编号</span>
+    dname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>			<span class="token comment">#部门名称</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-create table emp(
-	eid int primary key,  #员工编号
-    ename varchar(5),     #员工姓名
-    did int,				#员工所在的部门
-    foreign key (did) references dept(did)  
-    #emp表的deptid和和dept表的did的数据类型一致，意义都是表示部门的编号
-    #是否重名没问题，因为两个did在不同的表中
-);
+<span class="token keyword">create</span> <span class="token keyword">table</span> emp<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>  <span class="token comment">#员工编号</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>     <span class="token comment">#员工姓名</span>
+    did <span class="token keyword">int</span><span class="token punctuation">,</span>				<span class="token comment">#员工所在的部门</span>
+    <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token punctuation">(</span>did<span class="token punctuation">)</span> <span class="token keyword">references</span> dept<span class="token punctuation">(</span>did<span class="token punctuation">)</span>  
+    <span class="token comment">#emp表的deptid和和dept表的did的数据类型一致，意义都是表示部门的编号</span>
+    <span class="token comment">#是否重名没问题，因为两个did在不同的表中</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>（4）添加、删除、修改问题</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table dept(
-	did int primary key,		#部门编号
-    dname varchar(50)			#部门名称
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> dept<span class="token punctuation">(</span>
+	did <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>		<span class="token comment">#部门编号</span>
+    dname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>			<span class="token comment">#部门名称</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-create table emp(
-	eid int primary key,  #员工编号
-    ename varchar(5),     #员工姓名
-    deptid int,				#员工所在的部门
-    foreign key (deptid) references dept(did)  
-    #emp表的deptid和和dept表的did的数据类型一致，意义都是表示部门的编号
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into dept values(1001,'教学部');
-insert into dept values(1003, '财务部');
+<span class="token keyword">create</span> <span class="token keyword">table</span> emp<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>  <span class="token comment">#员工编号</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>     <span class="token comment">#员工姓名</span>
+    deptid <span class="token keyword">int</span><span class="token punctuation">,</span>				<span class="token comment">#员工所在的部门</span>
+    <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token punctuation">(</span>deptid<span class="token punctuation">)</span> <span class="token keyword">references</span> dept<span class="token punctuation">(</span>did<span class="token punctuation">)</span>  
+    <span class="token comment">#emp表的deptid和和dept表的did的数据类型一致，意义都是表示部门的编号</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> dept <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1001</span><span class="token punctuation">,</span><span class="token string">'教学部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> dept <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1003</span><span class="token punctuation">,</span> <span class="token string">'财务部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-insert into emp values(1,'张三',1001); #添加从表记录成功，在添加这条记录时，要求部门表有1001部门
+<span class="token keyword">insert</span> <span class="token keyword">into</span> emp <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">,</span><span class="token number">1001</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">#添加从表记录成功，在添加这条记录时，要求部门表有1001部门</span>
 
-insert into emp values(2,'李四',1005);#添加从表记录失败
-ERROR 1452 (23000): Cannot add（添加） or update（修改） a child row: a foreign key constraint fails (`atguigudb`.`emp`, CONSTRAINT `emp_ibfk_1` FOREIGN KEY (`deptid`) REFERENCES `dept` (`did`)) 从表emp添加记录失败，因为主表dept没有1005部门
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from dept;
-+------+--------+
-| did  | dname  |
-+------+--------+
-| 1001 | 教学部  |
-| 1003 | 财务部  |
-+------+--------+
-2 rows in set (0.00 sec)
+<span class="token keyword">insert</span> <span class="token keyword">into</span> emp <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'李四'</span><span class="token punctuation">,</span><span class="token number">1005</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">#添加从表记录失败</span>
+ERROR <span class="token number">1452</span> <span class="token punctuation">(</span><span class="token number">23000</span><span class="token punctuation">)</span>: Cannot <span class="token keyword">add</span>（添加） <span class="token operator">or</span> <span class="token keyword">update</span>（修改） a child <span class="token keyword">row</span>: a <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token keyword">constraint</span> fails <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>atguigudb<span class="token punctuation">`</span></span><span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>emp<span class="token punctuation">`</span></span><span class="token punctuation">,</span> <span class="token keyword">CONSTRAINT</span> <span class="token identifier"><span class="token punctuation">`</span>emp_ibfk_1<span class="token punctuation">`</span></span> <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>deptid<span class="token punctuation">`</span></span><span class="token punctuation">)</span> <span class="token keyword">REFERENCES</span> <span class="token identifier"><span class="token punctuation">`</span>dept<span class="token punctuation">`</span></span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>did<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span> 从表emp添加记录失败，因为主表dept没有<span class="token number">1005</span>部门
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> dept<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> did  <span class="token operator">|</span> dname  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> <span class="token number">1001</span> <span class="token operator">|</span> 教学部  <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1003</span> <span class="token operator">|</span> 财务部  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from emp;
-+-----+-------+--------+
-| eid | ename | deptid |
-+-----+-------+--------+
-|   1 | 张三   |   1001 |
-+-----+-------+--------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>update emp set deptid = 1002 where eid = 1;#修改从表失败 
-ERROR 1452 (23000): Cannot add（添加） or update（修改） a child row（子表的记录）: a foreign key constraint fails（外键约束失败） (`atguigudb`.`emp`, CONSTRAINT `emp_ibfk_1` FOREIGN KEY (`deptid`) REFERENCES `dept` (`did`))  #部门表did字段现在没有1002的值，所以员工表中不能修改员工所在部门deptid为1002
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span> eid <span class="token operator">|</span> ename <span class="token operator">|</span> deptid <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> 张三   <span class="token operator">|</span>   <span class="token number">1001</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">update</span> emp <span class="token keyword">set</span> deptid <span class="token operator">=</span> <span class="token number">1002</span> <span class="token keyword">where</span> eid <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token comment">#修改从表失败 </span>
+ERROR <span class="token number">1452</span> <span class="token punctuation">(</span><span class="token number">23000</span><span class="token punctuation">)</span>: Cannot <span class="token keyword">add</span>（添加） <span class="token operator">or</span> <span class="token keyword">update</span>（修改） a child <span class="token keyword">row</span>（子表的记录）: a <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token keyword">constraint</span> fails（外键约束失败） <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>atguigudb<span class="token punctuation">`</span></span><span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>emp<span class="token punctuation">`</span></span><span class="token punctuation">,</span> <span class="token keyword">CONSTRAINT</span> <span class="token identifier"><span class="token punctuation">`</span>emp_ibfk_1<span class="token punctuation">`</span></span> <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>deptid<span class="token punctuation">`</span></span><span class="token punctuation">)</span> <span class="token keyword">REFERENCES</span> <span class="token identifier"><span class="token punctuation">`</span>dept<span class="token punctuation">`</span></span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>did<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment">#部门表did字段现在没有1002的值，所以员工表中不能修改员工所在部门deptid为1002</span>
 
-update dept set did = 1002 where did = 1001;#修改主表失败
-ERROR 1451 (23000): Cannot delete（删除） or update（修改） a parent row（父表的记录）: a foreign key constraint fails (`atguigudb`.`emp`, CONSTRAINT `emp_ibfk_1` FOREIGN KEY (`deptid`) REFERENCES `dept` (`did`)) #部门表did的1001字段已经被emp引用了，所以部门表的1001字段就不能修改了。
+<span class="token keyword">update</span> dept <span class="token keyword">set</span> did <span class="token operator">=</span> <span class="token number">1002</span> <span class="token keyword">where</span> did <span class="token operator">=</span> <span class="token number">1001</span><span class="token punctuation">;</span><span class="token comment">#修改主表失败</span>
+ERROR <span class="token number">1451</span> <span class="token punctuation">(</span><span class="token number">23000</span><span class="token punctuation">)</span>: Cannot <span class="token keyword">delete</span>（删除） <span class="token operator">or</span> <span class="token keyword">update</span>（修改） a parent <span class="token keyword">row</span>（父表的记录）: a <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token keyword">constraint</span> fails <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>atguigudb<span class="token punctuation">`</span></span><span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>emp<span class="token punctuation">`</span></span><span class="token punctuation">,</span> <span class="token keyword">CONSTRAINT</span> <span class="token identifier"><span class="token punctuation">`</span>emp_ibfk_1<span class="token punctuation">`</span></span> <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>deptid<span class="token punctuation">`</span></span><span class="token punctuation">)</span> <span class="token keyword">REFERENCES</span> <span class="token identifier"><span class="token punctuation">`</span>dept<span class="token punctuation">`</span></span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>did<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">#部门表did的1001字段已经被emp引用了，所以部门表的1001字段就不能修改了。</span>
 
-update dept set did = 1002 where did = 1003;#修改主表成功  因为部门表的1003部门没有被emp表引用，所以可以修改
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>delete from dept where did=1001; #删除主表失败
-ERROR 1451 (23000): Cannot delete（删除） or update（修改） a parent row（父表记录）: a foreign key constraint fails (`atguigudb`.`emp`, CONSTRAINT `emp_ibfk_1` FOREIGN KEY (`deptid`) REFERENCES `dept` (`did`))  #因为部门表did的1001字段已经被emp引用了，所以部门表的1001字段对应的记录就不能被删除
+<span class="token keyword">update</span> dept <span class="token keyword">set</span> did <span class="token operator">=</span> <span class="token number">1002</span> <span class="token keyword">where</span> did <span class="token operator">=</span> <span class="token number">1003</span><span class="token punctuation">;</span><span class="token comment">#修改主表成功  因为部门表的1003部门没有被emp表引用，所以可以修改</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">delete</span> <span class="token keyword">from</span> dept <span class="token keyword">where</span> did<span class="token operator">=</span><span class="token number">1001</span><span class="token punctuation">;</span> <span class="token comment">#删除主表失败</span>
+ERROR <span class="token number">1451</span> <span class="token punctuation">(</span><span class="token number">23000</span><span class="token punctuation">)</span>: Cannot <span class="token keyword">delete</span>（删除） <span class="token operator">or</span> <span class="token keyword">update</span>（修改） a parent <span class="token keyword">row</span>（父表记录）: a <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token keyword">constraint</span> fails <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>atguigudb<span class="token punctuation">`</span></span><span class="token punctuation">.</span><span class="token identifier"><span class="token punctuation">`</span>emp<span class="token punctuation">`</span></span><span class="token punctuation">,</span> <span class="token keyword">CONSTRAINT</span> <span class="token identifier"><span class="token punctuation">`</span>emp_ibfk_1<span class="token punctuation">`</span></span> <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>deptid<span class="token punctuation">`</span></span><span class="token punctuation">)</span> <span class="token keyword">REFERENCES</span> <span class="token identifier"><span class="token punctuation">`</span>dept<span class="token punctuation">`</span></span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>did<span class="token punctuation">`</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment">#因为部门表did的1001字段已经被emp引用了，所以部门表的1001字段对应的记录就不能被删除</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><p>总结：约束关系是针对双方的</p>
 <ul>
 <li>
@@ -842,270 +842,270 @@ ERROR 1451 (23000): Cannot delete（删除） or update（修改） a parent row
 <p>如果没有指定等级，就相当于Restrict方式。</p>
 <p>对于外键约束，最好是采用: <code v-pre>ON UPDATE CASCADE ON DELETE RESTRICT</code> 的方式。</p>
 <p>（1）演示1：on update cascade on delete set null</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table dept(
-	did int primary key,		#部门编号
-    dname varchar(50)			#部门名称
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> dept<span class="token punctuation">(</span>
+	did <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>		<span class="token comment">#部门编号</span>
+    dname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>			<span class="token comment">#部门名称</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-create table emp(
-	eid int primary key,  #员工编号
-    ename varchar(5),     #员工姓名
-    deptid int,				#员工所在的部门
-    foreign key (deptid) references dept(did)  on update cascade on delete set null
-    #把修改操作设置为级联修改等级，把删除操作设置为set null等级
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into dept values(1001,'教学部');
-insert into dept values(1002, '财务部');
-insert into dept values(1003, '咨询部');
+<span class="token keyword">create</span> <span class="token keyword">table</span> emp<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>  <span class="token comment">#员工编号</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>     <span class="token comment">#员工姓名</span>
+    deptid <span class="token keyword">int</span><span class="token punctuation">,</span>				<span class="token comment">#员工所在的部门</span>
+    <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token punctuation">(</span>deptid<span class="token punctuation">)</span> <span class="token keyword">references</span> dept<span class="token punctuation">(</span>did<span class="token punctuation">)</span>  <span class="token keyword">on</span> <span class="token keyword">update</span> <span class="token keyword">cascade</span> <span class="token keyword">on</span> <span class="token keyword">delete</span> <span class="token keyword">set</span> <span class="token boolean">null</span>
+    <span class="token comment">#把修改操作设置为级联修改等级，把删除操作设置为set null等级</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> dept <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1001</span><span class="token punctuation">,</span><span class="token string">'教学部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> dept <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1002</span><span class="token punctuation">,</span> <span class="token string">'财务部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> dept <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1003</span><span class="token punctuation">,</span> <span class="token string">'咨询部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 
-insert into emp values(1,'张三',1001); #在添加这条记录时，要求部门表有1001部门
-insert into emp values(2,'李四',1001);
-insert into emp values(3,'王五',1002);
+<span class="token keyword">insert</span> <span class="token keyword">into</span> emp <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">,</span><span class="token number">1001</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">#在添加这条记录时，要求部门表有1001部门</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> emp <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'李四'</span><span class="token punctuation">,</span><span class="token number">1001</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> emp <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'王五'</span><span class="token punctuation">,</span><span class="token number">1002</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from dept;
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> dept<span class="token punctuation">;</span>
 
-mysql&gt; select * from emp;
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp<span class="token punctuation">;</span>
 
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#修改主表成功，从表也跟着修改，修改了主表被引用的字段1002为1004，从表的引用字段就跟着修改为1004了
-mysql&gt; update dept set did = 1004 where did = 1002;
-Query OK, 1 row affected (0.00 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#修改主表成功，从表也跟着修改，修改了主表被引用的字段1002为1004，从表的引用字段就跟着修改为1004了</span>
+mysql<span class="token operator">></span> <span class="token keyword">update</span> dept <span class="token keyword">set</span> did <span class="token operator">=</span> <span class="token number">1004</span> <span class="token keyword">where</span> did <span class="token operator">=</span> <span class="token number">1002</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token keyword">row</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+<span class="token keyword">Rows</span> <span class="token keyword">matched</span>: <span class="token number">1</span>  Changed: <span class="token number">1</span>  <span class="token keyword">Warnings</span>: <span class="token number">0</span>
 
-mysql&gt; select * from dept;
-+------+--------+
-| did  | dname  |
-+------+--------+
-| 1001 | 教学部 |
-| 1003 | 咨询部 |
-| 1004 | 财务部 | #原来是1002，修改为1004
-+------+--------+
-3 rows in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> dept<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> did  <span class="token operator">|</span> dname  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> <span class="token number">1001</span> <span class="token operator">|</span> 教学部 <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1003</span> <span class="token operator">|</span> 咨询部 <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1004</span> <span class="token operator">|</span> 财务部 <span class="token operator">|</span> <span class="token comment">#原来是1002，修改为1004</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from emp;
-+-----+-------+--------+
-| eid | ename | deptid |
-+-----+-------+--------+
-|   1 | 张三  |   1001 |
-|   2 | 李四  |   1001 |
-|   3 | 王五  |   1004 | #原来是1002，跟着修改为1004
-+-----+-------+--------+
-3 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#删除主表的记录成功，从表对应的字段的值被修改为null
-mysql&gt; delete from dept where did = 1001;
-Query OK, 1 row affected (0.01 sec)
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span> eid <span class="token operator">|</span> ename <span class="token operator">|</span> deptid <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> 张三  <span class="token operator">|</span>   <span class="token number">1001</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">2</span> <span class="token operator">|</span> 李四  <span class="token operator">|</span>   <span class="token number">1001</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">3</span> <span class="token operator">|</span> 王五  <span class="token operator">|</span>   <span class="token number">1004</span> <span class="token operator">|</span> <span class="token comment">#原来是1002，跟着修改为1004</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#删除主表的记录成功，从表对应的字段的值被修改为null</span>
+mysql<span class="token operator">></span> <span class="token keyword">delete</span> <span class="token keyword">from</span> dept <span class="token keyword">where</span> did <span class="token operator">=</span> <span class="token number">1001</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token keyword">row</span> affected <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from dept;
-+------+--------+
-| did  | dname  | #记录1001部门被删除了
-+------+--------+
-| 1003 | 咨询部  |
-| 1004 | 财务部  |
-+------+--------+
-2 rows in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> dept<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> did  <span class="token operator">|</span> dname  <span class="token operator">|</span> <span class="token comment">#记录1001部门被删除了</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> <span class="token number">1003</span> <span class="token operator">|</span> 咨询部  <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1004</span> <span class="token operator">|</span> 财务部  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from emp;
-+-----+-------+--------+
-| eid | ename | deptid |
-+-----+-------+--------+
-|   1 | 张三  |   NULL | #原来引用1001部门的员工，deptid字段变为null
-|   2 | 李四  |   NULL |
-|   3 | 王五  |   1004 |
-+-----+-------+--------+
-3 rows in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span> eid <span class="token operator">|</span> ename <span class="token operator">|</span> deptid <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> 张三  <span class="token operator">|</span>   <span class="token boolean">NULL</span> <span class="token operator">|</span> <span class="token comment">#原来引用1001部门的员工，deptid字段变为null</span>
+<span class="token operator">|</span>   <span class="token number">2</span> <span class="token operator">|</span> 李四  <span class="token operator">|</span>   <span class="token boolean">NULL</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">3</span> <span class="token operator">|</span> 王五  <span class="token operator">|</span>   <span class="token number">1004</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>（2）演示2：on update set null on delete cascade</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table dept(
-	did int primary key,		#部门编号
-    dname varchar(50)			#部门名称
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> dept<span class="token punctuation">(</span>
+	did <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>		<span class="token comment">#部门编号</span>
+    dname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>			<span class="token comment">#部门名称</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-create table emp(
-	eid int primary key,  #员工编号
-    ename varchar(5),     #员工姓名
-    deptid int,				#员工所在的部门
-    foreign key (deptid) references dept(did)  on update set null on delete cascade
-    #把修改操作设置为set null等级，把删除操作设置为级联删除等级
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into dept values(1001,'教学部');
-insert into dept values(1002, '财务部');
-insert into dept values(1003, '咨询部');
+<span class="token keyword">create</span> <span class="token keyword">table</span> emp<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>  <span class="token comment">#员工编号</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>     <span class="token comment">#员工姓名</span>
+    deptid <span class="token keyword">int</span><span class="token punctuation">,</span>				<span class="token comment">#员工所在的部门</span>
+    <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token punctuation">(</span>deptid<span class="token punctuation">)</span> <span class="token keyword">references</span> dept<span class="token punctuation">(</span>did<span class="token punctuation">)</span>  <span class="token keyword">on</span> <span class="token keyword">update</span> <span class="token keyword">set</span> <span class="token boolean">null</span> <span class="token keyword">on</span> <span class="token keyword">delete</span> <span class="token keyword">cascade</span>
+    <span class="token comment">#把修改操作设置为set null等级，把删除操作设置为级联删除等级</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> dept <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1001</span><span class="token punctuation">,</span><span class="token string">'教学部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> dept <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1002</span><span class="token punctuation">,</span> <span class="token string">'财务部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> dept <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1003</span><span class="token punctuation">,</span> <span class="token string">'咨询部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-insert into emp values(1,'张三',1001); #在添加这条记录时，要求部门表有1001部门
-insert into emp values(2,'李四',1001);
-insert into emp values(3,'王五',1002);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from dept;
-+------+--------+
-| did  | dname  |
-+------+--------+
-| 1001 | 教学部 |
-| 1002 | 财务部 |
-| 1003 | 咨询部 |
-+------+--------+
-3 rows in set (0.00 sec)
+<span class="token keyword">insert</span> <span class="token keyword">into</span> emp <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">,</span><span class="token number">1001</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">#在添加这条记录时，要求部门表有1001部门</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> emp <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'李四'</span><span class="token punctuation">,</span><span class="token number">1001</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> emp <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'王五'</span><span class="token punctuation">,</span><span class="token number">1002</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> dept<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> did  <span class="token operator">|</span> dname  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> <span class="token number">1001</span> <span class="token operator">|</span> 教学部 <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1002</span> <span class="token operator">|</span> 财务部 <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1003</span> <span class="token operator">|</span> 咨询部 <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from emp;
-+-----+-------+--------+
-| eid | ename | deptid |
-+-----+-------+--------+
-|   1 | 张三  |   1001 |
-|   2 | 李四  |   1001 |
-|   3 | 王五  |   1002 |
-+-----+-------+--------+
-3 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#修改主表，从表对应的字段设置为null
-mysql&gt; update dept set did = 1004 where did = 1002;
-Query OK, 1 row affected (0.00 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span> eid <span class="token operator">|</span> ename <span class="token operator">|</span> deptid <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> 张三  <span class="token operator">|</span>   <span class="token number">1001</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">2</span> <span class="token operator">|</span> 李四  <span class="token operator">|</span>   <span class="token number">1001</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">3</span> <span class="token operator">|</span> 王五  <span class="token operator">|</span>   <span class="token number">1002</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#修改主表，从表对应的字段设置为null</span>
+mysql<span class="token operator">></span> <span class="token keyword">update</span> dept <span class="token keyword">set</span> did <span class="token operator">=</span> <span class="token number">1004</span> <span class="token keyword">where</span> did <span class="token operator">=</span> <span class="token number">1002</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token keyword">row</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+<span class="token keyword">Rows</span> <span class="token keyword">matched</span>: <span class="token number">1</span>  Changed: <span class="token number">1</span>  <span class="token keyword">Warnings</span>: <span class="token number">0</span>
 
-mysql&gt; select * from dept;
-+------+--------+
-| did  | dname  |
-+------+--------+
-| 1001 | 教学部 |
-| 1003 | 咨询部 |
-| 1004 | 财务部 | #原来did是1002
-+------+--------+
-3 rows in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> dept<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> did  <span class="token operator">|</span> dname  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> <span class="token number">1001</span> <span class="token operator">|</span> 教学部 <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1003</span> <span class="token operator">|</span> 咨询部 <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1004</span> <span class="token operator">|</span> 财务部 <span class="token operator">|</span> <span class="token comment">#原来did是1002</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from emp;
-+-----+-------+--------+
-| eid | ename | deptid |
-+-----+-------+--------+
-|   1 | 张三  |   1001 |
-|   2 | 李四  |   1001 |
-|   3 | 王五  |   NULL | #原来deptid是1002，因为部门表1002被修改了，1002没有对应的了，就设置为null
-+-----+-------+--------+
-3 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#删除主表的记录成功，主表的1001行被删除了，从表相应的记录也被删除了
-mysql&gt; delete from dept where did=1001;
-Query OK, 1 row affected (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span> eid <span class="token operator">|</span> ename <span class="token operator">|</span> deptid <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> 张三  <span class="token operator">|</span>   <span class="token number">1001</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">2</span> <span class="token operator">|</span> 李四  <span class="token operator">|</span>   <span class="token number">1001</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">3</span> <span class="token operator">|</span> 王五  <span class="token operator">|</span>   <span class="token boolean">NULL</span> <span class="token operator">|</span> <span class="token comment">#原来deptid是1002，因为部门表1002被修改了，1002没有对应的了，就设置为null</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#删除主表的记录成功，主表的1001行被删除了，从表相应的记录也被删除了</span>
+mysql<span class="token operator">></span> <span class="token keyword">delete</span> <span class="token keyword">from</span> dept <span class="token keyword">where</span> did<span class="token operator">=</span><span class="token number">1001</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token keyword">row</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from dept;
-+------+--------+
-| did  | dname  | #部门表中1001部门被删除
-+------+--------+
-| 1003 | 咨询部 |
-| 1004 | 财务部 |
-+------+--------+
-2 rows in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> dept<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> did  <span class="token operator">|</span> dname  <span class="token operator">|</span> <span class="token comment">#部门表中1001部门被删除</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> <span class="token number">1003</span> <span class="token operator">|</span> 咨询部 <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1004</span> <span class="token operator">|</span> 财务部 <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from emp;
-+-----+-------+--------+
-| eid | ename | deptid |#原来1001部门的员工也被删除了
-+-----+-------+--------+
-|   3 | 王五  |   NULL |
-+-----+-------+--------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span> eid <span class="token operator">|</span> ename <span class="token operator">|</span> deptid <span class="token operator">|</span><span class="token comment">#原来1001部门的员工也被删除了</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span>   <span class="token number">3</span> <span class="token operator">|</span> 王五  <span class="token operator">|</span>   <span class="token boolean">NULL</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>（3）演示：on update cascade on delete cascade</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table dept(
-	did int primary key,		#部门编号
-    dname varchar(50)			#部门名称
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> dept<span class="token punctuation">(</span>
+	did <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>		<span class="token comment">#部门编号</span>
+    dname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span>			<span class="token comment">#部门名称</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-create table emp(
-	eid int primary key,  #员工编号
-    ename varchar(5),     #员工姓名
-    deptid int,				#员工所在的部门
-    foreign key (deptid) references dept(did)  on update cascade on delete cascade
-    #把修改操作设置为级联修改等级，把删除操作也设置为级联删除等级
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into dept values(1001,'教学部');
-insert into dept values(1002, '财务部');
-insert into dept values(1003, '咨询部');
+<span class="token keyword">create</span> <span class="token keyword">table</span> emp<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>  <span class="token comment">#员工编号</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>     <span class="token comment">#员工姓名</span>
+    deptid <span class="token keyword">int</span><span class="token punctuation">,</span>				<span class="token comment">#员工所在的部门</span>
+    <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token punctuation">(</span>deptid<span class="token punctuation">)</span> <span class="token keyword">references</span> dept<span class="token punctuation">(</span>did<span class="token punctuation">)</span>  <span class="token keyword">on</span> <span class="token keyword">update</span> <span class="token keyword">cascade</span> <span class="token keyword">on</span> <span class="token keyword">delete</span> <span class="token keyword">cascade</span>
+    <span class="token comment">#把修改操作设置为级联修改等级，把删除操作也设置为级联删除等级</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> dept <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1001</span><span class="token punctuation">,</span><span class="token string">'教学部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> dept <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1002</span><span class="token punctuation">,</span> <span class="token string">'财务部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> dept <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1003</span><span class="token punctuation">,</span> <span class="token string">'咨询部'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-insert into emp values(1,'张三',1001); #在添加这条记录时，要求部门表有1001部门
-insert into emp values(2,'李四',1001);
-insert into emp values(3,'王五',1002);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from dept;
-+------+--------+
-| did  | dname  |
-+------+--------+
-| 1001 | 教学部 |
-| 1002 | 财务部 |
-| 1003 | 咨询部 |
-+------+--------+
-3 rows in set (0.00 sec)
+<span class="token keyword">insert</span> <span class="token keyword">into</span> emp <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">,</span><span class="token number">1001</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">#在添加这条记录时，要求部门表有1001部门</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> emp <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'李四'</span><span class="token punctuation">,</span><span class="token number">1001</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> emp <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'王五'</span><span class="token punctuation">,</span><span class="token number">1002</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> dept<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> did  <span class="token operator">|</span> dname  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> <span class="token number">1001</span> <span class="token operator">|</span> 教学部 <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1002</span> <span class="token operator">|</span> 财务部 <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1003</span> <span class="token operator">|</span> 咨询部 <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from emp;
-+-----+-------+--------+
-| eid | ename | deptid |
-+-----+-------+--------+
-|   1 | 张三  |   1001 |
-|   2 | 李四  |   1001 |
-|   3 | 王五  |   1002 |
-+-----+-------+--------+
-3 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#修改主表，从表对应的字段自动修改
-mysql&gt; update dept set did = 1004 where did = 1002;
-Query OK, 1 row affected (0.00 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span> eid <span class="token operator">|</span> ename <span class="token operator">|</span> deptid <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> 张三  <span class="token operator">|</span>   <span class="token number">1001</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">2</span> <span class="token operator">|</span> 李四  <span class="token operator">|</span>   <span class="token number">1001</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">3</span> <span class="token operator">|</span> 王五  <span class="token operator">|</span>   <span class="token number">1002</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#修改主表，从表对应的字段自动修改</span>
+mysql<span class="token operator">></span> <span class="token keyword">update</span> dept <span class="token keyword">set</span> did <span class="token operator">=</span> <span class="token number">1004</span> <span class="token keyword">where</span> did <span class="token operator">=</span> <span class="token number">1002</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token keyword">row</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+<span class="token keyword">Rows</span> <span class="token keyword">matched</span>: <span class="token number">1</span>  Changed: <span class="token number">1</span>  <span class="token keyword">Warnings</span>: <span class="token number">0</span>
 
-mysql&gt; select * from dept;
-+------+--------+
-| did  | dname  |
-+------+--------+
-| 1001 | 教学部 |
-| 1003 | 咨询部 |
-| 1004 | 财务部 | #部门1002修改为1004
-+------+--------+
-3 rows in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> dept<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> did  <span class="token operator">|</span> dname  <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> <span class="token number">1001</span> <span class="token operator">|</span> 教学部 <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1003</span> <span class="token operator">|</span> 咨询部 <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1004</span> <span class="token operator">|</span> 财务部 <span class="token operator">|</span> <span class="token comment">#部门1002修改为1004</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from emp;
-+-----+-------+--------+
-| eid | ename | deptid |
-+-----+-------+--------+
-|   1 | 张三  |   1001 |
-|   2 | 李四  |   1001 |
-|   3 | 王五  |   1004 | #级联修改
-+-----+-------+--------+
-3 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>#删除主表的记录成功，主表的1001行被删除了，从表相应的记录也被删除了
-mysql&gt; delete from dept where did=1001;
-Query OK, 1 row affected (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span> eid <span class="token operator">|</span> ename <span class="token operator">|</span> deptid <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> 张三  <span class="token operator">|</span>   <span class="token number">1001</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">2</span> <span class="token operator">|</span> 李四  <span class="token operator">|</span>   <span class="token number">1001</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">3</span> <span class="token operator">|</span> 王五  <span class="token operator">|</span>   <span class="token number">1004</span> <span class="token operator">|</span> <span class="token comment">#级联修改</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token comment">#删除主表的记录成功，主表的1001行被删除了，从表相应的记录也被删除了</span>
+mysql<span class="token operator">></span> <span class="token keyword">delete</span> <span class="token keyword">from</span> dept <span class="token keyword">where</span> did<span class="token operator">=</span><span class="token number">1001</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token keyword">row</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from dept;
-+------+--------+
-| did  | dname  | #1001部门被删除了
-+------+--------+
-| 1003 | 咨询部 |
-| 1004 | 财务部 | 
-+------+--------+
-2 rows in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> dept<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> did  <span class="token operator">|</span> dname  <span class="token operator">|</span> <span class="token comment">#1001部门被删除了</span>
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token operator">|</span> <span class="token number">1003</span> <span class="token operator">|</span> 咨询部 <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">1004</span> <span class="token operator">|</span> 财务部 <span class="token operator">|</span> 
+<span class="token operator">+</span><span class="token comment">------+--------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 
-mysql&gt; select * from emp;
-+-----+-------+--------+
-| eid | ename | deptid |  #1001部门的员工也被删除了
-+-----+-------+--------+
-|   3 | 王五  |   1004 |
-+-----+-------+--------+
-1 row in set (0.00 sec)
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span> eid <span class="token operator">|</span> ename <span class="token operator">|</span> deptid <span class="token operator">|</span>  <span class="token comment">#1001部门的员工也被删除了</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span>   <span class="token number">3</span> <span class="token operator">|</span> 王五  <span class="token operator">|</span>   <span class="token number">1004</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_6-8-删除外键约束" tabindex="-1"><a class="header-anchor" href="#_6-8-删除外键约束" aria-hidden="true">#</a> 6.8 删除外键约束</h3>
 <p>流程如下：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>(1)第一步先查看约束名和删除外键约束
-SELECT * FROM information_schema.table_constraints WHERE table_name = '表名称';#查看某个表的约束名
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>第一步先查看约束名和删除外键约束
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> information_schema<span class="token punctuation">.</span>table_constraints <span class="token keyword">WHERE</span> table_name <span class="token operator">=</span> <span class="token string">'表名称'</span><span class="token punctuation">;</span><span class="token comment">#查看某个表的约束名</span>
 
-ALTER TABLE 从表名 DROP FOREIGN KEY 外键约束名;
+<span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 从表名 <span class="token keyword">DROP</span> <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span> 外键约束名<span class="token punctuation">;</span>
 
-（2）第二步查看索引名和删除索引。（注意，只能手动删除）
-SHOW INDEX FROM 表名称; #查看某个表的索引名
+（<span class="token number">2</span>）第二步查看索引名和删除索引。（注意，只能手动删除）
+<span class="token keyword">SHOW</span> <span class="token keyword">INDEX</span> <span class="token keyword">FROM</span> 表名称<span class="token punctuation">;</span> <span class="token comment">#查看某个表的索引名</span>
 
-ALTER TABLE 从表名 DROP INDEX 索引名;
+<span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 从表名 <span class="token keyword">DROP</span> <span class="token keyword">INDEX</span> 索引名<span class="token punctuation">;</span>
 
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; SELECT * FROM information_schema.table_constraints WHERE table_name = 'emp';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> information_schema<span class="token punctuation">.</span>table_constraints <span class="token keyword">WHERE</span> table_name <span class="token operator">=</span> <span class="token string">'emp'</span><span class="token punctuation">;</span>
 
-mysql&gt; alter table emp drop foreign key emp_ibfk_1;
-Query OK, 0 rows affected (0.02 sec)
-Records: 0  Duplicates: 0  Warnings: 0
+mysql<span class="token operator">></span> <span class="token keyword">alter</span> <span class="token keyword">table</span> emp <span class="token keyword">drop</span> <span class="token keyword">foreign</span> <span class="token keyword">key</span> emp_ibfk_1<span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.02</span> sec<span class="token punctuation">)</span>
+Records: <span class="token number">0</span>  Duplicates: <span class="token number">0</span>  <span class="token keyword">Warnings</span>: <span class="token number">0</span>
 
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; show index from emp;
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">show</span> <span class="token keyword">index</span> <span class="token keyword">from</span> emp<span class="token punctuation">;</span>
 
-mysql&gt; alter table emp drop index deptid;
-Query OK, 0 rows affected (0.01 sec)
-Records: 0  Duplicates: 0  Warnings: 0
+mysql<span class="token operator">></span> <span class="token keyword">alter</span> <span class="token keyword">table</span> emp <span class="token keyword">drop</span> <span class="token keyword">index</span> deptid<span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span>
+Records: <span class="token number">0</span>  Duplicates: <span class="token number">0</span>  <span class="token keyword">Warnings</span>: <span class="token number">0</span>
 
-mysql&gt;  show index from emp;
+mysql<span class="token operator">></span>  <span class="token keyword">show</span> <span class="token keyword">index</span> <span class="token keyword">from</span> emp<span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_6-9-开发场景" tabindex="-1"><a class="header-anchor" href="#_6-9-开发场景" aria-hidden="true">#</a> 6.9 开发场景</h3>
 <p><strong>问题1：如果两个表之间有关系（一对一、一对多），比如：员工表和部门表（一对多），它们之间是否一定要建外键约束？</strong></p>
 <p>答：不是的</p>
@@ -1128,36 +1128,36 @@ mysql&gt;  show index from emp;
 <h3 id="_3、说明-mysql-5-7-不支持" tabindex="-1"><a class="header-anchor" href="#_3、说明-mysql-5-7-不支持" aria-hidden="true">#</a> 3、说明：MySQL 5.7 不支持</h3>
 <p>MySQL5.7 可以使用check约束，但check约束对数据验证没有任何作用。添加数据时，没有任何错误或警告</p>
 <p>但是<strong>MySQL 8.0中可以使用check约束了</strong>。</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table employee(
-	eid int primary key,
-    ename varchar(5),
-    gender char check ('男' or '女')
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into employee values(1,'张三','妖');
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from employee;
-+-----+-------+--------+
-| eid | ename | gender |
-+-----+-------+--------+
-|   1 | 张三   | 妖     |
-+-----+-------+--------+
-1 row in set (0.00 sec)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> employee<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    gender <span class="token keyword">char</span> <span class="token keyword">check</span> <span class="token punctuation">(</span><span class="token string">'男'</span> <span class="token operator">or</span> <span class="token string">'女'</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> employee <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'张三'</span><span class="token punctuation">,</span><span class="token string">'妖'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> employee<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span> eid <span class="token operator">|</span> ename <span class="token operator">|</span> gender <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> 张三   <span class="token operator">|</span> 妖     <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>再举例</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE temp(
-id INT AUTO_INCREMENT,
-NAME VARCHAR(20),
-age INT CHECK(age &gt; 20),
-PRIMARY KEY(id)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">temp</span><span class="token punctuation">(</span>
+id <span class="token keyword">INT</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+age <span class="token keyword">INT</span> <span class="token keyword">CHECK</span><span class="token punctuation">(</span>age <span class="token operator">></span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ul>
 <li>再举例</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>age tinyint check(age &gt;20) 或 sex char(2) check(sex in(‘男’,’女’))
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>age <span class="token keyword">tinyint</span> <span class="token keyword">check</span><span class="token punctuation">(</span>age <span class="token operator">></span><span class="token number">20</span><span class="token punctuation">)</span> 或 sex <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">check</span><span class="token punctuation">(</span>sex <span class="token operator">in</span><span class="token punctuation">(</span>‘男’<span class="token punctuation">,</span>’女’<span class="token punctuation">)</span><span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>再举例</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CHECK(height&gt;=0 AND height&lt;3)
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CHECK</span><span class="token punctuation">(</span>height<span class="token operator">>=</span><span class="token number">0</span> <span class="token operator">AND</span> height<span class="token operator">&lt;</span><span class="token number">3</span><span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h2 id="_8-default约束" tabindex="-1"><a class="header-anchor" href="#_8-default约束" aria-hidden="true">#</a> 8. DEFAULT约束</h2>
 <h3 id="_8-1-作用" tabindex="-1"><a class="header-anchor" href="#_8-1-作用" aria-hidden="true">#</a> 8.1 作用</h3>
 <p>给某个字段/某列指定默认值，一旦设置默认值，在插入数据时，如果此字段没有显式赋值，则赋值为默认值。</p>
@@ -1165,124 +1165,124 @@ PRIMARY KEY(id)
 <p>DEFAULT</p>
 <h3 id="_8-3-如何给字段加默认值" tabindex="-1"><a class="header-anchor" href="#_8-3-如何给字段加默认值" aria-hidden="true">#</a> 8.3 如何给字段加默认值</h3>
 <p>（1）建表时</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table 表名称(
-	字段名  数据类型  primary key,
-    字段名  数据类型  unique key not null,  
-    字段名  数据类型  unique key,
-    字段名  数据类型  not null default 默认值, 
-);
-create table 表名称(
-	字段名  数据类型 default 默认值 ,
-    字段名  数据类型 not null default 默认值,  
-    字段名  数据类型 not null default 默认值,
-    primary key(字段名),
-    unique key(字段名)
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> 表名称<span class="token punctuation">(</span>
+	字段名  数据类型  <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
+    字段名  数据类型  <span class="token keyword">unique</span> <span class="token keyword">key</span> <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">,</span>  
+    字段名  数据类型  <span class="token keyword">unique</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
+    字段名  数据类型  <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">default</span> 默认值<span class="token punctuation">,</span> 
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> 表名称<span class="token punctuation">(</span>
+	字段名  数据类型 <span class="token keyword">default</span> 默认值 <span class="token punctuation">,</span>
+    字段名  数据类型 <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">default</span> 默认值<span class="token punctuation">,</span>  
+    字段名  数据类型 <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">default</span> 默认值<span class="token punctuation">,</span>
+    <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">(</span>字段名<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">unique</span> <span class="token keyword">key</span><span class="token punctuation">(</span>字段名<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 说明：默认值约束一般不在唯一键和主键列上加
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table employee(
-	eid int primary key,
-    ename varchar(20) not null,
-    gender char default '男',
-    tel char(11) not null default '' #默认是空字符串
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; desc employee;
-+--------+-------------+------+-----+---------+-------+
-| Field  | Type        | Null | Key | Default | Extra |
-+--------+-------------+------+-----+---------+-------+
-| eid    | int(11)     | NO   | PRI | NULL    |       |
-| ename  | varchar(20) | NO   |     | NULL    |       |
-| gender | char(1)     | YES  |     | 男      |       |
-| tel    | char(11)    | NO   |     |         |       |
-+--------+-------------+------+-----+---------+-------+
-4 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into employee values(1,'汪飞','男','13700102535'); #成功
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from employee;
-+-----+-------+--------+-------------+
-| eid | ename | gender | tel         |
-+-----+-------+--------+-------------+
-|   1 | 汪飞  | 男     | 13700102535 |
-+-----+-------+--------+-------------+
-1 row in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into employee(eid,ename) values(2,'天琪'); #成功
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; select * from employee;
-+-----+-------+--------+-------------+
-| eid | ename | gender | tel         |
-+-----+-------+--------+-------------+
-|   1 | 汪飞  | 男     | 13700102535 |
-|   2 | 天琪  | 男     |             |
-+-----+-------+--------+-------------+
-2 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>insert into employee(eid,ename) values(3,'二虎');
-#ERROR 1062 (23000): Duplicate entry '' for key 'tel'  
-#如果tel有唯一性约束的话会报错，如果tel没有唯一性约束，可以添加成功
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> employee<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">,</span>
+    gender <span class="token keyword">char</span> <span class="token keyword">default</span> <span class="token string">'男'</span><span class="token punctuation">,</span>
+    tel <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">default</span> <span class="token string">''</span> <span class="token comment">#默认是空字符串</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">desc</span> employee<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> Field  <span class="token operator">|</span> <span class="token keyword">Type</span>        <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> eid    <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>     <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> PRI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> ename  <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> gender <span class="token operator">|</span> <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>     <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> 男      <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> tel    <span class="token operator">|</span> <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>    <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span>     <span class="token operator">|</span>         <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> employee <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'汪飞'</span><span class="token punctuation">,</span><span class="token string">'男'</span><span class="token punctuation">,</span><span class="token string">'13700102535'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">#成功</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> employee<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+-------------+</span>
+<span class="token operator">|</span> eid <span class="token operator">|</span> ename <span class="token operator">|</span> gender <span class="token operator">|</span> tel         <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+-------------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> 汪飞  <span class="token operator">|</span> 男     <span class="token operator">|</span> <span class="token number">13700102535</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+-------------+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> employee<span class="token punctuation">(</span>eid<span class="token punctuation">,</span>ename<span class="token punctuation">)</span> <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token string">'天琪'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">#成功</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> employee<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+-------------+</span>
+<span class="token operator">|</span> eid <span class="token operator">|</span> ename <span class="token operator">|</span> gender <span class="token operator">|</span> tel         <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+-------------+</span>
+<span class="token operator">|</span>   <span class="token number">1</span> <span class="token operator">|</span> 汪飞  <span class="token operator">|</span> 男     <span class="token operator">|</span> <span class="token number">13700102535</span> <span class="token operator">|</span>
+<span class="token operator">|</span>   <span class="token number">2</span> <span class="token operator">|</span> 天琪  <span class="token operator">|</span> 男     <span class="token operator">|</span>             <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">-----+-------+--------+-------------+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">insert</span> <span class="token keyword">into</span> employee<span class="token punctuation">(</span>eid<span class="token punctuation">,</span>ename<span class="token punctuation">)</span> <span class="token keyword">values</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token string">'二虎'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">#ERROR 1062 (23000): Duplicate entry '' for key 'tel'  </span>
+<span class="token comment">#如果tel有唯一性约束的话会报错，如果tel没有唯一性约束，可以添加成功</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>再举例：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>CREATE TABLE myemp(
-id INT AUTO_INCREMENT PRIMARY KEY,
-NAME VARCHAR(15),
-salary DOUBLE(10,2) DEFAULT 2000
-);
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> myemp<span class="token punctuation">(</span>
+id <span class="token keyword">INT</span> <span class="token keyword">AUTO_INCREMENT</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span><span class="token punctuation">,</span>
+NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+salary <span class="token keyword">DOUBLE</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token number">2000</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>（2）建表后</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>alter table 表名称 modify 字段名 数据类型 default 默认值;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> 表名称 <span class="token keyword">modify</span> 字段名 数据类型 <span class="token keyword">default</span> 默认值<span class="token punctuation">;</span>
 
-#如果这个字段原来有非空约束，你还保留非空约束，那么在加默认值约束时，还得保留非空约束，否则非空约束就被删除了
-#同理，在给某个字段加非空约束也一样，如果这个字段原来有默认值约束，你想保留，也要在modify语句中保留默认值约束，否则就删除了
-alter table 表名称 modify 字段名 数据类型 default 默认值 not null;
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>create table employee(
-	eid int primary key,
-    ename varchar(20),
-    gender char,
-    tel char(11) not null
-);
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; desc employee;
-+--------+-------------+------+-----+---------+-------+
-| Field  | Type        | Null | Key | Default | Extra |
-+--------+-------------+------+-----+---------+-------+
-| eid    | int(11)     | NO   | PRI | NULL    |       |
-| ename  | varchar(20) | YES  |     | NULL    |       |
-| gender | char(1)     | YES  |     | NULL    |       |
-| tel    | char(11)    | NO   |     | NULL    |       |
-+--------+-------------+------+-----+---------+-------+
-4 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>alter table employee modify gender char default '男';  #给gender字段增加默认值约束
-alter table employee modify tel char(11) default ''; #给tel字段增加默认值约束
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; desc employee;
-+--------+-------------+------+-----+---------+-------+
-| Field  | Type        | Null | Key | Default | Extra |
-+--------+-------------+------+-----+---------+-------+
-| eid    | int(11)     | NO   | PRI | NULL    |       |
-| ename  | varchar(20) | YES  |     | NULL    |       |
-| gender | char(1)     | YES  |     | 男      |       |
-| tel    | char(11)    | YES  |     |         |       |
-+--------+-------------+------+-----+---------+-------+
-4 rows in set (0.00 sec)
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>alter table employee modify tel char(11) default ''  not null;#给tel字段增加默认值约束，并保留非空约束
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; desc employee;
-+--------+-------------+------+-----+---------+-------+
-| Field  | Type        | Null | Key | Default | Extra |
-+--------+-------------+------+-----+---------+-------+
-| eid    | int(11)     | NO   | PRI | NULL    |       |
-| ename  | varchar(20) | YES  |     | NULL    |       |
-| gender | char(1)     | YES  |     | 男      |       |
-| tel    | char(11)    | NO   |     |         |       |
-+--------+-------------+------+-----+---------+-------+
-4 rows in set (0.00 sec)
+<span class="token comment">#如果这个字段原来有非空约束，你还保留非空约束，那么在加默认值约束时，还得保留非空约束，否则非空约束就被删除了</span>
+<span class="token comment">#同理，在给某个字段加非空约束也一样，如果这个字段原来有默认值约束，你想保留，也要在modify语句中保留默认值约束，否则就删除了</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> 表名称 <span class="token keyword">modify</span> 字段名 数据类型 <span class="token keyword">default</span> 默认值 <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">create</span> <span class="token keyword">table</span> employee<span class="token punctuation">(</span>
+	eid <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
+    ename <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    gender <span class="token keyword">char</span><span class="token punctuation">,</span>
+    tel <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">not</span> <span class="token boolean">null</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">desc</span> employee<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> Field  <span class="token operator">|</span> <span class="token keyword">Type</span>        <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> eid    <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>     <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> PRI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> ename  <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> gender <span class="token operator">|</span> <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>     <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> tel    <span class="token operator">|</span> <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>    <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> employee <span class="token keyword">modify</span> gender <span class="token keyword">char</span> <span class="token keyword">default</span> <span class="token string">'男'</span><span class="token punctuation">;</span>  <span class="token comment">#给gender字段增加默认值约束</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> employee <span class="token keyword">modify</span> tel <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">''</span><span class="token punctuation">;</span> <span class="token comment">#给tel字段增加默认值约束</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">desc</span> employee<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> Field  <span class="token operator">|</span> <span class="token keyword">Type</span>        <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> eid    <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>     <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> PRI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> ename  <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> gender <span class="token operator">|</span> <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>     <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> 男      <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> tel    <span class="token operator">|</span> <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>    <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span>         <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> employee <span class="token keyword">modify</span> tel <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">''</span>  <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">;</span><span class="token comment">#给tel字段增加默认值约束，并保留非空约束</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">desc</span> employee<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> Field  <span class="token operator">|</span> <span class="token keyword">Type</span>        <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> eid    <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>     <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> PRI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> ename  <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> gender <span class="token operator">|</span> <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>     <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> 男      <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> tel    <span class="token operator">|</span> <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>    <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span>     <span class="token operator">|</span>         <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="_8-4-如何删除默认值约束" tabindex="-1"><a class="header-anchor" href="#_8-4-如何删除默认值约束" aria-hidden="true">#</a> 8.4 如何删除默认值约束</h3>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>alter table 表名称 modify 字段名 数据类型 ;#删除默认值约束，也不保留非空约束
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> 表名称 <span class="token keyword">modify</span> 字段名 数据类型 <span class="token punctuation">;</span><span class="token comment">#删除默认值约束，也不保留非空约束</span>
 
-alter table 表名称 modify 字段名 数据类型  not null; #删除默认值约束，保留非空约束
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>alter table employee modify gender char; #删除gender字段默认值约束，如果有非空约束，也一并删除
-alter table employee modify tel char(11)  not null;#删除tel字段默认值约束，保留非空约束
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>mysql&gt; desc employee;
-+--------+-------------+------+-----+---------+-------+
-| Field  | Type        | Null | Key | Default | Extra |
-+--------+-------------+------+-----+---------+-------+
-| eid    | int(11)     | NO   | PRI | NULL    |       |
-| ename  | varchar(20) | YES  |     | NULL    |       |
-| gender | char(1)     | YES  |     | NULL    |       |
-| tel    | char(11)    | NO   |     | NULL    |       |
-+--------+-------------+------+-----+---------+-------+
-4 rows in set (0.00 sec)
+<span class="token keyword">alter</span> <span class="token keyword">table</span> 表名称 <span class="token keyword">modify</span> 字段名 数据类型  <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">;</span> <span class="token comment">#删除默认值约束，保留非空约束</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">alter</span> <span class="token keyword">table</span> employee <span class="token keyword">modify</span> gender <span class="token keyword">char</span><span class="token punctuation">;</span> <span class="token comment">#删除gender字段默认值约束，如果有非空约束，也一并删除</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> employee <span class="token keyword">modify</span> tel <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>  <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">;</span><span class="token comment">#删除tel字段默认值约束，保留非空约束</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div></div></div><div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>mysql<span class="token operator">></span> <span class="token keyword">desc</span> employee<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> Field  <span class="token operator">|</span> <span class="token keyword">Type</span>        <span class="token operator">|</span> <span class="token boolean">Null</span> <span class="token operator">|</span> <span class="token keyword">Key</span> <span class="token operator">|</span> <span class="token keyword">Default</span> <span class="token operator">|</span> Extra <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token operator">|</span> eid    <span class="token operator">|</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>     <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span> PRI <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> ename  <span class="token operator">|</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> gender <span class="token operator">|</span> <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>     <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> tel    <span class="token operator">|</span> <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>    <span class="token operator">|</span> <span class="token keyword">NO</span>   <span class="token operator">|</span>     <span class="token operator">|</span> <span class="token boolean">NULL</span>    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">--------+-------------+------+-----+---------+-------+</span>
+<span class="token number">4</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="_9-面试" tabindex="-1"><a class="header-anchor" href="#_9-面试" aria-hidden="true">#</a> 9. 面试</h2>
 <p><strong>面试1、为什么建表时，加 not null default '' 或 default 0</strong></p>
 <p>答：不想让表中出现null值。</p>

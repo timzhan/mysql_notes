@@ -116,7 +116,7 @@ mysqladmin --version
 <h5 id="_3-1首次登录" tabindex="-1"><a class="header-anchor" href="#_3-1首次登录" aria-hidden="true">#</a> <strong>3.1首次登录</strong></h5>
 <p>通过<code v-pre>mysql -hlocalhost -P3306 -uroot -p</code>进行登录，在Enter password：录入初始化密码</p>
 <h5 id="_3-2修改密码" tabindex="-1"><a class="header-anchor" href="#_3-2修改密码" aria-hidden="true">#</a> <strong>3.2修改密码</strong></h5>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">USER</span> <span class="token string">'root'</span><span class="token variable">@'localhost'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'new_password'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h5 id="_3-3设置远程登录" tabindex="-1"><a class="header-anchor" href="#_3-3设置远程登录" aria-hidden="true">#</a> <strong>3.3设置远程登录</strong></h5>
 <p><strong>1.确认网络</strong></p>
 <p>1.在远程机器上使用ping ip地址<code v-pre>保证网络畅通</code></p>
@@ -158,10 +158,10 @@ firewall-cmd --add-port<span class="token operator">=</span><span class="token n
 <ul>
 <li>修改允许远程登陆</li>
 </ul>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>use mysql;
-select Host,User from user;
-update user set host = '%' where user ='root';
-flush privileges;
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">use</span> mysql<span class="token punctuation">;</span>
+<span class="token keyword">select</span> Host<span class="token punctuation">,</span><span class="token keyword">User</span> <span class="token keyword">from</span> <span class="token keyword">user</span><span class="token punctuation">;</span>
+<span class="token keyword">update</span> <span class="token keyword">user</span> <span class="token keyword">set</span> host <span class="token operator">=</span> <span class="token string">'%'</span> <span class="token keyword">where</span> <span class="token keyword">user</span> <span class="token operator">=</span><span class="token string">'root'</span><span class="token punctuation">;</span>
+flush <span class="token keyword">privileges</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><blockquote>
 <p><code v-pre>%</code>是个 通配符 ，如果Host=192.168.1.%，那么就表示只要是IP地址前缀为“192.168.1.”的客户端都可以连接。如果<code v-pre>Host=%</code>，表示所有IP都有连接权限。</p>
 <p>注意：在生产环境下不能为了省事将host设置为%，这样做会存在安全问题，具体的设置可以根据生产环境的IP进行设置。</p>
@@ -169,10 +169,10 @@ flush privileges;
 <p>配置新连接报错：错误号码 2058，分析是 mysql 密码加密方法变了。</p>
 <p>**解决方法一：**升级远程连接工具版本</p>
 <p><strong>解决方法二：</strong></p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'abc123';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">ALTER</span> <span class="token keyword">USER</span> <span class="token string">'root'</span><span class="token variable">@'%'</span> IDENTIFIED <span class="token keyword">WITH</span> mysql_native_password <span class="token keyword">BY</span> <span class="token string">'abc123'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><h4 id="_5-字符集的相关操作" tabindex="-1"><a class="header-anchor" href="#_5-字符集的相关操作" aria-hidden="true">#</a> <strong>5.字符集的相关操作</strong></h4>
 <h5 id="_5-1各级别的字符集" tabindex="-1"><a class="header-anchor" href="#_5-1各级别的字符集" aria-hidden="true">#</a> <strong>5.1各级别的字符集</strong></h5>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>show variables like 'character%';
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code><span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'character%'</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><ul>
 <li>character_set_server：服务器级别的字符集</li>
 <li>character_set_database：当前数据库的字符集</li>
@@ -181,12 +181,12 @@ flush privileges;
 <li>character_set_results：服务器向客户端返回数据时使用的字符集</li>
 </ul>
 <p>操作2：修改字符集</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>vim /etc/my.cnf
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>vim <span class="token operator">/</span>etc<span class="token operator">/</span>my<span class="token punctuation">.</span>cnf
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p>在MySQL5.7或之前的版本中，在/etc/my.cnf文件最后加上中文字符集配置：</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>character_set_server=utf8
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/6e7f2fd6-e801-4c01-9c4f-b54d8bebe8e6.png" alt=""></p>
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>character_set_server<span class="token operator">=</span>utf8
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><img src="@source/notes/senior_mysql/images/6e7f2fd6-e801-4c01-9c4f-b54d8bebe8e6.png" alt="" loading="lazy"></p>
 <p>操作3：重新启动MySQL服务</p>
-<div class="language-mysql ext-mysql line-numbers-mode"><pre v-pre class="language-mysql"><code>systemctl restart mysqld
+<div class="language-sql ext-sql line-numbers-mode"><pre v-pre class="language-sql"><code>systemctl restart mysqld
 </code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div></div></div><p><strong>小结</strong></p>
 <ul>
 <li>如果<code v-pre>创建或修改列</code>时没有显式的指定字符集和比较规则，则该列<code v-pre>默认用表的</code>字符集和比较规则</li>
@@ -194,10 +194,4 @@ flush privileges;
 <li>如果<code v-pre>创建数据库时</code>没有显式的指定字符集和比较规则，则该数据库<code v-pre>默认用服务器的</code>字符集和比较规则</li>
 </ul>
 <h5 id="_5-2请求到响应过程中字符集的变化" tabindex="-1"><a class="header-anchor" href="#_5-2请求到响应过程中字符集的变化" aria-hidden="true">#</a> <strong>5.2请求到响应过程中字符集的变化</strong></h5>
-<div class="language-mermaid ext-mermaid line-numbers-mode"><pre v-pre class="language-mermaid"><code><span class="token keyword">graph</span> TB
-A<span class="token text string">(客户端)</span> <span class="token arrow operator">--></span> <span class="token label property">|"使用操作系统的字符集编码请求字符串"|</span> B<span class="token text string">(从character_set_client转换为character_set_connection)</span>
-B <span class="token arrow operator">--></span> C<span class="token text string">(从character_set_connection转换为具体的列使用的字符集)</span>
-C <span class="token arrow operator">--></span> D<span class="token text string">(将查询结果从具体的列上使用的字符集转换为character_set_results)</span>
-D <span class="token arrow operator">--></span> <span class="token label property">|"使用操作系统的字符集解码响应的字符串"|</span> A
-
-</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div></div></template>
+<Mermaid id="mermaid-64a55a20" code="graph%20TB%0AA(%E5%AE%A2%E6%88%B7%E7%AB%AF)%20--%3E%20%7C%22%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AD%97%E7%AC%A6%E9%9B%86%E7%BC%96%E7%A0%81%E8%AF%B7%E6%B1%82%E5%AD%97%E7%AC%A6%E4%B8%B2%22%7C%20B(%E4%BB%8Echaracter_set_client%E8%BD%AC%E6%8D%A2%E4%B8%BAcharacter_set_connection)%0AB%20--%3E%20C(%E4%BB%8Echaracter_set_connection%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%85%B7%E4%BD%93%E7%9A%84%E5%88%97%E4%BD%BF%E7%94%A8%E7%9A%84%E5%AD%97%E7%AC%A6%E9%9B%86)%0AC%20--%3E%20D(%E5%B0%86%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E4%BB%8E%E5%85%B7%E4%BD%93%E7%9A%84%E5%88%97%E4%B8%8A%E4%BD%BF%E7%94%A8%E7%9A%84%E5%AD%97%E7%AC%A6%E9%9B%86%E8%BD%AC%E6%8D%A2%E4%B8%BAcharacter_set_results)%0AD%20--%3E%20%7C%22%E4%BD%BF%E7%94%A8%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AD%97%E7%AC%A6%E9%9B%86%E8%A7%A3%E7%A0%81%E5%93%8D%E5%BA%94%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%22%7C%20A%0A%0A"></Mermaid></div></template>
