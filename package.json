@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "devDependencies": {
+    "vuepress": "^2.0.0-beta.49"
+  },
+  "name": "mysql-learning",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/tutusmart/mysql_notes.git",
+  "author": "涂威 <tuwei@lonch.com.cn>",
+  "license": "MIT"
+}
